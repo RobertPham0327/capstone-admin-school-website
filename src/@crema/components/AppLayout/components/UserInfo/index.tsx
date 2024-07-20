@@ -93,7 +93,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
                   </StyledUserArrow>
                 </StyledUsernameInfo>
                 <StyledCrUserDesignation className="text-truncate">
-                  System Manager
+                    School Admin
                 </StyledCrUserDesignation>
               </StyledCrUserInfoContent>
             </StyledCrUserInfoInner>

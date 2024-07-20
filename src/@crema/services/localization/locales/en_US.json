@@ -731,6 +731,7 @@
   "sidebar.sample": "Sample",
   "sidebar.sample.page1": "Page 1",
   "sidebar.sample.page2": "Page 2",
+  "sidebar.dashboard": "Dashboard",
   "customizer.layoutTypes": "Layout Types",
   "sidebar.app.dashboard.analytics": "Analytics",
   "dashboard.analytics.welcome": "Welcome",
@@ -833,5 +834,6 @@
 
   "sidebar.classManagement": "Class Management",
   "sidebar.classManagement.students": "Student",
-  "sidebar.classManagement.teachers": "Teacher"
+  "sidebar.classManagement.teachers": "Teacher",
+  "sidebar.classManagement.classes": "Class"
 }

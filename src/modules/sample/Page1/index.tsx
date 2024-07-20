@@ -2,8 +2,6 @@ import React from 'react';
 import WelcomeCard from './WelcomeCard';
 import SalesState from './SalesState';
 
-
-
 const Page1 = () => {
   return (
     <>

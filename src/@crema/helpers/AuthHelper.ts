@@ -18,9 +18,9 @@ export const getUserFromFirebase = (user: any) => {
     return {
       id: 1,
       uid: user.uid,
-      displayName: user.displayName ? user.displayName : 'Crema User',
+      displayName: user.displayName ? user.displayName : 'Robert P',
       email: user.email,
-      photoURL: user.photoURL ? user.photoURL : '/assets/images/avatar/A11.jpg',
+      photoURL: user.photoURL ? user.photoURL : '/assets/images/avatar.jpg',
       role: authRole.User,
     };
   return user;
@@ -30,7 +30,7 @@ export const getUserFromAWS = (user: any) => {
     return {
       id: 1,
       uid: user.username,
-      displayName: user.attributes.name ? user.attributes.name : 'Crema User',
+      displayName: user.attributes.name ? user.attributes.name : 'Robert P',
       email: user.attributes.email,
       photoURL: user.photoURL,
       role: authRole.User,

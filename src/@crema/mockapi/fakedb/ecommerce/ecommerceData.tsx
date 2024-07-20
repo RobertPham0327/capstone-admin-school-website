@@ -81,7 +81,7 @@ export const productCategory = [
 export const addresses: AddressesType[] = [
   {
     id: 1,
-    name: "Crema User",
+    name: "Rober Pham",
     mobile: "+1 508-966-0591",
     addressLine: "777 Brockton Avenue",
     city: "Abington MA",
@@ -89,7 +89,7 @@ export const addresses: AddressesType[] = [
   },
   {
     id: 2,
-    name: "Crema User",
+    name: "Quang Simp",
     mobile: "+1 508-966-0592",
     addressLine: "250 Hartford Avenue",
     city: "Bellingham MA",
@@ -97,7 +97,7 @@ export const addresses: AddressesType[] = [
   },
   {
     id: 3,
-    name: "Crema User",
+    name: "Khang Wibu",
     mobile: "+1 508-966-0593",
     addressLine: "700 Oak Street",
     city: "Brockton MA",

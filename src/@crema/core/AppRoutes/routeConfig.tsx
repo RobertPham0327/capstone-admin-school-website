@@ -1,5 +1,6 @@
 import React from 'react';
 import { PiStudentBold } from "react-icons/pi";
+import { TbDeviceDesktopAnalytics } from "react-icons/tb";
 
 const routesConfig = [
   {
@@ -9,12 +10,26 @@ const routesConfig = [
     type: 'group',
     children: [
       {
+        id: 'dashboard',
+        title: 'Dashboard',
+        messageId: 'sidebar.dashboard',
+        type: 'item',
+        icon: <TbDeviceDesktopAnalytics />,
+        path: '/sample/page-1',
+      },
+      {
         id: 'class_management',
         title: 'Class management',
         messageId: 'sidebar.classManagement',
         type: 'collapse',
         icon: <PiStudentBold />,
         children: [
+          {
+            id: 'classes',
+            title: 'Classes',
+            messageId: 'sidebar.classManagement.classes',
+            path: '/class-management/classes',
+          },
           {
             id: 'students',
             title: 'Students',
@@ -29,14 +44,6 @@ const routesConfig = [
           }
         ]
       },
-      // {
-      //   id: 'page-2',
-      //   title: 'Page 2',
-      //   messageId: 'sidebar.sample.page2',
-      //   type: 'item',
-      //   icon: <BiAlignLeft />,
-      //   path: '/sample/page-2',
-      // },
     ],
   },
 ];
