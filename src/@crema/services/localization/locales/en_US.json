@@ -829,5 +829,9 @@
   "sidebar.layout.grid": "Grid",
   "sidebar.layout.layout": "Layout",
   "sidebar.layout.space": "Space",
-  "sidebar.components.layout": "Layout"
+  "sidebar.components.layout": "Layout",
+
+  "sidebar.classManagement": "Class Management",
+  "sidebar.classManagement.students": "Student",
+  "sidebar.classManagement.teachers": "Teacher"
 }
