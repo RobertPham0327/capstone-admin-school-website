@@ -9,7 +9,7 @@ module.exports = {
       'plugin:prettier/recommended',
       'plugin:@next/next/recommended',
     ],
-    plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+    plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
     settings: {
       react: {
         version: 'detect',

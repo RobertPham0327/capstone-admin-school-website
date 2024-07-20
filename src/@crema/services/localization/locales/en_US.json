@@ -835,5 +835,6 @@
   "sidebar.classManagement": "Class Management",
   "sidebar.classManagement.students": "Student",
   "sidebar.classManagement.teachers": "Teacher",
-  "sidebar.classManagement.classes": "Class"
+  "sidebar.classManagement.classes": "Class",
+  "sidebar.classManagementAdmin.classListing": "Class Listing"
 }

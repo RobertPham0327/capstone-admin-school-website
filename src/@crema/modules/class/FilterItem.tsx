@@ -1,22 +1,48 @@
-import AppCard from "@crema/components/AppCard";
-import React from "react";
-import AppRowContainer from "@crema/components/AppRowContainer";
-import dayjs from "dayjs";
-import { Col, DatePicker, InputNumber, Select, Switch } from "antd";
-import { StyledFormWrapper } from "./index.styled";
-import { FilterType } from "@crema/types/models/ecommerce/EcommerceApp";
+import AppCard from '@crema/components/AppCard';
+import React from 'react';
+import AppRowContainer from '@crema/components/AppRowContainer';
+import dayjs from 'dayjs';
+import { Col, DatePicker, Form, InputNumber, Select } from 'antd';
+import { StyledFormWrapper, StyledTitleFilter } from './index.styled';
+import { FilterType } from '@crema/types/models/ecommerce/EcommerceApp';
 
 const { Option } = Select;
 
 const statusList = [
   {
     id: 1,
-    name: "In Stock",
+    name: 'In Stock',
     value: true,
   },
   {
     id: 2,
-    name: "Out of Stock",
+    name: 'Out of Stock',
+    value: false,
+  },
+];
+
+const teacherList = [
+  {
+    id: 1,
+    name: 'Teacher 1',
+    value: true,
+  },
+  {
+    id: 2,
+    name: 'Teacher 2',
+    value: false,
+  },
+];
+
+const schoolList = [
+  {
+    id: 1,
+    name: 'School 1',
+    value: true,
+  },
+  {
+    id: 2,
+    name: 'School 2',
     value: false,
   },
 ];
@@ -28,86 +54,97 @@ type Props = {
 
 const Filter = ({ filterData, setFilterData }: Props) => {
   return (
-    <AppCard title="Filter ">
+    <AppCard title="Filter Item">
       <StyledFormWrapper>
         <AppRowContainer>
-          <Col xs={24}>
+          <Col xs={24} md={8}>
+            <StyledTitleFilter>Status</StyledTitleFilter>
             <Select
               placeholder="status"
-              onChange={(value) => {
-                setFilterData((prev) => ({
+              onChange={value => {
+                setFilterData(prev => ({
                   ...prev,
                   inStock: [value === 1],
                 }));
               }}
             >
-              {statusList.map((status) => (
+              {statusList.map(status => (
                 <Option key={status.id} value={status.id}>
                   {status.name}
                 </Option>
               ))}
             </Select>
           </Col>
-          <Col xs={24} md={12}>
-            <InputNumber
-              placeholder="Start Price"
-              onChange={(value) => {
-                setFilterData((prev) => ({
-                  ...prev,
-                  mrp: { start: value ? +value : 0, end: filterData.mrp.end },
-                }));
-              }}
-            />
-          </Col>
-          <Col xs={24} md={12}>
-            <InputNumber
-              placeholder="End Price"
-              onChange={(value) => {
-                setFilterData((prev) => ({
-                  ...prev,
-                  mrp: { start: filterData.mrp.start, end: value ? +value : 0 },
-                }));
-              }}
-            />
-          </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24} lg={8} md={12}>
+            <StyledTitleFilter>Start Date</StyledTitleFilter>
             <DatePicker
+              style={{ width: '100%' }}
               defaultValue={filterData?.createdAt?.start as any}
               allowClear={false}
-              onChange={(value) => {
-                console.log(
-                  "DatePickervalue",
-                  value,
-                  dayjs(value).format("DD MMM YYYY")
-                );
-                setFilterData((prev) => ({
+              onChange={value => {
+                console.log('DatePickervalue', value, dayjs(value).format('DD MMM YYYY'));
+                setFilterData(prev => ({
                   ...prev,
                   createdAt: {
-                    start: dayjs(value).format("DD MMM YYYY"),
+                    start: dayjs(value).format('DD MMM YYYY'),
                     end: filterData?.createdAt?.end,
                   },
                 }));
               }}
             />
           </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24} lg={8} md={12}>
+            <StyledTitleFilter>End Date</StyledTitleFilter>
             <DatePicker
+              style={{ width: '100%' }}
               defaultValue={filterData?.createdAt?.end as any}
               allowClear={false}
-              onChange={(value) =>
-                setFilterData((prev) => ({
+              onChange={value =>
+                setFilterData(prev => ({
                   ...prev,
                   createdAt: {
                     start: filterData?.createdAt?.start,
-                    end: dayjs(value).format("DD MMM YYYY"),
+                    end: dayjs(value).format('DD MMM YYYY'),
                   },
                 }))
               }
             />
           </Col>
-          <Col xs={24}>
-            <Switch />
-            <span className="notification">Notifications</span>
+          <Col xs={24} lg={8} md={12}>
+            <StyledTitleFilter>Teachers</StyledTitleFilter>
+            <Select
+              placeholder="teacher"
+              onChange={value => {
+                setFilterData(prev => ({
+                  ...prev,
+                  inStock: [value === 1],
+                }));
+              }}
+            >
+              {teacherList.map(status => (
+                <Option key={status.id} value={status.id}>
+                  {status.name}
+                </Option>
+              ))}
+            </Select>
+          </Col>
+          <Col xs={24} lg={8} md={12}>
+          <StyledTitleFilter>Schools</StyledTitleFilter>
+            <Select
+              placeholder="school"
+              onChange={value => {
+                setFilterData(prev => ({
+                  ...prev,
+                  inStock: [value === 1],
+                }));
+              }}
+            >
+              {schoolList.map(status => (
+                <Option key={status.id} value={status.id}>
+                  {status.name}
+                </Option>
+              ))}
+            </Select>
           </Col>
         </AppRowContainer>
       </StyledFormWrapper>

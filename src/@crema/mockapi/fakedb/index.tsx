@@ -3,6 +3,7 @@ import messages from './messages';
 import photos from './gallery/photos';
 import accountData from './account';
 import countries from './account/countries';
+import classes from './classes';
 import { aboutUsData } from './extraPages/aboutUs';
 import ecommerce, {
   addresses,
@@ -33,4 +34,5 @@ export {
   recentOrders,
   customersData,
   ecommerce,
+  classes,
 };

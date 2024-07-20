@@ -12,6 +12,12 @@ export const StyledFormWrapper = styled.div`
   }
 `;
 
+export const StyledTitleFilter = styled.h5`
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 10px;
+`;
+
 export const StyledListingStatus = styled.div`
   padding: 3px 5px;
   border-radius: 4px;

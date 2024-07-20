@@ -20,42 +20,49 @@ const getPaymentStatusColor = (inStock: boolean) => {
 
 const getColumns = (router: NextRouter): ColumnsType<ProductDataType> => [
   {
-    title: "Product Name",
+    title: "No.",
     dataIndex: "id",
+    width: 50,
+    align: "center",
     key: "id",
     render: (id, record) => (
       <Typography.Link
         onClick={() => router.push(`/ecommerce/product_detail/${id}`)}
         style={{ display: "flex", alignItems: "center" }}
       >
-        <img
-          style={{
-            width: "40px",
-            height: "40px",
-            objectFit: "contain",
-            marginRight: 10,
-          }}
-          src={record?.image?.[0]?.src}
-          alt="crema-logo"
-        />
         {ellipsisLines(record.title)}
       </Typography.Link>
     ),
   },
   {
-    title: "Product SKU",
-    dataIndex: "SKU",
-    key: "SKU",
+    title: "Class Name",
+    dataIndex: "name",
+    align: "center",
+    key: "name",
   },
   {
-    title: "Created at",
-    dataIndex: "createdAt",
-    key: "createdAt",
+    title: "Teacher",
+    dataIndex: "teacher_id",
+    align: "center",
+    key: "teacherId",
+  },
+  {
+    title: "Student",
+    dataIndex: "student_id",
+    align: "center",
+    key: "studentId",
+  },
+  {
+    title: "School",
+    dataIndex: "school_id",
+    align: "center",
+    key: "schoolId"
   },
   {
     title: "Status",
     dataIndex: "date",
     key: "date",
+    align: "center",
     render: (data, record) => (
       <StyledListingStatus
         style={{
@@ -68,10 +75,10 @@ const getColumns = (router: NextRouter): ColumnsType<ProductDataType> => [
     ),
   },
   {
-    title: "Price",
-    dataIndex: "mrp",
-    key: "mrp",
-    render: (price) => <span>${price}</span>,
+    title: "Created Date",
+    dataIndex: "created_at",
+    align: "center",
+    key: "createdAt",
   },
   {
     title: "Actions",

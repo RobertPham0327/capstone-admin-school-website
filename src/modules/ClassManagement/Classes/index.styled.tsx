@@ -1,6 +1,14 @@
 import AppsPagination from '@crema/components/AppsPagination';
 import AppTableContainer from '@crema/components/AppTableContainer';
 import styled from 'styled-components';
+import { Input } from 'antd';
+
+const { Search } = Input;
+
+export const StyledInputSearch = styled(Search)`
+  width: 250px;
+
+`
 
 export const StyledTitle5 = styled.h5`
   color: ${({ theme }) => theme.palette.text.primary};

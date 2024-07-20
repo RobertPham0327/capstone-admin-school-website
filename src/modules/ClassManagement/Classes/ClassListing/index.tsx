@@ -1,33 +1,32 @@
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
-import { FilterItem, ListingTable } from "@crema/modules/class";
-import AppRowContainer from "@crema/components/AppRowContainer";
-import AppCard from "@crema/components/AppCard";
-import { Col, Input } from "antd";
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { FilterItem, ListingTable } from '@crema/modules/class';
+import AppRowContainer from '@crema/components/AppRowContainer';
+import AppCard from '@crema/components/AppCard';
+import { Col } from 'antd';
 import {
+    StyledInputSearch,
   StyledOrderFooterPagination,
   StyledOrderHeader,
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
-} from "../index.styled";
-import { StyledTitle5 } from "../index.styled";
-import { useAppSelector, useAppDispatch } from "../../../../toolkit/hooks";
-import { onGetEcommerceData } from "../../../../toolkit/actions";
+} from '../index.styled';
+import { StyledTitle5 } from '../index.styled';
+import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
+import { onGetEcommerceData } from '../../../../toolkit/actions';
 
 const ProductListing = () => {
   const { messages } = useIntl();
   const dispatch = useAppDispatch();
   const [filterData, setFilterData] = useState({
-    title: "",
+    title: '',
     inStock: [true, false],
     mrp: { start: 0, end: 30000 },
   });
 
   const [page, setPage] = useState(0);
-  const ecommerceList = useAppSelector(
-    ({ ecommerce }) => ecommerce.ecommerceList
-  );
+  const ecommerceList = useAppSelector(({ ecommerce }) => ecommerce.ecommerceList);
   const { list = [], total = 0 } = ecommerceList;
 
   const onChange = (page: number) => {
@@ -39,50 +38,39 @@ const ProductListing = () => {
     dispatch(onGetEcommerceData({ filterData, page }));
   }, [dispatch, filterData, page]);
 
-  const searchProduct = (title: string) => {
+  const searchClass = (title: string) => {
     setFilterData({ ...filterData, title });
   };
 
   return (
     <>
-      <StyledTitle5>
-        {messages["sidebar.ecommerceAdmin.productListing"] as string}
-      </StyledTitle5>
+      <StyledTitle5>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle5>
       <AppRowContainer>
-        <Col xs={24} lg={18}>
+      <Col xs={24} lg={24}>
+        <FilterItem filterData={filterData} setFilterData={setFilterData} />
+      </Col>
+        <Col xs={24} lg={24}>
           <AppCard
             title={
               <AppsHeader>
                 <StyledOrderHeader>
                   <StyledOrderHeaderInputView>
-                    <Input
+                    <StyledInputSearch
                       id="user-name"
-                      placeholder="Search"
+                      placeholder="Search..."
                       type="search"
-                      onChange={(event) => searchProduct(event.target.value)}
+                      enterButton
+                      onChange={event => searchClass(event.target.value)}
                     />
                   </StyledOrderHeaderInputView>
-                  <StyledOrderHeaderPagination
-                    pageSize={10}
-                    count={total}
-                    page={page}
-                    onChange={onChange}
-                  />
+                  <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} />
                 </StyledOrderHeader>
               </AppsHeader>
             }
           >
             <ListingTable productData={list || []} loading={loading} />
-            <StyledOrderFooterPagination
-              pageSize={10}
-              count={total}
-              page={page}
-              onChange={onChange}
-            />
+            <StyledOrderFooterPagination pageSize={10} count={total} page={page} onChange={onChange} />
           </AppCard>
-        </Col>
-        <Col xs={24} lg={6}>
-          <FilterItem filterData={filterData} setFilterData={setFilterData} />
         </Col>
       </AppRowContainer>
     </>
