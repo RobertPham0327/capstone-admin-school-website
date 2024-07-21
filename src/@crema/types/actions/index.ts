@@ -12,6 +12,7 @@ import { ScrumboardActions } from './Scrumboard.actions';
 import { UserListActions } from './UserList.actions';
 import { InvoiceActionTypes } from './Invoice.action';
 import { BlogActionTypes } from './Blogs.action';
+import { ClassActionTypes } from './Class.actions';
 
 export type AppActions =
   | CommonActionTypes
@@ -27,4 +28,5 @@ export type AppActions =
   | ContactActions
   | InvoiceActionTypes
   | BlogActionTypes
-  | UserListActions;
+  | UserListActions
+  | ClassActionTypes;
