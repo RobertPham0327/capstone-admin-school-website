@@ -1,38 +1,32 @@
-import React from "react";
-import { Select } from "antd";
-import { useIntl } from "react-intl";
-import { StyledTodoSelectBox } from "../index.styled";
-import { putDataApi, useGetDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { PriorityObjType, TodoObjType } from "@crema/types/models/apps/Todo";
+import React from 'react';
+import { Select } from 'antd';
+import { useIntl } from 'react-intl';
+import { StyledTodoSelectBox } from '../index.styled';
+import { putDataApi, useGetDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { PriorityObjType, TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskPriorityProps = {
   selectedTask: TodoObjType;
   onUpdateSelectedTask?: (data: TodoObjType) => void;
 };
 
-const TaskPriority: React.FC<TaskPriorityProps> = ({
-  selectedTask,
-  onUpdateSelectedTask,
-}) => {
+const TaskPriority: React.FC<TaskPriorityProps> = ({ selectedTask, onUpdateSelectedTask }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
-  const [{ apiData: priorityList }] = useGetDataApi<PriorityObjType[]>(
-    "/api/todo/priority/list",
-    []
-  );
+  const [{ apiData: priorityList }] = useGetDataApi<PriorityObjType[]>('/api/todo/priority/list', []);
 
   const onChangePriority = (value: number) => {
     selectedTask.priority = priorityList.find(
-      (priority: PriorityObjType) => priority.type === value
+      (priority: PriorityObjType) => priority.type === value,
     ) as PriorityObjType;
-    putDataApi<TodoObjType[]>("/api/todoApp/task/", infoViewActionsContext, {
+    putDataApi<TodoObjType[]>('/api/todoApp/task/', infoViewActionsContext, {
       task: selectedTask,
     })
-      .then((data) => {
+      .then(data => {
         if (onUpdateSelectedTask) onUpdateSelectedTask(data[0]);
-        infoViewActionsContext.showMessage("Task Updated Successfully");
+        infoViewActionsContext.showMessage('Task Updated Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -41,8 +35,8 @@ const TaskPriority: React.FC<TaskPriorityProps> = ({
   return (
     <StyledTodoSelectBox
       defaultValue={selectedTask?.priority?.type}
-      placeholder={messages["common.priority"] as string}
-      onChange={(value) => onChangePriority(value as number)}
+      placeholder={messages['common.priority'] as string}
+      onChange={value => onChangePriority(value as number)}
     >
       {priorityList.map((priority: PriorityObjType) => {
         return (

@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import {
   auth,
   createUserWithEmailAndPassword,
@@ -17,8 +11,8 @@ import {
   signInWithPopup,
   twitterAuthProvider,
   updateProfile,
-} from "./firebase";
-import type { AuthUserType } from "@crema/types/models/AuthUser";
+} from './firebase';
+import type { AuthUserType } from '@crema/types/models/AuthUser';
 
 type FirebaseContextProps = {
   user: AuthUserType | null | undefined;
@@ -82,7 +76,7 @@ const FirebaseAuthProvider: React.FC<FirebaseAuthProviderProps> = ({
   useEffect(() => {
     fetchStart();
     const getAuthUser = auth.onAuthStateChanged(
-      (user) => {
+      user => {
         setFirebaseData({
           user: user as AuthUserType,
           isAuthenticated: Boolean(user),
@@ -105,7 +99,7 @@ const FirebaseAuthProvider: React.FC<FirebaseAuthProviderProps> = ({
           isLoading: false,
           isAuthenticated: true,
         });
-      }
+      },
     );
 
     return () => {
@@ -115,16 +109,16 @@ const FirebaseAuthProvider: React.FC<FirebaseAuthProviderProps> = ({
 
   const getProvider = (providerName: string) => {
     switch (providerName) {
-      case "google": {
+      case 'google': {
         return googleAuthProvider;
       }
-      case "facebook": {
+      case 'facebook': {
         return facebookAuthProvider;
       }
-      case "twitter": {
+      case 'twitter': {
         return twitterAuthProvider;
       }
-      case "github": {
+      case 'github': {
         return githubAuthProvider;
       }
       default:
@@ -152,10 +146,7 @@ const FirebaseAuthProvider: React.FC<FirebaseAuthProviderProps> = ({
     }
   };
 
-  const logInWithEmailAndPassword = async ({
-    email,
-    password,
-  }: SignInProps) => {
+  const logInWithEmailAndPassword = async ({ email, password }: SignInProps) => {
     fetchStart();
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
@@ -174,18 +165,10 @@ const FirebaseAuthProvider: React.FC<FirebaseAuthProviderProps> = ({
       fetchError(message as string);
     }
   };
-  const registerUserWithEmailAndPassword = async ({
-    name,
-    email,
-    password,
-  }: SignUpProps) => {
+  const registerUserWithEmailAndPassword = async ({ name, email, password }: SignUpProps) => {
     fetchStart();
     try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const { user } = await createUserWithEmailAndPassword(auth, email, password);
       await sendEmailVerification(auth.currentUser!, {
         url: window.location.href,
         handleCodeInApp: true,

@@ -1,5 +1,5 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
 import {
   StyledContactDetailModalItem,
   StyledContactDetailModalItemContent,
@@ -10,8 +10,8 @@ import {
   StyleFiTwitterIcon,
   StyleAiOutlineHomeIcon,
   StyleRiFoldersLineIcon,
-} from "./index.styled";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+} from './index.styled';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type OtherDetailsProps = {
   contact: ContactObjType | null;
@@ -28,43 +28,27 @@ const OtherDetails: React.FC<OtherDetailsProps> = ({ contact }) => {
         <StyledOtherDetailItem>
           <StyleRiFoldersLineIcon />
           <StyledOtherDetailItemContent>
-            {contact!.company ? (
-              contact!.company
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.company ? contact!.company : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
 
         <StyledOtherDetailItem>
           <StyleAiOutlineHomeIcon />
           <StyledOtherDetailItemContent>
-            {contact!.address ? (
-              contact!.address
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.address ? contact!.address : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
         <StyledOtherDetailItem>
           <StyledFiFacebookIcon />
           <StyledOtherDetailItemContent>
-            {contact!.facebookId ? (
-              contact!.facebookId
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.facebookId ? contact!.facebookId : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
 
         <StyledOtherDetailItem>
           <StyleFiTwitterIcon />
           <StyledOtherDetailItemContent>
-            {contact!.twitterId ? (
-              contact!.twitterId
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.twitterId ? contact!.twitterId : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
       </StyledContactDetailModalItemContent>

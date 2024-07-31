@@ -27,9 +27,7 @@ const AppHeader = () => {
     <StyledAppHeaderMini className="app-header-mini">
       <AppLogo />
 
-      <StyledHeaderSearchMini
-        placeholder={messages['common.searchHere'] as string}
-      />
+      <StyledHeaderSearchMini placeholder={messages['common.searchHere'] as string} />
       <StyledAppHeaderMiniSecDesktop>
         <AppLanguageSwitcher />
         <AppHeaderMessages />
@@ -40,13 +38,10 @@ const AppHeader = () => {
           <Dropdown
             menu={{ items }}
             overlayClassName="dropdown-wrapper"
-            getPopupContainer={(triggerNode) => triggerNode}
+            getPopupContainer={triggerNode => triggerNode}
             trigger={['click']}
           >
-            <a
-              className="ant-dropdown-link-mobile"
-              onClick={(e) => e.preventDefault()}
-            >
+            <a className="ant-dropdown-link-mobile" onClick={e => e.preventDefault()}>
               <FiMoreVertical />
             </a>
           </Dropdown>

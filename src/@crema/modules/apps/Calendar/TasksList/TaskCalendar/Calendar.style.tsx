@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Calendar } from "react-big-calendar";
-import { rgba } from "polished";
-import AppIconButton from "@crema/components/AppIconButton";
+import styled from 'styled-components';
+import { Calendar } from 'react-big-calendar';
+import { rgba } from 'polished';
+import AppIconButton from '@crema/components/AppIconButton';
 
 export const StyledFlex = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ export const StyledCalendar = styled(Calendar)`
     background-color: transparent;
   }
   & .rbc-toolbar button {
-    cursor: "pointer";
+    cursor: 'pointer';
     color: ${({ theme }) => theme.palette.text.secondary};
     font-size: 100%;
     &:hover,
@@ -141,8 +141,7 @@ export const StyledCommentWrapper = styled.div`
 
 export const StyledIconBtn = styled(AppIconButton)`
   color: ${({ theme }) => theme.palette.text.disabled} !important;
-  background-color: ${({ theme }) =>
-    rgba(theme.palette.primary.main, 0.05)}!important;
+  background-color: ${({ theme }) => rgba(theme.palette.primary.main, 0.05)}!important;
   padding: 8px;
 
   &:hover,

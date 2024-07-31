@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyledPagination} from './index.styled';
+import { StyledPagination } from './index.styled';
 
 type AppsPaginationProps = {
   count: number;
@@ -9,9 +9,9 @@ type AppsPaginationProps = {
   rowsPerPage?: number;
 
   [x: string]: any;
-}
+};
 
-function itemRender(_:any, type:any, originalElement:React.ReactNode) {
+function itemRender(_: any, type: any, originalElement: React.ReactNode) {
   if (type === 'prev') {
     return <a>Previous Page</a>;
   }
@@ -21,13 +21,7 @@ function itemRender(_:any, type:any, originalElement:React.ReactNode) {
   return originalElement;
 }
 
-const AppsPagination: React.FC<AppsPaginationProps> = ({
-  count,
-  page,
-  onChange,
-  className = '',
-  pageSize = 15,
-}) => {
+const AppsPagination: React.FC<AppsPaginationProps> = ({ count, page, onChange, className = '', pageSize = 15 }) => {
   return (
     <StyledPagination
       total={count}

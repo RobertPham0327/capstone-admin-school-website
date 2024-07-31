@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyledFollowAvatar,
   StyledFollowItem,
@@ -7,8 +7,8 @@ import {
   StyledFollowItemContentTitle,
   StyledFollowItemIcon,
   StyledFollowItemInfo,
-} from "./index.styled";
-import { WhoToFollowObjType } from "@crema/types/models/apps/Wall";
+} from './index.styled';
+import { WhoToFollowObjType } from '@crema/types/models/apps/Wall';
 
 type FollowItemProps = {
   item: WhoToFollowObjType;

@@ -25,8 +25,4 @@ export type UpdatePostActions = {
   payload: PostObjType;
 };
 
-export type WallActions =
-  | CreateNewPostActions
-  | GetFeedPostActions
-  | GetWallDataActions
-  | UpdatePostActions;
+export type WallActions = CreateNewPostActions | GetFeedPostActions | GetWallDataActions | UpdatePostActions;

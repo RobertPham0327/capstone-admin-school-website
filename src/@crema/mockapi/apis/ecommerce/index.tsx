@@ -1,16 +1,12 @@
-import { AxiosRequestConfig } from "axios";
-import mock from "../MockConfig";
-import ecommerceData, {
-  cartItems,
-  customersData,
-  recentOrders,
-} from "../../fakedb/ecommerce/ecommerceData";
-import { multiPropsFilter } from "@crema/helpers/Common";
+import { AxiosRequestConfig } from 'axios';
+import mock from '../MockConfig';
+import ecommerceData, { cartItems, customersData, recentOrders } from '../../fakedb/ecommerce/ecommerceData';
+import { multiPropsFilter } from '@crema/helpers/Common';
 
 let cartItemsData = cartItems;
 let ecommerceListingData = ecommerceData;
 
-mock.onPost("/api/ecommerce/list/add").reply((request) => {
+mock.onPost('/api/ecommerce/list/add').reply(request => {
   const { product } = JSON.parse(request.data);
   ecommerceListingData = ecommerceListingData.concat({
     id: ecommerceListingData.length + 1,
@@ -19,9 +15,9 @@ mock.onPost("/api/ecommerce/list/add").reply((request) => {
   return [200, ecommerceListingData];
 });
 
-mock.onPut("/api/ecommerce/list/update").reply((request) => {
+mock.onPut('/api/ecommerce/list/update').reply(request => {
   const { product } = JSON.parse(request.data);
-  ecommerceListingData = ecommerceListingData.map((item) => {
+  ecommerceListingData = ecommerceListingData.map(item => {
     if (item.id === product.id) {
       return product;
     }
@@ -30,7 +26,7 @@ mock.onPut("/api/ecommerce/list/update").reply((request) => {
   return [200, ecommerceListingData];
 });
 
-mock.onGet("/api/ecommerce/list").reply((request: AxiosRequestConfig) => {
+mock.onGet('/api/ecommerce/list').reply((request: AxiosRequestConfig) => {
   const { filterData, page } = request.params;
   const data = multiPropsFilter(ecommerceListingData, filterData);
   const index = page * 10;
@@ -39,26 +35,26 @@ mock.onGet("/api/ecommerce/list").reply((request: AxiosRequestConfig) => {
   return [200, { list, total }];
 });
 
-mock.onGet("/api/ecommerce/get").reply((request: AxiosRequestConfig) => {
+mock.onGet('/api/ecommerce/get').reply((request: AxiosRequestConfig) => {
   const { id } = request.params;
 
   if (+id >= 1) {
-    const data = ecommerceListingData.filter((item) => +item.id === +id);
+    const data = ecommerceListingData.filter(item => +item.id === +id);
     if (data.length > 0) return [200, data[0]];
   }
   return [200, ecommerceListingData[0]];
 });
 
-mock.onGet("/api/ecommerce/orders").reply((request: AxiosRequestConfig) => {
+mock.onGet('/api/ecommerce/orders').reply((request: AxiosRequestConfig) => {
   const { search, page } = request.params;
 
   let orders = [...recentOrders];
 
   if (search) {
     orders = orders.filter(
-      (order) =>
+      order =>
         order.customer.toLowerCase().includes(search.toLowerCase()) ||
-        order.product.toLowerCase().includes(search.toLowerCase())
+        order.product.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
@@ -71,16 +67,16 @@ mock.onGet("/api/ecommerce/orders").reply((request: AxiosRequestConfig) => {
   ];
 });
 
-mock.onGet("/api/ecommerce/customers").reply((request: AxiosRequestConfig) => {
+mock.onGet('/api/ecommerce/customers').reply((request: AxiosRequestConfig) => {
   const { search, page } = request.params;
 
   let customers = [...customersData];
 
   if (search) {
     customers = customers.filter(
-      (customer) =>
+      customer =>
         customer.name.toLowerCase().includes(search.toLowerCase()) ||
-        customer.email.toLowerCase().includes(search.toLowerCase())
+        customer.email.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
@@ -93,14 +89,14 @@ mock.onGet("/api/ecommerce/customers").reply((request: AxiosRequestConfig) => {
   ];
 });
 
-mock.onGet("/api/cart/get").reply(() => {
+mock.onGet('/api/cart/get').reply(() => {
   return [200, cartItems];
 });
 
-mock.onPost("/api/cart/add").reply((request: AxiosRequestConfig) => {
+mock.onPost('/api/cart/add').reply((request: AxiosRequestConfig) => {
   const { product } = JSON.parse(request.data);
-  if (cartItemsData.some((item) => +item.id === +product.id)) {
-    cartItemsData = cartItemsData.map((item) => {
+  if (cartItemsData.some(item => +item.id === +product.id)) {
+    cartItemsData = cartItemsData.map(item => {
       if (+item.id === +product.id) {
         item.count = +item.count + 1;
       }
@@ -130,16 +126,14 @@ mock.onPost("/api/cart/add").reply((request: AxiosRequestConfig) => {
   }
 });
 
-mock.onPut("/api/cart/update").reply((request) => {
+mock.onPut('/api/cart/update').reply(request => {
   const { product } = JSON.parse(request.data);
-  cartItemsData = cartItemsData.map((item) =>
-    item.id === product.id ? product : item
-  );
+  cartItemsData = cartItemsData.map(item => (item.id === product.id ? product : item));
   return [200, cartItemsData];
 });
 
-mock.onPost("/api/cart/remove").reply((request) => {
+mock.onPost('/api/cart/remove').reply(request => {
   const { product } = JSON.parse(request.data);
-  cartItemsData = cartItemsData.filter((item) => item.id !== product.id);
+  cartItemsData = cartItemsData.filter(item => item.id !== product.id);
   return [200, cartItemsData];
 });

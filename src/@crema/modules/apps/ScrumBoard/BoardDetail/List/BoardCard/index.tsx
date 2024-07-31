@@ -1,8 +1,8 @@
-import React from "react";
-import dayjs from "dayjs";
-import Members from "./Members";
-import Labels from "./Labels";
-import { MdChatBubbleOutline } from "react-icons/md";
+import React from 'react';
+import dayjs from 'dayjs';
+import Members from './Members';
+import Labels from './Labels';
+import { MdChatBubbleOutline } from 'react-icons/md';
 import {
   StyledIoMdAttach,
   StyledScrumBoardCardDetails,
@@ -12,11 +12,8 @@ import {
   StyledScrumBoardCardHeaderAction,
   StyledScrumBoardCardDetailDate,
   StyledScrumBoardCardDetailComment,
-} from "./index.styled";
-import {
-  LabelObjType,
-  MemberObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
+} from './index.styled';
+import { LabelObjType, MemberObjType } from '@crema/types/models/apps/ScrumbBoard';
 
 type CardDetailProps = {
   title: string;
@@ -40,14 +37,12 @@ const BoardCard: React.FC<CardDetailProps> = ({
   return (
     <StyledScrumBoardCardDetails
       onClick={() => {
-        console.log("clicked");
+        console.log('clicked');
         onClick();
       }}
     >
       <StyledScrumBoardCardHeader>
-        <StyledScrumBoardCardDetailTitle>
-          {title}
-        </StyledScrumBoardCardDetailTitle>
+        <StyledScrumBoardCardDetailTitle>{title}</StyledScrumBoardCardDetailTitle>
         {attachments && attachments.length > 0 ? (
           <StyledScrumBoardCardHeaderAction>
             <span>{attachments.length}</span>
@@ -61,7 +56,7 @@ const BoardCard: React.FC<CardDetailProps> = ({
         {members.length > 0 ? <Members members={members} /> : null}
 
         <StyledScrumBoardCardDetailDate>
-          {date ? dayjs(date).format("MMM DD").split(",")[0] : null}
+          {date ? dayjs(date).format('MMM DD').split(',')[0] : null}
         </StyledScrumBoardCardDetailDate>
         {comments && comments.length > 0 ? (
           <StyledScrumBoardCardDetailComment>

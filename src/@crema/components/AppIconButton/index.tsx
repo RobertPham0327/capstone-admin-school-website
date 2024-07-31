@@ -12,13 +12,7 @@ type AppIconButtonProps = {
   [x: string]: any;
 };
 
-const AppIconButton: React.FC<AppIconButtonProps> = ({
-  title = '',
-  icon,
-  className = '',
-  onClick,
-  ...rest
-}) => {
+const AppIconButton: React.FC<AppIconButtonProps> = ({ title = '', icon, className = '', onClick, ...rest }) => {
   if (title)
     return (
       <Tooltip title={title}>
@@ -26,7 +20,7 @@ const AppIconButton: React.FC<AppIconButtonProps> = ({
           className={clsx('icon-btn', className)}
           shape="circle"
           icon={icon}
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation();
             if (onClick) {
               onClick();
@@ -41,7 +35,7 @@ const AppIconButton: React.FC<AppIconButtonProps> = ({
       className={clsx('icon-btn', className)}
       shape="circle"
       icon={icon}
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation();
         if (onClick) {
           onClick();

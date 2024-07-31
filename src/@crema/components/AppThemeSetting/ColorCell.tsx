@@ -1,7 +1,7 @@
-import React from "react";
-import { CheckOutlined, PlusOutlined } from "@ant-design/icons";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { useThemeContext } from "@crema/context/AppContextProvider/ThemeContextProvider";
+import React from 'react';
+import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { useThemeContext } from '@crema/context/AppContextProvider/ThemeContextProvider';
 import {
   StyledColorBody,
   StyledColorBodyColor,
@@ -10,17 +10,14 @@ import {
   StyledColorHeadingWrapper,
   StyledColorTitle,
   StyledColorWrapper,
-} from "./index.styled";
-import { ThemeColorType } from "@crema/constants/ColorSets";
+} from './index.styled';
+import { ThemeColorType } from '@crema/constants/ColorSets';
 
 type ColorCellProps = {
   themeColorSet: ThemeColorType;
   updateThemeColors: (colorSet: ThemeColorType) => void;
 };
-const CustomColorCell: React.FC<ColorCellProps> = ({
-  themeColorSet,
-  updateThemeColors,
-}) => {
+const CustomColorCell: React.FC<ColorCellProps> = ({ themeColorSet, updateThemeColors }) => {
   const { theme } = useThemeContext();
   return (
     <div
@@ -29,9 +26,7 @@ const CustomColorCell: React.FC<ColorCellProps> = ({
       }}
     >
       <StyledColorWrapper>
-        <StyledColorHeadingWrapper
-          style={{ backgroundColor: themeColorSet.primary.main }}
-        >
+        <StyledColorHeadingWrapper style={{ backgroundColor: themeColorSet.primary.main }}>
           Primary
           {theme.palette.primary.main === themeColorSet.primary.main &&
           theme.palette.secondary.main === themeColorSet.secondary.main &&
@@ -56,9 +51,7 @@ const CustomColorCell: React.FC<ColorCellProps> = ({
             }}
           >
             Paper
-            <StyledColorBodyColor
-              style={{ backgroundColor: themeColorSet.secondary.main }}
-            >
+            <StyledColorBodyColor style={{ backgroundColor: themeColorSet.secondary.main }}>
               <PlusOutlined />
             </StyledColorBodyColor>
           </StyledColorBody>

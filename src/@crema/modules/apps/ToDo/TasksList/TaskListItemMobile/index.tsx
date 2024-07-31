@@ -1,10 +1,10 @@
-import React from "react";
-import clsx from "clsx";
-import Priority from "./Priority";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import dayjs from "dayjs";
-import { CheckOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import React from 'react';
+import clsx from 'clsx';
+import Priority from './Priority';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import dayjs from 'dayjs';
+import { CheckOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 import {
   StyledTodoListMobileAction,
   StyledTodoListMobileAvatar,
@@ -16,8 +16,8 @@ import {
   StyledTodoListMobileTitle,
   StyledTodoListMobileView,
   StyledTodoListStarMobile,
-} from "./index.styled";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
+} from './index.styled';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskListItemProps = {
   task: TodoObjType;
@@ -43,7 +43,7 @@ const TaskListItemMobile: React.FC<TaskListItemProps> = ({
   return (
     <StyledTodoListMobileItem
       key={task.id}
-      className={clsx("item-hover", {
+      className={clsx('item-hover', {
         checked: checkedTasks.includes(task.id),
       })}
       onClick={() => onViewTaskDetail(task)}
@@ -53,7 +53,7 @@ const TaskListItemMobile: React.FC<TaskListItemProps> = ({
           className={clsx({
             checked: checkedTasks.includes(task.id),
           })}
-          onClick={(event) => {
+          onClick={event => {
             event.stopPropagation();
             onChangeCheckedTasks(!checkedTasks.includes(task.id), task.id);
           }}
@@ -80,10 +80,8 @@ const TaskListItemMobile: React.FC<TaskListItemProps> = ({
       </StyledTodoListMobileMain>
 
       <StyledTodoListMobileAction>
-        <StyledTodoListMobileDate>
-          {dayjs(task.startDate).format("HH:mm A")}
-        </StyledTodoListMobileDate>
-        <StyledTodoListStarMobile onClick={(event) => event.stopPropagation()}>
+        <StyledTodoListMobileDate>{dayjs(task.startDate).format('HH:mm A')}</StyledTodoListMobileDate>
+        <StyledTodoListStarMobile onClick={event => event.stopPropagation()}>
           <AppsStarredIcon item={task} onChange={onChangeStarred} />
         </StyledTodoListStarMobile>
       </StyledTodoListMobileAction>

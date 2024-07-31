@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import ConfirmationModal from "@crema/components/AppConfirmationModal";
-import { MoreOutlined } from "@ant-design/icons";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import { Dropdown } from "antd";
-import UserInfo from "../../ChatSideBar/UserInfo";
-import AppIconButton from "@crema/components/AppIconButton";
-import { MdOutlinePhone } from "react-icons/md";
-import { BiVideo } from "react-icons/bi";
-import { StyledChatHeader, StyledChatHeaderAction } from "../index.styled";
-import { ConnectionObjType } from "@crema/types/models/apps/Chat";
+import React, { useState } from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import ConfirmationModal from '@crema/components/AppConfirmationModal';
+import { MoreOutlined } from '@ant-design/icons';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import { Dropdown } from 'antd';
+import UserInfo from '../../ChatSideBar/UserInfo';
+import AppIconButton from '@crema/components/AppIconButton';
+import { MdOutlinePhone } from 'react-icons/md';
+import { BiVideo } from 'react-icons/bi';
+import { StyledChatHeader, StyledChatHeaderAction } from '../index.styled';
+import { ConnectionObjType } from '@crema/types/models/apps/Chat';
 
 type HeaderProps = {
   selectedUser: ConnectionObjType;
@@ -68,26 +68,14 @@ const Header: React.FC<HeaderProps> = ({
     <StyledChatHeader>
       <UserInfo user={selectedUser} showStatus={true} />
       <StyledChatHeaderAction>
-        <AppIconButton
-          title={<IntlMessages id="common.call" />}
-          icon={<MdOutlinePhone />}
-        />
+        <AppIconButton title={<IntlMessages id="common.call" />} icon={<MdOutlinePhone />} />
 
-        <AppIconButton
-          title={<IntlMessages id="common.videoCall" />}
-          icon={<BiVideo />}
-        />
+        <AppIconButton title={<IntlMessages id="common.videoCall" />} icon={<BiVideo />} />
 
-        <AppsStarredIcon
-          item={{ isStarred: isChecked }}
-          onChange={onChangeStarred}
-        />
+        <AppsStarredIcon item={{ isStarred: isChecked }} onChange={onChangeStarred} />
 
-        <Dropdown menu={{ items }} trigger={["click"]}>
-          <AppIconButton
-            title={<IntlMessages id="common.more" />}
-            icon={<MoreOutlined />}
-          />
+        <Dropdown menu={{ items }} trigger={['click']}>
+          <AppIconButton title={<IntlMessages id="common.more" />} icon={<MoreOutlined />} />
         </Dropdown>
       </StyledChatHeaderAction>
 

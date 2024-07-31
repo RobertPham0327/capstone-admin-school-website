@@ -30,9 +30,7 @@ export const StyledAppSelect = styled(Select)`
     height: 30px;
   }
 
-  &.ant-select-single:not(.ant-select-customize-input)
-    .ant-select-selector
-    .ant-select-selection-search-input {
+  &.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
     height: 28px;
     color: ${({ theme }) => theme.palette.text.primary};
   }

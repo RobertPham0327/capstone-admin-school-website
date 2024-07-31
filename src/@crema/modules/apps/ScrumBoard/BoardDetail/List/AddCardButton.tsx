@@ -12,9 +12,9 @@ import {
 type AddCardButtonProps = {
   laneId: string;
   t: (laneId: string) => void;
-}
+};
 
-const AddCardButton: React.FC<AddCardButtonProps> = (props) => {
+const AddCardButton: React.FC<AddCardButtonProps> = props => {
   return (
     <StyledSCrumBoardAddBtnCard onClick={() => props.t(props.laneId)}>
       <StyledScrumBoardAddCardBtnUser>
@@ -22,7 +22,7 @@ const AddCardButton: React.FC<AddCardButtonProps> = (props) => {
           <StyledScrumBoardMdAdd />
         </StyledScrumBoardAddCardUserAvatar>
         <StyledScrumBoardAddBtnCardText>
-          <IntlMessages id='scrumboard.addACard' />
+          <IntlMessages id="scrumboard.addACard" />
         </StyledScrumBoardAddBtnCardText>
       </StyledScrumBoardAddCardBtnUser>
     </StyledSCrumBoardAddBtnCard>
@@ -30,4 +30,3 @@ const AddCardButton: React.FC<AddCardButtonProps> = (props) => {
 };
 
 export default AddCardButton;
-

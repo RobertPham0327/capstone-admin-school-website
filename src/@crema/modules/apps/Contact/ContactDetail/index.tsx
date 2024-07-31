@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import ContactActions from "./ContactActions";
-import PersonalDetails from "./PersonalDetails";
-import OtherDetails from "./OtherDetails";
-import { Col } from "antd";
+import React, { useEffect, useState } from 'react';
+import ContactActions from './ContactActions';
+import PersonalDetails from './PersonalDetails';
+import OtherDetails from './OtherDetails';
+import { Col } from 'antd';
 
-import AppRowContainer from "@crema/components/AppRowContainer";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import AppRowContainer from '@crema/components/AppRowContainer';
+import IntlMessages from '@crema/helpers/IntlMessages';
 import {
   StyledContactDetailContent,
   StyledContactDetailModal,
@@ -13,12 +13,9 @@ import {
   StyledContactModalHeader,
   StyledContactModalUser,
   StyledContactModalUserAvatar,
-} from "./index.styled";
-import {
-  StyledContactFormBtn,
-  StyledContactFormFooter,
-} from "../CreateContact/index.styled";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+} from './index.styled';
+import { StyledContactFormBtn, StyledContactFormFooter } from '../CreateContact/index.styled';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type ContactDetailProps = {
   isShowDetail: boolean;
@@ -37,9 +34,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({
   onOpenEditContact,
   onChangeStarred,
 }) => {
-  const [contact, setContact] = useState<ContactObjType | null>(
-    selectedContact
-  );
+  const [contact, setContact] = useState<ContactObjType | null>(selectedContact);
 
   useEffect(() => {
     setContact(selectedContact);
@@ -72,9 +67,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({
           {contact!.image ? (
             <StyledContactModalUserAvatar src={contact!.image} />
           ) : (
-            <StyledContactModalUserAvatar>
-              {contact!.name[0].toUpperCase()}
-            </StyledContactModalUserAvatar>
+            <StyledContactModalUserAvatar>{contact!.name[0].toUpperCase()}</StyledContactModalUserAvatar>
           )}
           <h4>{contact!.name}</h4>
         </StyledContactModalUser>
@@ -93,11 +86,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({
         </StyledContactDetailContent>
 
         <StyledContactFormFooter>
-          <StyledContactFormBtn
-            type="primary"
-            ghost
-            onClick={onContactDetailClose}
-          >
+          <StyledContactFormBtn type="primary" ghost onClick={onContactDetailClose}>
             <IntlMessages id="common.cancel" />
           </StyledContactFormBtn>
         </StyledContactFormFooter>

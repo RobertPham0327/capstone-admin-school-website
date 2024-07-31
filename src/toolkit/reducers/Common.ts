@@ -1,25 +1,20 @@
-import {
-  FETCH_START,
-  FETCH_SUCCESS,
-  HIDE_MESSAGE,
-  TOGGLE_APP_DRAWER,
-} from "@crema/types/actions/Common.action";
-import { createReducer } from "@reduxjs/toolkit";
-import { CommonType } from "@crema/types/models/Common";
-import { FetchErrorAction, ShowMsgAction } from "./ActionTypes/Common";
+import { FETCH_START, FETCH_SUCCESS, HIDE_MESSAGE, TOGGLE_APP_DRAWER } from '@crema/types/actions/Common.action';
+import { createReducer } from '@reduxjs/toolkit';
+import { CommonType } from '@crema/types/models/Common';
+import { FetchErrorAction, ShowMsgAction } from './ActionTypes/Common';
 
 const INIT_STATE: CommonType = {
-  error: "",
+  error: '',
   loading: true,
   isAppDrawerOpen: false,
-  message: "",
+  message: '',
 };
 
-const commonReducer = createReducer(INIT_STATE, (builder) => {
+const commonReducer = createReducer(INIT_STATE, builder => {
   builder
     .addCase(FETCH_START, (state, action) => {
-      state.error = "";
-      state.message = "";
+      state.error = '';
+      state.message = '';
       state.loading = true;
     })
     // .addCase(UPDATING_CONTENT, (state, action) => {
@@ -28,23 +23,23 @@ const commonReducer = createReducer(INIT_STATE, (builder) => {
     //   state.updatingContent = true;
     // })
     .addCase(FETCH_SUCCESS, (state, action) => {
-      state.error = "";
-      state.message = "";
+      state.error = '';
+      state.message = '';
       state.loading = false;
     })
     .addCase(ShowMsgAction, (state, action) => {
-      state.error = "";
+      state.error = '';
       state.message = action.payload;
       state.loading = false;
     })
     .addCase(FetchErrorAction, (state, action) => {
       state.error = action.payload;
-      state.message = "";
+      state.message = '';
       state.loading = false;
     })
     .addCase(HIDE_MESSAGE, (state, action) => {
-      state.error = "";
-      state.message = "";
+      state.error = '';
+      state.message = '';
       state.loading = false;
     })
     .addCase(TOGGLE_APP_DRAWER, (state, action) => {

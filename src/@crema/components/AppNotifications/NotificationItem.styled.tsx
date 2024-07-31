@@ -1,4 +1,4 @@
-import {Avatar, List} from 'antd';
+import { Avatar, List } from 'antd';
 import styled from 'styled-components';
 
 export const StyledNotifyListItem = styled(List.Item)`
@@ -17,7 +17,7 @@ export const StyledNotifyListItem = styled(List.Item)`
       margin-left: 12px;
     }
 
-    @media screen and (min-width: ${({theme}) => theme.breakpoints.md}px) {
+    @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
       margin-right: 16px;
 
       [dir='rtl'] & {
@@ -32,7 +32,7 @@ export const StyledNotifyListItem = styled(List.Item)`
   }
 
   & .ant-list-item-meta-description {
-    color: ${({theme}) => theme.palette.text.secondary} !important;
+    color: ${({ theme }) => theme.palette.text.secondary} !important;
   }
 `;
 

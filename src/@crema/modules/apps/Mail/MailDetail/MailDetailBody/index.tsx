@@ -1,53 +1,47 @@
-import React from "react";
-import MessageItem from "./MessageItem";
-import {
-  StyledMailDetailBody,
-  StyledMailDetailBodyContent,
-} from "../index.styled";
-import { putDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { MailObjType, MessageType } from "@crema/types/models/apps/Mail";
+import React from 'react';
+import MessageItem from './MessageItem';
+import { StyledMailDetailBody, StyledMailDetailBodyContent } from '../index.styled';
+import { putDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { MailObjType, MessageType } from '@crema/types/models/apps/Mail';
 
 type MailDetailBodyProps = {
   selectedMail: MailObjType;
   onUpdateSelectedMail: (data: MailObjType) => void;
 };
 
-const MailDetailBody: React.FC<MailDetailBodyProps> = ({
-  selectedMail,
-  onUpdateSelectedMail,
-}) => {
+const MailDetailBody: React.FC<MailDetailBodyProps> = ({ selectedMail, onUpdateSelectedMail }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
 
   const onSubmitMail = (message: MessageType, index: number) => {
     const messages = selectedMail.messages;
     messages!.splice(index + 1, 0, message);
     selectedMail.messages = messages;
-    putDataApi("/api/mailApp/mail/", infoViewActionsContext, {
+    putDataApi('/api/mailApp/mail/', infoViewActionsContext, {
       mail: selectedMail,
     })
-      .then((data) => {
+      .then(data => {
         onUpdateSelectedMail(data as MailObjType);
-        infoViewActionsContext.showMessage("Mail Sent Successfully");
+        infoViewActionsContext.showMessage('Mail Sent Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onChangeStarred = (message: MessageType, isStarred: boolean) => {
     message.isStarred = isStarred;
-    selectedMail.messages = selectedMail!.messages!.map((data) =>
-      data.messageId === message.messageId ? message : data
+    selectedMail.messages = selectedMail!.messages!.map(data =>
+      data.messageId === message.messageId ? message : data,
     );
-    putDataApi("/api/mailApp/mail/", infoViewActionsContext, {
+    putDataApi('/api/mailApp/mail/', infoViewActionsContext, {
       mail: selectedMail,
     })
-      .then((data) => {
+      .then(data => {
         onUpdateSelectedMail(data as MailObjType);
-        infoViewActionsContext.showMessage("Mail Updated Successfully");
+        infoViewActionsContext.showMessage('Mail Updated Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };

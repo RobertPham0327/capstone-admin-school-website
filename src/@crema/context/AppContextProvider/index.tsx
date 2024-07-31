@@ -9,9 +9,7 @@ type AppContextProviderProps = {
   children: ReactNode;
 };
 
-const AppContextProvider: React.FC<AppContextProviderProps> = ({
-  children,
-}) => {
+const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => {
   return (
     <ThemeContextProvider>
       <LocaleContextProvider>

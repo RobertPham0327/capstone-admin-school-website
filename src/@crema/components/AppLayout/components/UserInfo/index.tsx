@@ -1,11 +1,11 @@
-import React from "react";
-import { useRouter } from "next/router";
-import clsx from "clsx";
-import { Dropdown } from "antd";
-import { FaChevronDown } from "react-icons/fa";
-import { useThemeContext } from "@crema/context/AppContextProvider/ThemeContextProvider";
-import { useAuthMethod, useAuthUser } from "@crema/hooks/AuthHooks";
-import { useSidebarContext } from "@crema/context/AppContextProvider/SidebarContextProvider";
+import React from 'react';
+import { useRouter } from 'next/router';
+import clsx from 'clsx';
+import { Dropdown } from 'antd';
+import { FaChevronDown } from 'react-icons/fa';
+import { useThemeContext } from '@crema/context/AppContextProvider/ThemeContextProvider';
+import { useAuthMethod, useAuthUser } from '@crema/hooks/AuthHooks';
+import { useSidebarContext } from '@crema/context/AppContextProvider/SidebarContextProvider';
 import {
   StyledCrUserDesignation,
   StyledCrUserInfo,
@@ -15,7 +15,7 @@ import {
   StyledUserArrow,
   StyledUsername,
   StyledUsernameInfo,
-} from "./index.styled";
+} from './index.styled';
 
 type UserInfoProps = {
   hasColor?: boolean;
@@ -40,7 +40,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
   const items = [
     {
       key: 1,
-      label: <div onClick={() => router.push("/my-profile")}>My Profile</div>,
+      label: <div onClick={() => router.push('/my-profile')}>My Profile</div>,
     },
     {
       key: 2,
@@ -53,18 +53,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
       {hasColor ? (
         <StyledCrUserInfo
           style={{
-            backgroundColor: allowSidebarBgImage
-              ? ""
-              : sidebarColorSet.sidebarHeaderColor,
+            backgroundColor: allowSidebarBgImage ? '' : sidebarColorSet.sidebarHeaderColor,
             color: sidebarColorSet.sidebarTextColor,
           }}
-          className={clsx("cr-user-info", {
-            light: themeMode === "light",
+          className={clsx('cr-user-info', {
+            light: themeMode === 'light',
           })}
         >
           <Dropdown
             menu={{ items }}
-            trigger={["click"]}
+            trigger={['click']}
             placement="bottomRight"
             overlayStyle={{
               zIndex: 1052,
@@ -75,39 +73,35 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
               {user.photoURL ? (
                 <StyledCrUserInfoAvatar src={user.photoURL} />
               ) : (
-                <StyledCrUserInfoAvatar>
-                  {getUserAvatar()}
-                </StyledCrUserInfoAvatar>
+                <StyledCrUserInfoAvatar>{getUserAvatar()}</StyledCrUserInfoAvatar>
               )}
               <StyledCrUserInfoContent className="cr-user-info-content">
                 <StyledUsernameInfo>
                   <StyledUsername
-                    className={clsx("text-truncate", {
-                      light: themeMode === "light",
+                    className={clsx('text-truncate', {
+                      light: themeMode === 'light',
                     })}
                   >
-                    {user.displayName ? user.displayName : "admin user "}
+                    {user.displayName ? user.displayName : 'admin user '}
                   </StyledUsername>
                   <StyledUserArrow className="cr-user-arrow">
                     <FaChevronDown />
                   </StyledUserArrow>
                 </StyledUsernameInfo>
-                <StyledCrUserDesignation className="text-truncate">
-                    School Admin
-                </StyledCrUserDesignation>
+                <StyledCrUserDesignation className="text-truncate">School Admin</StyledCrUserDesignation>
               </StyledCrUserInfoContent>
             </StyledCrUserInfoInner>
           </Dropdown>
         </StyledCrUserInfo>
       ) : (
         <StyledCrUserInfo
-          className={clsx("cr-user-info", {
-            light: themeMode === "light",
+          className={clsx('cr-user-info', {
+            light: themeMode === 'light',
           })}
         >
           <Dropdown
             menu={{ items }}
-            trigger={["click"]}
+            trigger={['click']}
             placement="bottomRight"
             overlayStyle={{
               zIndex: 1052,
@@ -118,18 +112,16 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
               {user.photoURL ? (
                 <StyledCrUserInfoAvatar src={user.photoURL} />
               ) : (
-                <StyledCrUserInfoAvatar>
-                  {getUserAvatar()}
-                </StyledCrUserInfoAvatar>
+                <StyledCrUserInfoAvatar>{getUserAvatar()}</StyledCrUserInfoAvatar>
               )}
               <StyledCrUserInfoContent className="cr-user-info-content">
                 <StyledUsernameInfo>
                   <StyledUsername
-                    className={clsx("text-truncate", {
-                      light: themeMode === "light",
+                    className={clsx('text-truncate', {
+                      light: themeMode === 'light',
                     })}
                   >
-                    {user.displayName ? user.displayName : "admin user "}
+                    {user.displayName ? user.displayName : 'admin user '}
                   </StyledUsername>
                   <StyledUserArrow className="cr-user-arrow">
                     <FaChevronDown />

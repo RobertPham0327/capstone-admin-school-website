@@ -1,12 +1,12 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import CardAttachments from "./CardAttachments";
-import CardCheckedList from "./CardCheckedList";
-import CardComments from "./CardComments";
-import { useIntl } from "react-intl";
-import dayjs from "dayjs";
-import { Avatar, Button, Col, Form, Input, Select } from "antd";
-import AppRowContainer from "@crema/components/AppRowContainer";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import CardAttachments from './CardAttachments';
+import CardCheckedList from './CardCheckedList';
+import CardComments from './CardComments';
+import { useIntl } from 'react-intl';
+import dayjs from 'dayjs';
+import { Avatar, Button, Col, Form, Input, Select } from 'antd';
+import AppRowContainer from '@crema/components/AppRowContainer';
 import {
   StyledMultiSelect,
   StyledMultiSelectName,
@@ -15,9 +15,9 @@ import {
   StyledScrumBoardAddCardFormFooter,
   StyledScrumBoardDatePicker,
   StyledScrumBoardScrollbar,
-} from "./index.styled";
-import { postDataApi, putDataApi, useGetDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
+} from './index.styled';
+import { postDataApi, putDataApi, useGetDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
 import {
   BoardObjType,
   CardListObjType,
@@ -26,9 +26,9 @@ import {
   LabelObjType,
   MemberObjType,
   CardObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
-import { AuthUserType } from "@crema/types/models/AuthUser";
-import { generateRandomUniqueNumber } from "@crema/helpers/Common";
+} from '@crema/types/models/apps/ScrumbBoard';
+import { AuthUserType } from '@crema/types/models/AuthUser';
+import { generateRandomUniqueNumber } from '@crema/helpers/Common';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -78,34 +78,26 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
 }) => {
   const { messages } = useIntl();
   const infoViewActionsContext = useInfoViewActionsContext();
-  const [{ apiData: labelList }] = useGetDataApi(
-    "/api/scrumboard/label/list",
-    []
-  );
-  const [{ apiData: memberList }] = useGetDataApi(
-    "/api/scrumboard/member/list",
-    []
-  );
+  const [{ apiData: labelList }] = useGetDataApi('/api/scrumboard/label/list', []);
+  const [{ apiData: memberList }] = useGetDataApi('/api/scrumboard/member/list', []);
 
-  console.log("board, list: ", board, list);
+  console.log('board, list: ', board, list);
   const onDeleteCheckedItem = (id: number) => {
-    const updatedList = checkedList.filter(
-      (item: CheckedListObjType) => item.id !== id
-    );
+    const updatedList = checkedList.filter((item: CheckedListObjType) => item.id !== id);
     setCheckedList(updatedList);
   };
 
   const onAddNewCheckedItem = () => {
     const item = {
       id: generateRandomUniqueNumber(),
-      title: "",
+      title: '',
     };
     const updatedList = checkedList.concat(item);
     setCheckedList(updatedList);
   };
 
   const onSetCheckedItemText = (title: string, id: number) => {
-    const updatedList = checkedList.map((item) => {
+    const updatedList = checkedList.map(item => {
       if (item.id === id) {
         item.title = title;
         return item;
@@ -122,23 +114,21 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
         comment: comment,
         sender: {
           id: authUser!.id,
-          name: authUser!.displayName ? authUser!.displayName : "User",
+          name: authUser!.displayName ? authUser!.displayName : 'User',
           image: authUser!.photoURL,
         },
-        date: dayjs().format("MMM DD"),
-      })
+        date: dayjs().format('MMM DD'),
+      }),
     );
   };
 
   const onDeleteAttachment = (id: number) => {
-    const updatedAttachments = attachments.filter(
-      (attachment) => attachment.id !== id
-    );
+    const updatedAttachments = attachments.filter(attachment => attachment.id !== id);
     setAttachments(updatedAttachments);
   };
 
   const onFinish = (values: any) => {
-    console.log("values", values);
+    console.log('values', values);
     if (selectedCard) {
       const editedCard = {
         ...selectedCard,
@@ -147,19 +137,19 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
         attachments: attachments,
         members: selectedMembers,
         label: selectedLabels,
-        checkedList: checkedList.filter((item) => item.title !== ""),
+        checkedList: checkedList.filter(item => item.title !== ''),
       };
-      putDataApi("/api/scrumboard/edit/card", infoViewActionsContext, {
+      putDataApi('/api/scrumboard/edit/card', infoViewActionsContext, {
         board,
         list,
         card: editedCard,
       })
-        .then((data) => {
+        .then(data => {
           setData(data);
           handleCancel();
-          infoViewActionsContext.showMessage("Card Edited Successfully!");
+          infoViewActionsContext.showMessage('Card Edited Successfully!');
         })
-        .catch((error) => {
+        .catch(error => {
           infoViewActionsContext.fetchError(error.message);
         });
     } else {
@@ -172,32 +162,28 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
         label: selectedLabels,
         members: selectedMembers,
       };
-      postDataApi("/api/scrumboard/add/card", infoViewActionsContext, {
+      postDataApi('/api/scrumboard/add/card', infoViewActionsContext, {
         board,
         list,
         card: newCard,
       })
-        .then((data) => {
+        .then(data => {
           setData(data);
           handleCancel();
-          infoViewActionsContext.showMessage("Card Added Successfully!");
+          infoViewActionsContext.showMessage('Card Added Successfully!');
         })
-        .catch((error) => {
+        .catch(error => {
           infoViewActionsContext.fetchError(error.message);
         });
     }
   };
 
   const updateLabelList = (values: any) => {
-    setSelectedLabels(
-      labelList.filter((label: LabelObjType) => values.includes(label.id))
-    );
+    setSelectedLabels(labelList.filter((label: LabelObjType) => values.includes(label.id)));
   };
 
   const updateMemberList = (values: any) => {
-    setMembersList(
-      memberList.filter((member: MemberObjType) => values.includes(member.id))
-    );
+    setMembersList(memberList.filter((member: MemberObjType) => values.includes(member.id)));
   };
 
   return (
@@ -207,12 +193,9 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
       initialValues={{
         title: selectedCard?.title,
         desc: selectedCard?.desc,
-        date:
-          selectedCard && selectedCard.date
-            ? dayjs(selectedCard.date, "DD-MM-YYYY")
-            : "",
-        label: selectedCard?.label.map((data) => data.id),
-        members: selectedCard?.members.map((data) => data.id),
+        date: selectedCard && selectedCard.date ? dayjs(selectedCard.date, 'DD-MM-YYYY') : '',
+        label: selectedCard?.label.map(data => data.id),
+        members: selectedCard?.members.map(data => data.id),
       }}
       onFinish={onFinish}
     >
@@ -221,7 +204,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
           <AppRowContainer>
             <Col xs={24} md={16}>
               <Form.Item name="title">
-                <Input placeholder={messages["common.title"] as string} />
+                <Input placeholder={messages['common.title'] as string} />
               </Form.Item>
             </Col>
 
@@ -233,10 +216,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
           </AppRowContainer>
 
           <Form.Item name="desc">
-            <TextArea
-              autoSize={{ minRows: 3, maxRows: 5 }}
-              placeholder={messages["common.description"] as string}
-            />
+            <TextArea autoSize={{ minRows: 3, maxRows: 5 }} placeholder={messages['common.description'] as string} />
           </Form.Item>
 
           <AppRowContainer>
@@ -246,9 +226,9 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
                   mode="multiple"
                   allowClear
                   maxTagCount={3}
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   placeholder="Please select Label"
-                  onChange={(value) => updateLabelList(value)}
+                  onChange={value => updateLabelList(value)}
                 >
                   {labelList.map((label: LabelObjType) => (
                     <Option key={label.id} value={label.id}>
@@ -265,19 +245,13 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
                   mode="multiple"
                   maxTagCount={2}
                   placeholder="Please select Members"
-                  onChange={(value) => updateMemberList(value)}
+                  onChange={value => updateMemberList(value)}
                 >
                   {memberList.map((member: MemberObjType) => (
                     <Option key={member.id} value={member.id}>
                       <StyledMultiSelect>
-                        {member.image ? (
-                          <Avatar src={member.image} />
-                        ) : (
-                          <Avatar>{member.name.toUpperCase()}</Avatar>
-                        )}
-                        <StyledMultiSelectName>
-                          {member.name}
-                        </StyledMultiSelectName>
+                        {member.image ? <Avatar src={member.image} /> : <Avatar>{member.name.toUpperCase()}</Avatar>}
+                        <StyledMultiSelectName>{member.name}</StyledMultiSelectName>
                       </StyledMultiSelect>
                     </Option>
                   ))}
@@ -286,10 +260,7 @@ const AddCardForm: React.FC<AddCardFormProps> = ({
             </Col>
           </AppRowContainer>
 
-          <CardAttachments
-            attachments={attachments}
-            onDeleteAttachment={onDeleteAttachment}
-          />
+          <CardAttachments attachments={attachments} onDeleteAttachment={onDeleteAttachment} />
 
           {selectedCard ? (
             <CardCheckedList

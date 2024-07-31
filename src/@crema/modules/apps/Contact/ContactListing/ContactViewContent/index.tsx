@@ -1,20 +1,16 @@
-import React from "react";
-import ContactListItem from "./ContactListItem";
-import ContactGridItem from "./ContactGridItem";
-import AppList from "@crema/components/AppList";
-import AppGrid from "@crema/components/AppGrid";
-import ContactListSkeleton from "@crema/components/AppSkeleton/ContactListSkeleton";
-import { AppAnimates } from "@crema/constants/AppEnums";
-import ContactListItemMobile from "./ContactListItemMobile";
-import {
-  StyledContactGridView,
-  StyledContactListDesktop,
-  StyledContactListMobile,
-} from "../index.styled";
-import { useIntl } from "react-intl";
-import { useGetDataApi } from "@crema/hooks/APIHooks";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
-import ListEmptyResult from "@crema/components/AppList/ListEmptyResult";
+import React from 'react';
+import ContactListItem from './ContactListItem';
+import ContactGridItem from './ContactGridItem';
+import AppList from '@crema/components/AppList';
+import AppGrid from '@crema/components/AppGrid';
+import ContactListSkeleton from '@crema/components/AppSkeleton/ContactListSkeleton';
+import { AppAnimates } from '@crema/constants/AppEnums';
+import ContactListItemMobile from './ContactListItemMobile';
+import { StyledContactGridView, StyledContactListDesktop, StyledContactListMobile } from '../index.styled';
+import { useIntl } from 'react-intl';
+import { useGetDataApi } from '@crema/hooks/APIHooks';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
+import ListEmptyResult from '@crema/components/AppList/ListEmptyResult';
 
 type ContactViewContentProps = {
   list: ContactObjType[];
@@ -41,14 +37,11 @@ const ContactViewContent: React.FC<ContactViewContentProps> = ({
   onOpenEditContact,
   onViewContactDetail,
 }) => {
-  const [{ apiData: labelList }] = useGetDataApi(
-    "/api/contactApp/labels/list",
-    []
-  );
+  const [{ apiData: labelList }] = useGetDataApi('/api/contactApp/labels/list', []);
   const { messages } = useIntl();
   return (
     <>
-      {pageView === "list" ? (
+      {pageView === 'list' ? (
         <>
           <StyledContactListDesktop>
             <AppList
@@ -57,12 +50,12 @@ const ContactViewContent: React.FC<ContactViewContentProps> = ({
               ListEmptyComponent={
                 <ListEmptyResult
                   loading={loading}
-                  actionTitle={messages["contactApp.createContact"] as string}
+                  actionTitle={messages['contactApp.createContact'] as string}
                   onClick={handleAddContactOpen}
                   placeholder={<ContactListSkeleton />}
                 />
               }
-              renderItem={(contact) => (
+              renderItem={contact => (
                 <ContactListItem
                   key={contact.id}
                   contact={contact}
@@ -84,12 +77,12 @@ const ContactViewContent: React.FC<ContactViewContentProps> = ({
               ListEmptyComponent={
                 <ListEmptyResult
                   loading={loading}
-                  actionTitle={messages["contactApp.createContact"] as string}
+                  actionTitle={messages['contactApp.createContact'] as string}
                   onClick={handleAddContactOpen}
                   placeholder={<ContactListSkeleton />}
                 />
               }
-              renderItem={(contact) => (
+              renderItem={contact => (
                 <ContactListItemMobile
                   key={contact.id}
                   contact={contact}
@@ -115,7 +108,7 @@ const ContactViewContent: React.FC<ContactViewContentProps> = ({
               xxl: 3,
             }}
             data={list}
-            renderItem={(contact) => (
+            renderItem={contact => (
               <ContactGridItem
                 key={contact.id}
                 contact={contact}

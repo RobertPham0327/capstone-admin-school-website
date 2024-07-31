@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import dayjs from "dayjs";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useIntl } from "react-intl";
-import { MdOutlineViewAgenda } from "react-icons/md";
-import {
-  AiOutlineCalendar,
-  AiOutlineLeft,
-  AiOutlineRight,
-} from "react-icons/ai";
-import { Button, Input, Space } from "antd";
-import { StyledFlex, StyledIconBtn } from "./Calendar.style";
-import { Fonts } from "@crema/constants/AppEnums";
-import { NavigateAction } from "react-big-calendar";
+import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useIntl } from 'react-intl';
+import { MdOutlineViewAgenda } from 'react-icons/md';
+import { AiOutlineCalendar, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { Button, Input, Space } from 'antd';
+import { StyledFlex, StyledIconBtn } from './Calendar.style';
+import { Fonts } from '@crema/constants/AppEnums';
+import { NavigateAction } from 'react-big-calendar';
 
 // const IconBtn = styled(IconButton)(({ theme }) => {
 //   return {
@@ -36,7 +32,7 @@ type Props = {
 };
 
 const CustomToolbar = (props: Props) => {
-  const [viewState, setViewState] = useState("month");
+  const [viewState, setViewState] = useState('month');
   const { messages } = useIntl();
 
   function addMonths(date: Date, months: number) {
@@ -67,35 +63,35 @@ const CustomToolbar = (props: Props) => {
   };*/
 
   const goToAgenda = () => {
-    props.onView("agenda");
-    setViewState("agenda");
+    props.onView('agenda');
+    setViewState('agenda');
   }; /*
   const goToWeekView = () => {
     props.onView('week');
     setViewState('week');
   };*/
   const goToMonthView = () => {
-    props.onView("month");
-    setViewState("month");
+    props.onView('month');
+    setViewState('month');
   };
 
   const goToBack = () => {
-    if (viewState === "month") {
-      props.onNavigate("prev" as NavigateAction, addMonths(props.date, -1));
-    } else if (viewState === "week") {
-      props.onNavigate("prev" as NavigateAction, addWeeks(props.date, -1));
+    if (viewState === 'month') {
+      props.onNavigate('prev' as NavigateAction, addMonths(props.date, -1));
+    } else if (viewState === 'week') {
+      props.onNavigate('prev' as NavigateAction, addWeeks(props.date, -1));
     } else {
-      props.onNavigate("prev" as NavigateAction, addDays(props.date, -1));
+      props.onNavigate('prev' as NavigateAction, addDays(props.date, -1));
     }
   };
 
   const goToNext = () => {
-    if (viewState === "month") {
-      props.onNavigate("next" as NavigateAction, addMonths(props.date, +1));
-    } else if (viewState === "week") {
-      props.onNavigate("next" as NavigateAction, addWeeks(props.date, +1));
+    if (viewState === 'month') {
+      props.onNavigate('next' as NavigateAction, addMonths(props.date, +1));
+    } else if (viewState === 'week') {
+      props.onNavigate('next' as NavigateAction, addWeeks(props.date, +1));
     } else {
-      props.onNavigate("next" as NavigateAction, addDays(props.date, +1));
+      props.onNavigate('next' as NavigateAction, addDays(props.date, +1));
     }
   };
 
@@ -104,7 +100,7 @@ const CustomToolbar = (props: Props) => {
     props.date.setMonth(now.getMonth());
     // props.date.setYear(now.getFullYear());
     props.date.setDate(now.getDate());
-    props.onNavigate("current" as NavigateAction);
+    props.onNavigate('current' as NavigateAction);
   };
 
   return (
@@ -125,30 +121,20 @@ const CustomToolbar = (props: Props) => {
         />
         <div style={{ marginRight: 12 }}>
           <Input.Search
-            onChange={(event) => props.onSetFilterText(event.target.value)}
-            placeholder={messages["common.searchHere"] as string}
+            onChange={event => props.onSetFilterText(event.target.value)}
+            placeholder={messages['common.searchHere'] as string}
           />
         </div>
       </Space>
 
-      <div style={{ fontWeight: Fonts.BOLD }}>
-        {dayjs(props.date).format("DD/MM/YYYY")}
-      </div>
+      <div style={{ fontWeight: Fonts.BOLD }}>{dayjs(props.date).format('DD/MM/YYYY')}</div>
 
       <Space size={14}>
-        <StyledIconBtn
-          title="Previous"
-          icon={<AiOutlineLeft size={20} />}
-          onClick={goToBack}
-        />
+        <StyledIconBtn title="Previous" icon={<AiOutlineLeft size={20} />} onClick={goToBack} />
         <Button style={{ maxHeight: 36 }} type="primary" onClick={goToToday}>
           today
         </Button>
-        <StyledIconBtn
-          title="Next"
-          icon={<AiOutlineRight size={20} />}
-          onClick={goToNext}
-        />
+        <StyledIconBtn title="Next" icon={<AiOutlineRight size={20} />} onClick={goToNext} />
       </Space>
     </StyledFlex>
   );

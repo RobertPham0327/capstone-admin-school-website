@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import AppAnimateGroup from '../AppAnimateGroup';
 import ComponentCardWithoutAnim from './ComponentCardWithoutAnim';
 
@@ -22,7 +22,7 @@ const AppComponentCard: React.FC<AppComponentCardProps> = ({
   source,
 }) => {
   return (
-    <AppAnimateGroup type='bottom' interval={100} duration={450}>
+    <AppAnimateGroup type="bottom" interval={100} duration={450}>
       <ComponentCardWithoutAnim
         title={title}
         description={description}

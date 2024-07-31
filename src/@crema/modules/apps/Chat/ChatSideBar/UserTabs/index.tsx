@@ -1,11 +1,11 @@
-import React from "react";
-import ConnectionList from "./ConnectionList";
-import ChatList from "./ChatList";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { BsChatSquareText } from "react-icons/bs";
-import { BiUserPin } from "react-icons/bi";
-import { StyledChatSidebarTabs, StyledTabItem } from "../index.styled";
-import { ConnectionObjType } from "@crema/types/models/apps/Chat";
+import React from 'react';
+import ConnectionList from './ConnectionList';
+import ChatList from './ChatList';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { BsChatSquareText } from 'react-icons/bs';
+import { BiUserPin } from 'react-icons/bi';
+import { StyledChatSidebarTabs, StyledTabItem } from '../index.styled';
+import { ConnectionObjType } from '@crema/types/models/apps/Chat';
 
 const tabs = [
   { id: 333, name: <IntlMessages id="dashboard.messages" /> },
@@ -35,7 +35,7 @@ const UserTabs: React.FC<UserTabsProps> = ({
           {tabs[0].name}
         </StyledTabItem>
       ),
-      key: "1",
+      key: '1',
       children: (
         <ChatList
           chatListData={chatListData}
@@ -52,7 +52,7 @@ const UserTabs: React.FC<UserTabsProps> = ({
           {tabs[1].name}
         </StyledTabItem>
       ),
-      key: "2",
+      key: '2',
       children: (
         <ConnectionList
           connectionListData={connectionListData}

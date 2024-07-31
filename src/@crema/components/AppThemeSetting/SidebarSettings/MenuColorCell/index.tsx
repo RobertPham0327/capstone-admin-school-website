@@ -1,13 +1,10 @@
-import React from "react";
-import {
-  useSidebarActionsContext,
-  useSidebarContext,
-} from "@crema/context/AppContextProvider/SidebarContextProvider";
-import { MenuStyle, NavStyle, ThemeMode } from "@crema/constants/AppEnums";
-import clsx from "clsx";
-import { useLayoutContext } from "@crema/context/AppContextProvider/LayoutContextProvider";
-import AppSelectedIcon from "../../../AppSelectedIcon";
-import defaultConfig, { SidebarData } from "@crema/constants/defaultConfig";
+import React from 'react';
+import { useSidebarActionsContext, useSidebarContext } from '@crema/context/AppContextProvider/SidebarContextProvider';
+import { MenuStyle, NavStyle, ThemeMode } from '@crema/constants/AppEnums';
+import clsx from 'clsx';
+import { useLayoutContext } from '@crema/context/AppContextProvider/LayoutContextProvider';
+import AppSelectedIcon from '../../../AppSelectedIcon';
+import defaultConfig, { SidebarData } from '@crema/constants/defaultConfig';
 import {
   StyledMenuColorCell,
   StyledMenuColorCellContent,
@@ -17,7 +14,7 @@ import {
   StyledMenuColorCellHeaderContentLine,
   StyledMenuColorCellItem,
   StyledMenuColorCellItemSelected,
-} from "./index.styled";
+} from './index.styled';
 
 type Props = {
   sidebarColors: SidebarData;
@@ -25,12 +22,8 @@ type Props = {
 const MenuColorCell: React.FC<Props> = ({ sidebarColors }) => {
   const { sidebarColorSet, menuStyle } = useSidebarContext();
   const { updateSidebarColorSet } = useSidebarActionsContext();
-  const {
-    sidebarBgColor,
-    sidebarTextColor,
-    sidebarMenuSelectedBgColor,
-    sidebarMenuSelectedTextColor,
-  } = sidebarColorSet;
+  const { sidebarBgColor, sidebarTextColor, sidebarMenuSelectedBgColor, sidebarMenuSelectedTextColor } =
+    sidebarColorSet;
   const { navStyle } = useLayoutContext();
 
   return (
@@ -90,11 +83,11 @@ const MenuColorCell: React.FC<Props> = ({ sidebarColors }) => {
         </StyledMenuColorCellItem>
         <StyledMenuColorCellItemSelected
           className={clsx({
-            "rounded-menu": menuStyle === MenuStyle.ROUNDED,
-            "rounded-menu-reverse": menuStyle === MenuStyle.ROUNDED_REVERSE,
-            "standard-menu": menuStyle === MenuStyle.STANDARD,
-            "default-menu": menuStyle === MenuStyle.DEFAULT,
-            "curved-menu": menuStyle === MenuStyle.CURVED_MENU,
+            'rounded-menu': menuStyle === MenuStyle.ROUNDED,
+            'rounded-menu-reverse': menuStyle === MenuStyle.ROUNDED_REVERSE,
+            'standard-menu': menuStyle === MenuStyle.STANDARD,
+            'default-menu': menuStyle === MenuStyle.DEFAULT,
+            'curved-menu': menuStyle === MenuStyle.CURVED_MENU,
           })}
           style={{
             backgroundColor: sidebarColors.sidebarMenuSelectedBgColor,
@@ -114,8 +107,7 @@ const MenuColorCell: React.FC<Props> = ({ sidebarColors }) => {
       {sidebarColors.sidebarBgColor === sidebarBgColor &&
       sidebarColors.sidebarTextColor === sidebarTextColor &&
       sidebarColors.sidebarMenuSelectedBgColor === sidebarMenuSelectedBgColor &&
-      sidebarColors.sidebarMenuSelectedTextColor ===
-        sidebarMenuSelectedTextColor ? (
+      sidebarColors.sidebarMenuSelectedTextColor === sidebarMenuSelectedTextColor ? (
         <AppSelectedIcon
           isCenter={false}
           backgroundColor={sidebarMenuSelectedBgColor}

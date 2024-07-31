@@ -1,12 +1,4 @@
-import {
-  Fonts,
-  FooterType,
-  LayoutDirection,
-  MenuStyle,
-  ThemeMode,
-  ThemeStyle,
-  ThemeStyleRadius,
-} from './AppEnums';
+import { Fonts, FooterType, LayoutDirection, MenuStyle, ThemeMode, ThemeStyle, ThemeStyleRadius } from './AppEnums';
 
 export const appThemeFont = {
   family: ['Be Vietnam', 'sans-serif'].join(','),

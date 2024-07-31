@@ -1,12 +1,12 @@
-import React from "react";
-import { getTimeFromNow } from "@crema/helpers/DateHelper";
+import React from 'react';
+import { getTimeFromNow } from '@crema/helpers/DateHelper';
 import {
   StyledRequestAvatar,
   StyledRequestItem,
   StyledRequestItemContent,
   StyledRequestItemInfo,
-} from "./index.styled";
-import { FriendRequestObjType } from "@crema/types/models/apps/Wall";
+} from './index.styled';
+import { FriendRequestObjType } from '@crema/types/models/apps/Wall';
 
 type RequestItemProps = {
   request: FriendRequestObjType;

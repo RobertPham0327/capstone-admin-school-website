@@ -18,10 +18,9 @@ import {
 type AddNewListProps = {
   onAdd: (listName: string) => void;
   onCancel: () => void;
-}
+};
 
 const AddNewList: React.FC<AddNewListProps> = ({ onAdd, onCancel }) => {
-
   const [listName, setListName] = useState('');
 
   const onClickAddButton = () => {
@@ -40,7 +39,7 @@ const AddNewList: React.FC<AddNewListProps> = ({ onAdd, onCancel }) => {
           <MdAdd />
         </StyledScrumBoardAddIcon>
         <StyledScrumBoardAddText>
-          <IntlMessages id='scrumboard.addAList' />
+          <IntlMessages id="scrumboard.addAList" />
         </StyledScrumBoardAddText>
         <StyledScrumBoardAddClose>
           <AppIconButton onClick={onCancel} icon={<RiCloseLine />} />
@@ -50,14 +49,10 @@ const AddNewList: React.FC<AddNewListProps> = ({ onAdd, onCancel }) => {
         <Input
           placeholder={messages['scrumboard.cardTitle'] as string}
           value={listName}
-          onChange={(event) => setListName(event.target.value)}
+          onChange={event => setListName(event.target.value)}
         />
-        <StyledScrumBoardAddListBtn
-          type='primary'
-          ghost
-          onClick={() => onClickAddButton()}
-        >
-          <IntlMessages id='common.add' />
+        <StyledScrumBoardAddListBtn type="primary" ghost onClick={() => onClickAddButton()}>
+          <IntlMessages id="common.add" />
         </StyledScrumBoardAddListBtn>
       </StyledScrumBoardAddListFormFilled>
     </StyledScrumBoardAddListCard>
@@ -65,4 +60,3 @@ const AddNewList: React.FC<AddNewListProps> = ({ onAdd, onCancel }) => {
 };
 
 export default AddNewList;
-

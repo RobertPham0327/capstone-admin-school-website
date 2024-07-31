@@ -8,7 +8,7 @@ export const useEventListener = (type, handler, el = window) => {
   }, [handler]);
 
   React.useEffect(() => {
-    const listener = (e) => savedHandler.current(e);
+    const listener = e => savedHandler.current(e);
 
     el.addEventListener(type, listener);
 

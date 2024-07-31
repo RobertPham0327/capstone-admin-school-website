@@ -1,4 +1,4 @@
-import { AppActions } from "@crema/types/actions";
+import { AppActions } from '@crema/types/actions';
 import {
   ADD_NEW_MESSAGE,
   DELETE_MESSAGE,
@@ -8,28 +8,25 @@ import {
   GET_USER_MESSAGES,
   SELECT_USER,
   TOGGLE_CHAT_DRAWER,
-} from "@crema/types/actions/Chat.actions";
-import { appIntl } from "@crema/helpers/Common";
-import {
-  ConnectionObjType,
-  MessageDataObjType,
-} from "@crema/types/models/apps/Chat";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { Dispatch } from "react";
-import { fetchError, fetchStart, fetchSuccess, showMessage } from "./Common";
+} from '@crema/types/actions/Chat.actions';
+import { appIntl } from '@crema/helpers/Common';
+import { ConnectionObjType, MessageDataObjType } from '@crema/types/models/apps/Chat';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { Dispatch } from 'react';
+import { fetchError, fetchStart, fetchSuccess, showMessage } from './Common';
 
 export const getConnectionList = () => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/chatApp/connections")
+      .get('/api/chatApp/connections')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CONNECTIONS_LIST, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -43,7 +40,7 @@ export const getConnectionMessages = (id: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/chatApp/connection/messages", {
+      .get('/api/chatApp/connection/messages', {
         params: {
           id,
         },
@@ -53,7 +50,7 @@ export const getConnectionMessages = (id: number) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_USER_MESSAGES, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -62,37 +59,28 @@ export const getConnectionMessages = (id: number) => {
   };
 };
 
-export const onSendMessage = (
-  channelId: number,
-  message: MessageDataObjType
-) => {
+export const onSendMessage = (channelId: number, message: MessageDataObjType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>, getState: any) => {
     jwtAxios
-      .post("/api/chatApp/message", { channelId, message })
+      .post('/api/chatApp/message', { channelId, message })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
-          console.log("response", data.data);
+          console.log('response', data.data);
           if (
             data?.data?.userMessages?.messageData?.length === 1 &&
             getState().chatApp.userMessages &&
             getState().chatApp?.userMessages?.messageData
           ) {
-            console.log(
-              "getState().chatApp.userMessages.messageData",
-              getState().chatApp.userMessages.messageData
-            );
+            console.log('getState().chatApp.userMessages.messageData', getState().chatApp.userMessages.messageData);
             dispatch({
               type: ADD_NEW_MESSAGE,
               payload: {
                 ...data.data,
                 userMessages: {
                   ...data.data.userMessages,
-                  messageData:
-                    getState().chatApp.userMessages.messageData.concat(
-                      data.data.userMessages.messageData
-                    ),
+                  messageData: getState().chatApp.userMessages.messageData.concat(data.data.userMessages.messageData),
                 },
               },
             });
@@ -104,7 +92,7 @@ export const onSendMessage = (
             });
           }
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -113,14 +101,11 @@ export const onSendMessage = (
   };
 };
 
-export const onEditMessage = (
-  channelId: number,
-  message: MessageDataObjType
-) => {
+export const onEditMessage = (channelId: number, message: MessageDataObjType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .put("/api/chatApp/message", { channelId, message })
+      .put('/api/chatApp/message', { channelId, message })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -129,7 +114,7 @@ export const onEditMessage = (
             payload: { data: data.data },
           });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -142,13 +127,13 @@ export const onDeleteMessage = (channelId: number, messageId: number) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .post("/api/chatApp/delete/message", { channelId, messageId })
+      .post('/api/chatApp/delete/message', { channelId, messageId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_MESSAGE, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -162,13 +147,13 @@ export const onDeleteConversation = (channelId: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/chatApp/delete/user/messages", { channelId })
+      .post('/api/chatApp/delete/user/messages', { channelId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_USER_MESSAGES, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -193,15 +178,15 @@ export const onClearChatHistory = (channelId: number) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .post("/api/chatApp/clearChat", { channelId })
+      .post('/api/chatApp/clearChat', { channelId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchStart());
           dispatch({ type: GET_USER_MESSAGES, payload: null });
 
-          dispatch(showMessage(String(messages["chatApp.clearChatMessage"])));
+          dispatch(showMessage(String(messages['chatApp.clearChatMessage'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {

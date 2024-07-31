@@ -6,7 +6,7 @@ import AppRowContainer from '@crema/components/AppRowContainer';
 import AppCard from '@crema/components/AppCard';
 import { Col } from 'antd';
 import {
-    StyledInputSearch,
+  StyledInputSearch,
   StyledOrderFooterPagination,
   StyledOrderHeader,
   StyledOrderHeaderInputView,
@@ -46,9 +46,9 @@ const ProductListing = () => {
     <>
       <StyledTitle5>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle5>
       <AppRowContainer>
-      <Col xs={24} lg={24}>
-        <FilterItem filterData={filterData} setFilterData={setFilterData} />
-      </Col>
+        <Col xs={24} lg={24}>
+          <FilterItem filterData={filterData} setFilterData={setFilterData} />
+        </Col>
         <Col xs={24} lg={24}>
           <AppCard
             title={

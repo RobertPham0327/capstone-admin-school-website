@@ -29,12 +29,7 @@ const getHomeTimeline = (node, delay) => {
 
   timeline
     .from(node, 0, { display: 'none', autoAlpha: 0, delay })
-    .staggerFrom(
-      texts,
-      0.375,
-      { autoAlpha: 0, x: -25, ease: Power1.easeOut },
-      0.125
-    );
+    .staggerFrom(texts, 0.375, { autoAlpha: 0, x: -25, ease: Power1.easeOut }, 0.125);
 
   return timeline;
 };
@@ -49,7 +44,7 @@ export const play = (pathname, node, appears) => {
   window.loadPromise.then(() => requestAnimationFrame(() => timeline.play()));
 };
 
-export const exit = (node) => {
+export const exit = node => {
   const timeline = new Timeline({ paused: true });
 
   timeline.to(node, 0.15, { autoAlpha: 0, ease: Power1.easeOut });

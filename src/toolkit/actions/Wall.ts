@@ -1,28 +1,23 @@
-import {
-  CREATE_NEW_POST,
-  GET_FEED_POSTS,
-  GET_WALL_DATA,
-  UPDATE_POST,
-} from "@crema/types/actions/Wall.actions";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { fetchError, fetchStart, fetchSuccess } from "./Common";
-import { Dispatch } from "redux";
-import { AppActions } from "@crema/types/actions";
-import { appIntl } from "@crema/helpers/Common";
-import { CommentObjType, PostObjType } from "@crema/types/models/apps/Wall";
+import { CREATE_NEW_POST, GET_FEED_POSTS, GET_WALL_DATA, UPDATE_POST } from '@crema/types/actions/Wall.actions';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { fetchError, fetchStart, fetchSuccess } from './Common';
+import { Dispatch } from 'redux';
+import { AppActions } from '@crema/types/actions';
+import { appIntl } from '@crema/helpers/Common';
+import { CommentObjType, PostObjType } from '@crema/types/models/apps/Wall';
 
 export const onGetWallData = () => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/wall")
+      .get('/wall')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_WALL_DATA, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -36,13 +31,13 @@ export const onGetPostsList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/wall/posts")
+      .get('/wall/posts')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_FEED_POSTS, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -56,13 +51,13 @@ export const onCreateNewPost = (post: PostObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/wall/posts", { post })
+      .post('/wall/posts', { post })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: CREATE_NEW_POST, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -76,7 +71,7 @@ export const onUpdatePostStatus = (postId: number, status: boolean) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/wall/posts", { postId, status })
+      .put('/wall/posts', { postId, status })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -85,7 +80,7 @@ export const onUpdatePostStatus = (postId: number, status: boolean) => {
             payload: data.data,
           });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -99,13 +94,13 @@ export const onAddNewComment = (postId: number, comment: CommentObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/wall/posts/comments", { postId, comment })
+      .post('/wall/posts/comments', { postId, comment })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: UPDATE_POST, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {

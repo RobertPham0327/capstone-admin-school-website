@@ -1,8 +1,4 @@
-import {
-  ContactObjType,
-  FolderObjType,
-  LabelObjType,
-} from '../models/apps/Contact';
+import { ContactObjType, FolderObjType, LabelObjType } from '../models/apps/Contact';
 
 export const CREATE_NEW_CONTACT = 'CREATE_NEW_CONTACT';
 export const DELETE_CONTACT = 'DELETE_CONTACT';

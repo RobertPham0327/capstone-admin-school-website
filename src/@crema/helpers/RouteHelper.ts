@@ -10,7 +10,7 @@ export const checkPermission = (routeRole: any, userRole: any) => {
     return !userRole || userRole.length === 0;
   }
   if (userRole && Array.isArray(userRole) && Array.isArray(routeRole)) {
-    return routeRole.some((r) => userRole.indexOf(r) >= 0);
+    return routeRole.some(r => userRole.indexOf(r) >= 0);
   }
   return routeRole.indexOf(userRole) >= 0;
 };

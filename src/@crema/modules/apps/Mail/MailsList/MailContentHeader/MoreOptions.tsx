@@ -1,11 +1,11 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { FiMoreVertical } from "react-icons/fi";
-import { Dropdown } from "antd";
-import AppIconButton from "@crema/components/AppIconButton";
-import { putDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { MailObjType } from "@crema/types/models/apps/Mail";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { FiMoreVertical } from 'react-icons/fi';
+import { Dropdown } from 'antd';
+import AppIconButton from '@crema/components/AppIconButton';
+import { putDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { MailObjType } from '@crema/types/models/apps/Mail';
 
 type MoreOptionsProps = {
   checkedMails: number[];
@@ -15,12 +15,7 @@ type MoreOptionsProps = {
   path: string[];
 };
 
-const MoreOptions: React.FC<MoreOptionsProps> = ({
-  checkedMails,
-  setCheckedMails,
-  mailList,
-  setData,
-}) => {
+const MoreOptions: React.FC<MoreOptionsProps> = ({ checkedMails, setCheckedMails, mailList, setData }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
 
   let unReadOption;
@@ -46,72 +41,64 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
 
   const onChangeReadStatus = (statusValue: number) => {
     const status = !!statusValue;
-    putDataApi("/api/mailApp/update/read", infoViewActionsContext, {
+    putDataApi('/api/mailApp/update/read', infoViewActionsContext, {
       mailIds: checkedMails,
       status: status,
     })
-      .then((data) => {
+      .then(data => {
         setData(data as MailObjType);
         setCheckedMails([]);
-        infoViewActionsContext.showMessage(
-          `Email marked as ${status ? "read" : "unread"}`
-        );
+        infoViewActionsContext.showMessage(`Email marked as ${status ? 'read' : 'unread'}`);
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onChangeAllReadStatus = (statusValue: number) => {
     const status = !!statusValue;
-    const allMails = mailList.map((mail) => mail.id);
-    putDataApi("/api/mailApp/update/read", infoViewActionsContext, {
+    const allMails = mailList.map(mail => mail.id);
+    putDataApi('/api/mailApp/update/read', infoViewActionsContext, {
       mailIds: allMails,
       status: status,
     })
-      .then((data) => {
+      .then(data => {
         setData(data as MailObjType);
         setCheckedMails([]);
-        infoViewActionsContext.showMessage(
-          `Email marked as ${status ? "read" : "unread"}`
-        );
+        infoViewActionsContext.showMessage(`Email marked as ${status ? 'read' : 'unread'}`);
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onChangeAllStarred = (status: number) => {
-    const allMails = mailList.map((mail) => mail.id);
-    putDataApi("/api/mailApp/update/starred", infoViewActionsContext, {
+    const allMails = mailList.map(mail => mail.id);
+    putDataApi('/api/mailApp/update/starred', infoViewActionsContext, {
       mailIds: allMails,
       status: status,
     })
-      .then((data) => {
+      .then(data => {
         setData(data as MailObjType);
         setCheckedMails([]);
-        infoViewActionsContext.showMessage(
-          `Email(s) marked as ${status ? "stared" : "unread"}`
-        );
+        infoViewActionsContext.showMessage(`Email(s) marked as ${status ? 'stared' : 'unread'}`);
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onChangeStarredStatus = (status: number) => {
-    putDataApi("/api/mailApp/update/starred", infoViewActionsContext, {
+    putDataApi('/api/mailApp/update/starred', infoViewActionsContext, {
       mailIds: checkedMails,
       status: status,
     })
-      .then((data) => {
+      .then(data => {
         setData(data as MailObjType);
         setCheckedMails([]);
-        infoViewActionsContext.showMessage(
-          `Email(s) marked as ${status ? "stared" : "unread"}`
-        );
+        infoViewActionsContext.showMessage(`Email(s) marked as ${status ? 'stared' : 'unread'}`);
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -153,7 +140,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
 
   const menuViewMoreTo = [
     {
-      key: "01",
+      key: '01',
       label: (
         <span onClick={() => onChangeAllReadStatus(1)}>
           <IntlMessages id="mailApp.markAllAsRead" />
@@ -161,7 +148,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
       ),
     },
     {
-      key: "02",
+      key: '02',
       label: (
         <span onClick={() => onChangeAllReadStatus(0)}>
           <IntlMessages id="mailApp.markAllAsUnread" />
@@ -169,7 +156,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
       ),
     },
     {
-      key: "03",
+      key: '03',
       label: (
         <span onClick={() => onChangeAllStarred(1)}>
           <IntlMessages id="mailApp.markAllAsImportant" />
@@ -177,7 +164,7 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
       ),
     },
     {
-      key: "04",
+      key: '04',
       label: (
         <span onClick={() => onChangeAllStarred(0)}>
           <IntlMessages id="mailApp.markAllAsNotImportant" />
@@ -189,18 +176,12 @@ const MoreOptions: React.FC<MoreOptionsProps> = ({
   return (
     <>
       {checkedMails.length > 0 ? (
-        <Dropdown menu={{ items: menuViewMore }} trigger={["click"]}>
-          <AppIconButton
-            title={<IntlMessages id="common.more" />}
-            icon={<FiMoreVertical />}
-          />
+        <Dropdown menu={{ items: menuViewMore }} trigger={['click']}>
+          <AppIconButton title={<IntlMessages id="common.more" />} icon={<FiMoreVertical />} />
         </Dropdown>
       ) : (
-        <Dropdown menu={{ items: menuViewMoreTo }} trigger={["click"]}>
-          <AppIconButton
-            title={<IntlMessages id="common.more" />}
-            icon={<FiMoreVertical />}
-          />
+        <Dropdown menu={{ items: menuViewMoreTo }} trigger={['click']}>
+          <AppIconButton title={<IntlMessages id="common.more" />} icon={<FiMoreVertical />} />
         </Dropdown>
       )}
     </>

@@ -14,8 +14,7 @@ export const StyledContactSidebarLabelItem = styled(NavLink)`
   color: ${({ theme }) => theme.palette.text.primary};
   padding: 8.5px 16px;
   margin-right: 20px;
-  border-radius: 0 ${({ theme }) => theme.cardRadius30}
-    ${({ theme }) => theme.cardRadius30} 0;
+  border-radius: 0 ${({ theme }) => theme.cardRadius30} ${({ theme }) => theme.cardRadius30} 0;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
     padding: 8.5px 20px;

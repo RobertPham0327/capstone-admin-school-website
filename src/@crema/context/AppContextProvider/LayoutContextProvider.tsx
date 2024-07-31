@@ -42,19 +42,11 @@ type LayoutContextProviderProps = {
   children: ReactNode;
 };
 
-const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({
-  children,
-}) => {
-  const [layoutType, updateLayoutType] = useState<string>(
-    defaultConfig.layoutType
-  );
+const LayoutContextProvider: React.FC<LayoutContextProviderProps> = ({ children }) => {
+  const [layoutType, updateLayoutType] = useState<string>(defaultConfig.layoutType);
   const [navStyle, updateNavStyle] = useState<string>(defaultConfig.navStyle);
-  const [direction, updateDirection] = useState<string>(
-    defaultConfig.direction
-  );
-  const [footerType, setFooterType] = useState<string>(
-    defaultConfig.footerType
-  );
+  const [direction, updateDirection] = useState<string>(defaultConfig.direction);
+  const [footerType, setFooterType] = useState<string>(defaultConfig.footerType);
   const [footer, setFooter] = useState<boolean>(defaultConfig.footer);
 
   return (

@@ -1,10 +1,5 @@
-import {
-  InvoiceType,
-  ClientType,
-  InvoiceSettingType,
-  InvFolderType,
-} from "@crema/types/models/invoice";
-import { createReducer } from "@reduxjs/toolkit";
+import { InvoiceType, ClientType, InvoiceSettingType, InvFolderType } from '@crema/types/models/invoice';
+import { createReducer } from '@reduxjs/toolkit';
 import {
   InvoiceDetailAction,
   InvoiceFolderAction,
@@ -17,7 +12,7 @@ import {
   UpdateInvoiceAction,
   UpdateInvoiceSettingsAction,
   GetClientDetailAction,
-} from "./ActionTypes/Invoice";
+} from './ActionTypes/Invoice';
 
 const initialState: {
   invoiceList: InvoiceType[];
@@ -35,7 +30,7 @@ const initialState: {
   selectedClient: null,
 };
 
-const invoiceReducer = createReducer(initialState, (builder) => {
+const invoiceReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetInvoiceListAction, (state, action) => {
       state.invoiceList = action.payload;

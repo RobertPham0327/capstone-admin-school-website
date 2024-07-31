@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import dayjs from "dayjs";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { Form, Input } from "antd";
-import { useIntl } from "react-intl";
+import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { Form, Input } from 'antd';
+import { useIntl } from 'react-intl';
 // import '../../../../../shared/styles/vendors/ql-editor.css';
-import AppIconButton from "@crema/components/AppIconButton";
-import { AiOutlineDelete } from "react-icons/ai";
+import AppIconButton from '@crema/components/AppIconButton';
+import { AiOutlineDelete } from 'react-icons/ai';
 import {
   StyledMailDetailBtn,
   StyledMailDetailForm,
@@ -13,11 +13,11 @@ import {
   StyledMailDetailInput,
   StyledMailDetailTextarea,
   StyledMailFormFooter,
-} from "../index.styled";
-import { StyledMailModalSuffix } from "../../ComposeMail/index.styled";
-import { getFormattedDate } from "@crema/helpers/DateHelper";
-import { generateUniqueID } from "@crema/helpers/StringHelper";
-import { MessageType } from "@crema/types/models/apps/Mail";
+} from '../index.styled';
+import { StyledMailModalSuffix } from '../../ComposeMail/index.styled';
+import { getFormattedDate } from '@crema/helpers/DateHelper';
+import { generateUniqueID } from '@crema/helpers/StringHelper';
+import { MessageType } from '@crema/types/models/apps/Mail';
 
 type ReplyMailProps = {
   message: MessageType;
@@ -27,13 +27,7 @@ type ReplyMailProps = {
   onDeleteDraft: () => void;
 };
 
-const ReplyMail: React.FC<ReplyMailProps> = ({
-  message,
-  isForward,
-  index,
-  onSubmitMail,
-  onDeleteDraft,
-}) => {
+const ReplyMail: React.FC<ReplyMailProps> = ({ message, isForward, index, onSubmitMail, onDeleteDraft }) => {
   const [isShowCC, onShowCC] = useState(false);
   const [isShowBcc, onShowBcc] = useState(false);
 
@@ -51,7 +45,7 @@ const ReplyMail: React.FC<ReplyMailProps> = ({
         isStarred: false,
         sentOn: getFormattedDate(),
       },
-      index
+      index,
     );
   };
 
@@ -66,16 +60,13 @@ const ReplyMail: React.FC<ReplyMailProps> = ({
     <StyledMailDetailForm
       name="basic"
       initialValues={{
-        username: isForward ? "" : getSender().email,
+        username: isForward ? '' : getSender().email,
         ...message,
-        description: "",
+        description: '',
       }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
-      >
+      <Form.Item name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
         <StyledMailDetailInput
           prefix={
             <span className="mail-modal-prefix">
@@ -97,13 +88,8 @@ const ReplyMail: React.FC<ReplyMailProps> = ({
       </Form.Item>
 
       {isShowCC ? (
-        <Form.Item
-          name="cc"
-          rules={[{ required: true, message: "Please input your cc!" }]}
-        >
-          <StyledMailDetailInput
-            placeholder={messages["common.cc"] as string}
-          />
+        <Form.Item name="cc" rules={[{ required: true, message: 'Please input your cc!' }]}>
+          <StyledMailDetailInput placeholder={messages['common.cc'] as string} />
         </Form.Item>
       ) : null}
 
@@ -113,23 +99,20 @@ const ReplyMail: React.FC<ReplyMailProps> = ({
           rules={[
             {
               required: true,
-              type: "email",
-              message: "Please input your bcc!",
+              type: 'email',
+              message: 'Please input your bcc!',
             },
           ]}
         >
-          <Input placeholder={messages["common.bcc"] as string} />
+          <Input placeholder={messages['common.bcc'] as string} />
         </Form.Item>
       ) : null}
       <Form.Item
         className="form-field"
         name="description"
-        rules={[{ required: true, message: "Please input your Content!" }]}
+        rules={[{ required: true, message: 'Please input your Content!' }]}
       >
-        <StyledMailDetailTextarea
-          theme="snow"
-          placeholder={messages["common.writeContent"] as string}
-        />
+        <StyledMailDetailTextarea theme="snow" placeholder={messages['common.writeContent'] as string} />
       </Form.Item>
 
       <StyledMailFormFooter>

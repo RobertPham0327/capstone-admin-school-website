@@ -1,4 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
+import { createReducer } from '@reduxjs/toolkit';
 import {
   FolderObjType,
   LabelObjType,
@@ -6,7 +6,7 @@ import {
   StaffObjType,
   StatusObjType,
   TodoObjType,
-} from "@crema/types/models/apps/Todo";
+} from '@crema/types/models/apps/Todo';
 import {
   CreateTaskAction,
   GetFolderListAction,
@@ -21,7 +21,7 @@ import {
   UpdateTaskFolderAction,
   UpdateTaskLabelAction,
   UpdateTaskStarredAction,
-} from "./ActionTypes/Todo";
+} from './ActionTypes/Todo';
 
 const initialState: {
   taskList: TodoObjType[];
@@ -45,7 +45,7 @@ const initialState: {
   selectedTask: null,
 };
 
-const calendarReducer = createReducer(initialState, (builder) => {
+const calendarReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetTaskListAction, (state, action) => {
       state.taskList = action.payload.data;
@@ -78,12 +78,10 @@ const calendarReducer = createReducer(initialState, (builder) => {
       state.totalTasks = action.payload.count;
     })
     .addCase(UpdateTaskLabelAction, (state, action) => {
-      const taskIds = action.payload.map((task) => task.id);
-      const updatedList = state.taskList.map((task) => {
+      const taskIds = action.payload.map(task => task.id);
+      const updatedList = state.taskList.map(task => {
         if (taskIds.includes(task.id)) {
-          return action.payload.find(
-            (selectedTask) => selectedTask.id === task.id
-          );
+          return action.payload.find(selectedTask => selectedTask.id === task.id);
         } else {
           return task;
         }
@@ -91,24 +89,18 @@ const calendarReducer = createReducer(initialState, (builder) => {
       state.taskList = updatedList as TodoObjType[];
     })
     .addCase(UpdateTaskStarredAction, (state, action) => {
-      const taskIds = action.payload.data.map((task) => task.id);
-      const updatedList = state.taskList.map((task) => {
+      const taskIds = action.payload.data.map(task => task.id);
+      const updatedList = state.taskList.map(task => {
         if (taskIds.includes(task.id)) {
-          return action.payload.data.find(
-            (selectedTask) => selectedTask.id === task.id
-          );
+          return action.payload.data.find(selectedTask => selectedTask.id === task.id);
         } else {
           return task;
         }
       });
       const filteredList =
-        action.payload.folderName === "starred"
-          ? updatedList.filter((item) => item?.isStarred)
-          : updatedList;
+        action.payload.folderName === 'starred' ? updatedList.filter(item => item?.isStarred) : updatedList;
       const total =
-        action.payload.folderName === "starred"
-          ? state.totalTasks - action.payload.data.length
-          : state.totalTasks;
+        action.payload.folderName === 'starred' ? state.totalTasks - action.payload.data.length : state.totalTasks;
       state.taskList = filteredList as TodoObjType[];
       state.totalTasks = total;
     })

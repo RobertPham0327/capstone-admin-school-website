@@ -1,12 +1,8 @@
-import React, { useState } from "react";
-import {
-  EditOutlined,
-  FileTextOutlined,
-  MoreOutlined,
-} from "@ant-design/icons";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { Dropdown } from "antd";
-import clsx from "clsx";
+import React, { useState } from 'react';
+import { EditOutlined, FileTextOutlined, MoreOutlined } from '@ant-design/icons';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { Dropdown } from 'antd';
+import clsx from 'clsx';
 import {
   StyledChatMediaWrapper,
   StyledChatMsgListItem,
@@ -26,26 +22,22 @@ import {
   StyledMsgInfoEdit,
   StyledMsgMoreDropdownLink,
   StyledMsgTime,
-} from "./MessageItem.style";
-import { getFileSize } from "@crema/helpers/Common";
-import AppMediaViewer from "@crema/components/AppMedialViewer";
-import {
-  MediaObjType,
-  MessageDataObjType,
-  MessageType,
-} from "@crema/types/models/apps/Chat";
-import { AuthUserType } from "@crema/types/models/AuthUser";
+} from './MessageItem.style';
+import { getFileSize } from '@crema/helpers/Common';
+import AppMediaViewer from '@crema/components/AppMedialViewer';
+import { MediaObjType, MessageDataObjType, MessageType } from '@crema/types/models/apps/Chat';
+import { AuthUserType } from '@crema/types/models/AuthUser';
 
 const showMediaItems = 2;
 
 const getMediaMessage = (item: MediaObjType) => {
-  if (item.mime_type.startsWith("image")) {
+  if (item.mime_type.startsWith('image')) {
     return (
       <StyledMediaImg>
         <img alt="" src={item.url} />
       </StyledMediaImg>
     );
-  } else if (item.mime_type.startsWith("video")) {
+  } else if (item.mime_type.startsWith('video')) {
     return (
       <StyledMediaVideo>
         <video src={item.url} />
@@ -65,10 +57,7 @@ const getMediaMessage = (item: MediaObjType) => {
   }
 };
 
-const getMessage = (
-  item: MessageDataObjType,
-  setIndex: (index: number) => void
-) => {
+const getMessage = (item: MessageDataObjType, setIndex: (index: number) => void) => {
   if (item.message_type === MessageType.TEXT) {
     return <StyledMessageTypePara>{item.message}</StyledMessageTypePara>;
   } else {
@@ -76,18 +65,13 @@ const getMessage = (
       <StyledChatMediaWrapper>
         <StyledMediaRow>
           {item.media!.slice(0, showMediaItems).map((data, index) => (
-            <StyledMediaCol
-              key={"media-" + data.id}
-              onClick={() => setIndex(index)}
-            >
+            <StyledMediaCol key={'media-' + data.id} onClick={() => setIndex(index)}>
               {getMediaMessage(data)}
             </StyledMediaCol>
           ))}
           {item.media!.length > showMediaItems ? (
             <StyledMediaCol onClick={() => setIndex(showMediaItems)}>
-              <StyledMediaCounter>
-                +{item.media!.length - showMediaItems}
-              </StyledMediaCounter>
+              <StyledMediaCounter>+{item.media!.length - showMediaItems}</StyledMediaCounter>
             </StyledMediaCol>
           ) : null}
         </StyledMediaRow>
@@ -158,9 +142,9 @@ const SenderMessageItem: React.FC<SenderMessageItemProps> = ({
   return (
     <StyledChatMsgListItem
       className={clsx(
-        "right",
-        isPreviousSender ? "hide-user-info" : "first-chat-message",
-        isLast ? "last-chat-message" : ""
+        'right',
+        isPreviousSender ? 'hide-user-info' : 'first-chat-message',
+        isLast ? 'last-chat-message' : '',
       )}
     >
       <StyledMsgChatView className="message-chat-view">
@@ -178,17 +162,11 @@ const SenderMessageItem: React.FC<SenderMessageItemProps> = ({
         </StyledMsgChatItem>
         <StyledMsgChatSender className="message-chat-sender">
           {authUser.photoURL ? (
-            <StyledMsgChatAvatar
-              size={34}
-              className="message-chat-avatar"
-              src={authUser.photoURL}
-            />
+            <StyledMsgChatAvatar size={34} className="message-chat-avatar" src={authUser.photoURL} />
           ) : (
-            <StyledMsgChatAvatar className="message-chat-avatar">
-              {getUserAvatar()}
-            </StyledMsgChatAvatar>
+            <StyledMsgChatAvatar className="message-chat-avatar">{getUserAvatar()}</StyledMsgChatAvatar>
           )}
-          <Dropdown menu={{ items }} trigger={["click"]}>
+          <Dropdown menu={{ items }} trigger={['click']}>
             <StyledMsgMoreDropdownLink className="message-more-dropdown-link">
               <MoreOutlined />
             </StyledMsgMoreDropdownLink>

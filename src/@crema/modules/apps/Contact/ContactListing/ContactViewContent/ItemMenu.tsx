@@ -1,9 +1,9 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { Dropdown } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
-import AppIconButton from "@crema/components/AppIconButton";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { Dropdown } from 'antd';
+import { MoreOutlined } from '@ant-design/icons';
+import AppIconButton from '@crema/components/AppIconButton';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type ItemMenuProps = {
   onSelectContactsForDelete: (ids: number[]) => void;
@@ -35,11 +35,7 @@ const ItemMenu: React.FC<ItemMenuProps> = ({
       key: 1,
       label: (
         <span onClick={onChangeStarredStatus}>
-          {contact.isStarred ? (
-            <IntlMessages id="common.unstarred" />
-          ) : (
-            <IntlMessages id="common.starred" />
-          )}
+          {contact.isStarred ? <IntlMessages id="common.unstarred" /> : <IntlMessages id="common.starred" />}
         </span>
       ),
     },
@@ -62,11 +58,8 @@ const ItemMenu: React.FC<ItemMenuProps> = ({
   ];
 
   return (
-    <Dropdown menu={{ items }} trigger={["click"]}>
-      <AppIconButton
-        icon={<MoreOutlined />}
-        title={<IntlMessages id="common.more" />}
-      />
+    <Dropdown menu={{ items }} trigger={['click']}>
+      <AppIconButton icon={<MoreOutlined />} title={<IntlMessages id="common.more" />} />
     </Dropdown>
   );
 };

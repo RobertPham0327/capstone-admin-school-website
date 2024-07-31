@@ -1,9 +1,9 @@
-import React from "react";
-import MessageItem from "./MessageItem";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import React from 'react';
+import MessageItem from './MessageItem';
+import IntlMessages from '@crema/helpers/IntlMessages';
 
-import { Dropdown, List } from "antd";
-import { AiOutlineMail } from "react-icons/ai";
+import { Dropdown, List } from 'antd';
+import { AiOutlineMail } from 'react-icons/ai';
 import {
   DropDownWrapper,
   StyledAppScrollbar,
@@ -11,8 +11,8 @@ import {
   StyledHeaderMsgIcon,
   StyledHeaderMsgLink,
   StyledHeaderMsgLinkText,
-} from "./index.styled";
-import { messages } from "@crema/mockapi/fakedb";
+} from './index.styled';
+import { messages } from '@crema/mockapi/fakedb';
 
 const items = [
   {
@@ -29,7 +29,7 @@ const items = [
       <StyledAppScrollbar>
         <List
           dataSource={messages}
-          renderItem={(item) => {
+          renderItem={item => {
             return <MessageItem key={item.id} item={item} />;
           }}
         />
@@ -51,10 +51,10 @@ const AppHeaderMessages = () => {
       <Dropdown
         menu={{ items }}
         overlayClassName="header-messages"
-        getPopupContainer={(triggerNode) => triggerNode}
-        trigger={["click"]}
+        getPopupContainer={triggerNode => triggerNode}
+        trigger={['click']}
       >
-        <StyledHeaderMsgLink onClick={(e) => e.preventDefault()}>
+        <StyledHeaderMsgLink onClick={e => e.preventDefault()}>
           <StyledHeaderMsgIcon>
             <AiOutlineMail />
           </StyledHeaderMsgIcon>

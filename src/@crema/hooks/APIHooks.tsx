@@ -1,23 +1,17 @@
-import { useEffect, useRef, useState } from "react";
-import _ from "lodash";
-import {
-  InfoViewActions,
-  useInfoViewActionsContext,
-} from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { isRequestSuccessful, sanitizeData } from "@crema/helpers/ApiHelper";
-import jwtAxios from "@crema/services/axios";
-import {
-  APIErrorProps,
-  APIErrorResProps,
-} from "@crema/types/models/APIDataProps";
-import { AxiosResponse } from "axios";
+import { useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
+import { InfoViewActions, useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { isRequestSuccessful, sanitizeData } from '@crema/helpers/ApiHelper';
+import jwtAxios from '@crema/services/axios';
+import { APIErrorProps, APIErrorResProps } from '@crema/types/models/APIDataProps';
+import { AxiosResponse } from 'axios';
 
 export const useGetDataApi = <T,>(
   url: string,
   initialData?: T,
   params?: any,
   initialCall?: boolean,
-  callbackFun?: (data: T) => void
+  callbackFun?: (data: T) => void,
 ) => {
   if (initialCall === undefined) {
     initialCall = true;
@@ -26,9 +20,7 @@ export const useGetDataApi = <T,>(
   const [initialUrl, setInitialUrl] = useState<string>(url);
   const [allowApiCall, setAllowApiCall] = useState<boolean>(initialCall);
   const [loading, setLoading] = useState<boolean>(initialCall);
-  const [apiData, setData] = useState<T>(
-    initialData ? initialData : (undefined as T)
-  );
+  const [apiData, setData] = useState<T>(initialData ? initialData : (undefined as T));
   const [queryParams, updateQueryParams] = useState<object>(params);
   const resStateRef = useRef<boolean>(false);
   const didCancelRef = useRef<boolean>(false);
@@ -61,12 +53,7 @@ export const useGetDataApi = <T,>(
       jwtAxios
         .get(initialUrl, { params: sanitizeData(params) })
         .then((data: any) => {
-          console.log(
-            initialUrl,
-            data.data,
-            didCancelRef.current,
-            isRequestSuccessful(data.status)
-          );
+          console.log(initialUrl, data.data, didCancelRef.current, isRequestSuccessful(data.status));
           resStateRef.current = false;
           if (!didCancelRef.current) {
             if (isRequestSuccessful(data.status)) {
@@ -75,7 +62,7 @@ export const useGetDataApi = <T,>(
               if (callbackFun) callbackFun(data.data);
             } else {
               setLoading(false);
-              console.log("Error", data.data);
+              console.log('Error', data.data);
               fetchError(data.data.error ? data.data.error : data.data.message);
               setData(initialData ? initialData : (undefined as T));
               if (callbackFun) callbackFun(data.data);
@@ -119,8 +106,8 @@ export const trimObjectValues = (obj: any) => {
   if (_.isEmpty(obj)) {
     return obj;
   }
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] && typeof obj[key] === "string") {
+  Object.keys(obj).forEach(key => {
+    if (obj[key] && typeof obj[key] === 'string') {
       obj[key] = obj[key].trim();
     }
   });
@@ -132,7 +119,7 @@ const handleApiResponse = <T,>(
   fetchSuccess: () => void,
   data: AxiosResponse<T>,
   resolve: (data: T) => void,
-  reject: (data: APIErrorResProps) => void
+  reject: (data: APIErrorResProps) => void,
 ) => {
   console.log(url, data.data);
   fetchSuccess();
@@ -147,7 +134,7 @@ const handleAPIError = (
   url: string,
   fetchSuccess: () => void,
   error: APIErrorProps,
-  reject: (data: APIErrorResProps) => void
+  reject: (data: APIErrorResProps) => void,
 ) => {
   console.log(url, error.response.data.message);
   fetchSuccess();
@@ -163,7 +150,7 @@ export const postDataApi = <T,>(
   infoViewContext: InfoViewActions,
   payload: object,
   isHideLoader?: boolean,
-  headers = {}
+  headers = {},
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -184,7 +171,7 @@ export const putDataApi = <T,>(
   url: string,
   infoViewContext: InfoViewActions,
   payload: object,
-  isHideLoader = false
+  isHideLoader = false,
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -206,7 +193,7 @@ export const getDataApi = <T,>(
   infoViewContext: InfoViewActions,
   params = {},
   isHideLoader = false,
-  headers = {}
+  headers = {},
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -227,7 +214,7 @@ export const deleteDataApi = <T,>(
   url: string,
   infoViewContext: InfoViewActions,
   params = {},
-  isHideLoader = false
+  isHideLoader = false,
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -250,9 +237,9 @@ export const uploadDataApi = <T,>(
   payload = {},
   isHideLoader = false,
   onUploadProgress = () => {
-    console.log("");
+    console.log('');
   },
-  allowDownload = false
+  allowDownload = false,
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -261,9 +248,9 @@ export const uploadDataApi = <T,>(
       .post(url, payload, {
         onUploadProgress,
         headers: {
-          "content-type": "application/x-www-form-urlencoded",
+          'content-type': 'application/x-www-form-urlencoded',
         },
-        responseType: allowDownload ? "arraybuffer" : "stream",
+        responseType: allowDownload ? 'arraybuffer' : 'stream',
       })
       .then((data: any) => {
         return handleApiResponse<T>(url, fetchSuccess, data, resolve, reject);
@@ -279,7 +266,7 @@ export const uploadPutDataApi = <T,>(
   url: string,
   infoViewContext: InfoViewActions,
   payload = {},
-  isHideLoader = false
+  isHideLoader = false,
 ) => {
   const { fetchStart, fetchSuccess } = infoViewContext;
   return new Promise((resolve, reject) => {
@@ -287,7 +274,7 @@ export const uploadPutDataApi = <T,>(
     jwtAxios
       .put(url, payload, {
         headers: {
-          "content-type": "multipart/form-data",
+          'content-type': 'multipart/form-data',
         },
       })
       .then((data: any) => {

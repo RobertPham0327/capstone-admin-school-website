@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { AiOutlineDelete } from "react-icons/ai";
-import { Dropdown } from "antd";
-import { MdLabelOutline } from "react-icons/md";
-import AppIconButton from "@crema/components/AppIconButton";
-import { StyledContactCheckedAction } from "../index.styled";
-import { putDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+import React, { useState } from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { Dropdown } from 'antd';
+import { MdLabelOutline } from 'react-icons/md';
+import AppIconButton from '@crema/components/AppIconButton';
+import { StyledContactCheckedAction } from '../index.styled';
+import { putDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type ContactCheckedActionsProps = {
   checkedContacts: number[];
@@ -35,18 +35,18 @@ const ContactCheckedActions: React.FC<ContactCheckedActionsProps> = ({
   };
 
   const onSelectLabel = (key: number) => {
-    console.log("key", key);
-    putDataApi("/api/contactApp/update/label", infoViewActionsContext, {
+    console.log('key', key);
+    putDataApi('/api/contactApp/update/label', infoViewActionsContext, {
       contactIds: checkedContacts,
       type: +key,
     })
-      .then((data) => {
+      .then(data => {
         onUpdateContacts(data as ContactObjType[]);
         setCheckedContacts([]);
         onLabelClose();
-        infoViewActionsContext.showMessage("Contact Updated Successfully");
+        infoViewActionsContext.showMessage('Contact Updated Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -86,16 +86,8 @@ const ContactCheckedActions: React.FC<ContactCheckedActionsProps> = ({
         onClick={() => onSelectContactsForDelete(checkedContacts)}
       />
 
-      <Dropdown
-        onOpenChange={onLabelOpen}
-        open={isLabelOpen}
-        menu={{ items }}
-        trigger={["click"]}
-      >
-        <AppIconButton
-          icon={<MdLabelOutline />}
-          title={<IntlMessages id="common.label" />}
-        />
+      <Dropdown onOpenChange={onLabelOpen} open={isLabelOpen} menu={{ items }} trigger={['click']}>
+        <AppIconButton icon={<MdLabelOutline />} title={<IntlMessages id="common.label" />} />
       </Dropdown>
     </StyledContactCheckedAction>
   );

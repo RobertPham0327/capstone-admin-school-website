@@ -1,17 +1,13 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
-import UserInfo from "../components/UserInfo";
-import clsx from "clsx";
-import AppVerticalMenu from "../components/AppVerticalNav";
-import { LayoutDirection } from "@crema/constants/AppEnums";
-import { useSidebarContext } from "@crema/context/AppContextProvider/SidebarContextProvider";
-import { useLayoutContext } from "@crema/context/AppContextProvider/LayoutContextProvider";
-import {
-  StyledAppHeaderDrawerFixed,
-  StyledAppHorHeaderFixedSidebar,
-  StyledAppHorScrollbar,
-} from "./index.styled";
-import { RouterConfigData } from "@crema/types/models/Apps";
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import UserInfo from '../components/UserInfo';
+import clsx from 'clsx';
+import AppVerticalMenu from '../components/AppVerticalNav';
+import { LayoutDirection } from '@crema/constants/AppEnums';
+import { useSidebarContext } from '@crema/context/AppContextProvider/SidebarContextProvider';
+import { useLayoutContext } from '@crema/context/AppContextProvider/LayoutContextProvider';
+import { StyledAppHeaderDrawerFixed, StyledAppHorHeaderFixedSidebar, StyledAppHorScrollbar } from './index.styled';
+import { RouterConfigData } from '@crema/types/models/Apps';
 
 type AppSidebarProps = {
   visible: boolean;
@@ -30,14 +26,14 @@ const AppSidebar = ({ visible, onClose, routesConfig }: AppSidebarProps) => {
 
   return (
     <StyledAppHeaderDrawerFixed
-      placement={direction === LayoutDirection.LTR ? "left" : "right"}
+      placement={direction === LayoutDirection.LTR ? 'left' : 'right'}
       closable={false}
       onClose={onClose}
       open={visible}
     >
       <StyledAppHorHeaderFixedSidebar
         className={clsx({
-          "hor-header-fixed-sidebar-img-background": allowSidebarBgImage,
+          'hor-header-fixed-sidebar-img-background': allowSidebarBgImage,
         })}
         collapsible
       >

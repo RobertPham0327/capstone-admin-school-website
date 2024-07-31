@@ -34,27 +34,15 @@ const TaskItem = ({ item }: Props) => {
           </StyledIconWrapper>
         ) : null}
         <StyledIconWrapper>
-          {item.hasAttachments ? (
-            <StarFilled style={{ fontSize: 14 }} />
-          ) : (
-            <StarOutlined style={{ fontSize: 14 }} />
-          )}
+          {item.hasAttachments ? <StarFilled style={{ fontSize: 14 }} /> : <StarOutlined style={{ fontSize: 14 }} />}
         </StyledIconWrapper>
         <StyledIconWrapper>
           <MdComment size={20} />
           <StyledCommentWrapper>{item.comments.length}</StyledCommentWrapper>
         </StyledIconWrapper>
         <Avatar.Group maxCount={3}>
-          <Avatar
-            alt={item?.createdBy?.name}
-            src={item?.assignedTo?.image}
-            size={24}
-          />
-          <Avatar
-            alt={item?.createdBy?.name}
-            src={item?.createdBy?.image}
-            size={24}
-          />
+          <Avatar alt={item?.createdBy?.name} src={item?.assignedTo?.image} size={24} />
+          <Avatar alt={item?.createdBy?.name} src={item?.createdBy?.image} size={24} />
         </Avatar.Group>
       </div>
     </StyledTaskItemWrapper>

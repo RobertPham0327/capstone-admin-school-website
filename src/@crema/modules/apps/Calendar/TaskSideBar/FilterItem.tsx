@@ -12,10 +12,7 @@ const FilterItem = ({ item, checked, onChange }: Props) => {
   return (
     <StyledTodoLabelItem>
       <StyledFlex className="filter-item">
-        <Checkbox
-          onChange={(e) => onChange(e.target.checked, item.id)}
-          value={checked.find((data) => data === item.id)}
-        />
+        <Checkbox onChange={e => onChange(e.target.checked, item.id)} value={checked.find(data => data === item.id)} />
         {item.name}
       </StyledFlex>
     </StyledTodoLabelItem>

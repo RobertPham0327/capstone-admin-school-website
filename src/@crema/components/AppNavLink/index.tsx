@@ -8,10 +8,9 @@ type AppNavLinkProps = {
   [x: string]: any;
 };
 const AppNavLink = React.forwardRef(
-  (
-    { activeClassName, className, ...rest }: AppNavLinkProps,
-    ref: Ref<HTMLAnchorElement>
-  ) => <NavLink ref={ref} href={rest.to} {...rest} />
+  ({ activeClassName, className, ...rest }: AppNavLinkProps, ref: Ref<HTMLAnchorElement>) => (
+    <NavLink ref={ref} href={rest.to} {...rest} />
+  ),
 );
 
 export default AppNavLink;

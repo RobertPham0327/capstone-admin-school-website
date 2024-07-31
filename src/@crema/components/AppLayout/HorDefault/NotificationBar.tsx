@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyledHeaderAlert} from './index.styled';
+import { StyledHeaderAlert } from './index.styled';
 
 export default function NotificationBar() {
   const onClose = () => {
@@ -7,11 +7,6 @@ export default function NotificationBar() {
   };
 
   return (
-    <StyledHeaderAlert
-      message=' Get flat 60% off on your first purchase'
-      type='warning'
-      closable
-      onClose={onClose}
-    />
+    <StyledHeaderAlert message=" Get flat 60% off on your first purchase" type="warning" closable onClose={onClose} />
   );
 }

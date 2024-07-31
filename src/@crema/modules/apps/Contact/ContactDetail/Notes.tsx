@@ -1,12 +1,9 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { useIntl } from "react-intl";
-import { Input } from "antd";
-import {
-  StyledContactDetailModalItemTitle,
-  StyledContactNote,
-} from "./index.styled";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { useIntl } from 'react-intl';
+import { Input } from 'antd';
+import { StyledContactDetailModalItemTitle, StyledContactNote } from './index.styled';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 const { TextArea } = Input;
 
@@ -23,12 +20,7 @@ const Notes: React.FC<NotesProps> = ({ contact }) => {
         <IntlMessages id="common.notes" />
       </StyledContactDetailModalItemTitle>
 
-      <TextArea
-        rows={4}
-        placeholder={messages["common.notes"] as string}
-        name="notes"
-        value={contact!.notes}
-      />
+      <TextArea rows={4} placeholder={messages['common.notes'] as string} name="notes" value={contact!.notes} />
     </StyledContactNote>
   );
 };

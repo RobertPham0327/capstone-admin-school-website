@@ -24,8 +24,4 @@ export type UpdateBlogAction = {
   payload: BlogType;
 };
 
-export type BlogActionTypes =
-  | GetBlogAction
-  | GetBlogDetailAction
-  | AddBlogAction
-  | UpdateBlogAction;
+export type BlogActionTypes = GetBlogAction | GetBlogDetailAction | AddBlogAction | UpdateBlogAction;

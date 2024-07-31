@@ -1,10 +1,4 @@
-import {
-  FolderObjType,
-  LabelObjType,
-  PriorityObjType,
-  StaffObjType,
-  TodoObjType,
-} from '../models/apps/Todo';
+import { FolderObjType, LabelObjType, PriorityObjType, StaffObjType, TodoObjType } from '../models/apps/Todo';
 
 export const CREATE_NEW_TASK = 'CREATE_NEW_TASK';
 export const GET_TASK_DETAIL = 'GET_TASK_DETAIL';

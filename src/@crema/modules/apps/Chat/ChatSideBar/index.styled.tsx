@@ -43,13 +43,9 @@ export const StyledChatSidebarSearch = styled(Search)`
 
   & .ant-input-group > .ant-input:last-child,
   & .ant-input-group-addon:last-child,
-  &.ant-input-search
-    > .ant-input-group
-    > .ant-input-group-addon:last-child
-    .ant-input-search-button {
+  &.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
     [dir='rtl'] & {
-      border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0
-        ${({ theme }) => theme.sizes.borderRadius.base};
+      border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0 ${({ theme }) => theme.sizes.borderRadius.base};
     }
   }
 `;

@@ -37,21 +37,11 @@ interface SidebarContextProviderProps {
   children: ReactNode;
 }
 
-const SidebarContextProvider: React.FC<SidebarContextProviderProps> = ({
-  children,
-}) => {
-  const [menuStyle, updateMenuStyle] = useState<string>(
-    defaultConfig.sidebar.menuStyle
-  );
-  const [sidebarColorSet, updateSidebarColorSet] = useState<SidebarData>(
-    defaultConfig.sidebar.colorSet
-  );
-  const [allowSidebarBgImage, setSidebarBgImage] = useState<boolean>(
-    defaultConfig.sidebar.allowSidebarBgImage
-  );
-  const [sidebarBgImageId, updateSidebarBgImage] = useState<number | string>(
-    defaultConfig.sidebar.sidebarBgImageId
-  );
+const SidebarContextProvider: React.FC<SidebarContextProviderProps> = ({ children }) => {
+  const [menuStyle, updateMenuStyle] = useState<string>(defaultConfig.sidebar.menuStyle);
+  const [sidebarColorSet, updateSidebarColorSet] = useState<SidebarData>(defaultConfig.sidebar.colorSet);
+  const [allowSidebarBgImage, setSidebarBgImage] = useState<boolean>(defaultConfig.sidebar.allowSidebarBgImage);
+  const [sidebarBgImageId, updateSidebarBgImage] = useState<number | string>(defaultConfig.sidebar.sidebarBgImageId);
 
   return (
     <SidebarContext.Provider

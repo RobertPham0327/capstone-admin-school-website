@@ -2,11 +2,7 @@ import React from 'react';
 import { Button, Col, Form, Input } from 'antd';
 import AppRowContainer from '@crema/components/AppRowContainer';
 import IntlMessages from '@crema/helpers/IntlMessages';
-import {
-  StyledUserProfileForm,
-  StyledUserProfileFormTitle,
-  StyledUserProfileGroupBtn,
-} from '../index.styled';
+import { StyledUserProfileForm, StyledUserProfileFormTitle, StyledUserProfileGroupBtn } from '../index.styled';
 
 const ChangePassword = () => {
   const onFinish = (values: any) => {
@@ -18,33 +14,19 @@ const ChangePassword = () => {
   };
 
   return (
-    <StyledUserProfileForm
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+    <StyledUserProfileForm initialValues={{ remember: true }} onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <StyledUserProfileFormTitle>
         <IntlMessages id="userProfile.changePassword" />
       </StyledUserProfileFormTitle>
       <AppRowContainer gutter={16}>
         <Col xs={24} md={12}>
-          <Form.Item
-            name="oldPassword"
-            rules={[
-              { required: true, message: 'Please input your Enter Password' },
-            ]}
-          >
+          <Form.Item name="oldPassword" rules={[{ required: true, message: 'Please input your Enter Password' }]}>
             <Input.Password placeholder="Enter password" />
           </Form.Item>
         </Col>
         <Col xs={24} md={12} />
         <Col xs={24} md={12}>
-          <Form.Item
-            name="password"
-            rules={[
-              { required: true, message: 'Please input your New Password!' },
-            ]}
-          >
+          <Form.Item name="password" rules={[{ required: true, message: 'Please input your New Password!' }]}>
             <Input.Password placeholder="Enter new password" />
           </Form.Item>
         </Col>
@@ -61,9 +43,7 @@ const ChangePassword = () => {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    'The Confirm Password that you entered do not match!'
-                  );
+                  return Promise.reject('The Confirm Password that you entered do not match!');
                 },
               }),
             ]}
@@ -72,10 +52,7 @@ const ChangePassword = () => {
           </Form.Item>
         </Col>
         <Col xs={24} md={24}>
-          <StyledUserProfileGroupBtn
-            shouldUpdate
-            className="user-profile-group-btn"
-          >
+          <StyledUserProfileGroupBtn shouldUpdate className="user-profile-group-btn">
             <Button type="primary" htmlType="submit">
               Save Changes
             </Button>

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   StyledNewsAvatar,
   StyledRecentNewsItem,
   StyledRecentNewsItemContent,
   StyledRecentNewsItewLink,
-} from "./index.styled";
-import { RecentNewsObjType } from "@crema/types/models/apps/Wall";
+} from './index.styled';
+import { RecentNewsObjType } from '@crema/types/models/apps/Wall';
 
 type RecentNewsProps = {
   item: RecentNewsObjType;

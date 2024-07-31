@@ -55,8 +55,7 @@ export const StyledOrderTable = styled(AppTableContainer)`
 
     &.order-table-action {
       text-align: center;
-      background-color: ${({ theme }) =>
-        theme.palette.background.paper} !important;
+      background-color: ${({ theme }) => theme.palette.background.paper} !important;
     }
   }
 
@@ -84,8 +83,7 @@ export const StyledOrderTable = styled(AppTableContainer)`
 
     &.order-table-action {
       text-align: center;
-      background-color: ${({ theme }) =>
-        theme.palette.background.paper} !important;
+      background-color: ${({ theme }) => theme.palette.background.paper} !important;
     }
   }
   & .badge {
@@ -94,4 +92,3 @@ export const StyledOrderTable = styled(AppTableContainer)`
     display: inline-block;
   }
 `;
-

@@ -1,14 +1,14 @@
-import React from "react";
-import CheckedMailActions from "./CheckedMailActions";
-import MoreOptions from "./MoreOptions";
-import { useIntl } from "react-intl";
+import React from 'react';
+import CheckedMailActions from './CheckedMailActions';
+import MoreOptions from './MoreOptions';
+import { useIntl } from 'react-intl';
 import {
   StyledMailContentHeader,
   StyledMailContentHeaderCheckbox,
   StyledMailContentHeaderPagination,
   StyledMailSearch,
-} from "../index.styled";
-import { MailObjType } from "@crema/types/models/apps/Mail";
+} from '../index.styled';
+import { MailObjType } from '@crema/types/models/apps/Mail';
 
 type MailContentHeaderProps = {
   path: string[];
@@ -37,7 +37,7 @@ const MailContentHeader: React.FC<MailContentHeaderProps> = ({
 }) => {
   const onHandleMasterCheckbox = (event: any) => {
     if (event.target.checked) {
-      const mailIds = mailList.map((mail) => mail.id);
+      const mailIds = mailList.map(mail => mail.id);
       setCheckedMails(mailIds);
     } else {
       setCheckedMails([]);
@@ -50,27 +50,19 @@ const MailContentHeader: React.FC<MailContentHeaderProps> = ({
     <>
       <StyledMailContentHeader>
         <StyledMailContentHeaderCheckbox
-          indeterminate={
-            checkedMails?.length > 0 && checkedMails?.length < mailList?.length
-          }
-          checked={
-            mailList?.length > 0 && checkedMails?.length === mailList?.length
-          }
+          indeterminate={checkedMails?.length > 0 && checkedMails?.length < mailList?.length}
+          checked={mailList?.length > 0 && checkedMails?.length === mailList?.length}
           onChange={onHandleMasterCheckbox}
         />
 
         <StyledMailSearch
-          placeholder={messages["common.searchHere"] as string}
+          placeholder={messages['common.searchHere'] as string}
           value={filterText}
           onChange={(event: any) => onSetFilterText(event.target.value)}
         />
 
         {checkedMails.length > 0 ? (
-          <CheckedMailActions
-            checkedMails={checkedMails}
-            setCheckedMails={setCheckedMails}
-            setData={setData}
-          />
+          <CheckedMailActions checkedMails={checkedMails} setCheckedMails={setCheckedMails} setData={setData} />
         ) : null}
 
         <MoreOptions
@@ -82,11 +74,7 @@ const MailContentHeader: React.FC<MailContentHeaderProps> = ({
         />
       </StyledMailContentHeader>
       {mailList?.length > 0 ? (
-        <StyledMailContentHeaderPagination
-          count={totalMails}
-          page={page}
-          onChange={onChange}
-        />
+        <StyledMailContentHeaderPagination count={totalMails} page={page} onChange={onChange} />
       ) : null}
     </>
   );

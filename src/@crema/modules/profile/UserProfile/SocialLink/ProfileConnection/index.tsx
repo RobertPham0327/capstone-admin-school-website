@@ -1,22 +1,16 @@
-import React from "react";
-import { Col } from "antd";
-import AppRowContainer from "@crema/components/AppRowContainer";
-import Member from "./Member";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import {
-  StyledMemberItem,
-  StyledProfileConnection,
-  StyledProfileConnectionTitle,
-} from "./index.styled";
-import { MemberDataType } from "@crema/types/models/account";
+import React from 'react';
+import { Col } from 'antd';
+import AppRowContainer from '@crema/components/AppRowContainer';
+import Member from './Member';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { StyledMemberItem, StyledProfileConnection, StyledProfileConnectionTitle } from './index.styled';
+import { MemberDataType } from '@crema/types/models/account';
 
 type ProfileConnectionProps = {
   profileConnection: MemberDataType[];
 };
 
-const ProfileConnection: React.FC<ProfileConnectionProps> = ({
-  profileConnection,
-}) => {
+const ProfileConnection: React.FC<ProfileConnectionProps> = ({ profileConnection }) => {
   return (
     <StyledProfileConnection>
       <StyledProfileConnectionTitle>

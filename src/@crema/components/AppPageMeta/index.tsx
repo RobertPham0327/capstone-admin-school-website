@@ -2,18 +2,13 @@ import React, { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import Helmet from 'react-helmet';
 
-const SITE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'https://ant-cra.cremawork.com/';
+const SITE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://ant-cra.cremawork.com/';
 
 const FACEBOOK_APP_ID = 'XXXXXXXXX';
 
 const defaultTitle = 'Crema-Ant Design admin Template';
-const defaultDescription =
-  'Crema Ant is an Ant design based admin template. buid with CRA all ant library. ';
-const defaultImage =
-  'https://firebasestorage.googleapis.com/v0/b/crema-demo.appspot.com/o/logo512.png?alt=media';
+const defaultDescription = 'Crema Ant is an Ant design based admin template. buid with CRA all ant library. ';
+const defaultImage = 'https://firebasestorage.googleapis.com/v0/b/crema-demo.appspot.com/o/logo512.png?alt=media';
 const defaultTwitter = '@crema';
 const defaultSep = ' | ';
 
@@ -48,14 +43,10 @@ const AppPageMeta: React.FC<AppPageMetaProps> = ({ children, ...rest }) => {
       category = 'admin Template, admin Dashboard, ',
       tags = 'admin Template, admin Dashboard, CRA, Antd, Ant Design, Less, Create React App, Firebase, Aws Cognito, Jwt-Auth, Mail App, Todo App, ',
     }: AppPageMetaProps,
-    pathname: string
+    pathname: string,
   ) => {
-    const theTitle = title
-      ? (title + defaultSep + defaultTitle).substring(0, 60)
-      : defaultTitle;
-    const theDescription = description
-      ? description.substring(0, 155)
-      : defaultDescription;
+    const theTitle = title ? (title + defaultSep + defaultTitle).substring(0, 60) : defaultTitle;
+    const theDescription = description ? description.substring(0, 155) : defaultDescription;
     const theImage = image ? `${SITE_URL}${image}` : defaultImage;
 
     const metaTags = [
@@ -105,9 +96,7 @@ const AppPageMeta: React.FC<AppPageMetaProps> = ({ children, ...rest }) => {
           itemscope: undefined,
           itemtype: `http://schema.org/${rest.schema || 'admin Template'}`,
         }}
-        title={
-          rest.title ? rest.title + defaultSep + defaultTitle : defaultTitle
-        }
+        title={rest.title ? rest.title + defaultSep + defaultTitle : defaultTitle}
         link={[
           {
             rel: 'canonical',

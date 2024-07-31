@@ -1,14 +1,10 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import CheckBox from "./CheckBox";
-import ContactCheckedActions from "./ContactCheckedActions";
-import ViewSelectButtons from "./ViewSelectButtons";
-import {
-  StyledContactContentHeader,
-  StyledContactHeaderPagination,
-  StyledContactSearch,
-} from "../index.styled";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+import React from 'react';
+import { useIntl } from 'react-intl';
+import CheckBox from './CheckBox';
+import ContactCheckedActions from './ContactCheckedActions';
+import ViewSelectButtons from './ViewSelectButtons';
+import { StyledContactContentHeader, StyledContactHeaderPagination, StyledContactSearch } from '../index.styled';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type ContactHeaderProps = {
   apiData: {
@@ -62,21 +58,14 @@ const ContactHeader: React.FC<ContactHeaderProps> = ({
 
         <StyledContactSearch
           value={filterText}
-          onChange={(event) => onSetFilterText(event.target.value)}
-          placeholder={messages["common.searchHere"] as string}
+          onChange={event => onSetFilterText(event.target.value)}
+          placeholder={messages['common.searchHere'] as string}
         />
 
-        <ViewSelectButtons
-          pageView={pageView}
-          onChangePageView={onChangePageView}
-        />
+        <ViewSelectButtons pageView={pageView} onChangePageView={onChangePageView} />
       </StyledContactContentHeader>
       {apiData?.data?.length > 0 ? (
-        <StyledContactHeaderPagination
-          count={apiData?.count}
-          page={page}
-          onChange={onChange}
-        />
+        <StyledContactHeaderPagination count={apiData?.count} page={page} onChange={onChange} />
       ) : null}
     </>
   );

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import ItemMenu from "./ItemMenu";
-import { Checkbox } from "antd";
-import ActionBtnHover from "./ActionBtnHover";
+import React, { useState } from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import ItemMenu from './ItemMenu';
+import { Checkbox } from 'antd';
+import ActionBtnHover from './ActionBtnHover';
 import {
   StyledContactGridCard,
   StyledContactGridHeader,
@@ -15,8 +15,8 @@ import {
   StyledGridCardTitle,
   StyledIdcardOutlined,
   StyledPhoneOutlined,
-} from "../index.styled";
-import { ContactObjType, LabelObjType } from "@crema/types/models/apps/Contact";
+} from '../index.styled';
+import { ContactObjType, LabelObjType } from '@crema/types/models/apps/Contact';
 
 type ContactGridItemProps = {
   contact: ContactObjType;
@@ -42,14 +42,9 @@ const ContactGridItem: React.FC<ContactGridItemProps> = ({
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   return (
-    <StyledContactGridCard
-      className="card-hover"
-      onClick={() => onViewContactDetail(contact)}
-    >
+    <StyledContactGridCard className="card-hover" onClick={() => onViewContactDetail(contact)}>
       <StyledContactGridHeader>
-        <StyledContactGridHeaderCheckbox
-          onClick={(event) => event.stopPropagation()}
-        >
+        <StyledContactGridHeaderCheckbox onClick={event => event.stopPropagation()}>
           <Checkbox
             checked={checkedContacts.includes(contact.id)}
             onChange={() => {
@@ -62,14 +57,10 @@ const ContactGridItem: React.FC<ContactGridItemProps> = ({
         {contact.image ? (
           <StyledGridCardAvatar src={contact.image} />
         ) : (
-          <StyledGridCardAvatar>
-            {contact.name[0].toUpperCase()}
-          </StyledGridCardAvatar>
+          <StyledGridCardAvatar>{contact.name[0].toUpperCase()}</StyledGridCardAvatar>
         )}
 
-        <StyledGridCardActionHeader
-          onClick={(event) => event.stopPropagation()}
-        >
+        <StyledGridCardActionHeader onClick={event => event.stopPropagation()}>
           <ItemMenu
             onSelectContactsForDelete={onSelectContactsForDelete}
             contact={contact}
@@ -94,13 +85,7 @@ const ContactGridItem: React.FC<ContactGridItemProps> = ({
       <StyledGridCardAction>
         <StyledGridCardActionItem>
           <StyledIdcardOutlined />
-          <p className="text-truncate mb-0">
-            {contact.company ? (
-              contact.company
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
-          </p>
+          <p className="text-truncate mb-0">{contact.company ? contact.company : <IntlMessages id="common.na" />}</p>
         </StyledGridCardActionItem>
         <StyledGridCardActionItem>
           <StyledPhoneOutlined />

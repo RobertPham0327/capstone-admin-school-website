@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const StyledSalesStateCard = styled(AppCard)`
   position: relative;
-  
 
   & .ant-card-body {
     display: flex;

@@ -1,17 +1,8 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import defaultConfig from "@crema/constants/defaultConfig";
-import { LanguageProps } from "@crema/types/models/Apps";
-import {
-  useThemeActionsContext,
-  useThemeContext,
-} from "./ThemeContextProvider";
-import { LayoutDirection } from "@crema/constants/AppEnums";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import defaultConfig from '@crema/constants/defaultConfig';
+import { LanguageProps } from '@crema/types/models/Apps';
+import { useThemeActionsContext, useThemeContext } from './ThemeContextProvider';
+import { LayoutDirection } from '@crema/constants/AppEnums';
 
 export interface LocaleContextData {
   locale: LanguageProps;
@@ -38,9 +29,7 @@ interface LocaleContextProviderProps {
   children: ReactNode;
 }
 
-const LocaleContextProvider: React.FC<LocaleContextProviderProps> = ({
-  children,
-}) => {
+const LocaleContextProvider: React.FC<LocaleContextProviderProps> = ({ children }) => {
   const [locale, updateLocale] = useState<LanguageProps>(defaultConfig.locale);
 
   return (

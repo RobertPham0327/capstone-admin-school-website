@@ -9,19 +9,11 @@ type AppRowContainerProps = {
   [x: string]: any;
 };
 
-const AppRowContainer: React.FC<AppRowContainerProps> = ({
-  children,
-  style,
-  ...others
-}) => {
+const AppRowContainer: React.FC<AppRowContainerProps> = ({ children, style, ...others }) => {
   return (
     <StyledAppRowContainer style={style}>
       <AppAnimate>
-        <Row
-          style={{ flexDirection: 'row' }}
-          gutter={{ xs: 16, sm: 16, md: 32 }}
-          {...others}
-        >
+        <Row style={{ flexDirection: 'row' }} gutter={{ xs: 16, sm: 16, md: 32 }} {...others}>
           {children}
         </Row>
       </AppAnimate>

@@ -7,8 +7,7 @@ const { Search } = Input;
 
 export const StyledInputSearch = styled(Search)`
   width: 250px;
-
-`
+`;
 
 export const StyledTitle5 = styled.h5`
   color: ${({ theme }) => theme.palette.text.primary};
@@ -22,7 +21,6 @@ export const StyledTitle5 = styled.h5`
     margin-bottom: 16px;
   }
 `;
-
 
 export const StyledOrderHeader = styled.div`
   display: flex;
@@ -111,8 +109,7 @@ export const StyledOrderTable = styled(AppTableContainer)`
 
     &.order-table-action {
       text-align: center;
-      background-color: ${({ theme }) =>
-        theme.palette.background.paper} !important;
+      background-color: ${({ theme }) => theme.palette.background.paper} !important;
     }
   }
 
@@ -140,8 +137,7 @@ export const StyledOrderTable = styled(AppTableContainer)`
 
     &.order-table-action {
       text-align: center;
-      background-color: ${({ theme }) =>
-        theme.palette.background.paper} !important;
+      background-color: ${({ theme }) => theme.palette.background.paper} !important;
     }
   }
 

@@ -1,16 +1,12 @@
-import React from "react";
-import SenderMessageItem from "./SenderMessageItem";
-import ReceiverMessageItem from "./ReceiverMessageItem";
-import AppList from "@crema/components/AppList";
-import { AppAnimates } from "@crema/constants/AppEnums";
-import { StyledChatMsgList } from "./MessageItem.style";
-import {
-  ConnectionObjType,
-  MessageDataObjType,
-  MessageObjType,
-} from "@crema/types/models/apps/Chat";
-import { AuthUserType } from "@crema/types/models/AuthUser";
-import ListEmptyResult from "@crema/components/AppList/ListEmptyResult";
+import React from 'react';
+import SenderMessageItem from './SenderMessageItem';
+import ReceiverMessageItem from './ReceiverMessageItem';
+import AppList from '@crema/components/AppList';
+import { AppAnimates } from '@crema/constants/AppEnums';
+import { StyledChatMsgList } from './MessageItem.style';
+import { ConnectionObjType, MessageDataObjType, MessageObjType } from '@crema/types/models/apps/Chat';
+import { AuthUserType } from '@crema/types/models/AuthUser';
+import ListEmptyResult from '@crema/components/AppList/ListEmptyResult';
 
 type MessagesListProps = {
   userMessages: MessageObjType;
@@ -39,14 +35,10 @@ const MessagesList: React.FC<MessagesListProps> = ({
               <SenderMessageItem
                 authUser={authUser}
                 item={item}
-                isPreviousSender={
-                  index > 0 &&
-                  item.sender === userMessages.messageData[index - 1].sender
-                }
+                isPreviousSender={index > 0 && item.sender === userMessages.messageData[index - 1].sender}
                 isLast={
                   (index + 1 < userMessages.messageData.length &&
-                    item.sender !==
-                      userMessages.messageData[index + 1].sender) ||
+                    item.sender !== userMessages.messageData[index + 1].sender) ||
                   index + 1 === userMessages.messageData.length
                 }
                 key={item.id}
@@ -57,14 +49,10 @@ const MessagesList: React.FC<MessagesListProps> = ({
           } else {
             return (
               <ReceiverMessageItem
-                isPreviousSender={
-                  index > 0 &&
-                  item.sender === userMessages.messageData[index - 1].sender
-                }
+                isPreviousSender={index > 0 && item.sender === userMessages.messageData[index - 1].sender}
                 isLast={
                   (index + 1 < userMessages.messageData.length &&
-                    item.sender !==
-                      userMessages.messageData[index + 1].sender) ||
+                    item.sender !== userMessages.messageData[index + 1].sender) ||
                   index + 1 === userMessages.messageData.length
                 }
                 selectedUser={selectedUser}

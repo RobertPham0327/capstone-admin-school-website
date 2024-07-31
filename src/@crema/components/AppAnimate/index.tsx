@@ -23,7 +23,7 @@ type AppAnimateProps = {
 //   mobileHA: true,
 // };
 
-export const AppAnimate: React.FC<AppAnimateProps> = (props) => {
+export const AppAnimate: React.FC<AppAnimateProps> = props => {
   // const children = React.cloneElement(props.children, {
   //   style: {
   //     ...props.children.style,

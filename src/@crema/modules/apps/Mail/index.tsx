@@ -4,10 +4,4 @@ import ConnectionListItem from './MailSideBar/ConnectionListItem';
 import MailListItemMobile from './MailsList/MailListItemMobile';
 import ReplyMail from './MailDetail/MailDetailBody/ReplyMail';
 
-export {
-  MessageItem,
-  LabelItem,
-  ConnectionListItem,
-  MailListItemMobile,
-  ReplyMail,
-};
+export { MessageItem, LabelItem, ConnectionListItem, MailListItemMobile, ReplyMail };

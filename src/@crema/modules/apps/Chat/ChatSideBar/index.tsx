@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import UserInfo from "./UserInfo";
-import UserTabs from "./UserTabs";
-import dayjs from "dayjs";
-import { useIntl } from "react-intl";
-import { useAuthUser } from "@crema/hooks/AuthHooks";
+import React, { useState } from 'react';
+import UserInfo from './UserInfo';
+import UserTabs from './UserTabs';
+import dayjs from 'dayjs';
+import { useIntl } from 'react-intl';
+import { useAuthUser } from '@crema/hooks/AuthHooks';
 import {
   StyledChatSidebar,
   StyledChatSidebarSearch,
   StyledChatSidebarSearchView,
   StyledChatSidebarUserView,
-} from "./index.styled";
-import { ConnectionObjType } from "@crema/types/models/apps/Chat";
+} from './index.styled';
+import { ConnectionObjType } from '@crema/types/models/apps/Chat';
 
 type ChatSideBarProps = {
   selectedUser: ConnectionObjType | null;
@@ -19,34 +19,27 @@ type ChatSideBarProps = {
   loading: boolean | undefined;
 };
 
-const ChatSideBar: React.FC<ChatSideBarProps> = ({
-  selectedUser,
-  setSelectedUser,
-  connectionList,
-  loading,
-}) => {
-  const [keywords, setKeywords] = useState("");
+const ChatSideBar: React.FC<ChatSideBarProps> = ({ selectedUser, setSelectedUser, connectionList, loading }) => {
+  const [keywords, setKeywords] = useState('');
   const { user } = useAuthUser();
 
   const getConnectionList = () => {
-    if (keywords !== "") {
-      return connectionList.filter((item) =>
-        item.name.toUpperCase().includes(keywords.toUpperCase())
-      );
+    if (keywords !== '') {
+      return connectionList.filter(item => item.name.toUpperCase().includes(keywords.toUpperCase()));
     }
     return connectionList;
   };
 
   const getChatList = () => {
-    let chatsList = connectionList?.filter((item) => item.lastMessage) || [];
-    if (keywords !== "") {
+    let chatsList = connectionList?.filter(item => item.lastMessage) || [];
+    if (keywords !== '') {
       chatsList = chatsList?.filter((item: ConnectionObjType) =>
-        item.name.toUpperCase().includes(keywords.toUpperCase())
+        item.name.toUpperCase().includes(keywords.toUpperCase()),
       );
     }
     chatsList?.sort((a, b) => {
-      const momentA: any = dayjs(a.lastMessage!.time).format("X");
-      const momentB: any = dayjs(b.lastMessage!.time).format("X");
+      const momentA: any = dayjs(a.lastMessage!.time).format('X');
+      const momentB: any = dayjs(b.lastMessage!.time).format('X');
       return momentB - momentA;
     });
     return chatsList;
@@ -66,9 +59,9 @@ const ChatSideBar: React.FC<ChatSideBarProps> = ({
 
       <StyledChatSidebarSearchView>
         <StyledChatSidebarSearch
-          placeholder={messages["common.searchHere"] as string}
+          placeholder={messages['common.searchHere'] as string}
           value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
+          onChange={e => setKeywords(e.target.value)}
         />
       </StyledChatSidebarSearchView>
 

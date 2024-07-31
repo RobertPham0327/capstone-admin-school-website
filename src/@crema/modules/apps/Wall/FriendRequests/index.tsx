@@ -1,9 +1,9 @@
-import React from "react";
-import AppList from "@crema/components/AppList";
-import RequestItem from "./RequestItem";
-import { useIntl } from "react-intl";
-import { StyledRequestCard } from "./index.styled";
-import { FriendRequestObjType } from "@crema/types/models/apps/Wall";
+import React from 'react';
+import AppList from '@crema/components/AppList';
+import RequestItem from './RequestItem';
+import { useIntl } from 'react-intl';
+import { StyledRequestCard } from './index.styled';
+import { FriendRequestObjType } from '@crema/types/models/apps/Wall';
 
 type FriendRequestsProps = {
   friendRequests: FriendRequestObjType[];
@@ -15,7 +15,7 @@ const FriendRequests: React.FC<FriendRequestsProps> = ({ friendRequests }) => {
     <StyledRequestCard
       className="no-card-space-ltr-rtl"
       title={`Friends`}
-      extra={<a href="#/">{messages["common.viewAll"] as string}</a>}
+      extra={<a href="#/">{messages['common.viewAll'] as string}</a>}
     >
       <AppList
         animation="transition.slideRightBigIn"

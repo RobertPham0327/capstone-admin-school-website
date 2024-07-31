@@ -8,16 +8,12 @@ export const getFileExtension = (filename: string) => {
   return filename ? nameArray[0] : '';
 };
 
-export const downloadPdf = (
-  noDownload = false,
-  elementName = 'pdfdiv',
-  fileName = 'Invoice.pdf'
-) => {
+export const downloadPdf = (noDownload = false, elementName = 'pdfdiv', fileName = 'Invoice.pdf') => {
   const input = document.getElementById(elementName);
   const result = html2canvas(input as HTMLElement, {
     allowTaint: true,
     useCORS: true,
-  }).then((canvas) => {
+  }).then(canvas => {
     const doc = new JsPDF('p', 'mm', 'a4');
     const imgWidth = 200;
     const pageHeight = 290;
