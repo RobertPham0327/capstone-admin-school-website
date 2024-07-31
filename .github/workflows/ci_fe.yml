@@ -34,7 +34,7 @@ jobs:
           cache-dependency-path: "client/package-lock.json"
       - name: lint with reporting
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run lint:report
         continue-on-error: true
       - name: Upload ESLint report
