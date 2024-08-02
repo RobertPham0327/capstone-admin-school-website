@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_INITIAL_URL: '/',
+    NEXT_PUBLIC_INITIAL_URL: '/sample/page-2',
     NEXT_PUBLIC_STATE_TYPE: 'redux',
     NEXT_PUBLIC_FILESTACK_KEY: 'Ach6MsgoQHGK6tCaq5uJgz',
     NEXT_PUBLIC_LAYOUT: 'default',

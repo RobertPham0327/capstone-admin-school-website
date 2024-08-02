@@ -96,6 +96,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-render-html": "^0.6.0",
+    "react-router-dom": "^6.26.0",
     "react-share": "^4.4.1",
     "react-simple-maps": "^3.0.0",
     "react-slick": "^0.29.0",
