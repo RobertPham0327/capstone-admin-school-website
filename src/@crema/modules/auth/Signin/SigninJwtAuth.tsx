@@ -1,8 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useIntl } from 'react-intl';
-import { Checkbox, Form, Input } from 'antd';
-
+import { Checkbox } from 'antd';
+import { useRouter } from 'next/router';
 import IntlMessages from '@crema/helpers/IntlMessages';
 import { useAuthMethod } from '@crema/hooks/AuthHooks';
 import {
@@ -12,25 +10,53 @@ import {
   StyledSignContent,
   StyledSignForm,
   StyledSignLink,
-  StyledSignLinkTag,
-  StyledSignTextGrey,
 } from './index.styled';
+import AppInputFormItem from '@crema/components/AppForm/AppInputFormItem'; // Update the import statement
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const SignInJwtAuth = () => {
-  const navigate = useNavigate();
-  const { signInUser } = useAuthMethod();
+    const router = useRouter();
+    // const navigate = useNavigate();
+    const { signInUser } = useAuthMethod();
 
-  const onFinishFailed = (errorInfo:any) => {
-    console.log('Failed:', errorInfo);
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+  const onGoToForgetPassword = () => {
+    router.push('forget-password');
+    // navigate('/forget-password', { tab: 'jwtAuth' });
   };
 
-
-  function onRememberMe(e) {
+  function onRememberMe(e: CheckboxChangeEvent) {
     console.log(`checked = ${e.target.checked}`);
   }
 
-  const { messages } = useIntl();
-
+  const inputFieldArray = [
+    {
+      name: 'email',
+      placeholder: 'Email',
+      className: 'form-field',
+      rules: [
+        {
+          required: true,
+          message: 'Trường email không được bỏ trống',
+        },
+      ],
+    },
+    {
+      name: 'password',
+      type: 'password',
+      placeholder: 'Mật khẩu',
+      className: 'form-field',
+      rules: [
+        {
+          required: true,
+          message: 'Trường mật khẩu không được bỏ trống',
+        },
+      ],
+    },
+  ];
   return (
     <StyledSign>
       <StyledSignContent>
@@ -38,44 +64,30 @@ const SignInJwtAuth = () => {
           name="basic"
           initialValues={{
             remember: true,
-            email: 'crema.demo@gmail.com',
-            password: 'Pass@1!@all',
+            email: 'huy@example.com',
+            password: 'password',
           }}
-          onFinish={signInUser}
+          onFinish={signInUser as ((values: unknown) => void) | undefined}
           onFinishFailed={onFinishFailed}
         >
-          <Form.Item
-            name="email"
-            className="form-field"
-            rules={[{ required: true, message: 'Please input your Email!' }]}
-          >
-            <Input placeholder={messages['common.email'] as string} />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            className="form-field"
-            rules={[{ required: true, message: 'Please input your Password!' }]}
-          >
-            <Input.Password placeholder={messages['common.password'] as string} />
-          </Form.Item>
+          {inputFieldArray.map(field => (
+            <AppInputFormItem key={field.name} {...field} />
+          ))}
 
           <StyledRememberMe>
             <Checkbox onChange={onRememberMe}>
               <IntlMessages id="common.rememberMe" />
             </Checkbox>
+
+            <StyledSignLink onClick={onGoToForgetPassword}>
+              <IntlMessages id="common.forgetPassword" />
+            </StyledSignLink>
           </StyledRememberMe>
 
           <div className="form-btn-field">
             <SignInButton type="primary" htmlType="submit">
               <IntlMessages id="common.login" />
             </SignInButton>
-          </div>
-
-          <div className="form-field-action">
-            <StyledSignTextGrey>
-              <IntlMessages id="common.dontHaveAccount" />
-            </StyledSignTextGrey>
           </div>
         </StyledSignForm>
       </StyledSignContent>

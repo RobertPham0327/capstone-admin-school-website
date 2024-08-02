@@ -1,10 +1,11 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { AuthUserType } from '@crema/types/models/AuthUser';
+import { UserType } from '@crema/types/models/AuthUser';
 import jwtAxios, { setAuthToken } from './index';
 import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { getCsrfToken, getCurrentUser } from '@crema/services/api/auth';
 
 interface JWTAuthContextProps {
-  user: AuthUserType | null | undefined;
+  user: UserType | null | undefined;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -32,9 +33,9 @@ const JWTAuthContext = createContext<JWTAuthContextProps>({
   isLoading: true,
 });
 const JWTAuthActionsContext = createContext<JWTAuthActionsProps>({
-  signUpUser: () => {},
-  signInUser: () => {},
-  logout: () => {},
+  signUpUser: () => undefined,
+  signInUser: () => undefined,
+  logout: () => undefined,
 });
 
 export const useJWTAuth = () => useContext(JWTAuthContext);
@@ -46,18 +47,18 @@ interface JWTAuthAuthProviderProps {
 }
 
 const JWTAuthAuthProvider: React.FC<JWTAuthAuthProviderProps> = ({ children }) => {
+  const _ = getCsrfToken();
+  const { fetchApi: fetchCurrentUser } = getCurrentUser();
   const [firebaseData, setJWTAuthData] = useState<JWTAuthContextProps>({
     user: null,
     isAuthenticated: false,
     isLoading: true,
   });
-
   const infoViewActionsContext = useInfoViewActionsContext();
 
   useEffect(() => {
     const getAuthUser = () => {
       const token = localStorage.getItem('token');
-
       if (!token) {
         setJWTAuthData({
           user: undefined,
@@ -67,22 +68,22 @@ const JWTAuthAuthProvider: React.FC<JWTAuthAuthProviderProps> = ({ children }) =
         return;
       }
       setAuthToken(token);
-      jwtAxios
-        .get('/auth')
-        .then(({ data }) =>
+      fetchCurrentUser({
+        onSuccess(data) {
           setJWTAuthData({
             user: data,
             isLoading: false,
             isAuthenticated: true,
-          }),
-        )
-        .catch(() =>
+          });
+        },
+        onError() {
           setJWTAuthData({
             user: undefined,
             isLoading: false,
             isAuthenticated: false,
-          }),
-        );
+          });
+        },
+      });
     };
 
     getAuthUser();
@@ -91,30 +92,37 @@ const JWTAuthAuthProvider: React.FC<JWTAuthAuthProviderProps> = ({ children }) =
   const signInUser = async ({ email, password }: { email: string; password: string }) => {
     infoViewActionsContext.fetchStart();
     try {
-      const { data } = await jwtAxios.post('auth', { email, password });
-      localStorage.setItem('token', data.token);
-      setAuthToken(data.token);
-      const res = await jwtAxios.get('/auth');
+      const { data } = await jwtAxios.post('login', {
+        email,
+        password,
+      });
+      setAuthToken(data.data.token);
+      // const res = await jwtAxios.get("/auth");
       setJWTAuthData({
-        user: res.data,
+        user: data.data.admin,
         isAuthenticated: true,
         isLoading: false,
       });
       infoViewActionsContext.fetchSuccess();
-    } catch (error) {
+      location.reload();
+    } catch (error: any) {
       setJWTAuthData({
         ...firebaseData,
         isAuthenticated: false,
         isLoading: false,
       });
-      infoViewActionsContext.fetchError('Something went wrong');
+      infoViewActionsContext.fetchError(error?.response?.data?.messages);
     }
   };
 
   const signUpUser = async ({ name, email, password }: { name: string; email: string; password: string }) => {
     infoViewActionsContext.fetchStart();
     try {
-      const { data } = await jwtAxios.post('users', { name, email, password });
+      const { data } = await jwtAxios.post('users', {
+        name,
+        email,
+        password,
+      });
       localStorage.setItem('token', data.token);
       setAuthToken(data.token);
       const res = await jwtAxios.get('/auth');
@@ -124,13 +132,13 @@ const JWTAuthAuthProvider: React.FC<JWTAuthAuthProviderProps> = ({ children }) =
         isLoading: false,
       });
       infoViewActionsContext.fetchSuccess();
-    } catch (error) {
+    } catch (error: any) {
       setJWTAuthData({
         ...firebaseData,
         isAuthenticated: false,
         isLoading: false,
       });
-      infoViewActionsContext.fetchError('Something went wrong');
+      infoViewActionsContext.fetchError(error?.response?.data?.messages);
     }
   };
 
