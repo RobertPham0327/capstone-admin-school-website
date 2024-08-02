@@ -1,10 +1,10 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppAnimate from "@crema/components/AppAnimate";
-import { Button, Form, Input } from "antd";
-import { useIntl } from "react-intl";
-import AppPageMeta from "@crema/components/AppPageMeta";
-import Logo from "../../../../assets/icon/comingsoon.png";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppAnimate from '@crema/components/AppAnimate';
+import { Button, Form, Input } from 'antd';
+import { useIntl } from 'react-intl';
+import AppPageMeta from '@crema/components/AppPageMeta';
+import Logo from '../../../../assets/icon/comingsoon.png';
 import {
   StyledErrorContainer,
   StyledErrorContent,
@@ -12,17 +12,17 @@ import {
   StyledErrorFormComing,
   StyledErrorImageLg,
   StyledErrorPara,
-} from "../index.styled";
-import Image from "next/image";
+} from '../index.styled';
+import Image from 'next/image';
 
 const ComingSoon = () => {
   const { messages } = useIntl();
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -57,13 +57,9 @@ const ComingSoon = () => {
                 <Form.Item
                   name="email"
                   className="form-field"
-                  rules={[
-                    { required: true, message: "Please enter Email Address!" },
-                  ]}
+                  rules={[{ required: true, message: 'Please enter Email Address!' }]}
                 >
-                  <Input
-                    placeholder={messages["common.emailAddress"] as string}
-                  />
+                  <Input placeholder={messages['common.emailAddress'] as string} />
                 </Form.Item>
 
                 <Button type="primary" className="error-btn" htmlType="submit">

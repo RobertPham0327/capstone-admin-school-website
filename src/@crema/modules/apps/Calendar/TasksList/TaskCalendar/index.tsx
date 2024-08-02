@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { momentLocalizer, stringOrDate } from "react-big-calendar";
-import moment from "moment";
-import { StyledCalendar } from "./Calendar.style";
+import React, { useState } from 'react';
+import { momentLocalizer, stringOrDate } from 'react-big-calendar';
+import moment from 'moment';
+import { StyledCalendar } from './Calendar.style';
 // import "./calendar.css";
-import CustomToolbar from "./CustomToolbar";
-import TaskItem from "./TaskItem";
-import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
-import { useRouter } from "next/router";
+import CustomToolbar from './CustomToolbar';
+import TaskItem from './TaskItem';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
+import { useRouter } from 'next/router';
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
 
@@ -25,8 +25,8 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
   const router = useRouter();
   const { all } = router.query;
 
-  let folder = "";
-  let label = "";
+  let folder = '';
+  let label = '';
   if (all?.length === 2) {
     label = all[1];
   } else if (all?.length === 1) {
@@ -35,7 +35,7 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const onSelectDate = ({ start }: { start: any }) => {
-    console.log("start: ", start);
+    console.log('start: ', start);
     setSelectedDate(start);
     setAddTaskOpen(true);
   };
@@ -68,7 +68,7 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
     isAllDay: boolean;
   }) => {
     // onUpdateTask({ ...event, startDate: start, endDate: end });
-    console.log("resizeEvent: ", event, start, end);
+    console.log('resizeEvent: ', event, start, end);
   };
 
   const moveEvent = ({
@@ -87,7 +87,7 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
 
   const getEvents = () => {
     if (taskList?.length > 0)
-      return taskList.map((task) => {
+      return taskList.map(task => {
         return {
           ...task,
           title: task.title,
@@ -98,13 +98,13 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
     return [];
   };
 
-  console.log("taskList", taskList, getEvents());
+  console.log('taskList', taskList, getEvents());
 
   return (
     <DragAndDropCalendar
       localizer={localizer}
       events={getEvents()}
-      views={["month", "agenda"]}
+      views={['month', 'agenda']}
       tooltipAccessor={undefined}
       showMultiDayTimes
       resizable
@@ -112,12 +112,12 @@ const TaskCalender = ({ taskList, onUpdateTask, onSetFilterText }: Props) => {
       onEventDrop={moveEvent}
       onSelectEvent={onOpenAddTask}
       components={{
-        toolbar: (props) => (
+        toolbar: props => (
           <AppsHeader>
             <CustomToolbar onSetFilterText={onSetFilterText} {...props} />
           </AppsHeader>
         ),
-        event: (item) => <TaskItem key={item.title} item={item.event} />,
+        event: item => <TaskItem key={item.title} item={item.event} />,
       }}
       popup
       selectable

@@ -7,15 +7,11 @@ import {
   GET_USER_MESSAGES,
   SELECT_USER,
   TOGGLE_CHAT_DRAWER,
-} from "@crema/types/actions/Chat.actions";
-import {
-  ConnectionObjType,
-  MessageObjType,
-} from "@crema/types/models/apps/Chat";
-import { createAction } from "@reduxjs/toolkit";
+} from '@crema/types/actions/Chat.actions';
+import { ConnectionObjType, MessageObjType } from '@crema/types/models/apps/Chat';
+import { createAction } from '@reduxjs/toolkit';
 
-export const ConnectionListAction =
-  createAction<ConnectionObjType[]>(GET_CONNECTIONS_LIST);
+export const ConnectionListAction = createAction<ConnectionObjType[]>(GET_CONNECTIONS_LIST);
 
 export const ToggleDrawerAction = createAction(TOGGLE_CHAT_DRAWER);
 
@@ -40,7 +36,6 @@ export const DeleteAction = createAction<{
   userMessages: MessageObjType;
 }>(DELETE_MESSAGE);
 
-export const DeleteUserAction =
-  createAction<ConnectionObjType>(DELETE_USER_MESSAGES);
+export const DeleteUserAction = createAction<ConnectionObjType>(DELETE_USER_MESSAGES);
 
 export const SelectAction = createAction<ConnectionObjType>(SELECT_USER);

@@ -93,8 +93,7 @@ export const StyledContactFormContentField = styled.div`
 export const StyledContactFormFooter = styled.div`
   padding: 16px 32px;
   border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
-  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base}
-    ${({ theme }) => theme.sizes.borderRadius.base};
+  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base} ${({ theme }) => theme.sizes.borderRadius.base};
   text-align: right;
 
   [dir='rtl'] & {

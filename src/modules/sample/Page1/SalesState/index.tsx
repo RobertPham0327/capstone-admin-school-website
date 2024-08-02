@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import AppSelect from "@crema/components/AppSelect";
-import { useIntl } from "react-intl";
-import AppRowContainer from "@crema/components/AppRowContainer";
-import { Avatar, Col } from "antd";
-import MixBarChart from "./MixBarChart";
-import AppList from "@crema/components/AppList";
+import AppSelect from '@crema/components/AppSelect';
+import { useIntl } from 'react-intl';
+import AppRowContainer from '@crema/components/AppRowContainer';
+import { Avatar, Col } from 'antd';
+import MixBarChart from './MixBarChart';
+import AppList from '@crema/components/AppList';
 import data2 from './data2';
-import data from "./data";
+import data from './data';
 import {
   StyledReactPieChart,
   StyledSalesStateCard,
@@ -16,12 +16,9 @@ import {
   StyledSalesStateItemContent,
   StyledSalesStateMain,
   StyledSalesStateSubTitle,
-} from "./index.styled";
+} from './index.styled';
 
-import type {
-  ChartDataType,
-  SalesStateDataType,
-} from "@crema/types/models/dashboards/Analytics";
+import type { ChartDataType, SalesStateDataType } from '@crema/types/models/dashboards/Analytics';
 
 type SalesStateProps = {
   salesState: SalesStateDataType[];
@@ -30,27 +27,23 @@ type SalesStateProps = {
 
 const SalesState: React.FC<SalesStateProps> = () => {
   const handleSelectionType = (data: any) => {
-    console.log("data: ", data);
+    console.log('data: ', data);
   };
   const { messages } = useIntl();
   return (
     <StyledSalesStateCard
-      title={messages["dashboard.analytics.salesState"]}
+      title={messages['dashboard.analytics.salesState']}
       heightFull
       extra={
         <AppSelect
-          menus={[
-            messages["dashboard.thisWeek"],
-            messages["dashboard.lastWeeks"],
-            messages["dashboard.lastMonth"],
-          ]}
-          defaultValue={messages["dashboard.thisWeek"]}
+          menus={[messages['dashboard.thisWeek'], messages['dashboard.lastWeeks'], messages['dashboard.lastMonth']]}
+          defaultValue={messages['dashboard.thisWeek']}
           onChange={handleSelectionType}
         />
       }
     >
       <StyledSalesStateSubTitle>
-        <>1343 {messages["dashboard.analytics.salesThisWeek"]}</>
+        <>1343 {messages['dashboard.analytics.salesThisWeek']}</>
       </StyledSalesStateSubTitle>
 
       <StyledSalesStateMain>
@@ -65,8 +58,8 @@ const SalesState: React.FC<SalesStateProps> = () => {
             <StyledSalesStateContent>
               <AppList
                 data={data2.salesState}
-                renderItem={(item) => (
-                  <StyledSalesStateItem key={"salesState-" + item.id}>
+                renderItem={item => (
+                  <StyledSalesStateItem key={'salesState-' + item.id}>
                     <Avatar src={item.icon} alt="icon" />
 
                     <StyledSalesStateItemContent>

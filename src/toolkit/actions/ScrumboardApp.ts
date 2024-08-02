@@ -11,30 +11,26 @@ import {
   GET_BOARDS,
   GET_MEMBER_LIST,
   GET_SCRUM_LABEL_LIST,
-} from "@crema/constants/ActionTypes";
-import { appIntl } from "@crema/helpers/Common";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { fetchError, fetchStart, fetchSuccess, showMessage } from "./Common";
-import { Dispatch } from "redux";
-import { AppActions } from "@crema/types/actions";
-import {
-  BoardObjType,
-  CardListObjType,
-  CardObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
+} from '@crema/constants/ActionTypes';
+import { appIntl } from '@crema/helpers/Common';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { fetchError, fetchStart, fetchSuccess, showMessage } from './Common';
+import { Dispatch } from 'redux';
+import { AppActions } from '@crema/types/actions';
+import { BoardObjType, CardListObjType, CardObjType } from '@crema/types/models/apps/ScrumbBoard';
 
 export const onGetBoardList = () => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/scrumboard/board/list")
+      .get('/api/scrumboard/board/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_BOARDS, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -43,13 +39,7 @@ export const onGetBoardList = () => {
   };
 };
 
-export const onUpdateCardCategory = (
-  cardId: any,
-  sourceLaneId: any,
-  categoryId: any,
-  position: any,
-  boardId: any
-) => {
+export const onUpdateCardCategory = (cardId: any, sourceLaneId: any, categoryId: any, position: any, boardId: any) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
@@ -66,11 +56,11 @@ export const onUpdateCardCategory = (
           dispatch(fetchSuccess());
           dispatch({ type: EDIT_BOARD_DETAIL, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
-        dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
       });
   };
 };
@@ -80,13 +70,13 @@ export const onGetScrumLabelList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/scrumboard/label/list")
+      .get('/api/scrumboard/label/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_SCRUM_LABEL_LIST, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -100,13 +90,13 @@ export const onGetMemberList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/scrumboard/member/list")
+      .get('/api/scrumboard/member/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_MEMBER_LIST, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -120,14 +110,14 @@ export const onEditBoardDetail = (board: BoardObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/scrumboard/edit/board", { board })
+      .put('/api/scrumboard/edit/board', { board })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: EDIT_BOARD_DETAIL, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.boardEdited"])));
+          dispatch(showMessage(String(messages['scrumBoard.boardEdited'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -141,7 +131,7 @@ export const onGetBoardDetail = (id: number | string) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/scrumboard/board/", {
+      .get('/api/scrumboard/board/', {
         params: {
           id: id,
         },
@@ -151,7 +141,7 @@ export const onGetBoardDetail = (id: number | string) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_BOARD_DETAIL, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -165,14 +155,14 @@ export const onAddNewBoard = (board: BoardObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/add/board", { board })
+      .post('/api/scrumboard/add/board', { board })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: ADD_NEW_BOARD, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.boardAdded"])));
+          dispatch(showMessage(String(messages['scrumBoard.boardAdded'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -186,14 +176,14 @@ export const onAddNewList = (boardId: number, list: CardListObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/add/list", { boardId, list })
+      .post('/api/scrumboard/add/list', { boardId, list })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: ADD_BOARD_LIST, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.listAdded"])));
+          dispatch(showMessage(String(messages['scrumBoard.listAdded'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -207,13 +197,13 @@ export const onEditBoardList = (boardId: number, list: CardListObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/scrumboard/edit/list", { boardId, list })
+      .put('/api/scrumboard/edit/list', { boardId, list })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
-          dispatch(showMessage(String(messages["scrumBoard.listEdited"])));
+          dispatch(showMessage(String(messages['scrumBoard.listEdited'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -222,23 +212,19 @@ export const onEditBoardList = (boardId: number, list: CardListObjType) => {
   };
 };
 
-export const onAddNewCard = (
-  board: BoardObjType,
-  list: CardListObjType,
-  card: CardObjType
-) => {
+export const onAddNewCard = (board: BoardObjType, list: CardListObjType, card: CardObjType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/add/card", { board, list, card })
+      .post('/api/scrumboard/add/card', { board, list, card })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: ADD_LIST_CARD, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.cardAdded"])));
+          dispatch(showMessage(String(messages['scrumBoard.cardAdded'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -247,23 +233,19 @@ export const onAddNewCard = (
   };
 };
 
-export const onEditCardDetails = (
-  board: BoardObjType,
-  list: CardListObjType,
-  card: CardObjType
-) => {
+export const onEditCardDetails = (board: BoardObjType, list: CardListObjType, card: CardObjType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/scrumboard/edit/card", { board, list, card })
+      .put('/api/scrumboard/edit/card', { board, list, card })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: EDIT_LIST_CARD, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.cardEdited"])));
+          dispatch(showMessage(String(messages['scrumBoard.cardEdited'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -272,23 +254,19 @@ export const onEditCardDetails = (
   };
 };
 
-export const onDeleteSelectedCard = (
-  boardId: number,
-  listId: number,
-  cardId: number
-) => {
+export const onDeleteSelectedCard = (boardId: number, listId: number, cardId: number) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/delete/card", { boardId, listId, cardId })
+      .post('/api/scrumboard/delete/card', { boardId, listId, cardId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_LIST_CARD, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.cardDeleted"])));
+          dispatch(showMessage(String(messages['scrumBoard.cardDeleted'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -302,13 +280,13 @@ export const onDeleteSelectedBoard = (boardId: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/delete/board", { boardId })
+      .post('/api/scrumboard/delete/board', { boardId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_BOARD, payload: data.data });
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {
@@ -322,14 +300,14 @@ export const onDeleteSelectedList = (boardId: number, listId: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/scrumboard/delete/list", { boardId, listId })
+      .post('/api/scrumboard/delete/list', { boardId, listId })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_LIST, payload: data.data });
-          dispatch(showMessage(String(messages["scrumBoard.listDeleted"])));
+          dispatch(showMessage(String(messages['scrumBoard.listDeleted'])));
         } else {
-          dispatch(fetchError(String(messages["message.somethingWentWrong"])));
+          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
       .catch((error: any) => {

@@ -1,8 +1,8 @@
-import React from "react";
-import { Layout } from "antd";
-import { ThemeMode } from "@crema/constants/AppEnums";
-import { useThemeContext } from "@crema/context/AppContextProvider/ThemeContextProvider";
-import { useSidebarContext } from "@crema/context/AppContextProvider/SidebarContextProvider";
+import React from 'react';
+import { Layout } from 'antd';
+import { ThemeMode } from '@crema/constants/AppEnums';
+import { useThemeContext } from '@crema/context/AppContextProvider/ThemeContextProvider';
+import { useSidebarContext } from '@crema/context/AppContextProvider/SidebarContextProvider';
 
 const { Sider } = Layout;
 
@@ -12,15 +12,9 @@ type Props = {
   collapsed?: boolean;
   [key: string]: any;
 };
-const MainSidebar: React.FC<Props> = ({
-  children,
-  className,
-  collapsed = false,
-  ...props
-}) => {
+const MainSidebar: React.FC<Props> = ({ children, className, collapsed = false, ...props }) => {
   const { themeMode } = useThemeContext();
-  const { sidebarColorSet, allowSidebarBgImage, sidebarBgImageId } =
-    useSidebarContext();
+  const { sidebarColorSet, allowSidebarBgImage, sidebarBgImageId } = useSidebarContext();
 
   return (
     <Sider
@@ -30,9 +24,7 @@ const MainSidebar: React.FC<Props> = ({
       style={{
         backgroundColor: sidebarColorSet.sidebarBgColor,
         color: sidebarColorSet.sidebarTextColor,
-        backgroundImage: allowSidebarBgImage
-          ? `url(/assets/images/sidebar/images/${sidebarBgImageId}.png)`
-          : "",
+        backgroundImage: allowSidebarBgImage ? `url(/assets/images/sidebar/images/${sidebarBgImageId}.png)` : '',
       }}
       collapsed={collapsed}
       {...props}

@@ -10,30 +10,20 @@ import {
   UPDATE_INVOICE_SETTINGS,
   UPDATE_INVOICE,
   GET_CLIENT_DETAIL,
-} from "@crema/types/actions/Invoice.action";
-import { appIntl } from "@crema/helpers/Common";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { Dispatch } from "redux";
-import { AppActions } from "@crema/types/actions";
-import { fetchError, fetchStart, fetchSuccess } from "./Common";
-import {
-  ClientType,
-  InvoiceSettingType,
-  InvoiceType,
-} from "@crema/types/models/invoice";
+} from '@crema/types/actions/Invoice.action';
+import { appIntl } from '@crema/helpers/Common';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { Dispatch } from 'redux';
+import { AppActions } from '@crema/types/actions';
+import { fetchError, fetchStart, fetchSuccess } from './Common';
+import { ClientType, InvoiceSettingType, InvoiceType } from '@crema/types/models/invoice';
 
-export const onGetInvoiceList = ({
-  folder,
-  page,
-}: {
-  folder?: string;
-  page: number;
-}) => {
+export const onGetInvoiceList = ({ folder, page }: { folder?: string; page: number }) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/invoice/list", {
+      .get('/api/invoice/list', {
         params: { folder, page },
       })
       .then((data: any) => {
@@ -41,9 +31,7 @@ export const onGetInvoiceList = ({
           dispatch(fetchSuccess());
           dispatch({ type: GET_INVOICE_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -57,15 +45,13 @@ export const onGetInvoiceFolderList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/invoice/folders/list")
+      .get('/api/invoice/folders/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_INVOICE_FOLDER_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -79,15 +65,13 @@ export const onGetInvoiceSettings = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/invoice/settings")
+      .get('/api/invoice/settings')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_INVOICE_SETTINGS, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -100,15 +84,13 @@ export const onGetClientList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/invoice/clients")
+      .get('/api/invoice/clients')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CLIENT_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -122,7 +104,7 @@ export const onGetInvoiceDetail = (id: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/invoice/detail", {
+      .get('/api/invoice/detail', {
         params: {
           id,
         },
@@ -132,9 +114,7 @@ export const onGetInvoiceDetail = (id: number) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_INVOICE_DETAIL, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -147,7 +127,7 @@ export const onGetClientDetail = (id: string) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/clients/detail", {
+      .get('/api/clients/detail', {
         params: {
           id,
         },
@@ -157,9 +137,7 @@ export const onGetClientDetail = (id: string) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CLIENT_DETAIL, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -172,7 +150,7 @@ export const onAddInvoice = (invoice: InvoiceType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .post("/api/invoice/list/add", { invoice })
+      .post('/api/invoice/list/add', { invoice })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch({
@@ -180,9 +158,7 @@ export const onAddInvoice = (invoice: InvoiceType) => {
             payload: data.data,
           });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -195,7 +171,7 @@ export const onAddClient = (client: ClientType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .post("/api/invoice/clients/add", { client })
+      .post('/api/invoice/clients/add', { client })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch({
@@ -203,9 +179,7 @@ export const onAddClient = (client: ClientType) => {
             payload: data.data,
           });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -218,7 +192,7 @@ export const onUpdateInvoice = (invoice: InvoiceType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .put("/api/invoice/list/update", { invoice })
+      .put('/api/invoice/list/update', { invoice })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -227,9 +201,7 @@ export const onUpdateInvoice = (invoice: InvoiceType) => {
             payload: data.data,
           });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -242,7 +214,7 @@ export const onUpdateClient = (client: ClientType) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .put("/api/invoice/clients/update", { client })
+      .put('/api/invoice/clients/update', { client })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -251,9 +223,7 @@ export const onUpdateClient = (client: ClientType) => {
             payload: data.data,
           });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -266,7 +236,7 @@ export const onUpdateSettings = (settings: Partial<InvoiceSettingType>) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     jwtAxios
-      .put("/api/invoice/settings/update", settings)
+      .put('/api/invoice/settings/update', settings)
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -275,9 +245,7 @@ export const onUpdateSettings = (settings: Partial<InvoiceSettingType>) => {
             payload: data.data,
           });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {

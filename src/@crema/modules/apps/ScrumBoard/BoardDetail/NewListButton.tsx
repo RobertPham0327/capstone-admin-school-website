@@ -10,10 +10,9 @@ import {
 
 type NewListButtonProps = {
   onClick: () => void;
-}
+};
 
 const NewListButton: React.FC<NewListButtonProps> = ({ onClick }) => {
-
   return (
     <StyledScrumBoardAddListCard>
       <StyledScrumBoardAddList>
@@ -21,7 +20,7 @@ const NewListButton: React.FC<NewListButtonProps> = ({ onClick }) => {
           <MdAdd />
         </StyledScrumBoardAddIcon>
         <StyledScrumBoardAddText>
-          <IntlMessages id='scrumboard.addAList' />
+          <IntlMessages id="scrumboard.addAList" />
         </StyledScrumBoardAddText>
       </StyledScrumBoardAddList>
     </StyledScrumBoardAddListCard>
@@ -29,4 +28,3 @@ const NewListButton: React.FC<NewListButtonProps> = ({ onClick }) => {
 };
 
 export default NewListButton;
-

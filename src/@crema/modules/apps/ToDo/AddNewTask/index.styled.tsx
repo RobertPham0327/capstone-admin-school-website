@@ -57,8 +57,7 @@ export const StyledAddTaskFormDate = styled(DatePicker)`
 export const StyledTodoModalFooter = styled.div`
   border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
   padding: 8px 10px;
-  border-radius: 0 0 ${({ theme }) => theme.cardRadius}
-    ${({ theme }) => theme.cardRadius};
+  border-radius: 0 0 ${({ theme }) => theme.cardRadius} ${({ theme }) => theme.cardRadius};
   text-align: right;
 
   [dir='rtl'] & {

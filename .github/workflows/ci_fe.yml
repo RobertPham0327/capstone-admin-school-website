@@ -1,0 +1,62 @@
+name: 💄 CI Frontend My Kidz Website
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          concurrent_skipping: "never"
+          skip_after_successful_duplicate: "true"
+          paths: '["client/**"]'
+          do_not_skip: '["workflow_dispatch", "schedule"]'
+
+  eslint:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client/
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "client/package-lock.json"
+      - name: lint with reporting
+        run: |
+          npm install --legacy-peer-deps
+          npm run lint:report
+        continue-on-error: true
+      - name: Upload ESLint report
+        uses: actions/upload-artifact@v2
+        with:
+          name: eslint_report.json
+          path: client/eslint_report.json
+
+  compile:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client/
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "client/package-lock.json"
+      - run: npm install
+      - run: npm install -g typescript
+      - run: npm run check

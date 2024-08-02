@@ -12,29 +12,21 @@ import {
   GET_BOARDS,
   GET_MEMBER_LIST,
   GET_SCRUM_LABEL_LIST,
-} from "@crema/types/actions/Scrumboard.actions";
-import {
-  BoardObjType,
-  LabelObjType,
-  MemberObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
-import { createAction } from "@reduxjs/toolkit";
+} from '@crema/types/actions/Scrumboard.actions';
+import { BoardObjType, LabelObjType, MemberObjType } from '@crema/types/models/apps/ScrumbBoard';
+import { createAction } from '@reduxjs/toolkit';
 
-export const GetMemberListAction =
-  createAction<MemberObjType[]>(GET_MEMBER_LIST);
+export const GetMemberListAction = createAction<MemberObjType[]>(GET_MEMBER_LIST);
 
-export const GetScrumLabelAction =
-  createAction<LabelObjType[]>(GET_SCRUM_LABEL_LIST);
+export const GetScrumLabelAction = createAction<LabelObjType[]>(GET_SCRUM_LABEL_LIST);
 
 export const GetBoardsAction = createAction<BoardObjType[]>(GET_BOARDS);
 
-export const GetBoardDetailAction =
-  createAction<BoardObjType>(GET_BOARD_DETAIL);
+export const GetBoardDetailAction = createAction<BoardObjType>(GET_BOARD_DETAIL);
 
 export const AddNewBoardAction = createAction<BoardObjType[]>(ADD_NEW_BOARD);
 
-export const EditBoardDetailAction =
-  createAction<BoardObjType>(EDIT_BOARD_DETAIL);
+export const EditBoardDetailAction = createAction<BoardObjType>(EDIT_BOARD_DETAIL);
 
 export const DeleteBoardAction = createAction<number>(DELETE_BOARD);
 
@@ -48,5 +40,4 @@ export const AddListCardAction = createAction<BoardObjType>(ADD_LIST_CARD);
 
 export const EditListCardAction = createAction<BoardObjType>(EDIT_LIST_CARD);
 
-export const DeleteListCardAction =
-  createAction<BoardObjType>(DELETE_LIST_CARD);
+export const DeleteListCardAction = createAction<BoardObjType>(DELETE_LIST_CARD);

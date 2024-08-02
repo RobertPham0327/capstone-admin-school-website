@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
-import { useIntl } from "react-intl";
-import { Button, Input } from "antd";
-import {
-  StyledAddNewMessage,
-  StyledNewMessageAction,
-  StyledNewMsgActionFirst,
-} from "../index.styled";
-import { generateUniqueID } from "@crema/helpers/StringHelper";
-import { MessageDataObjType, MessageType } from "@crema/types/models/apps/Chat";
+import React, { useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { PaperClipOutlined, SendOutlined } from '@ant-design/icons';
+import { useIntl } from 'react-intl';
+import { Button, Input } from 'antd';
+import { StyledAddNewMessage, StyledNewMessageAction, StyledNewMsgActionFirst } from '../index.styled';
+import { generateUniqueID } from '@crema/helpers/StringHelper';
+import { MessageDataObjType, MessageType } from '@crema/types/models/apps/Chat';
 
 type AddNewMessageProps = {
   sendFileMessage: (message: MessageDataObjType) => void;
@@ -17,19 +13,15 @@ type AddNewMessageProps = {
   currentMessage: string | undefined;
 };
 
-const AddNewMessage: React.FC<AddNewMessageProps> = ({
-  sendFileMessage,
-  onSendMessage,
-  currentMessage = "",
-}) => {
+const AddNewMessage: React.FC<AddNewMessageProps> = ({ sendFileMessage, onSendMessage, currentMessage = '' }) => {
   const [message, setMessage] = useState(currentMessage);
   const { getRootProps, getInputProps } = useDropzone({
     multiple: true,
-    onDrop: (acceptedFiles) => {
+    onDrop: acceptedFiles => {
       sendFileMessage({
-        message: "",
+        message: '',
         message_type: MessageType.MEDIA,
-        media: acceptedFiles.map((file) => {
+        media: acceptedFiles.map(file => {
           return {
             id: generateUniqueID(),
             url: URL.createObjectURL(file),
@@ -47,7 +39,7 @@ const AddNewMessage: React.FC<AddNewMessageProps> = ({
   }, [currentMessage]);
 
   const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       onClickSendMessage();
     }
   };
@@ -55,7 +47,7 @@ const AddNewMessage: React.FC<AddNewMessageProps> = ({
   const onClickSendMessage = () => {
     if (message) {
       onSendMessage(message);
-      setMessage("");
+      setMessage('');
     }
   };
 
@@ -64,10 +56,10 @@ const AddNewMessage: React.FC<AddNewMessageProps> = ({
   return (
     <StyledAddNewMessage>
       <StyledNewMsgActionFirst>
-        {message === "" ? (
+        {message === '' ? (
           <Button
             {...getRootProps({
-              className: "message-btn dropzone",
+              className: 'message-btn dropzone',
             })}
           >
             <input {...getInputProps()} />
@@ -76,10 +68,10 @@ const AddNewMessage: React.FC<AddNewMessageProps> = ({
         ) : null}
       </StyledNewMsgActionFirst>
       <Input
-        placeholder={messages["chatApp.sendMessagePlaceholder"] as string}
+        placeholder={messages['chatApp.sendMessagePlaceholder'] as string}
         value={message}
-        onChange={(event) => {
-          if (event.target.value !== "\n") setMessage(event.target.value);
+        onChange={event => {
+          if (event.target.value !== '\n') setMessage(event.target.value);
         }}
         onKeyPress={onKeyPress}
       />

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Popover, Space, Tooltip } from "antd";
-import AppIconButton from "@crema/components/AppIconButton";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { HiOutlineReply } from "react-icons/hi";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import { RiShareForwardLine } from "react-icons/ri";
+import React, { useState } from 'react';
+import { Popover, Space, Tooltip } from 'antd';
+import AppIconButton from '@crema/components/AppIconButton';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { HiOutlineReply } from 'react-icons/hi';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import { RiShareForwardLine } from 'react-icons/ri';
 // @ts-ignore
-import renderHTML from "react-render-html";
-import ReplyMail from "./ReplyMail";
-import { BiChevronDown } from "react-icons/bi";
-import { getFormattedDate } from "@crema/helpers/DateHelper";
-import { getStringFromHtml } from "@crema/helpers/StringHelper";
+import renderHTML from 'react-render-html';
+import ReplyMail from './ReplyMail';
+import { BiChevronDown } from 'react-icons/bi';
+import { getFormattedDate } from '@crema/helpers/DateHelper';
+import { getStringFromHtml } from '@crema/helpers/StringHelper';
 import {
   StyledMailDescItem,
   StyledMailDescName,
@@ -26,8 +26,8 @@ import {
   StyledMailDetailUser,
   StyledMailDetailUserContent,
   StyledMailDetailUserDesc,
-} from "../index.styled";
-import { MessageType } from "@crema/types/models/apps/Mail";
+} from '../index.styled';
+import { MessageType } from '@crema/types/models/apps/Mail';
 
 type ReplyMailProps = {
   message: MessageType;
@@ -37,13 +37,7 @@ type ReplyMailProps = {
   onChangeStarred: (message: MessageType, isStarred: boolean) => void;
 };
 
-const MessageItem: React.FC<ReplyMailProps> = ({
-  message,
-  mailLength,
-  index,
-  onSubmitMail,
-  onChangeStarred,
-}) => {
+const MessageItem: React.FC<ReplyMailProps> = ({ message, mailLength, index, onSubmitMail, onChangeStarred }) => {
   const [isExpanded, setExpanded] = useState(mailLength === index + 1);
 
   const [{ isReply, isForward }, onSelectMethod] = useState({
@@ -84,21 +78,17 @@ const MessageItem: React.FC<ReplyMailProps> = ({
   const getHeaderDescription = () => {
     if (isExpanded) {
       return (
-        <Tooltip title={message.to.map((user) => user.name)} placement="bottom">
-          <Popover
-            placement="bottomLeft"
-            content={mailDescription}
-            trigger="click"
-          >
+        <Tooltip title={message.to.map(user => user.name)} placement="bottom">
+          <Popover placement="bottomLeft" content={mailDescription} trigger="click">
             <span
               className="pointer"
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                whiteSpace: "nowrap",
+                display: 'inline-flex',
+                alignItems: 'center',
+                whiteSpace: 'nowrap',
               }}
             >
-              {`to ${message.to.map((user) => user.email).toString()}`}
+              {`to ${message.to.map(user => user.email).toString()}`}
               <span style={{ marginTop: 5, fontSize: 18 }}>
                 <BiChevronDown />
               </span>
@@ -108,10 +98,7 @@ const MessageItem: React.FC<ReplyMailProps> = ({
       );
     } else {
       return (
-        <StyledMailDetailUserDesc
-          className="text-truncate"
-          style={{ display: "block" }}
-        >
+        <StyledMailDetailUserDesc className="text-truncate" style={{ display: 'block' }}>
           {getStringFromHtml(message.description)}
         </StyledMailDetailUserDesc>
       );
@@ -134,26 +121,20 @@ const MessageItem: React.FC<ReplyMailProps> = ({
           <StyledMailDetailUserContent>
             <Space size={0}>
               <h3 className="mb-0">{message.sender.name}</h3>
-              {isExpanded ? (
-                <StyledMailDetailBreakAll>{`<${message.sender.email}>`}</StyledMailDetailBreakAll>
-              ) : null}
+              {isExpanded ? <StyledMailDetailBreakAll>{`<${message.sender.email}>`}</StyledMailDetailBreakAll> : null}
             </Space>
             <div>{getHeaderDescription()}</div>
           </StyledMailDetailUserContent>
         </StyledMailDetailUser>
 
         <StyledMailDetailBodyHeaderAction>
-          <StyledMailDetailDate>
-            {onGetMailDate(message.sentOn)}
-          </StyledMailDetailDate>
+          <StyledMailDetailDate>{onGetMailDate(message.sentOn)}</StyledMailDetailDate>
           <StyledMailDetailSubjectHeaderAction>
             {isExpanded ? (
               <AppIconButton
                 title={<IntlMessages id="common.reply" />}
                 icon={<HiOutlineReply />}
-                onClick={() =>
-                  onSelectMethod({ isReply: true, isForward: false })
-                }
+                onClick={() => onSelectMethod({ isReply: true, isForward: false })}
               />
             ) : null}
 
@@ -170,20 +151,14 @@ const MessageItem: React.FC<ReplyMailProps> = ({
               <AppIconButton
                 title={<IntlMessages id="common.forward" />}
                 icon={<RiShareForwardLine />}
-                onClick={() =>
-                  onSelectMethod({ isReply: false, isForward: true })
-                }
+                onClick={() => onSelectMethod({ isReply: false, isForward: true })}
               />
             ) : null}
           </StyledMailDetailSubjectHeaderAction>
         </StyledMailDetailBodyHeaderAction>
       </StyledMailDetailBodyHeader>
 
-      {isExpanded ? (
-        <StyledMailDetailDesc>
-          {renderHTML(message.description)}
-        </StyledMailDetailDesc>
-      ) : null}
+      {isExpanded ? <StyledMailDetailDesc>{renderHTML(message.description)}</StyledMailDetailDesc> : null}
       {isReply || isForward ? (
         <ReplyMail
           isForward={isForward}

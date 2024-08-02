@@ -1,8 +1,8 @@
-import React from "react";
-import { Dropdown } from "antd";
-import { green, red } from "@ant-design/colors";
-import { DownOutlined } from "@ant-design/icons";
-import { BiCheck } from "react-icons/bi";
+import React from 'react';
+import { Dropdown } from 'antd';
+import { green, red } from '@ant-design/colors';
+import { DownOutlined } from '@ant-design/icons';
+import { BiCheck } from 'react-icons/bi';
 
 import {
   StyledChatUserAvatar,
@@ -14,9 +14,9 @@ import {
   StyledChatUserStatusDot,
   StyledChatUserStatusText,
   StyledDropDownItem,
-} from "./userInfo.styled";
-import { ConnectionObjType } from "@crema/types/models/apps/Chat";
-import IntlMessages from "@crema/helpers/IntlMessages";
+} from './userInfo.styled';
+import { ConnectionObjType } from '@crema/types/models/apps/Chat';
+import IntlMessages from '@crema/helpers/IntlMessages';
 
 type UserInfoProps = {
   user: ConnectionObjType;
@@ -24,11 +24,7 @@ type UserInfoProps = {
   showStatusActive?: boolean;
 };
 
-const UserInfo: React.FC<UserInfoProps> = ({
-  user,
-  showStatus = false,
-  showStatusActive,
-}) => {
+const UserInfo: React.FC<UserInfoProps> = ({ user, showStatus = false, showStatusActive }) => {
   const getUserAvatar = () => {
     const name = user.name;
     if (name) {
@@ -93,7 +89,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
               <StyledChatUserStatusDot
                 className="chat-user-status-dot chat-user-status-dot-only"
                 style={{
-                  backgroundColor: user.status === "online" ? green[6] : red[6],
+                  backgroundColor: user.status === 'online' ? green[6] : red[6],
                 }}
               />
             )}
@@ -102,14 +98,11 @@ const UserInfo: React.FC<UserInfoProps> = ({
             <StyledChatUserStatusDot
               className="chat-user-status-dot"
               style={{
-                backgroundColor: user.status === "online" ? green[6] : red[6],
+                backgroundColor: user.status === 'online' ? green[6] : red[6],
               }}
             />
-            <Dropdown menu={{ items }} trigger={["click"]}>
-              <a
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 <DownOutlined />
               </a>
             </Dropdown>
@@ -118,9 +111,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
       </StyledChatUserAvatarView>
       <StyledChatUserInfoContext>
         <StyledChatUserName className="text-truncate">
-          {user.displayName || user.name
-            ? user.displayName || user.name
-            : user.email}
+          {user.displayName || user.name ? user.displayName || user.name : user.email}
         </StyledChatUserName>
         {user.isGroup ? (
           <StyledChatUserStatusText className="pointer">
@@ -128,7 +119,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
           </StyledChatUserStatusText>
         ) : (
           <StyledChatUserStatusText className="text-truncate">
-            {user.status ? user.status : "Online"}
+            {user.status ? user.status : 'Online'}
           </StyledChatUserStatusText>
         )}
       </StyledChatUserInfoContext>

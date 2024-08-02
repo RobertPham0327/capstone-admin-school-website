@@ -1,6 +1,6 @@
 import React from 'react';
-import { PiStudentBold } from "react-icons/pi";
-import { TbDeviceDesktopAnalytics } from "react-icons/tb";
+import { PiStudentBold } from 'react-icons/pi';
+import { TbDeviceDesktopAnalytics } from 'react-icons/tb';
 
 const routesConfig = [
   {
@@ -41,8 +41,8 @@ const routesConfig = [
             title: 'Teachers',
             messageId: 'sidebar.classManagement.teachers',
             path: '/class-management/teachers',
-          }
-        ]
+          },
+        ],
       },
     ],
   },

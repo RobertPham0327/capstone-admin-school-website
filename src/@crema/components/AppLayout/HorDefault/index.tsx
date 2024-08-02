@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react";
-import AppHeader from "./AppHeader";
-import AppContentView from "../../AppContentView";
-import AppThemeSetting from "../../AppThemeSetting";
-import AppFooter from "../components/AppFooter";
-import clsx from "clsx";
-import { FooterType, LayoutType } from "@crema/constants/AppEnums";
-import AppSidebar from "./AppSidebar";
-import { useLayoutContext } from "@crema/context/AppContextProvider/LayoutContextProvider";
-import {
-  StyledAppLayoutHor,
-  StyledAppLayoutHorMain,
-  StyledContainer,
-} from "./index.styled";
-import { RouterConfigData } from "@crema/types/models/Apps";
+import React, { useEffect, useState } from 'react';
+import AppHeader from './AppHeader';
+import AppContentView from '../../AppContentView';
+import AppThemeSetting from '../../AppThemeSetting';
+import AppFooter from '../components/AppFooter';
+import clsx from 'clsx';
+import { FooterType, LayoutType } from '@crema/constants/AppEnums';
+import AppSidebar from './AppSidebar';
+import { useLayoutContext } from '@crema/context/AppContextProvider/LayoutContextProvider';
+import { StyledAppLayoutHor, StyledAppLayoutHorMain, StyledContainer } from './index.styled';
+import { RouterConfigData } from '@crema/types/models/Apps';
 
 type Props = {
   children: React.ReactNode;
@@ -32,9 +28,9 @@ const HorDefault: React.FC<Props> = ({ children, routesConfig }) => {
 
   useEffect(() => {
     if (layoutType === LayoutType.FRAMED) {
-      document.body.classList.add("framedHorLayout");
+      document.body.classList.add('framedHorLayout');
     } else {
-      document.body.classList.remove("framedHorLayout");
+      document.body.classList.remove('framedHorLayout');
     }
   }, [layoutType]);
 
@@ -45,11 +41,7 @@ const HorDefault: React.FC<Props> = ({ children, routesConfig }) => {
         appMainFixedFooter: footer && footerType === FooterType.FIXED,
       })}
     >
-      <AppSidebar
-        visible={isVisible}
-        onClose={onClose}
-        routesConfig={routesConfig}
-      />
+      <AppSidebar visible={isVisible} onClose={onClose} routesConfig={routesConfig} />
       <AppHeader showDrawer={showDrawer} routesConfig={routesConfig} />
       <StyledAppLayoutHorMain>
         <StyledContainer>

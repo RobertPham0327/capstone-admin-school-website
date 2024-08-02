@@ -1,4 +1,4 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction } from '@reduxjs/toolkit';
 import {
   ADD_CART_ITEM,
   GET_CUSTOMERS,
@@ -11,14 +11,14 @@ import {
   UPDATE_CART_ITEM,
   ADD_PRODUCT_ITEM,
   UPDATE_PRODUCT_ITEM,
-} from "@crema/types/actions/Ecommerce.action";
+} from '@crema/types/actions/Ecommerce.action';
 import {
   CartItemsType,
   CustomersDataType,
   FilterDataType,
   ProductDataType,
   RecentOrdersType,
-} from "@crema/types/models/ecommerce/EcommerceApp";
+} from '@crema/types/models/ecommerce/EcommerceApp';
 
 export const GetEcomListAction = createAction<{
   list: ProductDataType[];
@@ -27,11 +27,9 @@ export const GetEcomListAction = createAction<{
 
 export const SetProdViewAction = createAction<number>(SET_PRODUCT_VIEW_TYPE);
 
-export const SetFilterViewAction =
-  createAction<FilterDataType>(SET_FILTER_DATA);
+export const SetFilterViewAction = createAction<FilterDataType>(SET_FILTER_DATA);
 
-export const SetProdDataAction =
-  createAction<ProductDataType>(SET_PRODUCT_DATA);
+export const SetProdDataAction = createAction<ProductDataType>(SET_PRODUCT_DATA);
 
 export const AddProdDataAction = createAction<{
   list: ProductDataType[];
@@ -48,8 +46,7 @@ export const GetRecentOrderAction = createAction<{
   count: number;
 }>(GET_RECENT_ORDER);
 
-export const UpdateCartItemAction =
-  createAction<CartItemsType>(UPDATE_CART_ITEM);
+export const UpdateCartItemAction = createAction<CartItemsType>(UPDATE_CART_ITEM);
 
 export const AddCartAction = createAction<CartItemsType>(ADD_CART_ITEM);
 

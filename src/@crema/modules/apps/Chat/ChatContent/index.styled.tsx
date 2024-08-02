@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import SimpleBarReact from "simplebar-react";
-import AppsFooter from "@crema/components/AppsContainer/AppsFooter";
-import { darken, rgba } from "polished";
+import styled from 'styled-components';
+import SimpleBarReact from 'simplebar-react';
+import AppsFooter from '@crema/components/AppsContainer/AppsFooter';
+import { darken, rgba } from 'polished';
 
 export const StyledChatContentScreen = styled.div`
   height: 100%;
@@ -48,14 +48,13 @@ export const StyledNewMessageAction = styled.div`
   flex-direction: row;
   align-items: center;
 
-  [dir="rtl"] & {
+  [dir='rtl'] & {
     margin-left: 0;
     margin-right: 8px;
   }
 
   & .message-btn {
-    background-color: ${({ theme }) =>
-      darken(0.05, theme.palette.background.paper)};
+    background-color: ${({ theme }) => darken(0.05, theme.palette.background.paper)};
     color: ${({ theme }) => theme.palette.text.disabled};
     border: 0 none;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.circle};
@@ -68,7 +67,7 @@ export const StyledNewMessageAction = styled.div`
     & .anticon-send {
       margin-left: 3px;
 
-      [dir="rtl"] & {
+      [dir='rtl'] & {
         margin-left: 0;
         margin-right: 3px;
       }
@@ -77,7 +76,7 @@ export const StyledNewMessageAction = styled.div`
     & + .message-btn {
       margin-left: 10px;
 
-      [dir="rtl"] & {
+      [dir='rtl'] & {
         margin-left: 0;
         margin-right: 10px;
       }
@@ -89,7 +88,7 @@ export const StyledNewMsgActionFirst = styled(StyledNewMessageAction)`
   margin-left: 0;
   margin-right: 8px;
 
-  [dir="rtl"] & {
+  [dir='rtl'] & {
     margin-right: 0;
     margin-left: 8px;
   }
@@ -109,7 +108,7 @@ export const StyledChatHeaderAction = styled.div`
   display: flex;
   align-items: center;
 
-  [dir="rtl"] & {
+  [dir='rtl'] & {
     margin-left: 0;
     margin-right: auto;
   }
@@ -122,7 +121,7 @@ export const StyledChatHeaderAction = styled.div`
 
     &:hover,
     &:focus {
-      background-color: ${() => rgba("black", 0.05)};
+      background-color: ${() => rgba('black', 0.05)};
       color: ${({ theme }) => theme.palette.text.primary};
     }
 
@@ -131,7 +130,7 @@ export const StyledChatHeaderAction = styled.div`
 
       &:hover,
       &:focus {
-        background-color: ${() => rgba("black", 0.05)};
+        background-color: ${() => rgba('black', 0.05)};
         color: ${({ theme }) => theme.palette.primary.main};
       }
     }

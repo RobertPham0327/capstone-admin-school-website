@@ -6,10 +6,7 @@ type ListFooterProps = {
   footerText: string;
 };
 
-export const ListFooter: React.FC<ListFooterProps> = ({
-  loading = false,
-  footerText,
-}) => {
+export const ListFooter: React.FC<ListFooterProps> = ({ loading = false, footerText }) => {
   return loading ? (
     <StyledLoaderProgress>
       <Progress percent={30} />

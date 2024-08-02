@@ -14,26 +14,21 @@ type TaskCreatedByInfoProps = {
     image?: string;
   };
   createdOn: string;
-}
+};
 
-const TaskCreatedByInfo: React.FC<TaskCreatedByInfoProps> = ({
-  createdBy,
-  createdOn,
-}) => {
+const TaskCreatedByInfo: React.FC<TaskCreatedByInfoProps> = ({ createdBy, createdOn }) => {
   return (
     <StyledTodoCrByInfo>
       {createdBy.image ? (
         <StyledTodoAvatar30 src={createdBy.image} />
       ) : (
-        <StyledTodoAvatar30 className='todo-avatar-name'>
-          {createdBy.name[0]}
-        </StyledTodoAvatar30>
+        <StyledTodoAvatar30 className="todo-avatar-name">{createdBy.name[0]}</StyledTodoAvatar30>
       )}
       <StyledTodoCrByInfoContent>
         <StyledTodoCrByName>{createdBy.name}</StyledTodoCrByName>
-        <p className='mb-0'>
+        <p className="mb-0">
           <span>
-            <IntlMessages id='todo.createdThisTask' />
+            <IntlMessages id="todo.createdThisTask" />
           </span>
           <StyledTodoCrOn>{createdOn}</StyledTodoCrOn>
         </p>

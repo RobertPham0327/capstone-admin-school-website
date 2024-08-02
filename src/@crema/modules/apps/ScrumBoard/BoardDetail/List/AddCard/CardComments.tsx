@@ -20,12 +20,9 @@ import {
 type CardCommentsProps = {
   comments: any[];
   onAddNewComment: (comment: string) => void;
-}
+};
 
-const CardComments: React.FC<CardCommentsProps> = ({
-  comments,
-  onAddNewComment,
-}) => {
+const CardComments: React.FC<CardCommentsProps> = ({ comments, onAddNewComment }) => {
   const [comment, setComment] = useState('');
 
   const onAddComment = () => {
@@ -46,19 +43,14 @@ const CardComments: React.FC<CardCommentsProps> = ({
         key={index}
       >
         {item.sender.image ? (
-          <StyledCommentAvatar
-            src={item.sender.image}
-            className='scrum-board-card-comment-item-user-avatar'
-          />
+          <StyledCommentAvatar src={item.sender.image} className="scrum-board-card-comment-item-user-avatar" />
         ) : (
-          <StyledCommentAvatar className='scrum-board-card-comment-item-user-avatar'>
+          <StyledCommentAvatar className="scrum-board-card-comment-item-user-avatar">
             {item.sender.name.charAt(0).toUpperCase()}
           </StyledCommentAvatar>
         )}
-        <StyledCommentItemContent className='scrum-board-card-comment-item-user-content'>
-          <StyledCommentItemDate className='scrum-board-card-comment-item-user-date'>
-            {item.date}
-          </StyledCommentItemDate>
+        <StyledCommentItemContent className="scrum-board-card-comment-item-user-content">
+          <StyledCommentItemDate className="scrum-board-card-comment-item-user-date">{item.date}</StyledCommentItemDate>
           <StyledCardCommentArea>
             <p>{item.comment}</p>
           </StyledCardCommentArea>
@@ -70,17 +62,13 @@ const CardComments: React.FC<CardCommentsProps> = ({
   return (
     <StyledScrumCardCommentView>
       <StyledScrumCardCommentTitle>
-        <IntlMessages id='common.comments' />
+        <IntlMessages id="common.comments" />
       </StyledScrumCardCommentTitle>
       <StyledScrumBoardCommentScroll>
         {comments && comments.length > 0 ? (
           <StyledScrumBoardCardComment>
             {comments.map((item, index) =>
-              getCommentCell(
-                item,
-                index,
-                index > 0 && comments[index - 1].sender.id === item.sender.id,
-              ),
+              getCommentCell(item, index, index > 0 && comments[index - 1].sender.id === item.sender.id),
             )}
           </StyledScrumBoardCardComment>
         ) : null}
@@ -92,14 +80,9 @@ const CardComments: React.FC<CardCommentsProps> = ({
           // onKeyDown={onAddComment}
           value={comment}
           placeholder={messages['common.pressEnter'] as string}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={e => setComment(e.target.value)}
         />
-        <Button
-          shape='circle'
-          type='primary'
-          disabled={!comment}
-          onClick={onAddComment}
-        >
+        <Button shape="circle" type="primary" disabled={!comment} onClick={onAddComment}>
           <FiSend />
         </Button>
       </StyledCardCommentFooter>

@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import ComposeMail from "../ComposeMail";
-import ConnectionListItem from "./ConnectionListItem";
-import AppsSideBarFolderItem from "@crema/components/AppsSideBarFolderItem";
-import LabelItem from "./LabelItem";
-import AppList from "@crema/components/AppList";
-import ListEmptyResult from "@crema/components/AppList/ListEmptyResult";
-import SidebarPlaceholder from "@crema/components/AppSkeleton/SidebarListSkeleton";
-import { Button, List } from "antd";
+import React, { useState } from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import ComposeMail from '../ComposeMail';
+import ConnectionListItem from './ConnectionListItem';
+import AppsSideBarFolderItem from '@crema/components/AppsSideBarFolderItem';
+import LabelItem from './LabelItem';
+import AppList from '@crema/components/AppList';
+import ListEmptyResult from '@crema/components/AppList/ListEmptyResult';
+import SidebarPlaceholder from '@crema/components/AppSkeleton/SidebarListSkeleton';
+import { Button, List } from 'antd';
 import {
   StyledMailSidebarContent,
   StyledMailSidebarHeader,
@@ -15,15 +15,13 @@ import {
   StyledMailSidebarScrollbar,
   StyledMailSidebarTitle,
   StyledPlusOutlined,
-} from "./index.styled";
-import { useGetDataApi } from "@crema/hooks/APIHooks";
+} from './index.styled';
+import { useGetDataApi } from '@crema/hooks/APIHooks';
 
 const MailSidebar = () => {
-  const [{ apiData: labelList }] = useGetDataApi("/api/mailApp/labels/list");
-  const [{ apiData: connectionList }] = useGetDataApi(
-    "/api/mailApp/connection/list"
-  );
-  const [{ apiData: folderList }] = useGetDataApi("/api/mailApp/folders/list");
+  const [{ apiData: labelList }] = useGetDataApi('/api/mailApp/labels/list');
+  const [{ apiData: connectionList }] = useGetDataApi('/api/mailApp/connection/list');
+  const [{ apiData: folderList }] = useGetDataApi('/api/mailApp/folders/list');
 
   const [isComposeMail, setComposeMail] = useState(false);
 
@@ -55,18 +53,9 @@ const MailSidebar = () => {
               <StyledMailSidebarList aria-label="main mailbox folders">
                 <AppList
                   data={folderList}
-                  ListEmptyComponent={
-                    <ListEmptyResult
-                      loading={true}
-                      placeholder={<SidebarPlaceholder />}
-                    />
-                  }
-                  renderItem={(item) => (
-                    <AppsSideBarFolderItem
-                      key={item.id}
-                      item={item}
-                      path={`/apps/mail/folder/${item.alias}`}
-                    />
+                  ListEmptyComponent={<ListEmptyResult loading={true} placeholder={<SidebarPlaceholder />} />}
+                  renderItem={item => (
+                    <AppsSideBarFolderItem key={item.id} item={item} path={`/apps/mail/folder/${item.alias}`} />
                   )}
                 />
               </StyledMailSidebarList>
@@ -77,15 +66,8 @@ const MailSidebar = () => {
               <StyledMailSidebarList aria-label="main mailbox folders">
                 <AppList
                   data={labelList}
-                  ListEmptyComponent={
-                    <ListEmptyResult
-                      loading={true}
-                      placeholder={<SidebarPlaceholder />}
-                    />
-                  }
-                  renderItem={(label) => (
-                    <LabelItem key={label.id} label={label} />
-                  )}
+                  ListEmptyComponent={<ListEmptyResult loading={true} placeholder={<SidebarPlaceholder />} />}
+                  renderItem={label => <LabelItem key={label.id} label={label} />}
                 />
               </StyledMailSidebarList>
               <StyledMailSidebarTitle>
@@ -95,19 +77,9 @@ const MailSidebar = () => {
               <List>
                 <AppList
                   data={connectionList}
-                  ListEmptyComponent={
-                    <ListEmptyResult
-                      loading={true}
-                      placeholder={<SidebarPlaceholder />}
-                    />
-                  }
-                  renderItem={(connection) => {
-                    return (
-                      <ConnectionListItem
-                        connection={connection}
-                        key={connection.id}
-                      />
-                    );
+                  ListEmptyComponent={<ListEmptyResult loading={true} placeholder={<SidebarPlaceholder />} />}
+                  renderItem={connection => {
+                    return <ConnectionListItem connection={connection} key={connection.id} />;
                   }}
                 />
               </List>
@@ -116,12 +88,7 @@ const MailSidebar = () => {
         </>
       ) : null}
 
-      {isComposeMail ? (
-        <ComposeMail
-          isComposeMail={isComposeMail}
-          onCloseComposeMail={onCloseComposeMail}
-        />
-      ) : null}
+      {isComposeMail ? <ComposeMail isComposeMail={isComposeMail} onCloseComposeMail={onCloseComposeMail} /> : null}
     </>
   );
 };

@@ -1,7 +1,7 @@
-import React from "react";
-import { Avatar, Button } from "antd";
-import { AiFillCheckCircle } from "react-icons/ai";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import React from 'react';
+import { Avatar, Button } from 'antd';
+import { AiFillCheckCircle } from 'react-icons/ai';
+import IntlMessages from '@crema/helpers/IntlMessages';
 import {
   StyledVideoCall,
   StyledVideoCallAvatar,
@@ -13,10 +13,10 @@ import {
   StyledVideoCallUser,
   StyledVideoCallUserInfo,
   StyledVideoCallUserStatus,
-} from "./index.styled";
-import { UserObjType } from "@crema/types/models/apps/Wall";
+} from './index.styled';
+import { UserObjType } from '@crema/types/models/apps/Wall';
 
-const coverImg = "/assets/images/wall/v-card.jpg";
+const coverImg = '/assets/images/wall/v-card.jpg';
 
 type VideoCallProps = {
   data: { users: UserObjType[]; title: string };
@@ -44,14 +44,10 @@ const VideoCall: React.FC<VideoCallProps> = ({ data }) => {
       <StyledVideoCall>
         <h5>{title}</h5>
         <StyledVideoCallAvatarView>
-          {users.slice(0, 4).map((user) => (
+          {users.slice(0, 4).map(user => (
             <StyledVideoCallAvatar key={user.id} src={user.profilePic} />
           ))}
-          {users.length > 4 ? (
-            <StyledVideoCallAvatarCount>
-              +{users.length - 4}
-            </StyledVideoCallAvatarCount>
-          ) : null}
+          {users.length > 4 ? <StyledVideoCallAvatarCount>+{users.length - 4}</StyledVideoCallAvatarCount> : null}
         </StyledVideoCallAvatarView>
         <StyledVideoCallBtnView>
           <Button type="primary" className="">

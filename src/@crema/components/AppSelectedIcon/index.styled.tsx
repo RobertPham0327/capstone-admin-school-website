@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 type StyledAppSelectedIconProps = {
-    backgroundColor:string | undefined;
-}
+  backgroundColor: string | undefined;
+};
 
 export const StyledAppSelectedIcon = styled.div<StyledAppSelectedIconProps>`
   width: 20px;
   height: 20px;
-  border-radius: ${({theme}) => theme.sizes.borderRadius.circle};
+  border-radius: ${({ theme }) => theme.sizes.borderRadius.circle};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,17 +16,12 @@ export const StyledAppSelectedIcon = styled.div<StyledAppSelectedIconProps>`
   right: 10px;
   top: 10px;
   z-index: 1;
-  background-color: ${(props) =>
-    props.backgroundColor
-      ? props.backgroundColor
-      : props.theme.palette.text.primary};
-  color: ${({color}) => color};
+  background-color: ${props => (props.backgroundColor ? props.backgroundColor : props.theme.palette.text.primary)};
+  color: ${({ color }) => color};
 
   .anticon {
-    background-color: ${(props) =>
-      props.backgroundColor ? props.backgroundColor : 'transparent'};
-    color: ${(props) =>
-      props.color ? props.color : props.theme.palette.background.paper};
+    background-color: ${props => (props.backgroundColor ? props.backgroundColor : 'transparent')};
+    color: ${props => (props.color ? props.color : props.theme.palette.background.paper)};
   }
 
   &.isCenter {
@@ -37,6 +32,6 @@ export const StyledAppSelectedIcon = styled.div<StyledAppSelectedIconProps>`
   }
 
   & svg {
-    font-size: ${({theme}) => theme.font.size.sm};
+    font-size: ${({ theme }) => theme.font.size.sm};
   }
 `;

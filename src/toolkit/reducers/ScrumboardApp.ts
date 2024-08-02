@@ -1,9 +1,5 @@
-import {
-  BoardObjType,
-  LabelObjType,
-  MemberObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
-import { createReducer } from "@reduxjs/toolkit";
+import { BoardObjType, LabelObjType, MemberObjType } from '@crema/types/models/apps/ScrumbBoard';
+import { createReducer } from '@reduxjs/toolkit';
 import {
   AddBoardListAction,
   AddListCardAction,
@@ -18,7 +14,7 @@ import {
   GetBoardsAction,
   GetMemberListAction,
   GetScrumLabelAction,
-} from "./ActionTypes/Scrumboard";
+} from './ActionTypes/Scrumboard';
 
 const initialState: {
   boardList: BoardObjType[];
@@ -32,7 +28,7 @@ const initialState: {
   boardDetail: null,
 };
 
-const scrumBoardReducer = createReducer(initialState, (builder) => {
+const scrumBoardReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetMemberListAction, (state, action) => {
       state.memberList = action.payload;
@@ -50,14 +46,10 @@ const scrumBoardReducer = createReducer(initialState, (builder) => {
       state.boardList = state.boardList.concat(action.payload);
     })
     .addCase(EditBoardDetailAction, (state, action) => {
-      state.boardList = state.boardList.map((board) =>
-        board.id === action.payload.id ? action.payload : board
-      );
+      state.boardList = state.boardList.map(board => (board.id === action.payload.id ? action.payload : board));
     })
     .addCase(DeleteBoardAction, (state, action) => {
-      state.boardList = state.boardList.filter(
-        (board) => board.id !== action.payload
-      );
+      state.boardList = state.boardList.filter(board => board.id !== action.payload);
     })
     .addCase(DeleteScrumListAction, (state, action) => {
       state.boardDetail = action.payload;

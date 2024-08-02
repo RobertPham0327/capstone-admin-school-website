@@ -1,13 +1,12 @@
-import React from "react";
-import { BarChart, Bar, XAxis, ResponsiveContainer, Tooltip } from "recharts";
-import type { ChartDataType } from "@crema/types/models/dashboards/Analytics";
-
+import React from 'react';
+import { BarChart, Bar, XAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import type { ChartDataType } from '@crema/types/models/dashboards/Analytics';
 
 type MixBarChartProp = {
   data: ChartDataType[];
 };
 
-const MixBarChart: React.FC<MixBarChartProp> = ({data}) => {
+const MixBarChart: React.FC<MixBarChartProp> = ({ data }) => {
   return (
     <ResponsiveContainer width="100%" height={270}>
       <BarChart

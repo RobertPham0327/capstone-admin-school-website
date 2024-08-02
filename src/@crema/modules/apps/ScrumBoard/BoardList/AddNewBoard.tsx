@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { Input } from "antd";
-import { useIntl } from "react-intl";
-import {
-  StyledScrumAddBoardCard,
-  StyledScrumAddBoardFooterBtn,
-  StyledScrumBoardAddModal,
-} from "./index.styled";
-import { BoardObjType } from "@crema/types/models/apps/ScrumbBoard";
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { Input } from 'antd';
+import { useIntl } from 'react-intl';
+import { StyledScrumAddBoardCard, StyledScrumAddBoardFooterBtn, StyledScrumBoardAddModal } from './index.styled';
+import { BoardObjType } from '@crema/types/models/apps/ScrumbBoard';
 
 type AddNewBoardProps = {
   isModalVisible: boolean;
@@ -25,14 +21,12 @@ const AddNewBoard: React.FC<AddNewBoardProps> = ({
   onAddBoard,
   selectedBoard,
 }) => {
-  const [boardName, setBoardName] = useState(() =>
-    selectedBoard ? selectedBoard.name : ""
-  );
+  const [boardName, setBoardName] = useState(() => (selectedBoard ? selectedBoard.name : ''));
 
   const onClickAddButton = () => {
-    if (boardName !== "") {
+    if (boardName !== '') {
       onAddBoard(boardName);
-      setBoardName("");
+      setBoardName('');
       handleCancel();
     }
   };
@@ -40,7 +34,7 @@ const AddNewBoard: React.FC<AddNewBoardProps> = ({
 
   return (
     <StyledScrumBoardAddModal
-      title={messages["scrumboard.addNewBoard"] as string}
+      title={messages['scrumboard.addNewBoard'] as string}
       open={isModalVisible}
       onOk={handleOk}
       onCancel={handleCancel}
@@ -51,11 +45,7 @@ const AddNewBoard: React.FC<AddNewBoardProps> = ({
       }
     >
       <StyledScrumAddBoardCard>
-        <Input
-          placeholder="Basic usage"
-          value={boardName}
-          onChange={(event) => setBoardName(event.target.value)}
-        />
+        <Input placeholder="Basic usage" value={boardName} onChange={event => setBoardName(event.target.value)} />
       </StyledScrumAddBoardCard>
     </StyledScrumBoardAddModal>
   );

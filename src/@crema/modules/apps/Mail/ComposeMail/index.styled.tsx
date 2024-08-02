@@ -71,8 +71,7 @@ export const StyledMainModalFooter = styled.div`
   padding: 16px 8px;
   border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
   margin-bottom: 0;
-  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base}
-    ${({ theme }) => theme.sizes.borderRadius.base};
+  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base} ${({ theme }) => theme.sizes.borderRadius.base};
   text-align: right;
 
   [dir='rtl'] & {

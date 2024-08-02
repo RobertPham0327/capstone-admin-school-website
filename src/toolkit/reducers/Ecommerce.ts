@@ -1,12 +1,12 @@
-import { cartItems } from "@crema/mockapi/fakedb";
-import { createReducer } from "@reduxjs/toolkit";
+import { cartItems } from '@crema/mockapi/fakedb';
+import { createReducer } from '@reduxjs/toolkit';
 import {
   CartItemsType,
   CustomersDataType,
   FilterDataType,
   ProductDataType,
   RecentOrdersType,
-} from "@crema/types/models/ecommerce/EcommerceApp";
+} from '@crema/types/models/ecommerce/EcommerceApp';
 import {
   AddCartAction,
   AddProdDataAction,
@@ -19,7 +19,7 @@ import {
   SetProdViewAction,
   UpdateCartItemAction,
   UpdateProdDataAction,
-} from "./ActionTypes/Ecommerce";
+} from './ActionTypes/Ecommerce';
 
 export const VIEW_TYPE = Object.freeze({ LIST: 1, GRID: 2 });
 const initialState: {
@@ -41,7 +41,7 @@ const initialState: {
   currentProduct: null,
   orderCount: 0,
   filterData: {
-    title: "",
+    title: '',
     brand: [],
     ideaFor: [],
     discount: [],
@@ -54,7 +54,7 @@ const initialState: {
   customerCount: 0,
 };
 
-const ecommerceReducer = createReducer(initialState, (builder) => {
+const ecommerceReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetEcomListAction, (state, action) => {
       state.ecommerceList = action.payload;
@@ -82,14 +82,12 @@ const ecommerceReducer = createReducer(initialState, (builder) => {
     //   state.cartItems = action.payload;
     // })
     .addCase(UpdateCartItemAction, (state, action) => {
-      state.cartItems = state.cartItems.map((item) =>
-        item.id === action.payload.id ? action.payload : item
-      );
+      state.cartItems = state.cartItems.map(item => (item.id === action.payload.id ? action.payload : item));
     })
     .addCase(AddCartAction, (state, action) => {
       let cartItems = [];
-      if (state.cartItems.some((item) => +item.id === +action.payload.id)) {
-        cartItems = state.cartItems.map((item) => {
+      if (state.cartItems.some(item => +item.id === +action.payload.id)) {
+        cartItems = state.cartItems.map(item => {
           if (+item.id === +action.payload.id) {
             item.count = +item.count + 1;
           }
@@ -108,9 +106,7 @@ const ecommerceReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(RemoveCartAction, (state, action) => {
-      state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload.id
-      );
+      state.cartItems = state.cartItems.filter(item => item.id !== action.payload.id);
     })
     .addCase(GetCustomerAction, (state, action) => {
       state.customers = action.payload.customers;

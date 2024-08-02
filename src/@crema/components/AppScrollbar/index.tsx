@@ -66,11 +66,7 @@ type AppScrollbarProps = {
   [x: string]: any;
 };
 
-const AppScrollbar: React.FC<AppScrollbarProps> = ({
-  children,
-  className,
-  ...others
-}) => {
+const AppScrollbar: React.FC<AppScrollbarProps> = ({ children, className, ...others }) => {
   return (
     <StyledScrollbar {...others} className={className}>
       {children}

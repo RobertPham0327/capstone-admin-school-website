@@ -34,9 +34,7 @@ const AppHeader = ({ showDrawer }: AppHeaderProps) => {
         <AiOutlineMenu />
       </a>
       <AppLogo />
-      <StyledDrawerLayoutHeaderSearch
-        placeholder={messages['common.searchHere'] as string}
-      />
+      <StyledDrawerLayoutHeaderSearch placeholder={messages['common.searchHere'] as string} />
       <StyledDrawerLayoutHeaderDesk>
         <AppLanguageSwitcher />
         <AppHeaderMessages />
@@ -47,13 +45,10 @@ const AppHeader = ({ showDrawer }: AppHeaderProps) => {
           <Dropdown
             menu={{ items }}
             overlayClassName="dropdown-wrapper"
-            getPopupContainer={(triggerNode) => triggerNode}
+            getPopupContainer={triggerNode => triggerNode}
             trigger={['click']}
           >
-            <a
-              className="ant-dropdown-link-mobile"
-              onClick={(e) => e.preventDefault()}
-            >
+            <a className="ant-dropdown-link-mobile" onClick={e => e.preventDefault()}>
               <FiMoreVertical />
             </a>
           </Dropdown>

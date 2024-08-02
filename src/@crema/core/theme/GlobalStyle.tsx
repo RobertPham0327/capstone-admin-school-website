@@ -23,8 +23,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: ${({ theme }: { theme: any }) => theme.font.family};
     font-weight: ${({ theme }: { theme: any }) => theme.font.weight.regular};
 
-    @media screen and (min-width: ${({ theme }: { theme: any }) =>
-      theme.breakpoints.sm + 320}px ) {
+    @media screen and (min-width: ${({ theme }: { theme: any }) => theme.breakpoints.sm + 320}px ) {
       font-size: ${({ theme }: { theme: any }) => theme.font.size.lg};
     }
   }
@@ -102,74 +101,59 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
   }
 
   .ant-btn-primary {
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
-    border-color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    background: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
+    border-color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
 
     &:hover,
     &:focus {
-      background: ${({ theme }: { theme: any }) =>
-        darken(0.08, theme.palette.primary.main)} !important;
-      border-color: ${({ theme }: { theme: any }) =>
-        darken(0.08, theme.palette.primary.main)} !important;
+      background: ${({ theme }: { theme: any }) => darken(0.08, theme.palette.primary.main)} !important;
+      border-color: ${({ theme }: { theme: any }) => darken(0.08, theme.palette.primary.main)} !important;
     }
   }
 
   .ant-btn-background-ghost.ant-btn-primary {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
     background: transparent !important;
-    border-color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    border-color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
 
     &:hover,
     &:focus {
-      color: ${({ theme }: { theme: any }) =>
-        darken(0.08, theme.palette.primary.main)} !important;
+      color: ${({ theme }: { theme: any }) => darken(0.08, theme.palette.primary.main)} !important;
       background: transparent;
-      border-color: ${({ theme }: { theme: any }) =>
-        darken(0.08, theme.palette.primary.main)} !important;
+      border-color: ${({ theme }: { theme: any }) => darken(0.08, theme.palette.primary.main)} !important;
     }
   }
 
   .ant-spin {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
   }
 
   .ant-list-item {
     justify-content: flex-start !important;
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .ant-spin-dot i,
   .ant-tabs-ink-bar {
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    background: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
   }
 
   .ant-spin-dot-item {
-    background-color: ${({ theme }: { theme: any }) =>
-      theme.palette.primary.main} !important;
+    background-color: ${({ theme }: { theme: any }) => theme.palette.primary.main} !important;
   }
 
   .ant-table {
     background: transparent !important;
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .ant-table-wrapper .ant-table {
     background: transparent !important;
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .text-lowercase {
@@ -219,10 +203,8 @@ export const GlobalStyles = createGlobalStyle`
     box-shadow: none;
 
     &:hover, &:focus {
-      background-color: ${({ theme }: { theme: any }) =>
-        theme.palette.tooltipBg + '04'};
-      border-color: ${({ theme }: { theme: any }) =>
-        theme.palette.tooltipBg + '04'};
+      background-color: ${({ theme }: { theme: any }) => theme.palette.tooltipBg + '04'};
+      border-color: ${({ theme }: { theme: any }) => theme.palette.tooltipBg + '04'};
       color: ${({ theme }: { theme: any }) => theme.palette.text.primary};
     }
 
@@ -232,50 +214,39 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .btn-secondary {
-    background-color: ${({ theme }: { theme: any }) =>
-      theme.palette.secondary.main};
-    border-color: ${({ theme }: { theme: any }) =>
-      theme.palette.secondary.main};
+    background-color: ${({ theme }: { theme: any }) => theme.palette.secondary.main};
+    border-color: ${({ theme }: { theme: any }) => theme.palette.secondary.main};
     color: ${({ theme }: { theme: any }) => theme.palette.white};
 
     &:hover, &:focus {
-      background-color: ${({ theme }: { theme: any }) =>
-        darken(0.25, theme.palette.secondary.main)} !important;
-      border-color: ${({ theme }: { theme: any }) =>
-        darken(0.25, theme.palette.secondary.main)} !important;
+      background-color: ${({ theme }: { theme: any }) => darken(0.25, theme.palette.secondary.main)} !important;
+      border-color: ${({ theme }: { theme: any }) => darken(0.25, theme.palette.secondary.main)} !important;
       color: ${({ theme }: { theme: any }) => theme.palette.white} !important;
     }
   }
 
   .btn-light-blue {
-    background-color: ${({ theme }: { theme: any }) =>
-      rgba(theme.palette.primary.main, 0.1)};
+    background-color: ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.1)};
     color: ${({ theme }: { theme: any }) => theme.palette.primary.main};
-    border-color: ${({ theme }: { theme: any }) =>
-      rgba(theme.palette.primary.main, 0.1)};
+    border-color: ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.1)};
 
     &:hover, &:focus {
-      background-color: ${({ theme }: { theme: any }) =>
-        rgba(theme.palette.primary.main, 0.2)};
+      background-color: ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.2)};
       color: ${({ theme }: { theme: any }) => theme.palette.primary.main};
-      border-color: ${({ theme }: { theme: any }) =>
-        rgba(theme.palette.primary.main, 0.2)};
+      border-color: ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.2)};
     }
   }
 
   .btn-secondary-outline {
     background-color: transparent;
-    border-color: ${({ theme }: { theme: any }) =>
-      theme.palette.secondary.main};
+    border-color: ${({ theme }: { theme: any }) => theme.palette.secondary.main};
     color: ${({ theme }: { theme: any }) => theme.palette.secondary.main};
     box-shadow: none;
 
     &:hover, &:focus {
       background-color: transparent;
-      border-color: darken(0.15, ${({ theme }: { theme: any }) =>
-        theme.palette.secondary.main});
-      color: darken(0.15, ${({ theme }: { theme: any }) =>
-        theme.palette.secondary.main});
+      border-color: darken(0.15, ${({ theme }: { theme: any }) => theme.palette.secondary.main});
+      color: darken(0.15, ${({ theme }: { theme: any }) => theme.palette.secondary.main});
     }
   }
 
@@ -287,10 +258,8 @@ export const GlobalStyles = createGlobalStyle`
 
     &:hover, &:focus {
       background-color: transparent;
-      border-color: darken(0.15, ${({ theme }: { theme: any }) =>
-        theme.palette.primary.main});
-      color: darken(0.15, ${({ theme }: { theme: any }) =>
-        theme.palette.primary.main});
+      border-color: darken(0.15, ${({ theme }: { theme: any }) => theme.palette.primary.main});
+      color: darken(0.15, ${({ theme }: { theme: any }) => theme.palette.primary.main});
     }
   }
 
@@ -315,8 +284,7 @@ export const GlobalStyles = createGlobalStyle`
     height: 12px;
     width: 12px;
     display: block;
-    border-radius: ${({ theme }: { theme: any }) =>
-      theme.sizes.borderRadius.circle};
+    border-radius: ${({ theme }: { theme: any }) => theme.sizes.borderRadius.circle};
   }
 
   .close-btn {
@@ -412,8 +380,7 @@ export const GlobalStyles = createGlobalStyle`
 
     &:hover,
     &:focus {
-      background-color: ${({ theme }: { theme: any }) =>
-        theme.palette.background.default};
+      background-color: ${({ theme }: { theme: any }) => theme.palette.background.default};
       color: ${({ theme }: { theme: any }) => theme.palette.text.primary};
 
     }
@@ -442,11 +409,9 @@ export const GlobalStyles = createGlobalStyle`
     transform: scale(1);
 
     &:hover {
-      background-color: ${({ theme }: { theme: any }) =>
-        rgba(theme.palette.primary.main, 0.1)};
+      background-color: ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.1)};
       transform: translateY(-2px);
-      box-shadow: 0 3px 10px 0 ${({ theme }: { theme: any }) =>
-        rgba(theme.palette.primary.main, 0.1)};
+      box-shadow: 0 3px 10px 0 ${({ theme }: { theme: any }) => rgba(theme.palette.primary.main, 0.1)};
     }
   }
 
@@ -457,15 +422,12 @@ export const GlobalStyles = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: ${({ theme }: { theme: any }) =>
-      theme.sizes.borderRadius.circle};
-    color: ${({ theme }: { theme: any }) =>
-      rgba(theme.palette.tooltipBg, 0.84)};
+    border-radius: ${({ theme }: { theme: any }) => theme.sizes.borderRadius.circle};
+    color: ${({ theme }: { theme: any }) => rgba(theme.palette.tooltipBg, 0.84)};
     font-size: 20px;
 
     &:hover {
-      background-color: ${({ theme }: { theme: any }) =>
-        rgba(theme.palette.tooltipBg, 0.1)};
+      background-color: ${({ theme }: { theme: any }) => rgba(theme.palette.tooltipBg, 0.1)};
     }
   }
 
@@ -504,8 +466,7 @@ export const GlobalStyles = createGlobalStyle`
   .ant-layout .ant-layout-header {
     padding-inline: 30px;
 
-    @media screen and (max-width: ${({ theme }: { theme: any }) =>
-      theme.breakpoints.md}px) {
+    @media screen and (max-width: ${({ theme }: { theme: any }) => theme.breakpoints.md}px) {
       padding-inline: 20px;
     }
   }
@@ -533,26 +494,21 @@ export const GlobalStyles = createGlobalStyle`
   .ant-list-item-meta-description,
   .ant-input-group-addon > .ant-btn-icon-only,
   .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.background.paper} !important;
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    background: ${({ theme }: { theme: any }) => theme.palette.background.paper} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .ant-input::placeholder {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.secondary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.secondary} !important;
   }
 
   .ant-dropdown-trigger {
     background: transparent;
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .ant-progress-text {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .anticon {
@@ -560,28 +516,23 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .ant-modal-content {
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.background.paper} !important;
+    background: ${({ theme }: { theme: any }) => theme.palette.background.paper} !important;
 
     & .ant-modal-header {
-      background: ${({ theme }: { theme: any }) =>
-        theme.palette.background.paper} !important;
+      background: ${({ theme }: { theme: any }) => theme.palette.background.paper} !important;
 
       & .ant-modal-title {
-        color: ${({ theme }: { theme: any }) =>
-          theme.palette.text.primary} !important;
+        color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
       }
     }
 
     & .ant-modal-close-icon {
-      color: ${({ theme }: { theme: any }) =>
-        theme.palette.text.primary} !important;
+      color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
     }
   }
 
   .ant-card {
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.background.paper};
+    background: ${({ theme }: { theme: any }) => theme.palette.background.paper};
     color: ${({ theme }: { theme: any }) => theme.palette.text.primary};
     overflow: hidden;
     border-radius: ${({ theme }: { theme: any }) => theme.cardRadius};
@@ -592,14 +543,12 @@ export const GlobalStyles = createGlobalStyle`
   .ant-tabs-tab .ant-tabs-tab-btn,
   .ant-picker-content th,
   .ant-table-thead .ant-table-cell {
-    color: ${({ theme }: { theme: any }) =>
-      theme.palette.text.primary} !important;
+    color: ${({ theme }: { theme: any }) => theme.palette.text.primary} !important;
   }
 
   .ant-collapse-content > .ant-collapse-content-box {
     color: ${({ theme }: { theme: any }) => theme.palette.text.secondary};
-    background: ${({ theme }: { theme: any }) =>
-      theme.palette.background.paper};
+    background: ${({ theme }: { theme: any }) => theme.palette.background.paper};
   }
 
   .ant-select-arrow,
@@ -609,8 +558,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .ant-checkbox-input {
-    background-color: ${({ theme }: { theme: any }) =>
-      theme.palette.background.paper};
+    background-color: ${({ theme }: { theme: any }) => theme.palette.background.paper};
   }
 
   .rnc__notification-container--top-right {
@@ -628,8 +576,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .boxedLayout {
-    @media screen and (min-width: ${({ theme }: { theme: any }) =>
-      theme.breakpoints.xl + 80}px) {
+    @media screen and (min-width: ${({ theme }: { theme: any }) => theme.breakpoints.xl + 80}px) {
       max-width: 1260px;
       margin-left: auto;
       margin-right: auto;
@@ -686,8 +633,7 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
 
-    @media screen and (min-width: ${({ theme }: { theme: any }) =>
-      theme.breakpoints.xxl}px) {
+    @media screen and (min-width: ${({ theme }: { theme: any }) => theme.breakpoints.xxl}px) {
       max-width: 1460px;
 
       & .appMainFixedFooter {
@@ -700,15 +646,12 @@ export const GlobalStyles = createGlobalStyle`
 
   //Framed Layout
   .framedLayout {
-    @media screen and (min-width: ${({ theme }: { theme: any }) =>
-      theme.breakpoints.xl + 80}px) {
+    @media screen and (min-width: ${({ theme }: { theme: any }) => theme.breakpoints.xl + 80}px) {
       padding: ${({ theme }: { theme: any }) => theme.sizes.framed.base};
-      background-color: ${({ theme }: { theme: any }) =>
-        theme.palette.secondary.main};
+      background-color: ${({ theme }: { theme: any }) => theme.palette.secondary.main};
 
       #root {
-        height: calc(100vh - 2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base});
+        height: calc(100vh - 2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base});
         overflow: hidden;
         box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.12);
         border-radius: 12px;
@@ -733,26 +676,22 @@ export const GlobalStyles = createGlobalStyle`
       & .main-userMiniHeader-scrollbar,
       & .drawerLayout-main-scrollbar,
       & .app-BitBucket-sidebar-scrollbar {
-        max-height: calc(100vh - (71px + 2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base}));
+        max-height: calc(100vh - (71px + 2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base}));
       }
 
       & .app-standard-sidebar-scrollbar {
-        max-height: calc(100vh - (140px + 2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base}));
+        max-height: calc(100vh - (140px + 2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base}));
       }
 
       & .app-userHeader-sidebar-scrollbar,
       & .app-sidebar-userMiniHeader-scrollbar,
       & .bitBucket-main-scrollbar,
       & .bucket-minibar {
-        max-height: calc(100vh - (2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base}));
+        max-height: calc(100vh - (2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base}));
       }
 
       & .app-layout {
-        height: calc(100vh - 2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base});
+        height: calc(100vh - 2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base});
         min-height: 10px;
       }
 
@@ -766,8 +705,7 @@ export const GlobalStyles = createGlobalStyle`
       }
 
       & .apps-container {
-        height: calc(100vh - (153px + 2 * ${({ theme }: { theme: any }) =>
-          theme.sizes.framed.base}));
+        height: calc(100vh - (153px + 2 * ${({ theme }: { theme: any }) => theme.sizes.framed.base}));
       }
 
       & .app-layout-mini-sidebar,

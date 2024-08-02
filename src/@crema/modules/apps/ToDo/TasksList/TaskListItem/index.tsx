@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import clsx from "clsx";
-import Labels from "./Labels";
-import Priority from "./Priority";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import { Avatar, Checkbox } from "antd";
-import AppIconButton from "@crema/components/AppIconButton";
-import { AiOutlineDelete } from "react-icons/ai";
-import { MdLabelOutline } from "react-icons/md";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import clsx from 'clsx';
+import Labels from './Labels';
+import Priority from './Priority';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import { Avatar, Checkbox } from 'antd';
+import AppIconButton from '@crema/components/AppIconButton';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { MdLabelOutline } from 'react-icons/md';
 import {
   StyledTodoListCheckboxView,
   StyledTodoListImg,
@@ -22,10 +22,10 @@ import {
   StyledTodoListRightContent,
   StyledTodoListStartDate,
   StyledTodoListItemAction,
-} from "../index.styled";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { putDataApi } from "@crema/hooks/APIHooks";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
+} from '../index.styled';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { putDataApi } from '@crema/hooks/APIHooks';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskListItemProps = {
   task: TodoObjType;
@@ -54,14 +54,14 @@ const TaskListItem: React.FC<TaskListItemProps> = ({
 
   const onDeleteTask = () => {
     task.folderValue = 126;
-    putDataApi("/api/todoApp/task/", infoViewActionsContext, {
+    putDataApi('/api/todoApp/task/', infoViewActionsContext, {
       task,
     })
       .then(() => {
         onUpdateSelectedTask(task);
-        infoViewActionsContext.showMessage("Task Deleted Successfully");
+        infoViewActionsContext.showMessage('Task Deleted Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -69,15 +69,13 @@ const TaskListItem: React.FC<TaskListItemProps> = ({
   return (
     <StyledTodoListItem
       key={task.id}
-      className={clsx("item-hover", {
+      className={clsx('item-hover', {
         checked: checkedTasks.includes(task.id),
       })}
       onClick={() => onViewTaskDetail(task)}
     >
       <StyledTodoListItemLeft>
-        <StyledTodoListCheckboxView
-          onClick={(event) => event.stopPropagation()}
-        >
+        <StyledTodoListCheckboxView onClick={event => event.stopPropagation()}>
           <Checkbox
             checked={checkedTasks.includes(task.id)}
             onChange={() => {
@@ -88,7 +86,7 @@ const TaskListItem: React.FC<TaskListItemProps> = ({
         </StyledTodoListCheckboxView>
 
         <StyledTodoListImgView>
-          <StyledTodoListStarView onClick={(event) => event.stopPropagation()}>
+          <StyledTodoListStarView onClick={event => event.stopPropagation()}>
             <AppsStarredIcon item={task} onChange={onChangeStarred} />
           </StyledTodoListStarView>
           <StyledTodoListImg>
@@ -96,9 +94,7 @@ const TaskListItem: React.FC<TaskListItemProps> = ({
           </StyledTodoListImg>
         </StyledTodoListImgView>
 
-        <StyledTodoListTitle className="text-truncate">
-          {task.title}
-        </StyledTodoListTitle>
+        <StyledTodoListTitle className="text-truncate">{task.title}</StyledTodoListTitle>
 
         {task.priority ? (
           <StyledTodoListItemHide>
@@ -123,10 +119,7 @@ const TaskListItem: React.FC<TaskListItemProps> = ({
             icon={<AiOutlineDelete />}
           />
 
-          <AppIconButton
-            title={<IntlMessages id="common.label" />}
-            icon={<MdLabelOutline />}
-          />
+          <AppIconButton title={<IntlMessages id="common.label" />} icon={<MdLabelOutline />} />
         </StyledTodoListItemAction>
       </StyledTodoListItemRight>
     </StyledTodoListItem>

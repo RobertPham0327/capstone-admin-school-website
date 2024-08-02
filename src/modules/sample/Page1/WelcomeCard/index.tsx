@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react";
-import { useIntl } from "react-intl";
-import  data from "./data";
-import { HiOutlineMailOpen } from "react-icons/hi";
-import { BiMessageDetail } from "react-icons/bi";
-import { CgFileDocument } from "react-icons/cg";
+import React, { ReactNode } from 'react';
+import { useIntl } from 'react-intl';
+import data from './data';
+import { HiOutlineMailOpen } from 'react-icons/hi';
+import { BiMessageDetail } from 'react-icons/bi';
+import { CgFileDocument } from 'react-icons/cg';
 import {
   StyledSpecialTitle,
   StyledWelcomeCard,
@@ -17,8 +17,8 @@ import {
   StyledWelcomeCardRow,
   StyledWelcomeCardScroll,
   StyledWelcomeImg,
-} from "./index.styled";
-import type { WelcomeCardDataType } from "@crema/types/models/dashboards/Analytics";
+} from './index.styled';
+import type { WelcomeCardDataType } from '@crema/types/models/dashboards/Analytics';
 
 type getWelcomeIconProps = {
   [key: string]: ReactNode;
@@ -41,17 +41,17 @@ const WelcomeCard: React.FC<WelcomeCardProps> = () => {
       <StyledWelcomeCardInfo>
         <StyledWelcomeCardContent>
           <StyledWelcomeCardHeader>
-            <h5>{messages["dashboard.analytics.welcome"] as string}</h5>
-            <h3>{messages["dashboard.analytics.eddieMassy"] as string}</h3>
+            <h5>{messages['dashboard.analytics.welcome'] as string}</h5>
+            <h3>{messages['dashboard.analytics.eddieMassy'] as string}</h3>
           </StyledWelcomeCardHeader>
           <StyledWelcomeCardScroll scrollToTop>
             <StyledWelcomeCardContainer>
               <StyledWelcomeCardRow>
                 {data?.welcomeCard.map((item, index) => (
-                  <StyledWelcomeCardCol key={"box-" + index}>
+                  <StyledWelcomeCardCol key={'box-' + index}>
                     <StyledWelcomeCardColThumb>
                       <span className="ant-avatar ant-avatar-circle ant-avatar-image">
-                        {getWelcomeIcon[item.icon] || getWelcomeIcon["default"]}
+                        {getWelcomeIcon[item.icon] || getWelcomeIcon['default']}
                       </span>
                     </StyledWelcomeCardColThumb>
                     <StyledWelcomeCardColContent>
@@ -65,7 +65,7 @@ const WelcomeCard: React.FC<WelcomeCardProps> = () => {
           </StyledWelcomeCardScroll>
         </StyledWelcomeCardContent>
         <StyledWelcomeImg>
-          <img alt="welcome" src={"/assets/images/dashboard/welcomImage.svg"} />
+          <img alt="welcome" src={'/assets/images/dashboard/welcomImage.svg'} />
         </StyledWelcomeImg>
       </StyledWelcomeCardInfo>
     </StyledWelcomeCard>

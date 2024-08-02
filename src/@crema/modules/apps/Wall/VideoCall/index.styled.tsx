@@ -161,8 +161,7 @@ export const StyledVideoCallBtn = styled(Button)`
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) =>
-      lighten(0.5, theme.palette.primary.main)};
+    background-color: ${({ theme }) => lighten(0.5, theme.palette.primary.main)};
     color: ${({ theme }) => theme.palette.primary.main};
   }
 `;

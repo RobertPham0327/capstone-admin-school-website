@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 import {
   StyledTodoAvatar36,
   StyledTodoCommentItem,
@@ -8,8 +8,8 @@ import {
   StyledTodoCommentTime,
   StyledTodoCommentUser,
   StyledTodoCommentView,
-} from "../../index.styled";
-import { CommentObjType } from "@crema/types/models/apps/Todo";
+} from '../../index.styled';
+import { CommentObjType } from '@crema/types/models/apps/Todo';
 
 type Props = {
   item: CommentObjType;
@@ -17,33 +17,22 @@ type Props = {
   isLast: boolean;
 };
 
-const CommentsListItem = ({
-  item,
-  isPreviousSender = false,
-  isLast,
-}: Props) => {
+const CommentsListItem = ({ item, isPreviousSender = false, isLast }: Props) => {
   return (
     <StyledTodoCommentItem
-      className={clsx(
-        isPreviousSender ? "hideUserInfo" : "first-chat-message",
-        isLast ? "last-chat-message" : ""
-      )}
+      className={clsx(isPreviousSender ? 'hideUserInfo' : 'first-chat-message', isLast ? 'last-chat-message' : '')}
     >
       <StyledTodoCommentView>
         <StyledTodoCommentUser className="todo-comment-user">
           {item.image ? (
             <StyledTodoAvatar36 src={item.image} />
           ) : (
-            <StyledTodoAvatar36 className="todo-avatar-name">
-              {item.name[0]}
-            </StyledTodoAvatar36>
+            <StyledTodoAvatar36 className="todo-avatar-name">{item.name[0]}</StyledTodoAvatar36>
           )}
           <span className="todo-name">{item.name}</span>
         </StyledTodoCommentUser>
         <StyledTodoCommentMsgView>
-          <StyledTodoCommentTime className="todo-comment-time">
-            {item.date}
-          </StyledTodoCommentTime>
+          <StyledTodoCommentTime className="todo-comment-time">{item.date}</StyledTodoCommentTime>
           <StyledTodoCommentMsg>
             <p>{item.comment}</p>
           </StyledTodoCommentMsg>

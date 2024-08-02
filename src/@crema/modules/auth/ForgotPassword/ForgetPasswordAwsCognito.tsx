@@ -40,9 +40,7 @@ const ForgetPasswordAwsCognito = () => {
         <Form.Item
           name="email"
           className="form-field"
-          rules={[
-            { required: true, message: 'Please input your Email Address!' },
-          ]}
+          rules={[{ required: true, message: 'Please input your Email Address!' }]}
         >
           <Input placeholder={messages['common.emailAddress'] as string} />
         </Form.Item>

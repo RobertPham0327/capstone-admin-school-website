@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import dayjs from "dayjs";
-import clsx from "clsx";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import { CheckOutlined } from "@ant-design/icons";
-import { getStringFromHtml } from "@crema/helpers/StringHelper";
+import dayjs from 'dayjs';
+import clsx from 'clsx';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import { CheckOutlined } from '@ant-design/icons';
+import { getStringFromHtml } from '@crema/helpers/StringHelper';
 import {
   StyledMailListActionMobile,
   StyledMailListAvatarMobile,
@@ -17,9 +17,9 @@ import {
   StyledMailListSubTitleMobile,
   StyledMailListTimeMobile,
   StyleMailListTitleMobile,
-} from "./index.styled";
-import { StyledMailListDate } from "../index.styled";
-import { LabelObjType, MailObjType } from "@crema/types/models/apps/Mail";
+} from './index.styled';
+import { StyledMailListDate } from '../index.styled';
+import { LabelObjType, MailObjType } from '@crema/types/models/apps/Mail';
 
 type MailListItemProps = {
   mail: MailObjType;
@@ -41,13 +41,10 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
 
   const onGetMailDate = () => {
     const date = mail!.messages![messages - 1].sentOn;
-    if (
-      dayjs(date, "ddd, MMM DD, YYYY").format() ===
-      dayjs("ddd, MMM DD, YYYY").format()
-    ) {
-      return dayjs(date).format("LT");
+    if (dayjs(date, 'ddd, MMM DD, YYYY').format() === dayjs('ddd, MMM DD, YYYY').format()) {
+      return dayjs(date).format('LT');
     } else {
-      return date.split(",")[1];
+      return date.split(',')[1];
     }
   };
 
@@ -55,9 +52,7 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
     if (messages === 1) {
       return mail!.messages![0].sender.name;
     } else if (messages === 2) {
-      return `${mail!.messages![0].sender.name}, ${
-        mail!.messages![1].sender.name
-      }(2)`;
+      return `${mail!.messages![0].sender.name}, ${mail!.messages![1].sender.name}(2)`;
     } else {
       return `${mail!.messages![0].sender.name}, ${
         mail!.messages![messages - 2].sender.name
@@ -72,7 +67,7 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
   return (
     <StyledMailListItemMobile
       key={mail.id}
-      className={clsx("item-hover", {
+      className={clsx('item-hover', {
         mailRead: mail.isRead,
       })}
       onClick={() => onViewMailDetail(mail)}
@@ -81,7 +76,7 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
         className={clsx({
           checked: checkedMails.includes(mail.id),
         })}
-        onClick={(event) => {
+        onClick={event => {
           event.stopPropagation();
           onChangeCheckedMails(!checkedMails.includes(mail.id), mail.id);
         }}
@@ -89,20 +84,14 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
         {checkedMails.includes(mail.id) ? (
           <CheckOutlined />
         ) : (
-          <StyledMailListAvatarMobile>
-            {getSenderName().charAt(0).toUpperCase()}
-          </StyledMailListAvatarMobile>
+          <StyledMailListAvatarMobile>{getSenderName().charAt(0).toUpperCase()}</StyledMailListAvatarMobile>
         )}
       </StyledMailListAvatarMobileView>
 
       <StyledMailListContentMobile>
         <StyledMailListMainContent>
-          <StyleMailListTitleMobile className="text-truncate">
-            {getSenderName()}
-          </StyleMailListTitleMobile>
-          <StyledMailListSubTitleMobile className="text-truncate">
-            {mail.subject}
-          </StyledMailListSubTitleMobile>
+          <StyleMailListTitleMobile className="text-truncate">{getSenderName()}</StyleMailListTitleMobile>
+          <StyledMailListSubTitleMobile className="text-truncate">{mail.subject}</StyledMailListSubTitleMobile>
           <StyledMailListDescMobile className="text-truncate">
             {getStringFromHtml(getDescription())}
           </StyledMailListDescMobile>
@@ -110,18 +99,11 @@ const MailListItemMobile: React.FC<MailListItemProps> = ({
 
         <StyledMailListActionMobile>
           <StyledMailListTimeMobile>
-            <StyledMailListDate className="text-truncate">
-              {onGetMailDate()}
-            </StyledMailListDate>
+            <StyledMailListDate className="text-truncate">{onGetMailDate()}</StyledMailListDate>
           </StyledMailListTimeMobile>
 
-          <StyledMailListStarredMobile
-            onClick={(event) => event.stopPropagation()}
-          >
-            <AppsStarredIcon
-              item={mail}
-              onChange={() => onChangeStarred(!mail.isStarred, mail)}
-            />
+          <StyledMailListStarredMobile onClick={event => event.stopPropagation()}>
+            <AppsStarredIcon item={mail} onChange={() => onChangeStarred(!mail.isStarred, mail)} />
           </StyledMailListStarredMobile>
         </StyledMailListActionMobile>
       </StyledMailListContentMobile>

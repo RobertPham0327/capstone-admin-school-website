@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { EditOutlined, FileTextOutlined } from "@ant-design/icons";
-import clsx from "clsx";
+import React, { useState } from 'react';
+import { EditOutlined, FileTextOutlined } from '@ant-design/icons';
+import clsx from 'clsx';
 import {
   StyledChatMediaWrapper,
   StyledChatMsgListItem,
@@ -18,25 +18,20 @@ import {
   StyledMsgChatView,
   StyledMsgInfoEdit,
   StyledMsgTime,
-} from "./MessageItem.style";
-import { getFileSize } from "@crema/helpers/Common";
-import AppMediaViewer from "@crema/components/AppMedialViewer";
-import {
-  ConnectionObjType,
-  MediaObjType,
-  MessageDataObjType,
-  MessageType,
-} from "@crema/types/models/apps/Chat";
+} from './MessageItem.style';
+import { getFileSize } from '@crema/helpers/Common';
+import AppMediaViewer from '@crema/components/AppMedialViewer';
+import { ConnectionObjType, MediaObjType, MessageDataObjType, MessageType } from '@crema/types/models/apps/Chat';
 
 const showMediaItems = 2;
 const getMediaMessage = (item: MediaObjType) => {
-  if (item.mime_type.startsWith("image")) {
+  if (item.mime_type.startsWith('image')) {
     return (
       <StyledMediaImg>
         <img alt="" src={item.url} />
       </StyledMediaImg>
     );
-  } else if (item.mime_type.startsWith("video")) {
+  } else if (item.mime_type.startsWith('video')) {
     return (
       <StyledMediaVideo>
         <video src={item.url} />
@@ -55,10 +50,7 @@ const getMediaMessage = (item: MediaObjType) => {
     );
   }
 };
-const getMessage = (
-  item: MessageDataObjType,
-  setIndex: (index: number) => void
-) => {
+const getMessage = (item: MessageDataObjType, setIndex: (index: number) => void) => {
   if (item.message_type === MessageType.TEXT) {
     return <StyledMessageTypePara>{item.message}</StyledMessageTypePara>;
   } else {
@@ -66,18 +58,13 @@ const getMessage = (
       <StyledChatMediaWrapper>
         <StyledMediaRow>
           {item.media!.slice(0, showMediaItems).map((data, index) => (
-            <StyledMediaCol
-              key={"media-" + data.id}
-              onClick={() => setIndex(index)}
-            >
+            <StyledMediaCol key={'media-' + data.id} onClick={() => setIndex(index)}>
               {getMediaMessage(data)}
             </StyledMediaCol>
           ))}
           {item.media!.length > showMediaItems ? (
             <StyledMediaCol onClick={() => setIndex(showMediaItems)}>
-              <StyledMediaCounter>
-                +{item.media!.length - showMediaItems}
-              </StyledMediaCounter>
+              <StyledMediaCounter>+{item.media!.length - showMediaItems}</StyledMediaCounter>
             </StyledMediaCol>
           ) : null}
         </StyledMediaRow>
@@ -108,18 +95,14 @@ const ReceiverMessageItem: React.FC<ReceiverMessageItemProps> = ({
   return (
     <StyledChatMsgListItem
       className={clsx(
-        "left",
-        isPreviousSender ? "hide-user-info" : "first-chat-message",
-        isLast ? "last-chat-message" : ""
+        'left',
+        isPreviousSender ? 'hide-user-info' : 'first-chat-message',
+        isLast ? 'last-chat-message' : '',
       )}
     >
       <StyledMsgChatView className="message-chat-view">
         {isPreviousSender ? null : selectedUser.image ? (
-          <StyledMsgChatAvatar
-            size={34}
-            className="message-chat-avatar"
-            src={selectedUser.image}
-          />
+          <StyledMsgChatAvatar size={34} className="message-chat-avatar" src={selectedUser.image} />
         ) : (
           <StyledMsgChatAvatar className="message-chat-avatar">
             {selectedUser.name.charAt(0).toUpperCase()}

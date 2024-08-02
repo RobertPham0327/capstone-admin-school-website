@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StyledEmptyResult,
-  StyledTitle,
-  StyledParaText,
-  StyledEmptyResultBtn,
-} from './index.styled';
+import { StyledEmptyResult, StyledTitle, StyledParaText, StyledEmptyResultBtn } from './index.styled';
 import IntlMessages from '@crema/helpers/IntlMessages';
 
 type AppEmptyResultProps = {
@@ -24,11 +19,7 @@ const AppEmptyResult: React.FC<AppEmptyResultProps> = ({
     <StyledEmptyResult>
       <StyledTitle level={4}>{title}</StyledTitle>
       {description ? <StyledParaText>{description}</StyledParaText> : null}
-      {actionTitle ? (
-        <StyledEmptyResultBtn onClick={onAction}>
-          {actionTitle}
-        </StyledEmptyResultBtn>
-      ) : null}
+      {actionTitle ? <StyledEmptyResultBtn onClick={onAction}>{actionTitle}</StyledEmptyResultBtn> : null}
     </StyledEmptyResult>
   );
 };

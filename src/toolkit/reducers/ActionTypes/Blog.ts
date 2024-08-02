@@ -1,15 +1,6 @@
-import {
-  GET_BLOGS_LIST,
-  GET_BLOGS_DETAIL,
-  ADD_NEW_BLOG,
-  EDIT_BLOG,
-} from "@crema/types/actions/Blogs.action";
-import { createAction } from "@reduxjs/toolkit";
-import {
-  BlogType,
-  BlogContentType,
-  BlogSidebarType,
-} from "@crema/types/models/extrapages/Blog";
+import { GET_BLOGS_LIST, GET_BLOGS_DETAIL, ADD_NEW_BLOG, EDIT_BLOG } from '@crema/types/actions/Blogs.action';
+import { createAction } from '@reduxjs/toolkit';
+import { BlogType, BlogContentType, BlogSidebarType } from '@crema/types/models/extrapages/Blog';
 
 export const BlogListAction = createAction<BlogType>(GET_BLOGS_LIST);
 

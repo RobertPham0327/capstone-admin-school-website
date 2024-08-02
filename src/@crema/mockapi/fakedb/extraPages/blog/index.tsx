@@ -1,76 +1,72 @@
-import {
-  BlogContentType,
-  BlogDetailType,
-  BlogSidebarType,
-} from "@crema/types/models/extrapages/Blog";
+import { BlogContentType, BlogDetailType, BlogSidebarType } from '@crema/types/models/extrapages/Blog';
 
 export const blogSidebar: BlogSidebarType = {
   recentPost: [
     {
       id: 1,
-      srcImg: "/assets/images/extra-pages/blog/blog-img.png",
-      title: "The standard Lorem Ipsum passage used?",
-      duration: "12 December 2021",
+      srcImg: '/assets/images/extra-pages/blog/blog-img.png',
+      title: 'The standard Lorem Ipsum passage used?',
+      duration: '12 December 2021',
     },
     {
       id: 2,
-      srcImg: "/assets/images/extra-pages/blog/blog-img.png",
-      title: "The standard Lorem Ipsum passage used?",
-      duration: "12 December 2021",
+      srcImg: '/assets/images/extra-pages/blog/blog-img.png',
+      title: 'The standard Lorem Ipsum passage used?',
+      duration: '12 December 2021',
     },
     {
       id: 3,
-      srcImg: "/assets/images/extra-pages/blog/blog-img.png",
-      title: "The standard Lorem Ipsum passage used?",
-      duration: "12 December 2021",
+      srcImg: '/assets/images/extra-pages/blog/blog-img.png',
+      title: 'The standard Lorem Ipsum passage used?',
+      duration: '12 December 2021',
     },
   ],
   categories: [
     {
       id: 1,
-      title: "Fashion",
+      title: 'Fashion',
       number: 10,
     },
     {
       id: 2,
-      title: "Business",
+      title: 'Business',
       number: 10,
     },
     {
       id: 3,
-      title: "Creative",
+      title: 'Creative',
       number: 10,
     },
     {
       id: 4,
-      title: "Lifestyle",
+      title: 'Lifestyle',
       number: 10,
     },
   ],
   tag: [
     {
       id: 1,
-      name: "Fashion",
+      name: 'Fashion',
     },
     {
       id: 2,
-      name: "Development",
+      name: 'Development',
     },
     {
       id: 3,
-      name: "Lifestyle",
+      name: 'Lifestyle',
     },
     {
       id: 4,
-      name: "Hotel",
+      name: 'Hotel',
     },
     {
       id: 5,
-      name: "Event",
+      name: 'Event',
     },
     {
       id: 6,
-      name: "Multimedia",
+      name: 'Multimedia',
     },
   ],
 };
@@ -78,27 +74,27 @@ export const blogDetail: BlogDetailType = {
   blogDetailHeader: [
     {
       id: 1,
-      icon: "BiUserCircle",
-      title: "John Deuo",
+      icon: 'BiUserCircle',
+      title: 'John Deuo',
     },
     {
       id: 2,
-      icon: "AiOutlineCalendar",
-      title: "13 Mar 2021",
+      icon: 'AiOutlineCalendar',
+      title: '13 Mar 2021',
     },
     {
       id: 3,
-      icon: "BiCommentDetail",
-      title: "100 Comments",
+      icon: 'BiCommentDetail',
+      title: '100 Comments',
     },
   ],
-  cardMediaAction: "Concept",
-  duration: "12 December 2021",
+  cardMediaAction: 'Concept',
+  duration: '12 December 2021',
   blogDetailContent: {
-    cardMedia: "/assets/images/extra-pages/blog/blog-img.png",
-    title: "You can never quit. Winners never quit, and quitters never win",
+    cardMedia: '/assets/images/extra-pages/blog/blog-img.png',
+    title: 'You can never quit. Winners never quit, and quitters never win',
     description:
-      "Tend to repeat predefined chunks as necessary, making this the first true generator on the internet. It uses dictionary the over 200 Latin words, combined with a handful of model sentence structures, to generate is lorem ipsum which looks reasonable. The generated Lorem ipsum is therefore always free from repetition, injected humour.",
+      'Tend to repeat predefined chunks as necessary, making this the first true generator on the internet. It uses dictionary the over 200 Latin words, combined with a handful of model sentence structures, to generate is lorem ipsum which looks reasonable. The generated Lorem ipsum is therefore always free from repetition, injected humour.',
     content: `<div>
     <div
       id="tooltip"
@@ -198,62 +194,59 @@ export const blogDetail: BlogDetailType = {
     tag: [
       {
         id: 1,
-        name: "Fashion",
+        name: 'Fashion',
       },
       {
         id: 2,
-        name: "Hotel",
+        name: 'Hotel',
       },
       {
         id: 3,
-        name: "Event",
+        name: 'Event',
       },
     ],
     likeCount: 5,
     post: {
-      user: "/assets/images/avatar/A12.jpg",
-      userName: "John Deuo",
-      userPosition: "Co-founder",
+      user: '/assets/images/avatar/A12.jpg',
+      userName: 'John Deuo',
+      userPosition: 'Co-founder',
       description:
         "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
     meta: {
-      metatitle: "Meta title",
-      metadesc: "Meta Description",
-      keywords: "Meta, title",
+      metatitle: 'Meta title',
+      metadesc: 'Meta Description',
+      keywords: 'Meta, title',
     },
   },
   blogComment: [
     {
       id: 1,
-      image: "/assets/images/avatar/A12.jpg",
-      name: "John Deuo",
-      duration: "17 July 2020, 6:05 PM",
+      image: '/assets/images/avatar/A12.jpg',
+      name: 'John Deuo',
+      duration: '17 July 2020, 6:05 PM',
       comment:
         "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
     {
       id: 2,
-      image: "/assets/images/avatar/A12.jpg",
-      name: "John Deuo",
-      duration: "17 July 2020, 6:05 PM",
+      image: '/assets/images/avatar/A12.jpg',
+      name: 'John Deuo',
+      duration: '17 July 2020, 6:05 PM',
       comment:
         "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
     {
       id: 3,
-      image: "/assets/images/avatar/A12.jpg",
-      name: "John Deuo",
-      duration: "17 July 2020, 6:05 PM",
+      image: '/assets/images/avatar/A12.jpg',
+      name: 'John Deuo',
+      duration: '17 July 2020, 6:05 PM',
       comment:
         "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
   ],
 };
 
-export const blogContent: BlogContentType[] = Array.from(
-  { length: 7 },
-  (_, index) => index + 1
-).map((item) => {
+export const blogContent: BlogContentType[] = Array.from({ length: 7 }, (_, index) => index + 1).map(item => {
   return { ...blogDetail, id: item };
 });

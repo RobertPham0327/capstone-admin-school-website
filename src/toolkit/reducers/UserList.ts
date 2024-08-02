@@ -1,6 +1,6 @@
-import { GET_USER_LIST } from "@crema/constants/ActionTypes";
-import { UserList } from "@crema/types/models/Apps";
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { GET_USER_LIST } from '@crema/constants/ActionTypes';
+import { UserList } from '@crema/types/models/Apps';
+import { createAction, createReducer } from '@reduxjs/toolkit';
 
 const initialState: {
   usersList: UserList[];
@@ -10,7 +10,7 @@ const initialState: {
 
 export const GetUserListAction = createAction<UserList[]>(GET_USER_LIST);
 
-const userListReducer = createReducer(initialState, (builder) => {
+const userListReducer = createReducer(initialState, builder => {
   builder.addCase(GetUserListAction, (state, action) => {
     state.usersList = action.payload;
   });

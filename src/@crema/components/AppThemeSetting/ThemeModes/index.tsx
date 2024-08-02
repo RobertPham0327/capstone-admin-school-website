@@ -1,23 +1,13 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import {
-  StyledThemeColorSetting,
-  StyledThemeColorSettingTitle,
-} from "../ThemeColors/index.styled";
-import { ThemeMode } from "@crema/constants/AppEnums";
-import {
-  useThemeActionsContext,
-  useThemeContext,
-} from "@crema/context/AppContextProvider/ThemeContextProvider";
-import { useSidebarActionsContext } from "@crema/context/AppContextProvider/SidebarContextProvider";
-import {
-  DarkSidebar,
-  LightSidebar,
-  SidebarData,
-} from "@crema/constants/defaultConfig";
-import clsx from "clsx";
-import styled from "styled-components";
-import { Radio } from "antd";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { StyledThemeColorSetting, StyledThemeColorSettingTitle } from '../ThemeColors/index.styled';
+import { ThemeMode } from '@crema/constants/AppEnums';
+import { useThemeActionsContext, useThemeContext } from '@crema/context/AppContextProvider/ThemeContextProvider';
+import { useSidebarActionsContext } from '@crema/context/AppContextProvider/SidebarContextProvider';
+import { DarkSidebar, LightSidebar, SidebarData } from '@crema/constants/defaultConfig';
+import clsx from 'clsx';
+import styled from 'styled-components';
+import { Radio } from 'antd';
 
 const ToggleButtonGroup = styled(Radio.Group)``;
 const StyledToggleButton = styled(Radio.Button)``;
@@ -35,8 +25,7 @@ const ThemeModes = () => {
           sidebarBgColor: LightSidebar.sidebarBgColor,
           sidebarTextColor: LightSidebar.sidebarTextColor,
           sidebarMenuSelectedBgColor: LightSidebar.sidebarMenuSelectedBgColor,
-          sidebarMenuSelectedTextColor:
-            LightSidebar.sidebarMenuSelectedTextColor,
+          sidebarMenuSelectedTextColor: LightSidebar.sidebarMenuSelectedTextColor,
           sidebarHeaderColor: LightSidebar.sidebarHeaderColor,
         } as SidebarData);
       } else {
@@ -44,8 +33,7 @@ const ThemeModes = () => {
           sidebarBgColor: DarkSidebar.sidebarBgColor,
           sidebarTextColor: DarkSidebar.sidebarTextColor,
           sidebarMenuSelectedBgColor: DarkSidebar.sidebarMenuSelectedBgColor,
-          sidebarMenuSelectedTextColor:
-            DarkSidebar.sidebarMenuSelectedTextColor,
+          sidebarMenuSelectedTextColor: DarkSidebar.sidebarMenuSelectedTextColor,
           sidebarHeaderColor: DarkSidebar.sidebarHeaderColor,
         } as SidebarData);
       }
@@ -58,11 +46,7 @@ const ThemeModes = () => {
         <IntlMessages id="customizer.themeMode" />
       </StyledThemeColorSettingTitle>
 
-      <ToggleButtonGroup
-        value={themeMode}
-        onChange={(e) => onModeChange(e.target.value)}
-        aria-label="text alignment"
-      >
+      <ToggleButtonGroup value={themeMode} onChange={e => onModeChange(e.target.value)} aria-label="text alignment">
         <StyledToggleButton
           className={clsx({
             active: themeMode === ThemeMode.LIGHT,
@@ -74,9 +58,7 @@ const ThemeModes = () => {
 
         <StyledToggleButton
           className={clsx({
-            active:
-              themeMode === ThemeMode.DARK ||
-              theme.palette.type === ThemeMode.DARK,
+            active: themeMode === ThemeMode.DARK || theme.palette.type === ThemeMode.DARK,
           })}
           aria-label="centered"
         >

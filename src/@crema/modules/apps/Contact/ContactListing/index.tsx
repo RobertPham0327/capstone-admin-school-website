@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import ContactHeader from "./ContactHeader";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import CreateContact from "../CreateContact";
-import ContactViewContent from "./ContactViewContent";
-import ContactDetail from "../ContactDetail";
-import AppsPagination from "@crema/components/AppsPagination";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import AppsContent from "@crema/components/AppsContainer/AppsContent";
-import ConfirmationModal from "@crema/components/AppConfirmationModal";
-import { StyledAppFooter } from "./index.styled";
-import { postDataApi, putDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import ContactHeader from './ContactHeader';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import CreateContact from '../CreateContact';
+import ContactViewContent from './ContactViewContent';
+import ContactDetail from '../ContactDetail';
+import AppsPagination from '@crema/components/AppsPagination';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import AppsContent from '@crema/components/AppsContainer/AppsContent';
+import ConfirmationModal from '@crema/components/AppConfirmationModal';
+import { StyledAppFooter } from './index.styled';
+import { postDataApi, putDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type DataType = {
   data: ContactObjType[];
@@ -27,21 +27,15 @@ type ContactListingProps = {
   reCallAPI?: () => void;
 };
 
-const ContactListing: React.FC<ContactListingProps> = ({
-  apiData,
-  loading,
-  setQueryParams,
-  setData,
-  reCallAPI,
-}) => {
+const ContactListing: React.FC<ContactListingProps> = ({ apiData, loading, setQueryParams, setData, reCallAPI }) => {
   const { pathname } = useRouter();
   const infoViewActionsContext = useInfoViewActionsContext();
 
-  const [filterText, onSetFilterText] = useState("");
+  const [filterText, onSetFilterText] = useState('');
 
   const [page, setPage] = useState(0);
 
-  const [pageView, setPageView] = useState<string>("list");
+  const [pageView, setPageView] = useState<string>('list');
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
@@ -53,16 +47,14 @@ const ContactListing: React.FC<ContactListingProps> = ({
 
   const [isShowDetail, onShowDetail] = useState<boolean>(false);
 
-  const [selectedContact, setSelectedContact] = useState<ContactObjType | null>(
-    null
-  );
+  const [selectedContact, setSelectedContact] = useState<ContactObjType | null>(null);
 
   useEffect(() => {
     setPage(0);
   }, [pathname]);
 
   useEffect(() => {
-    const path = pathname.split("/");
+    const path = pathname.split('/');
     setQueryParams({
       type: path[path.length - 2],
       name: path[path.length - 1],
@@ -100,30 +92,22 @@ const ContactListing: React.FC<ContactListingProps> = ({
     if (checked) {
       setCheckedContacts(checkedContacts.concat(id));
     } else {
-      setCheckedContacts(
-        checkedContacts.filter((contactId) => contactId !== id)
-      );
+      setCheckedContacts(checkedContacts.filter(contactId => contactId !== id));
     }
   };
 
   const onChangeStarred = (status: boolean, contact: ContactObjType) => {
-    putDataApi<ContactObjType[]>(
-      "/api/contactApp/update/starred",
-      infoViewActionsContext,
-      {
-        contactIds: [contact.id],
-        status: status,
-      }
-    )
-      .then((data) => {
+    putDataApi<ContactObjType[]>('/api/contactApp/update/starred', infoViewActionsContext, {
+      contactIds: [contact.id],
+      status: status,
+    })
+      .then(data => {
         onUpdateSelectedContact(data[0]);
         infoViewActionsContext.showMessage(
-          data[0].isStarred
-            ? "Contact Marked as Starred Successfully"
-            : "Contact Marked as Unstarred Successfully"
+          data[0].isStarred ? 'Contact Marked as Starred Successfully' : 'Contact Marked as Unstarred Successfully',
         );
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -131,7 +115,7 @@ const ContactListing: React.FC<ContactListingProps> = ({
   const onUpdateSelectedContact = (contact: ContactObjType) => {
     if (setData)
       setData({
-        data: apiData?.data.map((item) => {
+        data: apiData?.data.map(item => {
           if (item.id === contact.id) {
             return contact;
           }
@@ -148,22 +132,18 @@ const ContactListing: React.FC<ContactListingProps> = ({
 
   const onUpdateContacts = (contacts: ContactObjType[]) => {
     console.log(
-      apiData?.data.map((item) => {
-        const contact = contacts.find(
-          (contact: ContactObjType) => contact.id === item.id
-        );
+      apiData?.data.map(item => {
+        const contact = contacts.find((contact: ContactObjType) => contact.id === item.id);
         if (contact) {
           return contact;
         }
         return item;
-      })
+      }),
     );
     if (setData)
       setData({
-        data: apiData?.data.map((item) => {
-          const contact = contacts.find(
-            (contact: ContactObjType) => contact.id === item.id
-          );
+        data: apiData?.data.map(item => {
+          const contact = contacts.find((contact: ContactObjType) => contact.id === item.id);
           if (contact) {
             return contact;
           }
@@ -174,32 +154,28 @@ const ContactListing: React.FC<ContactListingProps> = ({
   };
 
   const onGetFilteredItems = () => {
-    if (filterText === "") {
+    if (filterText === '') {
       return apiData?.data;
     } else {
       return apiData?.data.filter((contact: ContactObjType) =>
-        contact.name.toUpperCase().includes(filterText.toUpperCase())
+        contact.name.toUpperCase().includes(filterText.toUpperCase()),
       );
     }
   };
 
   const onDeleteSelectedContacts = () => {
-    const path = pathname.split("/");
-    postDataApi<DataType>(
-      "/api/contactApp/delete/contact",
-      infoViewActionsContext,
-      {
-        type: path[path.length - 2],
-        name: path[path.length - 1],
-        contactIds: toDeleteContacts,
-        page,
-      }
-    )
-      .then((data) => {
+    const path = pathname.split('/');
+    postDataApi<DataType>('/api/contactApp/delete/contact', infoViewActionsContext, {
+      type: path[path.length - 2],
+      name: path[path.length - 1],
+      contactIds: toDeleteContacts,
+      page,
+    })
+      .then(data => {
         if (setData) setData(data);
-        infoViewActionsContext.showMessage("Contact Deleted Successfully");
+        infoViewActionsContext.showMessage('Contact Deleted Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
 
@@ -248,11 +224,7 @@ const ContactListing: React.FC<ContactListingProps> = ({
 
       {apiData?.data?.length > 0 ? (
         <StyledAppFooter>
-          <AppsPagination
-            count={apiData?.count}
-            page={page}
-            onChange={onChange}
-          />
+          <AppsPagination count={apiData?.count} page={page} onChange={onChange} />
         </StyledAppFooter>
       ) : null}
 

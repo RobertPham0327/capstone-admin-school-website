@@ -1,10 +1,6 @@
-import React from "react";
-import { useLayoutContext } from "@crema/context/AppContextProvider/LayoutContextProvider";
-import {
-  StyledFooterBtnView,
-  StyledMainFooter,
-  StyledFooterBtn,
-} from "./AppFooter.styled";
+import React from 'react';
+import { useLayoutContext } from '@crema/context/AppContextProvider/LayoutContextProvider';
+import { StyledFooterBtnView, StyledMainFooter, StyledFooterBtn } from './AppFooter.styled';
 
 const AppFooter = () => {
   const { footer } = useLayoutContext();

@@ -1,15 +1,11 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { Checkbox, Form, Input } from "antd";
-import {
-  GithubOutlined,
-  GoogleOutlined,
-  TwitterOutlined,
-} from "@ant-design/icons";
-import { FaFacebookF } from "react-icons/fa";
-import { useIntl } from "react-intl";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { useAuthMethod } from "@crema/hooks/AuthHooks";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { Checkbox, Form, Input } from 'antd';
+import { GithubOutlined, GoogleOutlined, TwitterOutlined } from '@ant-design/icons';
+import { FaFacebookF } from 'react-icons/fa';
+import { useIntl } from 'react-intl';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { useAuthMethod } from '@crema/hooks/AuthHooks';
 import {
   SignInButton,
   StyledRememberMe,
@@ -23,8 +19,8 @@ import {
   StyledSignLinkTag,
   StyledSignSocialLink,
   StyledSignTextGrey,
-} from "./index.styled";
-import { SignInProps } from "@crema/services/auth/firebase/FirebaseAuthProvider";
+} from './index.styled';
+import { SignInProps } from '@crema/services/auth/firebase/FirebaseAuthProvider';
 
 const SignInFirebase = () => {
   const router = useRouter();
@@ -32,10 +28,10 @@ const SignInFirebase = () => {
   const { messages } = useIntl();
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
   const onGoToForgetPassword = () => {
-    router.push("/forget-password");
+    router.push('/forget-password');
   };
 
   function onRememberMe() {
@@ -49,30 +45,26 @@ const SignInFirebase = () => {
           name="basic"
           initialValues={{
             remember: true,
-            email: "crema.demo@gmail.com",
-            password: "Pass@1!@all",
+            email: 'crema.demo@gmail.com',
+            password: 'Pass@1!@all',
           }}
-          onFinish={(values) =>
-            logInWithEmailAndPassword(values as SignInProps)
-          }
+          onFinish={values => logInWithEmailAndPassword(values as SignInProps)}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
             name="email"
             className="form-field"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+            rules={[{ required: true, message: 'Please input your Email!' }]}
           >
-            <Input placeholder={messages["common.email"] as string} />
+            <Input placeholder={messages['common.email'] as string} />
           </Form.Item>
 
           <Form.Item
             name="password"
             className="form-field"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: 'Please input your Password!' }]}
           >
-            <Input.Password
-              placeholder={messages["common.password"] as string}
-            />
+            <Input.Password placeholder={messages['common.password'] as string} />
           </Form.Item>
 
           <StyledRememberMe>
@@ -106,22 +98,10 @@ const SignInFirebase = () => {
           <IntlMessages id="common.orLoginWith" />
         </StyledSignedText>
         <StyledSignSocialLink>
-          <StyledSignIconBtn
-            onClick={() => logInWithPopup("google")}
-            icon={<GoogleOutlined />}
-          />
-          <StyledSignIconBtn
-            icon={<FaFacebookF />}
-            onClick={() => logInWithPopup("facebook")}
-          />
-          <StyledSignIconBtn
-            icon={<GithubOutlined />}
-            onClick={() => logInWithPopup("github")}
-          />
-          <StyledSignIconBtn
-            icon={<TwitterOutlined />}
-            onClick={() => logInWithPopup("twitter")}
-          />
+          <StyledSignIconBtn onClick={() => logInWithPopup('google')} icon={<GoogleOutlined />} />
+          <StyledSignIconBtn icon={<FaFacebookF />} onClick={() => logInWithPopup('facebook')} />
+          <StyledSignIconBtn icon={<GithubOutlined />} onClick={() => logInWithPopup('github')} />
+          <StyledSignIconBtn icon={<TwitterOutlined />} onClick={() => logInWithPopup('twitter')} />
         </StyledSignSocialLink>
       </StyledSignFooter>
     </StyledSign>

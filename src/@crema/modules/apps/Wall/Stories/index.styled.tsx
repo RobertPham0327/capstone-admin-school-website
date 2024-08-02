@@ -47,11 +47,7 @@ export const StyledStoriesUserInfo = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(
-      180deg,
-      rgba(120, 130, 146, 0) 7.29%,
-      #788292 100%
-    );
+    background-image: linear-gradient(180deg, rgba(120, 130, 146, 0) 7.29%, #788292 100%);
     border-bottom-left-radius: ${({ theme }) => theme.sizes.borderRadius.base};
     border-bottom-right-radius: ${({ theme }) => theme.sizes.borderRadius.base};
     opacity: 0.65;

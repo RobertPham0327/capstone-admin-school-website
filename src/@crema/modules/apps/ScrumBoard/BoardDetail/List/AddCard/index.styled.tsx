@@ -55,8 +55,7 @@ export const StyledMultiSelectName = styled.span`
 export const StyledScrumBoardAddCardFormFooter = styled.div`
   padding: 16px 32px;
   border-top: 1px solid ${({ theme }) => theme.palette.borderColor};
-  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base}
-    ${({ theme }) => theme.sizes.borderRadius.base};
+  border-radius: 0 0 ${({ theme }) => theme.sizes.borderRadius.base} ${({ theme }) => theme.sizes.borderRadius.base};
   text-align: right;
 
   [dir='rtl'] & {
@@ -156,14 +155,12 @@ export const StyledScrumBoardAttachmentAction = styled.div`
   visibility: hidden;
 
   & .icon-btn {
-    background-color: ${({ theme }) =>
-      rgba(theme.palette.background.paper, 0.5)};
+    background-color: ${({ theme }) => rgba(theme.palette.background.paper, 0.5)};
     color: ${({ theme }) => theme.palette.text.primary};
     font-weight: ${({ theme }) => theme.font.weight.bold};
 
     &:hover {
-      background-color: ${({ theme }) =>
-        rgba(theme.palette.background.paper, 0.6)};
+      background-color: ${({ theme }) => rgba(theme.palette.background.paper, 0.6)};
       color: ${({ theme }) => theme.palette.text.primary};
     }
 

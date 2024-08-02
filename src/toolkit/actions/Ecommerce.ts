@@ -10,11 +10,11 @@ import {
   UPDATE_CART_ITEM,
   ADD_PRODUCT_ITEM,
   UPDATE_PRODUCT_ITEM,
-} from "@crema/types/actions/Ecommerce.action";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { fetchError, fetchStart, fetchSuccess } from "./Common";
-import { Dispatch } from "redux";
-import { AppActions } from "@crema/types/actions";
+} from '@crema/types/actions/Ecommerce.action';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { fetchError, fetchStart, fetchSuccess } from './Common';
+import { Dispatch } from 'redux';
+import { AppActions } from '@crema/types/actions';
 import {
   CartItemsType,
   FilterDataType,
@@ -22,19 +22,13 @@ import {
   ProductCartItemsType,
   ProductDataType,
   VIEW_TYPE,
-} from "@crema/types/models/ecommerce/EcommerceApp";
+} from '@crema/types/models/ecommerce/EcommerceApp';
 
-export const onGetEcommerceData = ({
-  filterData,
-  page,
-}: {
-  filterData: FilterDataType | FilterType;
-  page: number;
-}) => {
+export const onGetEcommerceData = ({ filterData, page }: { filterData: FilterDataType | FilterType; page: number }) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/ecommerce/list", {
+      .get('/api/ecommerce/list', {
         params: { filterData, page },
       })
       .then((data: any) => {
@@ -42,7 +36,7 @@ export const onGetEcommerceData = ({
           dispatch(fetchSuccess());
           dispatch({ type: GET_ECOMMERCE_LIST, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {
@@ -54,7 +48,7 @@ export const getProductDetail = (id: number | string) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/ecommerce/get", {
+      .get('/api/ecommerce/get', {
         params: { id: id },
       })
       .then((data: any) => {
@@ -62,7 +56,7 @@ export const getProductDetail = (id: number | string) => {
           dispatch(fetchSuccess());
           dispatch({ type: SET_PRODUCT_DATA, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {
@@ -74,7 +68,7 @@ export const getRecentOrders = (search: string, page: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/ecommerce/orders", {
+      .get('/api/ecommerce/orders', {
         params: { search, page },
       })
       .then((data: any) => {
@@ -82,7 +76,7 @@ export const getRecentOrders = (search: string, page: number) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_RECENT_ORDER, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {
@@ -94,7 +88,7 @@ export const getCustomers = (search: string, page: number) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/ecommerce/customers", {
+      .get('/api/ecommerce/customers', {
         params: { search, page },
       })
       .then((data: any) => {
@@ -102,7 +96,7 @@ export const getCustomers = (search: string, page: number) => {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CUSTOMERS, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {
@@ -136,14 +130,14 @@ export const onCreateProduct = (product: ProductDataType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/ecommerce/list/add", { product })
+      .post('/api/ecommerce/list/add', { product })
       .then((data: any) => {
         if (data.status === 200) {
-          console.log("onCreateProduct", data.data);
+          console.log('onCreateProduct', data.data);
           dispatch(fetchSuccess());
           dispatch({ type: ADD_PRODUCT_ITEM, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {
@@ -156,13 +150,13 @@ export const onUpdateProduct = (product: ProductDataType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/ecommerce/list/update", { product })
+      .put('/api/ecommerce/list/update', { product })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: UPDATE_PRODUCT_ITEM, payload: data.data });
         } else {
-          dispatch(fetchError("Something went wrong, Please try again!"));
+          dispatch(fetchError('Something went wrong, Please try again!'));
         }
       })
       .catch((error: any) => {

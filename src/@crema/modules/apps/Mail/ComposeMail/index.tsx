@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import dayjs from "dayjs";
-import { useIntl } from "react-intl";
-import { Form, Input } from "antd";
-import { MailOutlined } from "@ant-design/icons";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import { useIntl } from 'react-intl';
+import { Form, Input } from 'antd';
+import { MailOutlined } from '@ant-design/icons';
+import IntlMessages from '@crema/helpers/IntlMessages';
 import {
   StyledMailModal,
   StyledMailModalContent,
@@ -14,10 +14,10 @@ import {
   StyledMainModalBtn,
   StyledMainModalFooter,
   StyledMainModalScrollbar,
-} from "./index.styled";
-import { postDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { generateRandomUniqueNumber } from "@crema/helpers/Common";
+} from './index.styled';
+import { postDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { generateRandomUniqueNumber } from '@crema/helpers/Common';
 
 export const isValidEmail = (value: string) => {
   return value && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
@@ -28,10 +28,7 @@ type ComposeMailProps = {
   onCloseComposeMail: (val: boolean) => void;
 };
 
-const ComposeMail: React.FC<ComposeMailProps> = ({
-  isComposeMail,
-  onCloseComposeMail,
-}) => {
+const ComposeMail: React.FC<ComposeMailProps> = ({ isComposeMail, onCloseComposeMail }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
 
   const [isShowBcc, onShowBcc] = useState(false);
@@ -47,30 +44,30 @@ const ComposeMail: React.FC<ComposeMailProps> = ({
       isStarred: false,
       label: {
         id: 211,
-        name: "Crema",
-        alias: "crema",
+        name: 'Crema',
+        alias: 'crema',
         icon: <MailOutlined />,
       },
       messages: [
         {
-          description: values.content ? values.content : "No Message",
+          description: values.content ? values.content : 'No Message',
           sender: {
             name: values.displayName ? values.displayName : values.username,
             email: values.username,
-            profilePic: "",
+            profilePic: '',
           },
           to: [
             {
               id: 1,
-              name: "Crema",
-              email: "info@cremawork.com",
-              profilePic: "",
+              name: 'Crema',
+              email: 'info@cremawork.com',
+              profilePic: '',
             },
           ],
           cc: [],
           bcc: [],
           messageId: generateRandomUniqueNumber(),
-          sentOn: dayjs().format("ddd, MMM DD, YYYY"),
+          sentOn: dayjs().format('ddd, MMM DD, YYYY'),
           isRead: false,
           isStarred: false,
         },
@@ -78,27 +75,27 @@ const ComposeMail: React.FC<ComposeMailProps> = ({
       hasAttachments: false,
       isRead: true,
       folderValue: 122,
-      sentOn: dayjs().format("llll"),
-      subject: values.subject !== "" ? values.subject : "No Subject",
+      sentOn: dayjs().format('llll'),
+      subject: values.subject !== '' ? values.subject : 'No Subject',
     };
-    postDataApi("/api/mailApp/compose", infoViewActionsContext, { mail })
+    postDataApi('/api/mailApp/compose', infoViewActionsContext, { mail })
       .then(() => {
-        infoViewActionsContext.showMessage("Mail Sent Successfully");
+        infoViewActionsContext.showMessage('Mail Sent Successfully');
         onCloseComposeMail(false);
       })
-      .catch((error) => {
+      .catch(error => {
         onCloseComposeMail(false);
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+    console.log('Failed:', errorInfo);
   };
 
   return (
     <StyledMailModal
-      title={messages["mailApp.compose"] as string}
+      title={messages['mailApp.compose'] as string}
       open={isComposeMail}
       width={800}
       // onOk={isComposeMail}
@@ -118,8 +115,8 @@ const ComposeMail: React.FC<ComposeMailProps> = ({
               rules={[
                 {
                   required: true,
-                  type: "email",
-                  message: "Please input email!",
+                  type: 'email',
+                  message: 'Please input email!',
                 },
               ]}
             >
@@ -149,12 +146,12 @@ const ComposeMail: React.FC<ComposeMailProps> = ({
                 rules={[
                   {
                     required: true,
-                    type: "email",
-                    message: "Please input your cc!",
+                    type: 'email',
+                    message: 'Please input your cc!',
                   },
                 ]}
               >
-                <Input placeholder={messages["common.cc"] as string} />
+                <Input placeholder={messages['common.cc'] as string} />
               </Form.Item>
             ) : null}
 
@@ -164,28 +161,20 @@ const ComposeMail: React.FC<ComposeMailProps> = ({
                 rules={[
                   {
                     required: true,
-                    type: "email",
-                    message: "Please input your bcc!",
+                    type: 'email',
+                    message: 'Please input your bcc!',
                   },
                 ]}
               >
-                <Input placeholder={messages["common.bcc"] as string} />
+                <Input placeholder={messages['common.bcc'] as string} />
               </Form.Item>
             ) : null}
-            <Form.Item
-              name="subject"
-              rules={[
-                { required: true, message: "Please input your Subject!" },
-              ]}
-            >
-              <Input placeholder={messages["common.subject"] as string} />
+            <Form.Item name="subject" rules={[{ required: true, message: 'Please input your Subject!' }]}>
+              <Input placeholder={messages['common.subject'] as string} />
             </Form.Item>
 
             <Form.Item name="content">
-              <StyledMailModalTextArea
-                theme="snow"
-                placeholder={messages["common.writeContent"] as string}
-              />
+              <StyledMailModalTextArea theme="snow" placeholder={messages['common.writeContent'] as string} />
             </Form.Item>
           </StyledMailModalContent>
 

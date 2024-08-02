@@ -1,14 +1,10 @@
-import React from "react";
-import {
-  GithubOutlined,
-  GoogleOutlined,
-  TwitterOutlined,
-} from "@ant-design/icons";
-import { Checkbox, Form, Input } from "antd";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { useIntl } from "react-intl";
-import { FaFacebookF } from "react-icons/fa";
-import { useAuthMethod } from "@crema/hooks/AuthHooks";
+import React from 'react';
+import { GithubOutlined, GoogleOutlined, TwitterOutlined } from '@ant-design/icons';
+import { Checkbox, Form, Input } from 'antd';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { useIntl } from 'react-intl';
+import { FaFacebookF } from 'react-icons/fa';
+import { useAuthMethod } from '@crema/hooks/AuthHooks';
 import {
   StyledSignedText,
   StyledSignFooter,
@@ -22,8 +18,8 @@ import {
   StyledSignUpForm,
   StyledSignupLink,
   StyledSignUpTestGrey,
-} from "./index.styled";
-import { SignUpProps } from "@crema/services/auth/firebase/FirebaseAuthProvider";
+} from './index.styled';
+import { SignUpProps } from '@crema/services/auth/firebase/FirebaseAuthProvider';
 
 const SignupFirebase = () => {
   const { messages } = useIntl();
@@ -35,34 +31,30 @@ const SignupFirebase = () => {
         <StyledSignUpForm
           name="basic"
           initialValues={{ remember: true }}
-          onFinish={(values: any) =>
-            registerUserWithEmailAndPassword(values as SignUpProps)
-          }
+          onFinish={(values: any) => registerUserWithEmailAndPassword(values as SignUpProps)}
         >
           <Form.Item
             name="name"
             className="form-field"
-            rules={[{ required: true, message: "Please input your Name!" }]}
+            rules={[{ required: true, message: 'Please input your Name!' }]}
           >
-            <Input placeholder={messages["common.name"] as string} />
+            <Input placeholder={messages['common.name'] as string} />
           </Form.Item>
 
           <Form.Item
             name="email"
             className="form-field"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+            rules={[{ required: true, message: 'Please input your Email!' }]}
           >
-            <Input placeholder={messages["common.email"] as string} />
+            <Input placeholder={messages['common.email'] as string} />
           </Form.Item>
 
           <Form.Item
             name="password"
             className="form-field"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: 'Please input your Password!' }]}
           >
-            <Input.Password
-              placeholder={messages["common.password"] as string}
-            />
+            <Input.Password placeholder={messages['common.password'] as string} />
           </Form.Item>
 
           <Form.Item
@@ -71,20 +63,14 @@ const SignupFirebase = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Retype Password!",
+                message: 'Please input your Retype Password!',
               },
             ]}
           >
-            <Input.Password
-              placeholder={messages["common.retypePassword"] as string}
-            />
+            <Input.Password placeholder={messages['common.retypePassword'] as string} />
           </Form.Item>
 
-          <StyledSignupCheckBox
-            className="form-field"
-            name="iAgreeTo"
-            valuePropName="checked"
-          >
+          <StyledSignupCheckBox className="form-field" name="iAgreeTo" valuePropName="checked">
             <Checkbox>
               <IntlMessages id="common.iAgreeTo" />
             </Checkbox>
@@ -116,26 +102,10 @@ const SignupFirebase = () => {
         </StyledSignedText>
 
         <StyledSignSocialLink>
-          <StyledSignIconBtn
-            shape="circle"
-            onClick={() => logInWithPopup("google")}
-            icon={<GoogleOutlined />}
-          />
-          <StyledSignIconBtn
-            shape="circle"
-            onClick={() => logInWithPopup("facebook")}
-            icon={<FaFacebookF />}
-          />
-          <StyledSignIconBtn
-            shape="circle"
-            icon={<GithubOutlined />}
-            onClick={() => logInWithPopup("github")}
-          />
-          <StyledSignIconBtn
-            shape="circle"
-            icon={<TwitterOutlined />}
-            onClick={() => logInWithPopup("twitter")}
-          />
+          <StyledSignIconBtn shape="circle" onClick={() => logInWithPopup('google')} icon={<GoogleOutlined />} />
+          <StyledSignIconBtn shape="circle" onClick={() => logInWithPopup('facebook')} icon={<FaFacebookF />} />
+          <StyledSignIconBtn shape="circle" icon={<GithubOutlined />} onClick={() => logInWithPopup('github')} />
+          <StyledSignIconBtn shape="circle" icon={<TwitterOutlined />} onClick={() => logInWithPopup('twitter')} />
         </StyledSignSocialLink>
       </StyledSignFooter>
     </StyledSignUp>

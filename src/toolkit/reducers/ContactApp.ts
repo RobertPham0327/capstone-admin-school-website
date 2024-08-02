@@ -1,9 +1,5 @@
-import { createReducer } from "@reduxjs/toolkit";
-import {
-  ContactObjType,
-  FolderObjType,
-  LabelObjType,
-} from "@crema/types/models/apps/Contact";
+import { createReducer } from '@reduxjs/toolkit';
+import { ContactObjType, FolderObjType, LabelObjType } from '@crema/types/models/apps/Contact';
 import {
   ContactListAction,
   ContactFolderListAction,
@@ -14,7 +10,7 @@ import {
   UpdateContactAction,
   UpdateContactStaredAction,
   UpdateContactDetailsAction,
-} from "./ActionTypes/Contact";
+} from './ActionTypes/Contact';
 
 const initialState: {
   contactList: ContactObjType[];
@@ -32,7 +28,7 @@ const initialState: {
   selectedContact: null,
 };
 
-const contactReducer = createReducer(initialState, (builder) => {
+const contactReducer = createReducer(initialState, builder => {
   builder
     .addCase(ContactListAction, (state, action) => {
       state.contactList = action.payload.data;
@@ -56,43 +52,35 @@ const contactReducer = createReducer(initialState, (builder) => {
       state.totalContacts = action.payload.count;
     })
     .addCase(UpdateContactAction, (state, action) => {
-      const contactIds = action.payload.data.map((contact) => contact.id);
-      const updatedList = state.contactList.map((contact) => {
+      const contactIds = action.payload.data.map(contact => contact.id);
+      const updatedList = state.contactList.map(contact => {
         if (contactIds.includes(contact.id)) {
-          return action.payload.data.find(
-            (selectedContact) => selectedContact.id === contact.id
-          );
+          return action.payload.data.find(selectedContact => selectedContact.id === contact.id);
         } else {
           return contact;
         }
       });
       const filteredList =
-        action.payload.labelName === "label"
-          ? updatedList.filter(
-              (item) => item?.label !== action.payload.LabelObjType
-            )
+        action.payload.labelName === 'label'
+          ? updatedList.filter(item => item?.label !== action.payload.LabelObjType)
           : updatedList;
 
       state.contactList = filteredList as ContactObjType[];
       state.totalContacts = filteredList.length;
     })
     .addCase(UpdateContactStaredAction, (state, action) => {
-      const contactIds = action.payload.data.map((contact) => contact.id);
-      const updatedList = state.contactList.map((contact) => {
+      const contactIds = action.payload.data.map(contact => contact.id);
+      const updatedList = state.contactList.map(contact => {
         if (contactIds.includes(contact.id)) {
-          return action.payload.data.find(
-            (selectedContact) => selectedContact.id === contact.id
-          );
+          return action.payload.data.find(selectedContact => selectedContact.id === contact.id);
         } else {
           return contact;
         }
       });
       const filteredList =
-        action.payload.folderName === "starred"
-          ? updatedList.filter((item) => item?.isStarred)
-          : updatedList;
+        action.payload.folderName === 'starred' ? updatedList.filter(item => item?.isStarred) : updatedList;
       const total =
-        action.payload.folderName === "starred"
+        action.payload.folderName === 'starred'
           ? state.totalContacts - action.payload.data.length
           : state.totalContacts;
 
@@ -104,8 +92,8 @@ const contactReducer = createReducer(initialState, (builder) => {
     // })
     .addCase(UpdateContactDetailsAction, (state, action) => {
       state.selectedContact = action.payload;
-      state.contactList = state.contactList.map((contact) =>
-        contact.id === action.payload.id ? action.payload : contact
+      state.contactList = state.contactList.map(contact =>
+        contact.id === action.payload.id ? action.payload : contact,
       );
     });
 });

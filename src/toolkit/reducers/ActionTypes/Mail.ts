@@ -1,4 +1,4 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction } from '@reduxjs/toolkit';
 import {
   CHANGE_READ_STATUS,
   COMPOSE_MAIL,
@@ -13,42 +13,32 @@ import {
   UPDATE_MAIL_LABEL,
   UPDATE_STARRED_STATUS,
   UPDATED_MAIL_DETAIL,
-} from "@crema/types/actions/Mail.action";
-import {
-  MailObjType,
-  LabelObjType,
-  FolderObjType,
-  ConnectionObjType,
-} from "@crema/types/models/apps/Mail";
+} from '@crema/types/actions/Mail.action';
+import { MailObjType, LabelObjType, FolderObjType, ConnectionObjType } from '@crema/types/models/apps/Mail';
 
 export const GetMailListAction = createAction<{
   data: MailObjType[];
   count: number;
 }>(GET_MAIL_LIST);
 
-export const GetFolderListAction =
-  createAction<FolderObjType[]>(GET_FOLDER_LIST);
+export const GetFolderListAction = createAction<FolderObjType[]>(GET_FOLDER_LIST);
 
 export const ToggleDrawerAction = createAction<boolean>(TOGGLE_MAIL_DRAWER);
 
 export const GetLabelAction = createAction<LabelObjType[]>(GET_LABEL_LIST);
 
-export const GetConnectionAction =
-  createAction<ConnectionObjType[]>(GET_CONNECTION_LIST);
+export const GetConnectionAction = createAction<ConnectionObjType[]>(GET_CONNECTION_LIST);
 
 export const ComposeMailAction = createAction<{
   pathname: string;
   data: MailObjType;
 }>(COMPOSE_MAIL);
 
-export const UpdateMailFolderAction =
-  createAction<number[]>(UPDATE_MAIL_FOLDER);
+export const UpdateMailFolderAction = createAction<number[]>(UPDATE_MAIL_FOLDER);
 
-export const UpdateMailLabelAction =
-  createAction<MailObjType[]>(UPDATE_MAIL_LABEL);
+export const UpdateMailLabelAction = createAction<MailObjType[]>(UPDATE_MAIL_LABEL);
 
-export const ChangeReadMailAction =
-  createAction<MailObjType[]>(CHANGE_READ_STATUS);
+export const ChangeReadMailAction = createAction<MailObjType[]>(CHANGE_READ_STATUS);
 
 export const UpdateStartedAction = createAction<{
   data: MailObjType[];

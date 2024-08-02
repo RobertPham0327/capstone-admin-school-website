@@ -114,12 +114,8 @@ export const StyledHeaderSearchMinibar = styled(Search)`
     }
   }
 
-  &.ant-input-search-rtl
-    > .ant-input-group
-    > .ant-input-group-addon:last-child
-    .ant-input-search-button {
-    border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0
-      ${({ theme }) => theme.sizes.borderRadius.base};
+  &.ant-input-search-rtl > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0 ${({ theme }) => theme.sizes.borderRadius.base};
   }
 `;
 
@@ -313,8 +309,7 @@ export const StyledAppLayoutMiniSidebarMain = styled(Layout)`
   width: 100% !important;
   margin-left: 0;
   position: relative;
-  background-color: ${({ theme }) =>
-    theme.palette.background.default} !important;
+  background-color: ${({ theme }) => theme.palette.background.default} !important;
 
   [dir='rtl'] & {
     margin-right: 0;

@@ -1,21 +1,13 @@
-import React from "react";
-import languageData from "./data";
+import React from 'react';
+import languageData from './data';
 
-import { Dropdown } from "antd";
-import { LayoutDirection } from "@crema/constants/AppEnums";
-import {
-  useLocaleActionsContext,
-  useLocaleContext,
-} from "@crema/context/AppContextProvider/LocaleContextProvider";
-import { useLayoutActionsContext } from "@crema/context/AppContextProvider/LayoutContextProvider";
-import { IoLanguageOutline } from "react-icons/io5";
-import {
-  StyledLangBtn,
-  StyledLangIcon,
-  StyledLangText,
-  StyledLangItem,
-} from "./index.styled";
-import { LanguageProps } from "@crema/types/models/Apps";
+import { Dropdown } from 'antd';
+import { LayoutDirection } from '@crema/constants/AppEnums';
+import { useLocaleActionsContext, useLocaleContext } from '@crema/context/AppContextProvider/LocaleContextProvider';
+import { useLayoutActionsContext } from '@crema/context/AppContextProvider/LayoutContextProvider';
+import { IoLanguageOutline } from 'react-icons/io5';
+import { StyledLangBtn, StyledLangIcon, StyledLangText, StyledLangItem } from './index.styled';
+import { LanguageProps } from '@crema/types/models/Apps';
 
 type AppLanguageSwitcherProps = {
   iconOnly?: boolean;
@@ -47,15 +39,8 @@ const AppLanguageSwitcher: React.FC<AppLanguageSwitcherProps> = () => {
 
   return (
     <>
-      <Dropdown
-        menu={{ items }}
-        trigger={["click"]}
-        overlayStyle={{ zIndex: 1052 }}
-      >
-        <StyledLangBtn
-          className="ant-dropdown-link langBtn"
-          onClick={(e) => e.preventDefault()}
-        >
+      <Dropdown menu={{ items }} trigger={['click']} overlayStyle={{ zIndex: 1052 }}>
+        <StyledLangBtn className="ant-dropdown-link langBtn" onClick={e => e.preventDefault()}>
           <StyledLangIcon>
             <IoLanguageOutline />
           </StyledLangIcon>

@@ -1,15 +1,15 @@
-import Link from "next/link";
-import React from "react";
-import { MessageFormatElement } from "react-intl";
-import { RouterConfigData } from "@crema/types/models/Apps";
+import Link from 'next/link';
+import React from 'react';
+import { MessageFormatElement } from 'react-intl';
+import { RouterConfigData } from '@crema/types/models/Apps';
 
 const renderMenuItemChildren = (
   item: RouterConfigData,
-  messages: Record<string, string> | Record<string, MessageFormatElement[]>
+  messages: Record<string, string> | Record<string, MessageFormatElement[]>,
 ) => {
   const { icon, messageId, path } = item;
 
-  if (path && path.includes("/"))
+  if (path && path.includes('/'))
     return {
       key: item.id,
       icon:
@@ -21,9 +21,7 @@ const renderMenuItemChildren = (
         )),
       label: (
         <Link href={path}>
-          <span data-testid={messageId.toLowerCase + "-nav"}>
-            {messages[messageId] as string}
-          </span>
+          <span data-testid={messageId.toLowerCase + '-nav'}>{messages[messageId] as string}</span>
         </Link>
       ),
     };
@@ -37,24 +35,20 @@ const renderMenuItemChildren = (
         ) : (
           <span className="ant-menu-item-icon" />
         )),
-      label: (
-        <span data-testid={messageId.toLowerCase + "-nav"}>
-          {messages[messageId] as string}
-        </span>
-      ),
+      label: <span data-testid={messageId.toLowerCase + '-nav'}>{messages[messageId] as string}</span>,
     };
   }
 };
 
 const renderMenuItem: any = (
   item: RouterConfigData,
-  messages: Record<string, string> | Record<string, MessageFormatElement[]>
+  messages: Record<string, string> | Record<string, MessageFormatElement[]>,
 ) => {
-  return item.type === "collapse"
+  return item.type === 'collapse'
     ? {
         ...renderMenuItemChildren(item, messages),
-        children: item.children?.map((item) => renderMenuItem(item, messages)),
-        type: "collapse",
+        children: item.children?.map(item => renderMenuItem(item, messages)),
+        type: 'collapse',
       }
     : {
         ...renderMenuItemChildren(item, messages),
@@ -63,13 +57,13 @@ const renderMenuItem: any = (
 
 const renderMenu = (
   item: RouterConfigData,
-  messages: Record<string, string> | Record<string, MessageFormatElement[]>
+  messages: Record<string, string> | Record<string, MessageFormatElement[]>,
 ) => {
-  return item.type === "group"
+  return item.type === 'group'
     ? {
         ...renderMenuItemChildren(item, messages),
-        children: item.children?.map((item) => renderMenuItem(item, messages)),
-        type: "group",
+        children: item.children?.map(item => renderMenuItem(item, messages)),
+        type: 'group',
       }
     : {
         exact: item.exact,
@@ -79,7 +73,7 @@ const renderMenu = (
 
 export const getRouteMenus = (
   routesConfig: RouterConfigData[],
-  messages: Record<string, string> | Record<string, MessageFormatElement[]>
+  messages: Record<string, string> | Record<string, MessageFormatElement[]>,
 ) => {
-  return routesConfig.map((route) => renderMenu(route, messages));
+  return routesConfig.map(route => renderMenu(route, messages));
 };

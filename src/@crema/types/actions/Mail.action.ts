@@ -1,9 +1,4 @@
-import {
-  ConnectionObjType,
-  FolderObjType,
-  LabelObjType,
-  MailObjType,
-} from '../models/apps/Mail';
+import { ConnectionObjType, FolderObjType, LabelObjType, MailObjType } from '../models/apps/Mail';
 
 export const GET_CONNECTION_LIST = 'GET_CONNECTION_LIST';
 export const GET_FOLDER_LIST = 'GET_FOLDER_LIST';

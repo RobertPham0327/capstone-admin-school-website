@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import {Avatar, List} from 'antd';
-import {darken} from 'polished';
+import { Avatar, List } from 'antd';
+import { darken } from 'polished';
 
 export const StyledDropdownList = styled(List)`
   & .ant-list-item {
@@ -8,8 +8,7 @@ export const StyledDropdownList = styled(List)`
     cursor: pointer;
 
     &:hover {
-      background-color: ${({theme}) =>
-        darken(0.03, theme.palette.background.paper)};
+      background-color: ${({ theme }) => darken(0.03, theme.palette.background.paper)};
     }
   }
 `;
@@ -23,7 +22,7 @@ export const StyledCrUserInfo = styled.div`
   justify-content: center;
   transition: all 0.2s ease;
 
-  @media screen and (min-width: ${({theme}) => theme.breakpoints.md}px) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}px) {
     padding-top: 10px;
     padding-bottom: 10px;
     height: 71px;
@@ -33,7 +32,7 @@ export const StyledCrUserInfo = styled.div`
     color: inherit;
 
     & .anticon {
-      font-size: ${({theme}) => theme.font.size.sm};
+      font-size: ${({ theme }) => theme.font.size.sm};
     }
   }
 
@@ -51,7 +50,7 @@ export const StyledCrUserInfoInner = styled.a`
 
 export const StyledCrUserInfoAvatar = styled(Avatar)`
   font-size: 24px;
-  background-color: ${({theme}) => theme.palette.orange[6]};
+  background-color: ${({ theme }) => theme.palette.orange[6]};
   width: 40px;
   height: 40px;
   display: flex;
@@ -78,8 +77,8 @@ export const StyledUsernameInfo = styled.span`
 
 export const StyledUsername = styled.h3`
   margin-bottom: 0;
-  font-size: ${({theme}) => theme.font.size.lg};
-  font-weight: ${({theme}) => theme.font.weight.medium};
+  font-size: ${({ theme }) => theme.font.size.lg};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   color: inherit;
 
   &.light {
@@ -107,7 +106,7 @@ export const StyledUserArrow = styled.span`
 export const StyledCrUserDesignation = styled.span`
   margin-top: -2px;
   color: inherit;
-  font-size: ${({theme}) => theme.font.size.base};
+  font-size: ${({ theme }) => theme.font.size.base};
 
   .ant-layout-sider-dark & {
     color: inherit;

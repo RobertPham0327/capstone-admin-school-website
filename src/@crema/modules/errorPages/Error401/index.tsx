@@ -1,17 +1,17 @@
-import React from "react";
-import { useRouter } from "next/router";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppAnimate from "@crema/components/AppAnimate";
-import AppPageMeta from "@crema/components/AppPageMeta";
-import Logo from "../../../../assets/icon/401.png";
+import React from 'react';
+import { useRouter } from 'next/router';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppAnimate from '@crema/components/AppAnimate';
+import AppPageMeta from '@crema/components/AppPageMeta';
+import Logo from '../../../../assets/icon/401.png';
 import {
   StyledErrorButton,
   StyledErrorContainer,
   StyledErrorContent,
   StyledErrorImage,
   StyledErrorPara,
-} from "../index.styled";
-import Image from "next/image";
+} from '../index.styled';
+import Image from 'next/image';
 
 const Error401 = () => {
   const router = useRouter();

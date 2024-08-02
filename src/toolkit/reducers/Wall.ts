@@ -1,11 +1,6 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { PostObjType, WallDataType } from "@crema/types/models/apps/Wall";
-import {
-  CreateNewPostAction,
-  GetFeedPostsAction,
-  GetWallDataAction,
-  UpdatePostAction,
-} from "./ActionTypes/Wall";
+import { createReducer } from '@reduxjs/toolkit';
+import { PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
+import { CreateNewPostAction, GetFeedPostsAction, GetWallDataAction, UpdatePostAction } from './ActionTypes/Wall';
 
 const initialState: {
   wallData: WallDataType;
@@ -14,7 +9,7 @@ const initialState: {
   wallData: {} as WallDataType,
   postList: [],
 };
-const wallReducer = createReducer(initialState, (builder) => {
+const wallReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetWallDataAction, (state, action) => {
       state.wallData = action.payload;

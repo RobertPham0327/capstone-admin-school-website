@@ -1,9 +1,9 @@
-/*// ForJWT Auth
+// ForJWT Auth
 import { getUserFromJwtAuth } from '@crema/helpers/AuthHelper';
 import {
   useJWTAuth,
   useJWTAuthActions,
-} from '@crema/services/auth/jwt-authAuthProvider';
+} from '@crema/services/auth/jwt-auth/JWTAuthProvider';
 
 export const useAuthUser = () => {
   const {user, isAuthenticated, isLoading} = useJWTAuth();
@@ -22,39 +22,31 @@ export const useAuthMethod = () => {
     logout,
     signUpUser,
   };
-};*/
+};
 //For Firebase Auth
 
-import {
-  useFirebase,
-  useFirebaseActions,
-} from "@crema/services/auth/firebase/FirebaseAuthProvider";
-import { getUserFromFirebase } from "@crema/helpers/AuthHelper";
+// import { useFirebase, useFirebaseActions } from '@crema/services/auth/firebase/FirebaseAuthProvider';
+// import { getUserFromFirebase } from '@crema/helpers/AuthHelper';
 
-export const useAuthUser = () => {
-  const { user, isAuthenticated, isLoading } = useFirebase();
-  return {
-    isLoading,
-    isAuthenticated,
-    user: getUserFromFirebase(user),
-  };
-};
+// export const useAuthUser = () => {
+//   const { user, isAuthenticated, isLoading } = useFirebase();
+//   return {
+//     isLoading,
+//     isAuthenticated,
+//     user: getUserFromFirebase(user),
+//   };
+// };
 
-export const useAuthMethod = () => {
-  const {
-    logInWithEmailAndPassword,
-    registerUserWithEmailAndPassword,
-    logInWithPopup,
-    logout,
-  } = useFirebaseActions();
+// export const useAuthMethod = () => {
+//   const { logInWithEmailAndPassword, registerUserWithEmailAndPassword, logInWithPopup, logout } = useFirebaseActions();
 
-  return {
-    logInWithEmailAndPassword,
-    registerUserWithEmailAndPassword,
-    logInWithPopup,
-    logout,
-  };
-};
+//   return {
+//     logInWithEmailAndPassword,
+//     registerUserWithEmailAndPassword,
+//     logInWithPopup,
+//     logout,
+//   };
+// };
 /*
 // For AWS Auth
 import { getUserFromAWS } from '@crema/helpers/AuthHelper';

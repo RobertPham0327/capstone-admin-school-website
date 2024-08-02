@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import defaultConfig, { defaultTheme } from '@crema/constants/defaultConfig';
 import { LayoutDirection } from '@crema/constants/AppEnums';
 
@@ -41,16 +34,10 @@ type ThemeContextProviderProps = {
   children: ReactNode;
 };
 
-const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({
-  children,
-}) => {
+const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<any>(defaultTheme.theme);
-  const [themeMode, updateThemeMode] = useState<string>(
-    defaultConfig.themeMode
-  );
-  const [themeStyle, updateThemeStyle] = useState<string>(
-    defaultConfig.themeStyle
-  );
+  const [themeMode, updateThemeMode] = useState<string>(defaultConfig.themeMode);
+  const [themeStyle, updateThemeStyle] = useState<string>(defaultConfig.themeStyle);
 
   const updateTheme = useCallback((theme: any) => {
     setTheme(theme);

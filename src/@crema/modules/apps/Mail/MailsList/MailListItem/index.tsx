@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import dayjs from "dayjs";
-import clsx from "clsx";
-import { Checkbox, Tooltip } from "antd";
-import { PaperClipOutlined } from "@ant-design/icons";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import AppIconButton from "@crema/components/AppIconButton";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { BiArchiveIn } from "react-icons/bi";
-import { AiOutlineDelete, AiOutlineInfoCircle } from "react-icons/ai";
-import { FiMail } from "react-icons/fi";
-import { HiOutlineMailOpen } from "react-icons/hi";
-import { MdLabelOutline } from "react-icons/md";
+import dayjs from 'dayjs';
+import clsx from 'clsx';
+import { Checkbox, Tooltip } from 'antd';
+import { PaperClipOutlined } from '@ant-design/icons';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import AppIconButton from '@crema/components/AppIconButton';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { BiArchiveIn } from 'react-icons/bi';
+import { AiOutlineDelete, AiOutlineInfoCircle } from 'react-icons/ai';
+import { FiMail } from 'react-icons/fi';
+import { HiOutlineMailOpen } from 'react-icons/hi';
+import { MdLabelOutline } from 'react-icons/md';
 
 import {
   StyledMailDesc,
@@ -29,12 +29,12 @@ import {
   StyledMailListTitle,
   StyledMailTag,
   StyledMailTagView,
-} from "../index.styled";
-import { putDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { getStringFromHtml } from "@crema/helpers/StringHelper";
-import { LabelObjType, MailObjType } from "@crema/types/models/apps/Mail";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
+} from '../index.styled';
+import { putDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { getStringFromHtml } from '@crema/helpers/StringHelper';
+import { LabelObjType, MailObjType } from '@crema/types/models/apps/Mail';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 type MailListItemProps = {
   mail: MailObjType;
@@ -61,13 +61,10 @@ const MailListItem: React.FC<MailListItemProps> = ({
 
   const onGetMailDate = () => {
     const date = mail!.messages![messages - 1].sentOn;
-    if (
-      dayjs(date, "ddd, MMM DD, YYYY").format() ===
-      dayjs("ddd, MMM DD, YYYY").format()
-    ) {
-      return dayjs(date).format("LT");
+    if (dayjs(date, 'ddd, MMM DD, YYYY').format() === dayjs('ddd, MMM DD, YYYY').format()) {
+      return dayjs(date).format('LT');
     } else {
-      return date.split(",")[1];
+      return date.split(',')[1];
     }
   };
 
@@ -75,9 +72,7 @@ const MailListItem: React.FC<MailListItemProps> = ({
     if (messages === 1) {
       return mail!.messages![0].sender.name;
     } else if (messages === 2) {
-      return `${mail!.messages![0].sender.name}, ${
-        mail!.messages![1].sender.name
-      }(2)`;
+      return `${mail!.messages![0].sender.name}, ${mail!.messages![1].sender.name}(2)`;
     } else {
       return `${mail!.messages![0].sender.name}, ${
         mail!.messages![messages - 2].sender.name
@@ -91,34 +86,32 @@ const MailListItem: React.FC<MailListItemProps> = ({
 
   const onChangeMailFolder = (type: number) => {
     mail.folderValue = type;
-    putDataApi("/api/mailApp/update/folder", infoViewActionsContext, {
+    putDataApi('/api/mailApp/update/folder', infoViewActionsContext, {
       mailIds: [mail.id],
       type,
     })
       .then(() => {
         onRemoveItem(mail);
-        infoViewActionsContext.showMessage("Mail Updated Successfully");
+        infoViewActionsContext.showMessage('Mail Updated Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
 
   const onChangeReadStatus = () => {
     mail.isRead = !mail.isRead;
-    putDataApi<MailObjType>("/api/mailApp/mail/", infoViewActionsContext, {
+    putDataApi<MailObjType>('/api/mailApp/mail/', infoViewActionsContext, {
       mail,
     })
-      .then((data) => {
+      .then(data => {
         onUpdateItem(data);
-        console.log("onChangeReadStatus: ", data);
+        console.log('onChangeReadStatus: ', data);
         infoViewActionsContext.showMessage(
-          data.isRead
-            ? "Mail Marked as Read Successfully"
-            : "Mail Marked as Unread Successfully"
+          data.isRead ? 'Mail Marked as Read Successfully' : 'Mail Marked as Unread Successfully',
         );
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
   };
@@ -126,44 +119,31 @@ const MailListItem: React.FC<MailListItemProps> = ({
   return (
     <StyledMailListItem
       key={mail.id}
-      className={clsx("item-hover", { mailRead: mail.isRead })}
+      className={clsx('item-hover', { mailRead: mail.isRead })}
       onClick={() => onViewMailDetail(mail)}
     >
       <StyledMailListContent>
-        <StyledMailListCheckbox onClick={(event) => event.stopPropagation()}>
+        <StyledMailListCheckbox onClick={event => event.stopPropagation()}>
           <Checkbox
             checked={checkedMails.includes(mail.id)}
-            onChange={(event: CheckboxChangeEvent) =>
-              onChangeCheckedMails(event, mail.id)
-            }
+            onChange={(event: CheckboxChangeEvent) => onChangeCheckedMails(event, mail.id)}
           />
         </StyledMailListCheckbox>
-        <StyledMailListStarted onClick={(event) => event.stopPropagation()}>
-          <AppsStarredIcon
-            item={mail}
-            onChange={() => onChangeStarred(!mail.isStarred, mail)}
-          />
+        <StyledMailListStarted onClick={event => event.stopPropagation()}>
+          <AppsStarredIcon item={mail} onChange={() => onChangeStarred(!mail.isStarred, mail)} />
         </StyledMailListStarted>
-        <StyledMailListAvatar>
-          {getSenderName().charAt(0).toUpperCase()}
-        </StyledMailListAvatar>
-        <StyledMailListTitle className="text-truncate">
-          {getSenderName()}
-        </StyledMailListTitle>
+        <StyledMailListAvatar>{getSenderName().charAt(0).toUpperCase()}</StyledMailListAvatar>
+        <StyledMailListTitle className="text-truncate">{getSenderName()}</StyledMailListTitle>
         <StyledMailListTime className="mail-list-time">
           {mail.hasAttachments ? <PaperClipOutlined /> : null}
-          <StyledMailListDate className="text-truncate">
-            {onGetMailDate()}
-          </StyledMailListDate>
+          <StyledMailListDate className="text-truncate">{onGetMailDate()}</StyledMailListDate>
         </StyledMailListTime>
       </StyledMailListContent>
 
       <StyledMailListAction>
         <StyledMailListSub className="mail-list-sub">
           <StyledMailListSubTitle>{mail.subject}</StyledMailListSubTitle>
-          <StyledMailDesc className="text-truncate">
-            {getStringFromHtml(getDescription())}
-          </StyledMailDesc>
+          <StyledMailDesc className="text-truncate">{getStringFromHtml(getDescription())}</StyledMailDesc>
         </StyledMailListSub>
 
         {mail.label ? (
@@ -178,9 +158,7 @@ const MailListItem: React.FC<MailListItemProps> = ({
 
         <StyledMailListTime className="mail-list-time">
           {/*{mail.hasAttachments ? <PaperClipOutlined /> : null}*/}
-          <StyledMailListDate className="text-truncate">
-            {onGetMailDate()}
-          </StyledMailListDate>
+          <StyledMailListDate className="text-truncate">{onGetMailDate()}</StyledMailListDate>
         </StyledMailListTime>
         <StyledMailListActionBtn className="mail-list-btn-action">
           <AppIconButton
@@ -196,13 +174,7 @@ const MailListItem: React.FC<MailListItemProps> = ({
           />
 
           <AppIconButton
-            title={
-              mail.isRead ? (
-                <IntlMessages id="mailApp.markAsUnread" />
-              ) : (
-                <IntlMessages id="mailApp.markAsRead" />
-              )
-            }
+            title={mail.isRead ? <IntlMessages id="mailApp.markAsUnread" /> : <IntlMessages id="mailApp.markAsRead" />}
             icon={mail.isRead ? <FiMail /> : <HiOutlineMailOpen />}
             onClick={onChangeReadStatus}
           />

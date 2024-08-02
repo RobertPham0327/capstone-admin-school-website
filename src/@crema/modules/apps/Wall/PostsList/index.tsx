@@ -1,18 +1,14 @@
-import React from "react";
-import PostItem from "./PostItem";
-import { StyledPostList } from "./index.styled";
-import { PostObjType, WallDataType } from "@crema/types/models/apps/Wall";
+import React from 'react';
+import PostItem from './PostItem';
+import { StyledPostList } from './index.styled';
+import { PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
 
 type PostListsProps = {
   postList: PostObjType[];
   setPostList: any;
   wallData: WallDataType;
 };
-const PostsList: React.FC<PostListsProps> = ({
-  wallData,
-  postList,
-  setPostList,
-}) => {
+const PostsList: React.FC<PostListsProps> = ({ wallData, postList, setPostList }) => {
   return (
     <StyledPostList
       data={postList}

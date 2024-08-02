@@ -1,12 +1,12 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { AcademyType } from "@crema/types/models/dashboards/AcademyType";
-import { AnalyticsType } from "@crema/types/models/dashboards/Analytics";
-import { CRMType } from "@crema/types/models/dashboards/CRM";
-import { CryptoType } from "@crema/types/models/dashboards/Crypto";
-import { EcommerceType } from "@crema/types/models/dashboards/Ecommerce";
-import { HealthCareType } from "@crema/types/models/dashboards/HealthCare";
-import { MetricsType } from "@crema/types/models/dashboards/Metrics";
-import { WidgetsType } from "@crema/types/models/dashboards/Widgets";
+import { createReducer } from '@reduxjs/toolkit';
+import { AcademyType } from '@crema/types/models/dashboards/AcademyType';
+import { AnalyticsType } from '@crema/types/models/dashboards/Analytics';
+import { CRMType } from '@crema/types/models/dashboards/CRM';
+import { CryptoType } from '@crema/types/models/dashboards/Crypto';
+import { EcommerceType } from '@crema/types/models/dashboards/Ecommerce';
+import { HealthCareType } from '@crema/types/models/dashboards/HealthCare';
+import { MetricsType } from '@crema/types/models/dashboards/Metrics';
+import { WidgetsType } from '@crema/types/models/dashboards/Widgets';
 import {
   GetAcademyAction,
   GetAnalyticsAction,
@@ -16,7 +16,7 @@ import {
   GetHealthcareAction,
   GetMetricsAction,
   GetWidgetsAction,
-} from "./ActionTypes/Dashboard";
+} from './ActionTypes/Dashboard';
 
 const initialState: {
   academyData: AcademyType | null;
@@ -38,7 +38,7 @@ const initialState: {
   academyData: null,
 };
 
-const dashboardReducer = createReducer(initialState, (builder) => {
+const dashboardReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetAnalyticsAction, (state, action) => {
       state.analyticsData = action.payload;

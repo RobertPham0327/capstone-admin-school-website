@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import AppConfirmationModal from "@crema/components/AppConfirmationModal";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import CardHeader from "./CardHeader";
-import AddCardForm from "./AddCardForm";
-import { useAuthUser } from "@crema/hooks/AuthHooks";
-import { StyledScrumBoardAppCardDrawer } from "./index.styled";
-import { postDataApi } from "@crema/hooks/APIHooks";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import {
-  AttachmentObjType,
-  BoardObjType,
-  CardListObjType,
-  CardObjType,
-} from "@crema/types/models/apps/ScrumbBoard";
+import React, { useState } from 'react';
+import AppConfirmationModal from '@crema/components/AppConfirmationModal';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import CardHeader from './CardHeader';
+import AddCardForm from './AddCardForm';
+import { useAuthUser } from '@crema/hooks/AuthHooks';
+import { StyledScrumBoardAppCardDrawer } from './index.styled';
+import { postDataApi } from '@crema/hooks/APIHooks';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { AttachmentObjType, BoardObjType, CardListObjType, CardObjType } from '@crema/types/models/apps/ScrumbBoard';
 
 type AddCardProps = {
   isModalVisible: boolean;
@@ -24,38 +19,21 @@ type AddCardProps = {
   setSelectedCard: any;
 };
 
-const AddCard: React.FC<AddCardProps> = ({
-  isModalVisible,
-  handleCancel,
-  board,
-  list,
-  selectedCard,
-  setData,
-}) => {
+const AddCard: React.FC<AddCardProps> = ({ isModalVisible, handleCancel, board, list, selectedCard, setData }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
   const { user } = useAuthUser();
 
-  const [checkedList, setCheckedList] = useState(() =>
-    selectedCard ? selectedCard.checkedList : []
-  );
+  const [checkedList, setCheckedList] = useState(() => (selectedCard ? selectedCard.checkedList : []));
 
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const [selectedMembers, setMembersList] = useState(() =>
-    selectedCard ? selectedCard.members : []
-  );
+  const [selectedMembers, setMembersList] = useState(() => (selectedCard ? selectedCard.members : []));
 
-  const [selectedLabels, setSelectedLabels] = useState(() =>
-    selectedCard ? selectedCard.label : []
-  );
+  const [selectedLabels, setSelectedLabels] = useState(() => (selectedCard ? selectedCard.label : []));
 
-  const [comments, setComments] = useState(() =>
-    selectedCard ? selectedCard.comments : []
-  );
+  const [comments, setComments] = useState(() => (selectedCard ? selectedCard.comments : []));
 
-  const [attachments, setAttachments] = useState(() =>
-    selectedCard ? selectedCard.attachments : []
-  );
+  const [attachments, setAttachments] = useState(() => (selectedCard ? selectedCard.attachments : []));
 
   const onAddAttachments = (files: AttachmentObjType[]) => {
     setAttachments([...attachments, ...files]);
@@ -65,16 +43,16 @@ const AddCard: React.FC<AddCardProps> = ({
     const boardId = board.id;
     const listId = list!.id;
     const cardId = selectedCard!.id;
-    postDataApi("/api/scrumboard/delete/card", infoViewActionsContext, {
+    postDataApi('/api/scrumboard/delete/card', infoViewActionsContext, {
       boardId,
       listId,
       cardId,
     })
-      .then((data) => {
+      .then(data => {
         setData(data);
-        infoViewActionsContext.showMessage("Card Deleted Successfully!");
+        infoViewActionsContext.showMessage('Card Deleted Successfully!');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
 

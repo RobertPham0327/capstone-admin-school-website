@@ -1,12 +1,12 @@
-import React from "react";
-import AddNewTask from "../AddNewTask";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppsSideBarFolderItem from "@crema/components/AppsSideBarFolderItem";
-import LabelItem from "./LabelItem";
-import AppList from "@crema/components/AppList";
-import ListEmptyResult from "@crema/components/AppList/ListEmptyResult";
-import SidebarPlaceholder from "@crema/components/AppSkeleton/SidebarListSkeleton";
-import { Button } from "antd";
+import React from 'react';
+import AddNewTask from '../AddNewTask';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppsSideBarFolderItem from '@crema/components/AppsSideBarFolderItem';
+import LabelItem from './LabelItem';
+import AppList from '@crema/components/AppList';
+import ListEmptyResult from '@crema/components/AppList/ListEmptyResult';
+import SidebarPlaceholder from '@crema/components/AppSkeleton/SidebarListSkeleton';
+import { Button } from 'antd';
 import {
   StyledPlusOutlined,
   StyledTodoScrollbar,
@@ -14,15 +14,15 @@ import {
   StyledTodoSidebarHeader,
   StyledTodoSidebarList,
   StyledTodoSidebarTitle,
-} from "./index.styled";
-import { useGetDataApi } from "@crema/hooks/APIHooks";
+} from './index.styled';
+import { useGetDataApi } from '@crema/hooks/APIHooks';
 
 type TaskSideBarProps = {
   reCallAPI: any;
 };
 const TaskSideBar: React.FC<TaskSideBarProps> = ({ reCallAPI }) => {
-  const [{ apiData: labelList }] = useGetDataApi("/api/todo/labels/list", []);
-  const [{ apiData: folderList }] = useGetDataApi("/api/todo/folders/list", []);
+  const [{ apiData: labelList }] = useGetDataApi('/api/todo/labels/list', []);
+  const [{ apiData: folderList }] = useGetDataApi('/api/todo/folders/list', []);
 
   const [isAddTaskOpen, setAddTaskOpen] = React.useState(false);
 
@@ -37,12 +37,7 @@ const TaskSideBar: React.FC<TaskSideBarProps> = ({ reCallAPI }) => {
   return (
     <>
       <StyledTodoSidebarHeader>
-        <Button
-          ghost
-          type="primary"
-          icon={<StyledPlusOutlined style={{ marginRight: 8 }} />}
-          onClick={onOpenAddTask}
-        >
+        <Button ghost type="primary" icon={<StyledPlusOutlined style={{ marginRight: 8 }} />} onClick={onOpenAddTask}>
           <IntlMessages id="todo.addNewTask" />
         </Button>
       </StyledTodoSidebarHeader>
@@ -52,18 +47,9 @@ const TaskSideBar: React.FC<TaskSideBarProps> = ({ reCallAPI }) => {
           <StyledTodoSidebarList itemLayout="horizontal">
             <AppList
               data={folderList}
-              ListEmptyComponent={
-                <ListEmptyResult
-                  loading={true}
-                  placeholder={<SidebarPlaceholder />}
-                />
-              }
-              renderItem={(item) => (
-                <AppsSideBarFolderItem
-                  key={item.id}
-                  item={item}
-                  path={`/apps/todo/folder/${item.alias}`}
-                />
+              ListEmptyComponent={<ListEmptyResult loading={true} placeholder={<SidebarPlaceholder />} />}
+              renderItem={item => (
+                <AppsSideBarFolderItem key={item.id} item={item} path={`/apps/todo/folder/${item.alias}`} />
               )}
             />
           </StyledTodoSidebarList>
@@ -73,24 +59,15 @@ const TaskSideBar: React.FC<TaskSideBarProps> = ({ reCallAPI }) => {
           <StyledTodoSidebarList aria-label="main mailbox folders">
             <AppList
               data={labelList}
-              ListEmptyComponent={
-                <ListEmptyResult
-                  loading={true}
-                  placeholder={<SidebarPlaceholder />}
-                />
-              }
-              renderItem={(label) => <LabelItem key={label.id} label={label} />}
+              ListEmptyComponent={<ListEmptyResult loading={true} placeholder={<SidebarPlaceholder />} />}
+              renderItem={label => <LabelItem key={label.id} label={label} />}
             />
           </StyledTodoSidebarList>
         </StyledTodoSidebarContent>
       </StyledTodoScrollbar>
 
       {isAddTaskOpen ? (
-        <AddNewTask
-          isAddTaskOpen={isAddTaskOpen}
-          onCloseAddTask={onCloseAddTask}
-          reCallAPI={reCallAPI}
-        />
+        <AddNewTask isAddTaskOpen={isAddTaskOpen} onCloseAddTask={onCloseAddTask} reCallAPI={reCallAPI} />
       ) : null}
     </>
   );

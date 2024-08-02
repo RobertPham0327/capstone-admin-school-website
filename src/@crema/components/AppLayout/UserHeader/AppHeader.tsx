@@ -36,9 +36,7 @@ const AppHeader = ({ isCollapsed, onToggleSidebar }: AppHeaderProps) => {
         <AiOutlineMenu />
       </a>
       <AppLogo />
-      <StyledAppUserHeaderSearch
-        placeholder={messages['common.searchHere'] as string}
-      />
+      <StyledAppUserHeaderSearch placeholder={messages['common.searchHere'] as string} />
       <StyledAppUserHeaderSectionDesktop>
         <AppLanguageSwitcher />
         <AppHeaderMessages />
@@ -50,13 +48,10 @@ const AppHeader = ({ isCollapsed, onToggleSidebar }: AppHeaderProps) => {
           <Dropdown
             menu={{ items }}
             overlayClassName="dropdown-wrapper"
-            getPopupContainer={(triggerNode) => triggerNode}
+            getPopupContainer={triggerNode => triggerNode}
             trigger={['click']}
           >
-            <a
-              className="ant-dropdown-link-mobile"
-              onClick={(e) => e.preventDefault()}
-            >
+            <a className="ant-dropdown-link-mobile" onClick={e => e.preventDefault()}>
               <FiMoreVertical />
             </a>
           </Dropdown>

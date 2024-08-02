@@ -1,11 +1,6 @@
-import { createAction } from "@reduxjs/toolkit";
-import {
-  CREATE_NEW_POST,
-  GET_FEED_POSTS,
-  GET_WALL_DATA,
-  UPDATE_POST,
-} from "@crema/types/actions/Wall.actions";
-import { PostObjType, WallDataType } from "@crema/types/models/apps/Wall";
+import { createAction } from '@reduxjs/toolkit';
+import { CREATE_NEW_POST, GET_FEED_POSTS, GET_WALL_DATA, UPDATE_POST } from '@crema/types/actions/Wall.actions';
+import { PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
 
 export const GetWallDataAction = createAction<WallDataType>(GET_WALL_DATA);
 

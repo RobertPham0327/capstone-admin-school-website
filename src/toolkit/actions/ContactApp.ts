@@ -1,6 +1,6 @@
-import { Dispatch } from "redux";
-import { AppActions } from "@crema/types/actions";
-import { fetchError, fetchStart, fetchSuccess, showMessage } from "./Common";
+import { Dispatch } from 'redux';
+import { AppActions } from '@crema/types/actions';
+import { fetchError, fetchStart, fetchSuccess, showMessage } from './Common';
 import {
   CREATE_NEW_CONTACT,
   DELETE_CONTACT,
@@ -11,22 +11,18 @@ import {
   UPDATE_CONTACT_DETAIL,
   UPDATE_CONTACT_LABEL,
   UPDATE_CONTACT_STARRED_STATUS,
-} from "@crema/types/actions/Contact.actions";
-import { appIntl } from "@crema/helpers/Common";
-import jwtAxios from "@crema/services/auth/jwt-auth";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+} from '@crema/types/actions/Contact.actions';
+import { appIntl } from '@crema/helpers/Common';
+import jwtAxios from '@crema/services/auth/jwt-auth';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
-export const onGetContactList = (
-  type: string,
-  name: string,
-  currentPage: number
-) => {
+export const onGetContactList = (type: string, name: string, currentPage: number) => {
   const { messages } = appIntl();
   const page = currentPage ? currentPage : 0;
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/contactApp/contact/List", {
+      .get('/api/contactApp/contact/List', {
         params: {
           type: type,
           name: name,
@@ -38,9 +34,7 @@ export const onGetContactList = (
           dispatch(fetchSuccess());
           dispatch({ type: GET_CONTACT_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -54,15 +48,13 @@ export const onGetLabelList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/contactApp/labels/list")
+      .get('/api/contactApp/labels/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CONTACT_LABEL_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -76,15 +68,13 @@ export const onGetFolderList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get("/api/contactApp/folders/list")
+      .get('/api/contactApp/folders/list')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_CONTACT_FOLDER_LIST, payload: data.data });
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -99,16 +89,12 @@ export const onToggleContactDrawer = () => {
   };
 };
 
-export const onUpdateContactLabel = (
-  contactIds: number[],
-  type: number,
-  labelName: string
-) => {
+export const onUpdateContactLabel = (contactIds: number[], type: number, labelName: string) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/contactApp/update/label", { contactIds, type })
+      .put('/api/contactApp/update/label', { contactIds, type })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -116,11 +102,9 @@ export const onUpdateContactLabel = (
             type: UPDATE_CONTACT_LABEL,
             payload: { data: data.data, labelName: labelName, labelType: type },
           });
-          dispatch(showMessage(messages["message.labelUpdated"] as string));
+          dispatch(showMessage(messages['message.labelUpdated'] as string));
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -129,16 +113,12 @@ export const onUpdateContactLabel = (
   };
 };
 
-export const onUpdateStarredStatus = (
-  contactIds: number[],
-  status: boolean,
-  folderName: string
-) => {
+export const onUpdateStarredStatus = (contactIds: number[], status: boolean, folderName: string) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/contactApp/update/starred", { contactIds, status })
+      .put('/api/contactApp/update/starred', { contactIds, status })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -146,11 +126,9 @@ export const onUpdateStarredStatus = (
             type: UPDATE_CONTACT_STARRED_STATUS,
             payload: { data: data.data, folderName: folderName },
           });
-          dispatch(showMessage(messages["message.starredStatus"] as string));
+          dispatch(showMessage(messages['message.starredStatus'] as string));
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -159,26 +137,19 @@ export const onUpdateStarredStatus = (
   };
 };
 
-export const onDeleteContacts = (
-  type: string,
-  name: string,
-  contactIds: number[],
-  page: number
-) => {
+export const onDeleteContacts = (type: string, name: string, contactIds: number[], page: number) => {
   const { messages } = appIntl();
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/contactApp/delete/contact", { type, name, contactIds, page })
+      .post('/api/contactApp/delete/contact', { type, name, contactIds, page })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: DELETE_CONTACT, payload: data.data });
-          dispatch(showMessage(messages["message.contactDeleted"] as string));
+          dispatch(showMessage(messages['message.contactDeleted'] as string));
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -192,16 +163,14 @@ export const onUpdateSelectedContact = (contact: ContactObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .put("/api/contactApp/contact/", { contact })
+      .put('/api/contactApp/contact/', { contact })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: UPDATE_CONTACT_DETAIL, payload: data.data });
-          dispatch(showMessage(messages["message.contactUpdated"] as string));
+          dispatch(showMessage(messages['message.contactUpdated'] as string));
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {
@@ -215,16 +184,14 @@ export const onCreateContact = (contact: ContactObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post("/api/contactApp/compose", { contact })
+      .post('/api/contactApp/compose', { contact })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: CREATE_NEW_CONTACT, payload: data.data });
-          dispatch(showMessage(messages["message.contactCreated"] as string));
+          dispatch(showMessage(messages['message.contactCreated'] as string));
         } else {
-          dispatch(
-            fetchError(messages["message.somethingWentWrong"] as string)
-          );
+          dispatch(fetchError(messages['message.somethingWentWrong'] as string));
         }
       })
       .catch((error: any) => {

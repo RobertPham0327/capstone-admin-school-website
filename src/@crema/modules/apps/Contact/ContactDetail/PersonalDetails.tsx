@@ -1,5 +1,5 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
 import {
   StyleAiOutlineGlobalIcon,
   StyleAiOutlineShoppingIcon,
@@ -10,8 +10,8 @@ import {
   StyledOtherDetailItemContent,
   StyleFiMailIcon,
   StyleFiPhoneIcon,
-} from "./index.styled";
-import { ContactObjType } from "@crema/types/models/apps/Contact";
+} from './index.styled';
+import { ContactObjType } from '@crema/types/models/apps/Contact';
 
 type PersonalDetailsProps = {
   contact: ContactObjType | null;
@@ -27,37 +27,25 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({ contact }) => {
       <StyledContactDetailModalItemContent>
         <StyledOtherDetailItem>
           <StyleFiMailIcon />
-          <StyledOtherDetailItemContent>
-            {contact!.email}
-          </StyledOtherDetailItemContent>
+          <StyledOtherDetailItemContent>{contact!.email}</StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
 
         <StyledOtherDetailItem>
           <StyleFiPhoneIcon />
-          <StyledOtherDetailItemContent>
-            {contact!.contact}
-          </StyledOtherDetailItemContent>
+          <StyledOtherDetailItemContent>{contact!.contact}</StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
 
         <StyledOtherDetailItem>
           <StyleAiOutlineGlobalIcon />
           <StyledOtherDetailItemContent>
-            {contact!.website ? (
-              contact!.website
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.website ? contact!.website : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
 
         <StyledOtherDetailItem>
           <StyleAiOutlineShoppingIcon />
           <StyledOtherDetailItemContent>
-            {contact!.birthday ? (
-              contact!.birthday
-            ) : (
-              <IntlMessages id="common.na" />
-            )}
+            {contact!.birthday ? contact!.birthday : <IntlMessages id="common.na" />}
           </StyledOtherDetailItemContent>
         </StyledOtherDetailItem>
       </StyledContactDetailModalItemContent>

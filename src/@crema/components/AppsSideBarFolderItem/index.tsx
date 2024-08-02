@@ -1,25 +1,11 @@
 import React from 'react';
 import NavLink from 'next/link';
-import {
-  FaRegCheckCircle,
-  FaRegEnvelope,
-  FaRegEnvelopeOpen,
-  FaRegStar,
-} from 'react-icons/fa';
+import { FaRegCheckCircle, FaRegEnvelope, FaRegEnvelopeOpen, FaRegStar } from 'react-icons/fa';
 import { BiArchiveIn, BiCalendarMinus, BiUser } from 'react-icons/bi';
-import {
-  AiOutlineDelete,
-  AiOutlineSchedule,
-  AiOutlineSend,
-  AiOutlineStop,
-} from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineSchedule, AiOutlineSend, AiOutlineStop } from 'react-icons/ai';
 import { FiInfo, FiRefreshCw } from 'react-icons/fi';
 
-import {
-  StyledListItem,
-  StyledListItemIcon,
-  StyledListItemText,
-} from './index.styled';
+import { StyledListItem, StyledListItemIcon, StyledListItemText } from './index.styled';
 import { MdOutlineCancel, MdOutlinePayment } from 'react-icons/md';
 
 const IconByName: any = {
@@ -45,10 +31,7 @@ type AppsSideBarFolderItemProps = {
   path: string;
 };
 
-const AppsSideBarFolderItem: React.FC<AppsSideBarFolderItemProps> = ({
-  item,
-  path,
-}) => {
+const AppsSideBarFolderItem: React.FC<AppsSideBarFolderItemProps> = ({ item, path }) => {
   return (
     <StyledListItem key={item.id}>
       <NavLink href={path}>

@@ -1,16 +1,10 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import CustomColorCell from "../ColorCell";
-import {
-  useThemeActionsContext,
-  useThemeContext,
-} from "@crema/context/AppContextProvider/ThemeContextProvider";
-import AppGrid from "../../AppGrid";
-import {
-  StyledThemeColorSetting,
-  StyledThemeColorSettingTitle,
-} from "./index.styled";
-import themeColorSets, { ThemeColorType } from "@crema/constants/ColorSets";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import CustomColorCell from '../ColorCell';
+import { useThemeActionsContext, useThemeContext } from '@crema/context/AppContextProvider/ThemeContextProvider';
+import AppGrid from '../../AppGrid';
+import { StyledThemeColorSetting, StyledThemeColorSettingTitle } from './index.styled';
+import themeColorSets, { ThemeColorType } from '@crema/constants/ColorSets';
 
 const ThemeColors = () => {
   const { theme } = useThemeContext();
@@ -39,11 +33,7 @@ const ThemeColors = () => {
           sm: 2,
         }}
         renderItem={(colorSet, index) => (
-          <CustomColorCell
-            key={index}
-            updateThemeColors={updateThemeColors}
-            themeColorSet={colorSet}
-          />
+          <CustomColorCell key={index} updateThemeColors={updateThemeColors} themeColorSet={colorSet} />
         )}
       />
     </StyledThemeColorSetting>

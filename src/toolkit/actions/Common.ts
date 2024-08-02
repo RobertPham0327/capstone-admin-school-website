@@ -1,4 +1,4 @@
-import { CommonActionTypes } from "@crema/types/actions/Common.action";
+import { CommonActionTypes } from '@crema/types/actions/Common.action';
 import {
   FETCH_ERROR,
   FETCH_START,
@@ -7,7 +7,7 @@ import {
   SHOW_MESSAGE,
   TOGGLE_APP_DRAWER,
   // UPDATING_CONTENT,
-} from "@crema/types/actions/Common.action";
+} from '@crema/types/actions/Common.action';
 
 export const fetchStart = (): CommonActionTypes => ({ type: FETCH_START });
 

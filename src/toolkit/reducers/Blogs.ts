@@ -1,15 +1,6 @@
-import {
-  BlogContentType,
-  BlogSidebarType,
-  BlogType,
-} from "@crema/types/models/extrapages/Blog";
-import { createReducer } from "@reduxjs/toolkit";
-import {
-  AddBlogAction,
-  BlogDetailAction,
-  BlogListAction,
-  EditBlogAction,
-} from "./ActionTypes/Blog";
+import { BlogContentType, BlogSidebarType, BlogType } from '@crema/types/models/extrapages/Blog';
+import { createReducer } from '@reduxjs/toolkit';
+import { AddBlogAction, BlogDetailAction, BlogListAction, EditBlogAction } from './ActionTypes/Blog';
 
 const initialState: {
   blogLists: BlogType;
@@ -22,7 +13,7 @@ const initialState: {
   selectedBlog: null,
 };
 
-const blogReducer = createReducer(initialState, (builder) => {
+const blogReducer = createReducer(initialState, builder => {
   builder
     .addCase(BlogListAction, (state, action) => {
       state.blogLists = action.payload;

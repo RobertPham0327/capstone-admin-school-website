@@ -129,7 +129,7 @@ const Filter = ({ filterData, setFilterData }: Props) => {
             </Select>
           </Col>
           <Col xs={24} lg={8} md={12}>
-          <StyledTitleFilter>Schools</StyledTitleFilter>
+            <StyledTitleFilter>Schools</StyledTitleFilter>
             <Select
               placeholder="school"
               onChange={value => {

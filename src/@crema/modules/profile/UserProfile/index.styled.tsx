@@ -75,15 +75,8 @@ export const StyledUserProfileTabs = styled(Tabs)`
     flex-direction: row;
   }
 
-  &.ant-tabs-left
-    > .ant-tabs-content-holder
-    > .ant-tabs-content
-    > .ant-tabs-tabpane,
-  &.ant-tabs-left
-    > div
-    > .ant-tabs-content-holder
-    > .ant-tabs-content
-    > .ant-tabs-tabpane {
+  &.ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane,
+  &.ant-tabs-left > div > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
     padding-left: 0;
   }
 
@@ -129,8 +122,7 @@ export const StyledUserProfileTabs = styled(Tabs)`
       &:hover,
       &:focus {
         color: ${({ theme }) => theme.palette.primary.main};
-        background-color: ${({ theme }) =>
-          rgba(theme.palette.primary.main, 0.1)};
+        background-color: ${({ theme }) => rgba(theme.palette.primary.main, 0.1)};
       }
     }
 

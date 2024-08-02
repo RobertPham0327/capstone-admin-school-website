@@ -26,7 +26,7 @@ type AppAnimateGroupProps = {
   [x: string]: any;
 };
 
-const AppAnimateGroup: React.FC<AppAnimateGroupProps> = (props) => {
+const AppAnimateGroup: React.FC<AppAnimateGroupProps> = props => {
   return <div {...props}>{props.children}</div>;
 };
 

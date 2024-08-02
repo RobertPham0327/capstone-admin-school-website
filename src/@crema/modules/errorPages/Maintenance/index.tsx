@@ -1,17 +1,17 @@
-import React from "react";
-import { useRouter } from "next/router";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppAnimate from "@crema/components/AppAnimate";
-import AppPageMeta from "@crema/components/AppPageMeta";
-import Logo from "../../../../assets/icon/maintenance.png";
+import React from 'react';
+import { useRouter } from 'next/router';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppAnimate from '@crema/components/AppAnimate';
+import AppPageMeta from '@crema/components/AppPageMeta';
+import Logo from '../../../../assets/icon/maintenance.png';
 import {
   StyledErrorButton,
   StyledErrorContainer,
   StyledErrorContent,
   StyledErrorImageLg,
   StyledErrorPara,
-} from "../index.styled";
-import Image from "next/image";
+} from '../index.styled';
+import Image from 'next/image';
 
 const Maintenance = () => {
   const router = useRouter();

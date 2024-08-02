@@ -29,26 +29,15 @@ const sanitizeArrayObject = (arrayOrObject: any) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       output[key] = item;
-    } else if (
-      typeof item === 'object' &&
-      item !== null &&
-      dayjs.isDayjs(item)
-    ) {
+    } else if (typeof item === 'object' && item !== null && dayjs.isDayjs(item)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       output[key] = item;
-    } else if (
-      typeof item === 'object' &&
-      item !== null &&
-      typeof item.getMonth === 'function'
-    ) {
+    } else if (typeof item === 'object' && item !== null && typeof item.getMonth === 'function') {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       output[key] = item;
-    } else if (
-      Array.isArray(item) ||
-      (typeof item === 'object' && item !== null)
-    ) {
+    } else if (Array.isArray(item) || (typeof item === 'object' && item !== null)) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       output[key] = sanitizeArrayObject(item);
@@ -68,10 +57,7 @@ export const sanitizeData = (inputVal: any) => {
       return inputVal;
     }
 
-    if (
-      Array.isArray(inputVal) ||
-      (typeof inputVal === 'object' && inputVal !== null)
-    ) {
+    if (Array.isArray(inputVal) || (typeof inputVal === 'object' && inputVal !== null)) {
       return sanitizeArrayObject(inputVal);
     }
 

@@ -1,8 +1,8 @@
-import React from "react";
-import clsx from "clsx";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import { Avatar } from "antd";
-import { CheckOutlined } from "@ant-design/icons";
+import React from 'react';
+import clsx from 'clsx';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import { Avatar } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import {
   StyledContactListMobileAvatarView,
   StyledContactListItemMobile,
@@ -14,8 +14,8 @@ import {
   StyledContactListItemActionMobile,
   StyledContactListExportMobileIcon,
   StyledContactListStarMobile,
-} from "../index.styled";
-import { ContactObjType, LabelObjType } from "@crema/types/models/apps/Contact";
+} from '../index.styled';
+import { ContactObjType, LabelObjType } from '@crema/types/models/apps/Contact';
 
 type ContactListItemProps = {
   contact: ContactObjType;
@@ -40,16 +40,16 @@ const ContactListItemMobile: React.FC<ContactListItemProps> = ({
 }) => {
   const onGetLabelColor = (labelId: number): string => {
     if (labelId) {
-      return labelList.find((label) => label.id === labelId)!.color;
+      return labelList.find(label => label.id === labelId)!.color;
     }
-    return "";
+    return '';
   };
 
   return (
     <>
       <StyledContactListItemMobile
         key={contact.id}
-        className={clsx("item-hover", {
+        className={clsx('item-hover', {
           rootCheck: checkedContacts.includes(contact.id),
         })}
         onClick={() => onViewContactDetail(contact)}
@@ -59,12 +59,9 @@ const ContactListItemMobile: React.FC<ContactListItemProps> = ({
             className={clsx({
               checked: checkedContacts.includes(contact.id),
             })}
-            onClick={(event) => {
+            onClick={event => {
               event.stopPropagation();
-              onChangeCheckedContacts(
-                !checkedContacts.includes(contact.id),
-                contact.id
-              );
+              onChangeCheckedContacts(!checkedContacts.includes(contact.id), contact.id);
             }}
           >
             {checkedContacts.includes(contact.id) ? (
@@ -74,9 +71,7 @@ const ContactListItemMobile: React.FC<ContactListItemProps> = ({
                 {contact.image ? (
                   <Avatar size={36} src={contact.image} />
                 ) : (
-                  <StyledContactListItemAvatar size={36}>
-                    {contact.name[0].toUpperCase()}
-                  </StyledContactListItemAvatar>
+                  <StyledContactListItemAvatar size={36}>{contact.name[0].toUpperCase()}</StyledContactListItemAvatar>
                 )}
               </StyledContactListItemAvatarView>
             )}
@@ -91,13 +86,9 @@ const ContactListItemMobile: React.FC<ContactListItemProps> = ({
           </StyledContactListItemContentMobile>
         </StyledContactListMainContent>
         <StyledContactListItemActionMobile>
-          <StyledContactListExportMobileIcon
-            style={{ color: onGetLabelColor(contact.label) }}
-          />
+          <StyledContactListExportMobileIcon style={{ color: onGetLabelColor(contact.label) }} />
 
-          <StyledContactListStarMobile
-            onClick={(event) => event.stopPropagation()}
-          >
+          <StyledContactListStarMobile onClick={event => event.stopPropagation()}>
             <AppsStarredIcon item={contact} onChange={onChangeStarred} />
           </StyledContactListStarMobile>
         </StyledContactListItemActionMobile>

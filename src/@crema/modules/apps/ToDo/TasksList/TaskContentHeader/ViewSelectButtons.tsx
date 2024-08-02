@@ -8,12 +8,9 @@ import { StyledTodoViewSelect } from '../index.styled';
 type ViewSelectButtonsProps = {
   onChangePageView: (str: string) => void;
   pageView: string;
-}
+};
 
-const ViewSelectButtons: React.FC<ViewSelectButtonsProps> = ({
-  pageView,
-  onChangePageView,
-}) => {
+const ViewSelectButtons: React.FC<ViewSelectButtonsProps> = ({ pageView, onChangePageView }) => {
   const { messages } = useIntl();
   return (
     <StyledTodoViewSelect>
@@ -39,4 +36,3 @@ const ViewSelectButtons: React.FC<ViewSelectButtonsProps> = ({
 };
 
 export default ViewSelectButtons;
-

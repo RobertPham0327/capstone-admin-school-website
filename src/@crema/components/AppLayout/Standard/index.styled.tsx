@@ -114,12 +114,8 @@ export const StyledStandardSearch = styled(Search)`
     }
   }
 
-  &.ant-input-search-rtl
-    > .ant-input-group
-    > .ant-input-group-addon:last-child
-    .ant-input-search-button {
-    border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0
-      ${({ theme }) => theme.sizes.borderRadius.base};
+  &.ant-input-search-rtl > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.base} 0 0 ${({ theme }) => theme.sizes.borderRadius.base};
   }
 `;
 
@@ -289,8 +285,7 @@ export const StyledAppLayoutStandardMain = styled(Layout)`
   transition: all 0.1s linear;
   width: 100% !important;
   position: relative;
-  background-color: ${({ theme }) =>
-    theme.palette.background.default} !important;
+  background-color: ${({ theme }) => theme.palette.background.default} !important;
   flex-shrink: 0;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}px) {
