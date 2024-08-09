@@ -1,6 +1,6 @@
 import React from 'react';
 import { PiStudentBold } from 'react-icons/pi';
-import { TbDeviceDesktopAnalytics } from 'react-icons/tb';
+import { MdOutlineFeed } from "react-icons/md";
 
 const routesConfig = [
   {
@@ -10,12 +10,12 @@ const routesConfig = [
     type: 'group',
     children: [
       {
-        id: 'dashboard',
-        title: 'Dashboard',
-        messageId: 'sidebar.dashboard',
+        id: 'main_feed',
+        title: 'Main Feed',
+        messageId: 'sidebar.mainFeed',
         type: 'item',
-        icon: <TbDeviceDesktopAnalytics />,
-        path: '/sample/page-1',
+        icon: <MdOutlineFeed />,
+        path: '/apps/main-feed',
       },
       {
         id: 'class_management',

@@ -35,6 +35,7 @@
   "sidebar.pages.extraPages.blogDetail": "Blog Detail",
   "sidebar.pages.extraPages.blogCreate": "Create Blog",
   "sidebar.apps.calender": "Calender",
+  "sidebar.apps.mainFeed": "Main Feed",
   "dashboard.crypto.topStories": "Top Stories",
   "dashboard.crypto.ordersActivities": "Orders Activities",
   "dashboard.crypto.topGainersTopLosers": "Top Gainers & Top Losers (24 hours)",
@@ -832,6 +833,7 @@
   "sidebar.layout.space": "Space",
   "sidebar.components.layout": "Layout",
 
+  "sidebar.mainFeed": "Main Feed",
   "sidebar.classManagement": "Class Management",
   "sidebar.classManagement.students": "Student",
   "sidebar.classManagement.teachers": "Teacher",

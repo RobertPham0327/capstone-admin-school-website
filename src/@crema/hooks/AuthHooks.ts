@@ -1,52 +1,52 @@
 // ForJWT Auth
-import { getUserFromJwtAuth } from '@crema/helpers/AuthHelper';
-import {
-  useJWTAuth,
-  useJWTAuthActions,
-} from '@crema/services/auth/jwt-auth/JWTAuthProvider';
-
-export const useAuthUser = () => {
-  const {user, isAuthenticated, isLoading} = useJWTAuth();
-  return {
-    isLoading,
-    isAuthenticated,
-    user: getUserFromJwtAuth(user),
-  };
-};
-
-export const useAuthMethod = () => {
-  const {signInUser, signUpUser, logout} = useJWTAuthActions();
-
-  return {
-    signInUser,
-    logout,
-    signUpUser,
-  };
-};
-//For Firebase Auth
-
-// import { useFirebase, useFirebaseActions } from '@crema/services/auth/firebase/FirebaseAuthProvider';
-// import { getUserFromFirebase } from '@crema/helpers/AuthHelper';
+// import { getUserFromJwtAuth } from '@crema/helpers/AuthHelper';
+// import {
+//   useJWTAuth,
+//   useJWTAuthActions,
+// } from '@crema/services/auth/jwt-auth/JWTAuthProvider';
 
 // export const useAuthUser = () => {
-//   const { user, isAuthenticated, isLoading } = useFirebase();
+//   const {user, isAuthenticated, isLoading} = useJWTAuth();
 //   return {
 //     isLoading,
 //     isAuthenticated,
-//     user: getUserFromFirebase(user),
+//     user: getUserFromJwtAuth(user),
 //   };
 // };
 
 // export const useAuthMethod = () => {
-//   const { logInWithEmailAndPassword, registerUserWithEmailAndPassword, logInWithPopup, logout } = useFirebaseActions();
+//   const {signInUser, signUpUser, logout} = useJWTAuthActions();
 
 //   return {
-//     logInWithEmailAndPassword,
-//     registerUserWithEmailAndPassword,
-//     logInWithPopup,
+//     signInUser,
 //     logout,
+//     signUpUser,
 //   };
 // };
+//For Firebase Auth
+
+import { useFirebase, useFirebaseActions } from '@crema/services/auth/firebase/FirebaseAuthProvider';
+import { getUserFromFirebase } from '@crema/helpers/AuthHelper';
+
+export const useAuthUser = () => {
+  const { user, isAuthenticated, isLoading } = useFirebase();
+  return {
+    isLoading,
+    isAuthenticated,
+    user: getUserFromFirebase(user),
+  };
+};
+
+export const useAuthMethod = () => {
+  const { logInWithEmailAndPassword, registerUserWithEmailAndPassword, logInWithPopup, logout } = useFirebaseActions();
+
+  return {
+    logInWithEmailAndPassword,
+    registerUserWithEmailAndPassword,
+    logInWithPopup,
+    logout,
+  };
+};
 /*
 // For AWS Auth
 import { getUserFromAWS } from '@crema/helpers/AuthHelper';

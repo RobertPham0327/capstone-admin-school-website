@@ -46,7 +46,7 @@ export const StyledScrollbar = styled(SimpleBarReact)`
   position: relative;
   width: 100%;
   height: 100%;
-
+  
   & .simplebar-offset,
   & .simplebar-content-wrapper,
   & .simplebar-content {
