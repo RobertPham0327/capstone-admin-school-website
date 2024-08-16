@@ -2,6 +2,8 @@ import React from 'react';
 import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineFeed } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
+import { BsBell } from "react-icons/bs";
+import { MdOutlinePermMedia } from "react-icons/md";
 
 const routesConfig = [
   {
@@ -33,6 +35,22 @@ const routesConfig = [
         type: 'collapse',
         icon: <GoGitPullRequest />,
         path: '/apps/request-management',
+      },
+      {
+        id: 'notification',
+        title: 'Notification',
+        messageId: 'sidebar.notification',
+        type: 'collapse',
+        icon: <BsBell />,
+        path: '/apps/notification',
+      },
+      {
+        id: 'media_library',
+        title: "Media Library",
+        messageId: "sidebar.mediaLibrary",
+        type: "collapse",
+        icon: <MdOutlinePermMedia />,
+        path: "/apps/media-library",
       }
     ],
   },

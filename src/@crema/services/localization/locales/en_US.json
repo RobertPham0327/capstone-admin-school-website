@@ -841,5 +841,14 @@
   "sidebar.classManagement.classes": "Class",
   "sidebar.classManagementAdmin.classListing": "Class Listing",
   "sidebar.requestManagement": "Request Management",
-  "requestManagement.loaRequest": "LOA Request"
+  "requestManagement.loaRequest": "LOA Request",
+  "sidebar.notification": "Notifications",
+  "notification.title": "Notification",
+  "notification.newNotification": "New Notification",
+  "notification.notificationTitle": "Notification Title",
+  "notification.notificationBody": "Notification Body",
+  "notification.send": "Send",
+  "sidebar.mediaLibrary": "Media Library"
+  
+
 }

@@ -38,7 +38,7 @@ const TaskSideBar: React.FC<TaskSideBarProps> = ({ reCallAPI }) => {
     <>
       <StyledTodoSidebarHeader>
         <Button ghost type="primary" icon={<StyledPlusOutlined style={{ marginRight: 8 }} />} onClick={onOpenAddTask}>
-          <IntlMessages id="todo.addNewTask" />
+          <IntlMessages id="notification." />
         </Button>
       </StyledTodoSidebarHeader>
 
