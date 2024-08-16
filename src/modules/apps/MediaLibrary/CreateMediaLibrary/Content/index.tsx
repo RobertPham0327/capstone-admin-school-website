@@ -18,7 +18,7 @@ const BlogContent = ({ uploadedFiles, setUploadedFiles }: Props) => {
       <AppCard>
         <StyledFormWrapper>
           <Form.Item label="Media Library Name" name="title">
-            <Input placeholder="Medua Library Name" />
+            <Input placeholder="Media Library Name" />
           </Form.Item>
 
           <Form.Item label="Description" name="description">
