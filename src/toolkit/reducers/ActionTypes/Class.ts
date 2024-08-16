@@ -17,7 +17,7 @@ import {
   ClassStudentDataType,
   AbsenceDataType,
   FilterDataType,
-} from '@crema/types/models/class/Class';
+} from '@crema/types/models/apps/ClassManagement';
 
 export const GetClassListAction = createAction<{
   list: ClassDataType[];

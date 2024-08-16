@@ -21,7 +21,7 @@ const renderMenuItemChildren = (
         )),
       label: (
         <Link href={path}>
-          <span data-testid={messageId.toLowerCase + '-nav'}>{messages[messageId] as string}</span>
+          <span data-testid={messageId + '-nav'}>{messages[messageId] as string}</span>
         </Link>
       ),
     };

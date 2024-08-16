@@ -7,7 +7,7 @@ import {
   ClassStudentDataType,
   AbsenceDataType,
   ClassDataType,
-} from '../models/class/Class';
+} from '../models/apps/ClassManagement';
 export const ADD_CLASS_ITEM = 'ADD_CLASS_ITEM';
 export const UPDATE_CLASS_ITEM = 'UPDATE_CLASS_ITEM';
 export const REMOVE_CLASS_ITEM = 'REMOVE_CLASS_ITEM';

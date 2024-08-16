@@ -36,6 +36,7 @@
   "sidebar.pages.extraPages.blogCreate": "Create Blog",
   "sidebar.apps.calender": "Calender",
   "sidebar.apps.mainFeed": "Main Feed",
+  "sidebar.apps.requestManagement": "Request Management",
   "dashboard.crypto.topStories": "Top Stories",
   "dashboard.crypto.ordersActivities": "Orders Activities",
   "dashboard.crypto.topGainersTopLosers": "Top Gainers & Top Losers (24 hours)",
@@ -838,5 +839,7 @@
   "sidebar.classManagement.students": "Student",
   "sidebar.classManagement.teachers": "Teacher",
   "sidebar.classManagement.classes": "Class",
-  "sidebar.classManagementAdmin.classListing": "Class Listing"
+  "sidebar.classManagementAdmin.classListing": "Class Listing",
+  "sidebar.requestManagement": "Request Management",
+  "requestManagement.loaRequest": "LOA Request"
 }

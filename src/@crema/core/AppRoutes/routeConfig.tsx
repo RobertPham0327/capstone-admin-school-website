@@ -1,6 +1,7 @@
 import React from 'react';
-import { PiStudentBold } from 'react-icons/pi';
+import { PiStudentFill } from "react-icons/pi";
 import { MdOutlineFeed } from "react-icons/md";
+import { GoGitPullRequest } from "react-icons/go";
 
 const routesConfig = [
   {
@@ -19,31 +20,20 @@ const routesConfig = [
       },
       {
         id: 'class_management',
-        title: 'Class management',
+        title: 'Class Management',
         messageId: 'sidebar.classManagement',
         type: 'collapse',
-        icon: <PiStudentBold />,
-        children: [
-          {
-            id: 'classes',
-            title: 'Classes',
-            messageId: 'sidebar.classManagement.classes',
-            path: '/class-management/classes',
-          },
-          {
-            id: 'students',
-            title: 'Students',
-            messageId: 'sidebar.classManagement.students',
-            path: '/class-management/students',
-          },
-          {
-            id: 'teachers',
-            title: 'Teachers',
-            messageId: 'sidebar.classManagement.teachers',
-            path: '/class-management/teachers',
-          },
-        ],
+        icon: <PiStudentFill />,
+        path: '/apps/class-management',
       },
+      {
+        id: 'request_management',
+        title: 'Request Management',
+        messageId: 'sidebar.requestManagement',
+        type: 'collapse',
+        icon: <GoGitPullRequest />,
+        path: '/apps/request-management',
+      }
     ],
   },
 ];

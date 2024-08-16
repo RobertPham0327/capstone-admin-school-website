@@ -6,7 +6,7 @@ import {
   EatingScheduleDataType,
   SchoolDataType,
   TeacherDataType,
-} from '@crema/types/models/class/Class';
+} from '@crema/types/models/apps/ClassManagement';
 // Mock Data for Teachers
 export const teachers: TeacherDataType[] = [
   { id: 1, name: 'John Doe' },

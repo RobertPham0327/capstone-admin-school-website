@@ -1,7 +1,7 @@
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { FilterItem, ListingTable } from '@crema/modules/class';
+import { FilterItem, ListingTable } from '@crema/modules/ClassManagement';
 import AppRowContainer from '@crema/components/AppRowContainer';
 import AppCard from '@crema/components/AppCard';
 import { Col } from 'antd';
@@ -11,12 +11,12 @@ import {
   StyledOrderHeader,
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
-} from '../index.styled';
-import { StyledTitle5 } from '../index.styled';
+  StyledTitle5
+} from './index.styled';
 import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
 import { onGetEcommerceData } from '../../../../toolkit/actions';
 
-const ProductListing = () => {
+const ClassListing = () => {
   const { messages } = useIntl();
   const dispatch = useAppDispatch();
   const [filterData, setFilterData] = useState({
@@ -77,4 +77,4 @@ const ProductListing = () => {
   );
 };
 
-export default ProductListing;
+export default ClassListing;

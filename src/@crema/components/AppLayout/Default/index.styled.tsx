@@ -10,7 +10,7 @@ export const StyledAppHeader = styled(Header)`
   padding-left: 20px;
   padding-right: 20px;
   color: ${({ theme }) => theme.palette.text.primary}!important;
-  background-color: ${({ theme }) => theme.palette.background.paper}!important;
+  background: #e7730d !important;
   height: 56px;
   line-height: 1;
   border-bottom: 1px solid ${({ theme }) => theme.palette.borderColor}!important;
