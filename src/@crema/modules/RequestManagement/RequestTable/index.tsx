@@ -9,7 +9,7 @@ const getPaymentStatusColor = (status: string) => {
     case "Pending": {
       return "#E2A72E";
     }
-    case "Delivered": {
+    case "Approved": {
       return "#43C888";
     }
     default: {
@@ -17,37 +17,22 @@ const getPaymentStatusColor = (status: string) => {
     }
   }
 };
-const columns: ColumnsType<RecentOrdersType> = [
+const columns: ColumnsType<Request> = [
   {
-    title: "Order ID",
+    title: "Request ID",
     dataIndex: "id",
     key: "id",
     render: (id) => <StyledOrderId>{id}</StyledOrderId>,
   },
   {
-    title: "Product",
-    dataIndex: "product",
-    key: "product",
+    title: "Parent ID",
+    dataIndex: "parent_id",
+    key: "parent_id",
   },
   {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
-  },
-  {
-    title: "Delivery Date",
+    title: "Date",
     dataIndex: "date",
     key: "date",
-  },
-  {
-    title: "Price",
-    dataIndex: "price",
-    key: "price",
-  },
-  {
-    title: "Payment Method",
-    dataIndex: "paymentType",
-    key: "paymentType",
   },
   {
     title: "Status",
@@ -76,7 +61,7 @@ const columns: ColumnsType<RecentOrdersType> = [
 ];
 
 type Props = {
-  orderData: RecentOrdersType[];
+  orderData: Request[];
   loading: boolean;
 };
 const RequestTable = ({ orderData, loading }: Props) => {

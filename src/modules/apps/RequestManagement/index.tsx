@@ -18,6 +18,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../../toolkit/hooks";
 import { getRecentOrders } from "../../../toolkit/actions";
 import { RequestTable } from "@crema/modules/RequestManagement/index";
+import mock from "./mock.json"
 
 const RequestManagement = () => {
   const { messages } = useIntl();
@@ -30,9 +31,18 @@ const RequestManagement = () => {
   const orderCount = useAppSelector(({ ecommerce }) => ecommerce.orderCount);
   const loading = useAppSelector(({ common }) => common.loading);
 
+  const [requests, setRequests] = useState<Request[]>([]);
+  const requestCount = requests.length;
+
   const onChange = (page: number) => {
     setPage(page);
   };
+
+  useEffect(() => {
+    setRequests(mock as unknown as Request[]);
+    console.log(requests);
+  })
+
 
   useEffect(() => {
     dispatch(getRecentOrders(search, page));
@@ -82,7 +92,7 @@ const RequestManagement = () => {
             paddingBottom: 10,
           }}
         >
-          <RequestTable loading={loading} orderData={recentOrders || []} />
+          <RequestTable loading={loading} orderData={requests || []} />
         </AppsContent>
 
         <StyledOrderFooterPagination
