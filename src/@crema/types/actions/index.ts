@@ -13,6 +13,7 @@ import { UserListActions } from './UserList.actions';
 import { InvoiceActionTypes } from './Invoice.action';
 import { BlogActionTypes } from './Blogs.action';
 import { ClassActionTypes } from './Class.actions';
+import { ClassManagementActions } from './ClassManagement.actions';
 
 export type AppActions =
   | CommonActionTypes
@@ -29,4 +30,6 @@ export type AppActions =
   | InvoiceActionTypes
   | BlogActionTypes
   | UserListActions
-  | ClassActionTypes;
+  | ClassActionTypes
+  | ClassManagementActions;
+ 

@@ -1,107 +1,84 @@
 import React from 'react';
-import OrderActions from './OrderAction';
 import { Typography } from 'antd';
-import { StyledListingStatus, StyledOrderTable } from '../index.styled';
+import { StyledListingStatus, StyledTable } from '../index.styled';
 import { ellipsisLines } from '@crema/helpers/StringHelper';
 import { NextRouter, useRouter } from 'next/router';
-import { ProductDataType } from '@crema/types/models/ecommerce/EcommerceApp';
 import type { ColumnsType } from 'antd/es/table';
+import { ItemAction } from './ItemAction';
+import { ClassDataType } from '@crema/types/models/apps/ClassManagement';
 
-const getPaymentStatusColor = (inStock: boolean) => {
-  switch (inStock) {
-    case true: {
-      return '#43C888';
-    }
-    case false: {
-      return '#F84E4E';
-    }
-  }
-};
-
-const getColumns = (router: NextRouter): ColumnsType<ProductDataType> => [
+const getColumns = (router: NextRouter): ColumnsType<any> => [
   {
-    title: 'No.',
+    title: 'Class ID',
     dataIndex: 'id',
-    width: 50,
     align: 'center',
     key: 'id',
     render: (id, record) => (
       <Typography.Link
-        onClick={() => router.push(`/ecommerce/product_detail/${id}`)}
+        onClick={() => router.push(`/apps/class-management/class/${record.id}`)}
         style={{ display: 'flex', alignItems: 'center' }}
       >
-        {ellipsisLines(record.title)}
+        {ellipsisLines(`${record.id}`)}
       </Typography.Link>
     ),
   },
   {
-    title: 'Class Name',
+    title: 'Class name',
     dataIndex: 'name',
     align: 'center',
     key: 'name',
   },
   {
     title: 'Teacher',
-    dataIndex: 'teacher_id',
+    dataIndex: 'teacher_name',
     align: 'center',
-    key: 'teacherId',
-  },
-  {
-    title: 'Student',
-    dataIndex: 'student_id',
-    align: 'center',
-    key: 'studentId',
-  },
-  {
-    title: 'School',
-    dataIndex: 'school_id',
-    align: 'center',
-    key: 'schoolId',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'date',
-    key: 'date',
-    align: 'center',
-    render: (data, record) => (
-      <StyledListingStatus
-        style={{
-          color: getPaymentStatusColor(record?.inStock),
-          backgroundColor: getPaymentStatusColor(record?.inStock) + '44',
-        }}
+    key: 'teacher_name',
+    render: (id, record) => (
+      <Typography.Link
+        onClick={() => router.push(`/apps/class-management/class/${record.id}/teacher/${record.teacher_id}`)}
+        style={{ display: 'flex', alignItems: 'center' }}
       >
-        {record?.inStock ? 'In Stock' : 'Out of Stock'}
-      </StyledListingStatus>
+        {ellipsisLines(record?.teacher_name)}
+      </Typography.Link>
     ),
   },
-  {
-    title: 'Created Date',
-    dataIndex: 'created_at',
-    align: 'center',
-    key: 'createdAt',
-  },
+  // {
+  //   title: 'School',
+  //   dataIndex: 'school_id',
+  //   align: 'center',
+  //   key: 'school_id',
+  //   render: (id, record) => (
+  //     <div>
+  //       {record?.school?.name}
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   title: 'Created Date',
+  //   dataIndex: 'created_at',
+  //   align: 'center',
+  //   key: 'created_at',
+  // },
   {
     title: 'Actions',
     dataIndex: 'actions',
+    align: 'center',
     key: 'actions',
-    className: 'order-table-action',
-    fixed: 'right',
-    render: (text, record) => <OrderActions id={record.id} />,
+    render: (id, record) => <ItemAction id={record.id} />,
   },
 ];
 
-type Props = {
-  productData: ProductDataType[];
+type ClassListProps = {
+  data: ClassDataType[];
   loading: boolean;
 };
 
-const ProductTable = ({ productData, loading }: Props) => {
+const ClassList = ({ data, loading }: ClassListProps) => {
   const router = useRouter();
-
   return (
-    <StyledOrderTable
+    <StyledTable
       hoverColor
-      data={productData}
+      data={data}
       loading={loading}
       columns={getColumns(router)}
       scroll={{ x: 'auto' }}
@@ -109,4 +86,4 @@ const ProductTable = ({ productData, loading }: Props) => {
   );
 };
 
-export default ProductTable;
+export default ClassList;

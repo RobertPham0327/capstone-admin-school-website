@@ -1,24 +1,65 @@
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { FilterItem, ListingTable } from '@crema/modules/ClassManagement';
+import { FilterItem, ClassList } from '@crema/modules/ClassManagement';
 import AppRowContainer from '@crema/components/AppRowContainer';
 import AppCard from '@crema/components/AppCard';
-import { Col } from 'antd';
+import { Col, Space, Modal } from 'antd';
 import {
   StyledInputSearch,
   StyledOrderFooterPagination,
   StyledOrderHeader,
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
-  StyledTitle5
+  StyledTitle,
+  StyledPlusOutlined,
 } from './index.styled';
-import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
-import { onGetEcommerceData } from '../../../../toolkit/actions';
+import { useAppSelector, useAppDispatch } from '@toolkit/hooks';
+import { onGetEcommerceData } from '@toolkit/actions';
+import { Button, Form, Input, Select } from "antd";
+import { ClassDataType } from '@crema/types/models/apps/ClassManagement';
+import { createClassData, getClassList } from '@/toolkit/actions/ClassManagement';
+import { createClass } from '@/@crema/services/api/class';
+
+const { Option } = Select;
+
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 8,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 16,
+    },
+  },
+};
+
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
 
 const ClassListing = () => {
   const { messages } = useIntl();
+
   const dispatch = useAppDispatch();
+
   const [filterData, setFilterData] = useState({
     title: '',
     inStock: [true, false],
@@ -26,29 +67,58 @@ const ClassListing = () => {
   });
 
   const [page, setPage] = useState(0);
-  const ecommerceList = useAppSelector(({ ecommerce }) => ecommerce.ecommerceList);
-  const { list = [], total = 0 } = ecommerceList;
+
+  // const ecommerceList = useAppSelector(({ ecommerce }) => ecommerce.ecommerceList);
 
   const onChange = (page: number) => {
     setPage(page);
   };
-  const loading = useAppSelector(({ common }) => common.loading);
 
-  useEffect(() => {
-    dispatch(onGetEcommerceData({ filterData, page }));
-  }, [dispatch, filterData, page]);
 
   const searchClass = (title: string) => {
     setFilterData({ ...filterData, title });
   };
 
+  const [newClassModalVisible, setNewClassModalVisible] = useState(false);
+
+  const { classList } = useAppSelector(({ classManagement }) => classManagement);
+
+  const loading = useAppSelector(({ common }) => common.loading);
+
+  useEffect(() => {
+    dispatch(getClassList());
+  }, [dispatch]);
+
+  const onFormSubmit = (values: any) => {
+    console.log(values);
+    const classData = {
+      name: values.name,
+      teacherId: Number(values.teacherId),
+      classRoom: values.classroom,
+    }
+    dispatch(createClassData(classData));
+    setNewClassModalVisible(false);
+  }
+
+  const onFormValuesChange = (changedValues: any, allValues: any) => {
+    console.log(changedValues, allValues);
+  }
+
+
   return (
     <>
-      <StyledTitle5>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle5>
+      <StyledTitle>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle>
       <AppRowContainer>
+        <Col xs={24} lg={24}>
+          <Space>
+            <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setNewClassModalVisible(true)} >Add new class</Button>
+          </Space>
+        </Col>
+
         <Col xs={24} lg={24}>
           <FilterItem filterData={filterData} setFilterData={setFilterData} />
         </Col>
+
         <Col xs={24} lg={24}>
           <AppCard
             title={
@@ -63,16 +133,62 @@ const ClassListing = () => {
                       onChange={event => searchClass(event.target.value)}
                     />
                   </StyledOrderHeaderInputView>
-                  <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} />
+                  {/* <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} /> */}
                 </StyledOrderHeader>
               </AppsHeader>
             }
           >
-            <ListingTable productData={list || []} loading={loading} />
-            <StyledOrderFooterPagination pageSize={10} count={total} page={page} onChange={onChange} />
+            <ClassList data={classList || []} loading={loading} />
+            {/* <StyledOrderFooterPagination pageSize={10} count={total} page={page} onChange={onChange} /> */}
           </AppCard>
         </Col>
       </AppRowContainer>
+
+      <Modal
+        title="Add new class"
+        open={newClassModalVisible}
+        onOk={() => setNewClassModalVisible(false)}
+        onCancel={() => setNewClassModalVisible(false)}
+        footer={false}
+      >
+        <Form {...formItemLayout} onValuesChange={onFormValuesChange} onFinish={onFormSubmit}>
+          <Form.Item
+            label="Class name"
+            name="name"
+            rules={[{ required: true, message: 'Please input your class name!' }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Class room"
+            name="classroom"
+            rules={[{ required: true, message: 'Please input your class room!' }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Teacher"
+            name="teacherId"
+            rules={[{ required: true, message: 'Please select teacher!' }]}>
+            <Select
+              defaultValue='1'
+              style={{ width: "100%" }}
+              onChange={() => { }}>
+              <Option value='1'>Dumbledore</Option>
+              <Option value='2'>Robin Hood</Option>
+              <Option value='3'>Optimus Prime</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Space>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+              <Button type='default' onClick={() => setNewClassModalVisible(false)}>
+                Cancel
+              </Button>
+            </Space>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
