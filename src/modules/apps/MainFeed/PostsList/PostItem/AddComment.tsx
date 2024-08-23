@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { SmileOutlined } from '@ant-design/icons';
-import AppIconButton from '@crema/components/AppIconButton';
-import { MdOutlineAttachFile } from 'react-icons/md';
 import {
   StyledAddComment,
   StyledAddCommentInput,
   StyledAddCommentUser,
   StyledAddCommentUserInfo,
-  StyledAddSuffixAction,
   StyledPostItemAvatar,
 } from '../index.styled';
 import { useAppDispatch } from '../../../../../toolkit/hooks';
@@ -50,12 +46,12 @@ const AddComment: React.FC<AddCommentProps> = ({ postId, wallData }) => {
             value={comment}
             onChange={e => setComment(e.target.value)}
             onKeyPress={submitComment}
-            suffix={
-              <StyledAddSuffixAction>
-                <AppIconButton icon={<SmileOutlined />} />
-                <AppIconButton icon={<MdOutlineAttachFile />} />
-              </StyledAddSuffixAction>
-            }
+            // suffix={
+            //   <StyledAddSuffixAction>
+            //     <AppIconButton icon={<SmileOutlined />} />
+            //     <AppIconButton icon={<MdOutlineAttachFile />} />
+            //   </StyledAddSuffixAction>
+            // }
           />
         </StyledAddCommentUserInfo>
       </StyledAddCommentUser>

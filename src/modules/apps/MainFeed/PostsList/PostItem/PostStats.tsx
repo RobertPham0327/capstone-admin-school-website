@@ -6,7 +6,6 @@ import {
   StyledPostStats,
   StyledPostStatsItem,
   StyledPostStatsItemInfo,
-  StyledShareAltOutlined,
 } from '../index.styled';
 import { useAppDispatch } from '../../../../../toolkit/hooks';
 import { onUpdatePostStatus } from '../../../../../toolkit/actions';
@@ -35,10 +34,6 @@ const PostStats: React.FC<PostStatsProps> = ({ post }) => {
           <StyledPostStatsItemInfo>{post.comments.length} Comments</StyledPostStatsItemInfo>
         </StyledPostStatsItem>
       )}
-      <StyledPostStatsItem>
-        <StyledShareAltOutlined />
-        <StyledPostStatsItemInfo>{post.shares} Shares</StyledPostStatsItemInfo>
-      </StyledPostStatsItem>
     </StyledPostStats>
   );
 };

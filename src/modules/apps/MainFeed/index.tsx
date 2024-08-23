@@ -4,25 +4,13 @@ import { useIntl } from 'react-intl';
 import AppPageMeta from '@crema/components/AppPageMeta';
 import {
   StyledAppRowContainer,
-  StyledWallLeftSidebar,
   StyledWallMainContent,
   StyledWallRightSidebar,
   StyledWallScrollBar,
 } from './index.styled';
 import { useAppSelector, useAppDispatch } from '../../../toolkit/hooks';
 import { onGetWallData } from '../../../toolkit/actions';
-import {
-  About,
-  FriendRequests,
-  Photos,
-  RecentNews,
-  Suggestions,
-  SuggestTeam,
-  VideoCall,
-  Stories,
-  WhatsHappen,
-  WhoToFollow,
-} from '@crema/modules/apps/Wall';
+import { RecentNews, WhatsHappen } from '@crema/modules/apps/Wall';
 import CreatePost from './CreatePost';
 import PostsList from './PostsList';
 import { isEmptyObject } from '@crema/helpers/ApiHelper';
@@ -51,18 +39,7 @@ const MainFeed = () => {
             padding: 8,
           }}
         >
-          <StyledWallLeftSidebar xs={24} md={6} xl={6} xxl={6}>
-            <StyledWallScrollBar>
-              <div>
-                <VideoCall data={wallData?.videoCall} />
-                <About about={wallData?.about} />
-                <SuggestTeam data={wallData?.suggestTeam} />
-                <Photos photos={wallData?.photos} />
-                <Suggestions suggestions={wallData?.suggestions} />
-              </div>
-            </StyledWallScrollBar>
-          </StyledWallLeftSidebar>
-          <StyledWallMainContent xs={24} md={12} xl={12} xxl={12}>
+          <StyledWallMainContent xs={24} md={12} xl={16} xxl={12}>
             <StyledWallScrollBar style={{ height: '100%' }}>
               <div>
                 <CreatePost wallData={wallData} />
@@ -70,13 +47,10 @@ const MainFeed = () => {
               </div>
             </StyledWallScrollBar>
           </StyledWallMainContent>
-          <StyledWallRightSidebar xs={24} md={6} xl={6} xxl={6}>
+          <StyledWallRightSidebar xs={24} md={6} xl={8} xxl={6}>
             <StyledWallScrollBar style={{ height: '100%' }}>
               <div>
-                <Stories stories={wallData?.stories} />
                 <WhatsHappen whatsHappen={wallData?.whatsHappen} />
-                <WhoToFollow whoToFollow={wallData?.whoToFollow} />
-                <FriendRequests friendRequests={wallData?.friendRequests} />
                 <RecentNews recentNews={wallData?.recentNews} />
               </div>
             </StyledWallScrollBar>

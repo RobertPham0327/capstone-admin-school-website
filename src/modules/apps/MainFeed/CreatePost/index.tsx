@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useIntl } from 'react-intl';
 import { Avatar } from 'antd';
-import { PictureOutlined, SendOutlined, SmileOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { PictureOutlined, SendOutlined } from '@ant-design/icons';
 import AppIconButton from '@crema/components/AppIconButton';
 import {
   StyledCreatePostAction,
@@ -83,9 +83,6 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
                   <input {...getInputProps()} />
                   <PictureOutlined />
                 </StyledCreatePostActionBtn>
-                <AppIconButton icon={<VideoCameraOutlined />} />
-                <AppIconButton icon={<SmileOutlined />} />
-                <AppIconButton icon={<UserOutlined />} />
                 <AppIconButton
                   // disabled={!message.trim() && attachments.length === 0}
                   onClick={handlePostSubmit}
