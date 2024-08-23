@@ -173,81 +173,86 @@ export const wallData: WallDataType = {
   whatsHappen: [
     {
       id: 1,
-      imgSrc: '/assets/images/wall/happen_img1.png',
-      title: 'COVID-19 LIVE',
-      subTitle: 'Trending in India',
+      imgSrc:
+        'https://media.istockphoto.com/id/1565269886/vi/anh/tr%E1%BA%BB-em-l%C3%A0m-t%C3%A1c-ph%E1%BA%A9m-%C4%91i%C3%AAu-kh%E1%BA%AFc-c%C3%A1-m%E1%BA%ADp-b%E1%BA%B1ng-%C4%91%E1%BA%A5t-s%C3%A9t-x%C3%A1m-tr%C3%AAn-th%E1%BA%A3m-c%E1%BA%AFt-kraft-v%E1%BB%9Bi-m%E1%BB%99t-s%E1%BB%91-d%E1%BB%A5ng-c%E1%BB%A5.jpg?s=612x612&w=0&k=20&c=JdAYQtslD2fM0sqycnUZYh0gddlAqPb9WXrB_hmQios=',
+      title: 'New Playground Opening',
+      subTitle: 'Exciting New Facility at Happy Kids Kindergarten',
       tag: [
         {
           id: 1,
-          name: 'Sanam',
+          name: 'Playground',
         },
         {
           id: 2,
-          name: 'Nisha',
+          name: 'Outdoor Activities',
         },
       ],
     },
     {
       id: 2,
-      imgSrc: '/assets/images/wall/happen_img2.png',
-      title: 'COVID-19 LIVE',
-      subTitle: 'Trending in India',
+      imgSrc:
+        'https://media.istockphoto.com/id/1360983085/vi/anh/tr%E1%BA%BB-m%E1%BB%9Bi-bi%E1%BA%BFt-%C4%91i-ph%C3%A1t-tri%E1%BB%83n-s%E1%BB%9Bm-ng%C4%83n-x%E1%BA%BFp-b%E1%BA%B1ng-g%E1%BB%97-v%C3%A0-%C4%91%E1%BA%BFm-m%C3%A0u-s%E1%BA%AFc-c%E1%BA%A7u-v%E1%BB%93ng-tr%C3%B2-ch%C6%A1i-h%E1%BB%8Dc-t%E1%BA%ADp-tr%E1%BA%BB.jpg?s=612x612&w=0&k=20&c=UFB_gpKfe533x7bKq7EXBAHzqvIunlSmQ65kg-DMu6s=',
+      title: 'Arts and Crafts Day',
+      subTitle: 'Creativity Unleashed at Little Stars Kindergarten',
       tag: [
         {
           id: 1,
-          name: 'Sanam',
+          name: 'Arts',
         },
         {
           id: 2,
-          name: 'Nisha',
+          name: 'Crafts',
         },
       ],
     },
     {
       id: 3,
-      imgSrc: '/assets/images/wall/happen_img3.png',
-      title: 'COVID-19 LIVE',
-      subTitle: 'Trending in India',
+      imgSrc:
+        'https://media.istockphoto.com/id/473032112/vi/anh/tr%E1%BA%BB-m%E1%BA%ABu-gi%C3%A1o-vui-t%C6%B0%C6%A1i-vui-v%E1%BA%BB-l%C3%A0m-khu%C3%B4n-m%E1%BA%B7t.jpg?s=612x612&w=0&k=20&c=O21NGxj5UqqFWQDK6T1JPtLsZVMlLYkKVLDWGPHGOlQ=',
+      title: 'Healthy Eating Week',
+      subTitle: 'Promoting Nutrition at Sunshine Kindergarten',
       tag: [
         {
           id: 1,
-          name: 'Sanam',
+          name: 'Health',
         },
         {
           id: 2,
-          name: 'Nisha',
+          name: 'Nutrition',
         },
       ],
     },
     {
       id: 4,
-      imgSrc: '/assets/images/wall/happen_img4.png',
-      title: 'COVID-19 LIVE',
-      subTitle: 'Trending in India',
+      imgSrc:
+        'https://media.istockphoto.com/id/1346505485/vi/anh/ch%E1%BB%91t-%C3%A1o-kho%C3%A1c-tr%C6%B0%E1%BB%9Dng-ti%E1%BB%83u-h%E1%BB%8Dc.jpg?s=612x612&w=0&k=20&c=SLNpfRGW7ZjR4QQdfmf0aowQeVd3rx4COQ6AO4nC9QU=',
+      title: 'Storytelling Session',
+      subTitle: 'Bringing Stories to Life at Tiny Tots Kindergarten',
       tag: [
         {
           id: 1,
-          name: 'Sanam',
+          name: 'Storytelling',
         },
         {
           id: 2,
-          name: 'Nisha',
+          name: 'Books',
         },
       ],
     },
     {
       id: 5,
-      imgSrc: '/assets/images/wall/happen_img5.png',
-      title: 'COVID-19 LIVE',
-      subTitle: 'Trending in India',
+      imgSrc:
+        'https://media.istockphoto.com/id/474690025/vi/anh/tr%E1%BA%BB-em-t%E1%BA%A1i-s%E1%BB%9F-th%C3%BA-cho-h%C6%B0%C6%A1u-cao-c%E1%BB%95-%C4%83n.jpg?s=612x612&w=0&k=20&c=3o1efMtapvbOJ1VAWJ1ha3Ury3rUcwe_tll6Wwd4yZM=',
+      title: 'Field Trip to the Zoo',
+      subTitle: 'Adventurous Day Out for Little Explorers',
       tag: [
         {
           id: 1,
-          name: 'Sanam',
+          name: 'Field Trip',
         },
         {
           id: 2,
-          name: 'Nisha',
+          name: 'Zoo',
         },
       ],
     },
