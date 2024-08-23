@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { SmileOutlined } from "@ant-design/icons";
-import AppIconButton from "@crema/components/AppIconButton";
-import { MdOutlineAttachFile } from "react-icons/md";
+import React, { useState } from 'react';
+import { SmileOutlined } from '@ant-design/icons';
+import AppIconButton from '@crema/components/AppIconButton';
+import { MdOutlineAttachFile } from 'react-icons/md';
 import {
   StyledAddComment,
   StyledAddCommentInput,
@@ -9,11 +9,11 @@ import {
   StyledAddCommentUserInfo,
   StyledAddSuffixAction,
   StyledPostItemAvatar,
-} from "../index.styled";
-import { useAppDispatch } from "../../../../../toolkit/hooks";
-import { onAddNewComment } from "../../../../../toolkit/actions";
-import { WallDataType } from "@crema/types/models/apps/Wall";
-import { MessageType } from "@crema/constants/AppEnums";
+} from '../index.styled';
+import { useAppDispatch } from '../../../../../toolkit/hooks';
+import { onAddNewComment } from '../../../../../toolkit/actions';
+import { WallDataType } from '@crema/types/models/apps/Wall';
+import { MessageType } from '@crema/constants/AppEnums';
 
 type AddCommentProps = {
   postId: number;
@@ -22,10 +22,10 @@ type AddCommentProps = {
 
 const AddComment: React.FC<AddCommentProps> = ({ postId, wallData }) => {
   const dispatch = useAppDispatch();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
   const submitComment = (event: any) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       const newComment = {
         author: {
           name: wallData!.name,
@@ -36,7 +36,7 @@ const AddComment: React.FC<AddCommentProps> = ({ postId, wallData }) => {
         comment,
       };
       dispatch(onAddNewComment(postId, newComment));
-      setComment("");
+      setComment('');
     }
   };
 
@@ -48,7 +48,7 @@ const AddComment: React.FC<AddCommentProps> = ({ postId, wallData }) => {
           <StyledAddCommentInput
             placeholder="Write a comment"
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            onChange={e => setComment(e.target.value)}
             onKeyPress={submitComment}
             suffix={
               <StyledAddSuffixAction>

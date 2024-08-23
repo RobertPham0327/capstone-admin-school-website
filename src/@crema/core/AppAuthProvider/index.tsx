@@ -4,7 +4,7 @@
 
 // // import { FETCH_ERROR, FETCH_START, FETCH_SUCCESS } from '@crema/constants/ActionTypes';
 
-// type Props = { 
+// type Props = {
 //   children: React.ReactNode;
 // };
 // const AppAuthProvider = ({ children }: Props) => {
@@ -13,16 +13,11 @@
 
 // export default AppAuthProvider;
 
+import React from 'react';
+import FirebaseAuthProvider from '@crema/services/auth/firebase/FirebaseAuthProvider';
+import { useAppDispatch } from '../../../toolkit/hooks';
 
-import React from "react";
-import FirebaseAuthProvider from "@crema/services/auth/firebase/FirebaseAuthProvider";
-import { useAppDispatch } from "../../../toolkit/hooks";
-
-import {
-  FETCH_ERROR,
-  FETCH_START,
-  FETCH_SUCCESS,
-} from "@crema/constants/ActionTypes";
+import { FETCH_ERROR, FETCH_START, FETCH_SUCCESS } from '@crema/constants/ActionTypes';
 
 type Props = {
   children: React.ReactNode;
@@ -41,11 +36,7 @@ const AppAuthProvider = ({ children }: Props) => {
   };
 
   return (
-    <FirebaseAuthProvider
-      fetchStart={fetchStart}
-      fetchError={fetchError}
-      fetchSuccess={fetchSuccess}
-    >
+    <FirebaseAuthProvider fetchStart={fetchStart} fetchError={fetchError} fetchSuccess={fetchSuccess}>
       {children}
     </FirebaseAuthProvider>
   );

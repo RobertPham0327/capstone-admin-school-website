@@ -1,10 +1,6 @@
-import React from "react";
-import {
-  StyledSuggestionAvatar,
-  StyledSuggestionItem,
-  StyledSuggestionItemContent,
-} from "./index.styled";
-import { SuggestionObjType } from "@crema/types/models/apps/Wall";
+import React from 'react';
+import { StyledSuggestionAvatar, StyledSuggestionItem, StyledSuggestionItemContent } from './index.styled';
+import { SuggestionObjType } from '@crema/types/models/apps/Wall';
 
 type SuggestionItemProps = {
   item: SuggestionObjType;

@@ -11,10 +11,7 @@ type AddNewTaskProps = {
   selectedDate?: Dayjs;
 };
 
-const AddNewTask: React.FC<AddNewTaskProps> = ({
-  isAddTaskOpen,
-  onCloseAddTask,
-}) => {
+const AddNewTask: React.FC<AddNewTaskProps> = ({ isAddTaskOpen, onCloseAddTask }) => {
   const { messages } = useIntl();
 
   return (

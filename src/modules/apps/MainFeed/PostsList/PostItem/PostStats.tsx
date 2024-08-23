@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 import {
   StyledCommentOutlined,
   StyledLikeOutlined,
@@ -7,10 +7,10 @@ import {
   StyledPostStatsItem,
   StyledPostStatsItemInfo,
   StyledShareAltOutlined,
-} from "../index.styled";
-import { useAppDispatch } from "../../../../../toolkit/hooks";
-import { onUpdatePostStatus } from "../../../../../toolkit/actions";
-import { PostObjType } from "@crema/types/models/apps/Wall";
+} from '../index.styled';
+import { useAppDispatch } from '../../../../../toolkit/hooks';
+import { onUpdatePostStatus } from '../../../../../toolkit/actions';
+import { PostObjType } from '@crema/types/models/apps/Wall';
 
 type PostStatsProps = {
   post: PostObjType;
@@ -25,19 +25,14 @@ const PostStats: React.FC<PostStatsProps> = ({ post }) => {
 
   return (
     <StyledPostStats>
-      <StyledPostStatsItem
-        className={clsx({ active: post.liked })}
-        onClick={toggleLikeStatus}
-      >
+      <StyledPostStatsItem className={clsx({ active: post.liked })} onClick={toggleLikeStatus}>
         <StyledLikeOutlined />
         <StyledPostStatsItemInfo>{post.likes} likes</StyledPostStatsItemInfo>
       </StyledPostStatsItem>
       {post.comments.length > 0 && (
         <StyledPostStatsItem>
           <StyledCommentOutlined />
-          <StyledPostStatsItemInfo>
-            {post.comments.length} Comments
-          </StyledPostStatsItemInfo>
+          <StyledPostStatsItemInfo>{post.comments.length} Comments</StyledPostStatsItemInfo>
         </StyledPostStatsItem>
       )}
       <StyledPostStatsItem>

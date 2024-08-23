@@ -1,34 +1,24 @@
-
-import React, { useEffect, useState } from "react";
-import TaskContentHeader from "./TaskContentHeader";
-import AddNewTask from "../AddNewTask";
-import AppsPagination from "@crema/components/AppsPagination";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import AppsContent from "@crema/components/AppsContainer/AppsContent";
-import ListEmptyResult from "@crema/components/AppList/ListEmptyResult";
-import TodoListSkeleton from "@crema/components/AppSkeleton/TodoListSkeleton";
-import AppList from "@crema/components/AppList";
-import {
-  StyledTodoFooter,
-  StyledTodoListDesktop,
-  StyledTodoListMobile,
-} from "./index.styled";
-import { TaskListItemMobile } from "@crema/modules/Notification";
-import { useAppSelector, useAppDispatch } from "../../../../toolkit/hooks";
-import {
-  onDeleteSelectedTasks,
-  onGetTaskList,
-  onUpdateTaskStarredStatus,
-} from "../../../../toolkit/actions";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
-import { useRouter } from "next/router";
-import TaskListItem from "./TaskListItem";
+import React, { useEffect, useState } from 'react';
+import TaskContentHeader from './TaskContentHeader';
+import AddNewTask from '../AddNewTask';
+import AppsPagination from '@crema/components/AppsPagination';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import AppsContent from '@crema/components/AppsContainer/AppsContent';
+import ListEmptyResult from '@crema/components/AppList/ListEmptyResult';
+import TodoListSkeleton from '@crema/components/AppSkeleton/TodoListSkeleton';
+import AppList from '@crema/components/AppList';
+import { StyledTodoFooter, StyledTodoListDesktop, StyledTodoListMobile } from './index.styled';
+import { TaskListItemMobile } from '@crema/modules/Notification';
+import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
+import { onDeleteSelectedTasks, onGetTaskList, onUpdateTaskStarredStatus } from '../../../../toolkit/actions';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
+import { useRouter } from 'next/router';
+import TaskListItem from './TaskListItem';
 
 const TasksList = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { all, asPath } = router.query;
-
 
   const taskList = useAppSelector(({ todoApp }) => todoApp.taskList);
 
@@ -37,7 +27,7 @@ const TasksList = () => {
   const loading = useAppSelector(({ common }) => common.loading);
 
   const [page, setPage] = useState(0);
-  const [filterText, onSetFilterText] = useState<string>("");
+  const [filterText, onSetFilterText] = useState<string>('');
   const [checkedTasks, setCheckedTasks] = useState<number[]>([]);
   const [isAddTaskOpen, setAddTaskOpen] = useState<boolean>(false);
 
@@ -61,7 +51,7 @@ const TasksList = () => {
     if (checked) {
       setCheckedTasks(checkedTasks.concat(id));
     } else {
-      setCheckedTasks(checkedTasks.filter((taskId) => taskId !== id));
+      setCheckedTasks(checkedTasks.filter(taskId => taskId !== id));
     }
   };
 
@@ -78,16 +68,14 @@ const TasksList = () => {
   };
 
   const onGetFilteredItems = () => {
-    if (filterText === "") {
+    if (filterText === '') {
       return taskList;
     } else {
-      return taskList.filter((task) =>
-        task.title.toUpperCase().includes(filterText.toUpperCase())
-      );
+      return taskList.filter(task => task.title.toUpperCase().includes(filterText.toUpperCase()));
     }
   };
 
-  console.log("taskList", taskList);
+  console.log('taskList', taskList);
 
   const list = onGetFilteredItems();
   return (
@@ -108,7 +96,7 @@ const TasksList = () => {
           <StyledTodoListDesktop>
             <AppList
               data={list}
-              renderItem={(task) => (
+              renderItem={task => (
                 <TaskListItem
                   key={task.id}
                   task={task}
@@ -131,7 +119,7 @@ const TasksList = () => {
           <StyledTodoListMobile>
             <AppList
               data={list}
-              renderItem={(task) => (
+              renderItem={task => (
                 <TaskListItemMobile
                   key={task.id}
                   task={task}
@@ -155,20 +143,11 @@ const TasksList = () => {
 
       {taskList.length > 0 ? (
         <StyledTodoFooter>
-          <AppsPagination
-            count={totalTasks}
-            page={page}
-            onChange={onPageChange}
-          />
+          <AppsPagination count={totalTasks} page={page} onChange={onPageChange} />
         </StyledTodoFooter>
       ) : null}
 
-      {isAddTaskOpen ? (
-        <AddNewTask
-          isAddTaskOpen={isAddTaskOpen}
-          onCloseAddTask={onCloseAddTask}
-        />
-      ) : null}
+      {isAddTaskOpen ? <AddNewTask isAddTaskOpen={isAddTaskOpen} onCloseAddTask={onCloseAddTask} /> : null}
     </>
   );
 };

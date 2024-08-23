@@ -13,17 +13,17 @@ import About from './About';
 import WhatsHappen from './WhatsHappen';
 
 export {
-//   VideoCall,
-//   FriendRequests,
+  //   VideoCall,
+  //   FriendRequests,
   Photos,
   RecentNews,
-//   WhoToFollow,
+  //   WhoToFollow,
   Suggestions,
   CreatePost,
   PostsList,
   About,
-//   SuggestTeam,
-//   Stories,
+  //   SuggestTeam,
+  //   Stories,
   WhatsHappen,
   CommentsList,
 };

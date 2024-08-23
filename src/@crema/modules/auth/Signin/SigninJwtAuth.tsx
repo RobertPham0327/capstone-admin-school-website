@@ -20,7 +20,7 @@ const SignInJwtAuth = () => {
   const navigate = useNavigate();
   const { signInUser } = useAuthMethod();
 
-  const onFinishFailed = (errorInfo:any) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 

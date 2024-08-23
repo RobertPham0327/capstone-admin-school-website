@@ -1,10 +1,10 @@
-import React from "react";
-import Attachments from "./Attachments";
-import PostStats from "./PostStats";
-import AddComment from "./AddComment";
-import CommentsList from "./CommentsList";
-import { EllipsisOutlined } from "@ant-design/icons";
-import { getTimeFromNow } from "@crema/helpers/DateHelper";
+import React from 'react';
+import Attachments from './Attachments';
+import PostStats from './PostStats';
+import AddComment from './AddComment';
+import CommentsList from './CommentsList';
+import { EllipsisOutlined } from '@ant-design/icons';
+import { getTimeFromNow } from '@crema/helpers/DateHelper';
 import {
   StyledPostItemAvatar,
   StyledPostItemCard,
@@ -12,8 +12,8 @@ import {
   StyledPostItemPara,
   StyledPostItemUser,
   StyledPostItemUserInfo,
-} from "../index.styled";
-import { PostObjType, WallDataType } from "@crema/types/models/apps/Wall";
+} from '../index.styled';
+import { PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
 
 type PostItemProps = {
   post: PostObjType;
@@ -21,12 +21,7 @@ type PostItemProps = {
   setPostList: any;
   isLast: boolean;
 };
-const PostItem: React.FC<PostItemProps> = ({
-  post,
-  wallData,
-  setPostList,
-  isLast,
-}) => {
+const PostItem: React.FC<PostItemProps> = ({ post, wallData, setPostList, isLast }) => {
   const { owner, message, date, attachments, comments } = post;
   const getTitle = () => (
     <StyledPostItemUser>
@@ -41,7 +36,7 @@ const PostItem: React.FC<PostItemProps> = ({
   return (
     <StyledPostItemCard
       title={getTitle()}
-      className={isLast ? "" : "mb-5"}
+      className={isLast ? '' : 'mb-5'}
       extra={
         <StyledPostItemExtraBtn>
           <EllipsisOutlined />
@@ -51,11 +46,7 @@ const PostItem: React.FC<PostItemProps> = ({
       {message ? <StyledPostItemPara>{message}</StyledPostItemPara> : null}
       <Attachments attachments={attachments} />
       <PostStats post={post} setPostList={setPostList} />
-      <AddComment
-        postId={post.id}
-        wallData={wallData}
-        setPostList={setPostList}
-      />
+      <AddComment postId={post.id} wallData={wallData} setPostList={setPostList} />
       {comments.length > 0 && <CommentsList comments={comments} />}
     </StyledPostItemCard>
   );

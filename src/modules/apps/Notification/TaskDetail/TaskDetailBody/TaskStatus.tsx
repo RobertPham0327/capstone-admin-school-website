@@ -1,19 +1,17 @@
-import React from "react";
-import { Select } from "antd";
-import { useIntl } from "react-intl";
-import { StyledTodoSelectBox } from "../index.styled";
-import { useAppSelector, useAppDispatch } from "../../../../../toolkit/hooks";
-import { onUpdateSelectedTask } from "../../../../../toolkit/actions";
-import { StatusObjType, TodoObjType } from "@crema/types/models/apps/Todo";
+import React from 'react';
+import { Select } from 'antd';
+import { useIntl } from 'react-intl';
+import { StyledTodoSelectBox } from '../index.styled';
+import { useAppSelector, useAppDispatch } from '../../../../../toolkit/hooks';
+import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
+import { StatusObjType, TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskDetailHeaderProps = {
   selectedTask: TodoObjType;
 };
 
 const TaskStatus: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => {
-  const statusList = useAppSelector(
-    ({ calendarApp }) => calendarApp.statusList
-  );
+  const statusList = useAppSelector(({ calendarApp }) => calendarApp.statusList);
 
   const dispatch = useAppDispatch();
   const onChangeStatus = (value: number) => {
@@ -24,9 +22,9 @@ const TaskStatus: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => {
 
   return (
     <StyledTodoSelectBox
-      onChange={(value) => onChangeStatus(value as number)}
+      onChange={value => onChangeStatus(value as number)}
       value={selectedTask?.status}
-      placeholder={messages["common.status"] as string}
+      placeholder={messages['common.status'] as string}
     >
       {statusList.map((status: StatusObjType) => {
         return (

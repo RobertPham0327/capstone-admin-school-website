@@ -11,7 +11,7 @@ import {
   StyledOrderHeader,
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
-  StyledTitle5
+  StyledTitle5,
 } from './index.styled';
 import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
 import { onGetEcommerceData } from '../../../../toolkit/actions';

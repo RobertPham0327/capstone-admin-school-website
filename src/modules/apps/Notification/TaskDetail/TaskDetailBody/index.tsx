@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import { useAuthUser } from "@crema/hooks/AuthHooks";
-import { useIntl } from "react-intl";
-import ChangeStaff from "./ChangeStaff";
-import TaskStatus from "./TaskStatus";
-import TaskPriority from "./TaskPriority";
-import { Input } from "antd";
-import TaskLabel from "./TaskLabel";
-import { FiSend } from "react-icons/fi";
-import { AiOutlineCheckCircle, AiOutlineEdit } from "react-icons/ai";
-import AppIconButton from "@crema/components/AppIconButton";
+import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import { useAuthUser } from '@crema/hooks/AuthHooks';
+import { useIntl } from 'react-intl';
+import ChangeStaff from './ChangeStaff';
+import TaskStatus from './TaskStatus';
+import TaskPriority from './TaskPriority';
+import { Input } from 'antd';
+import TaskLabel from './TaskLabel';
+import { FiSend } from 'react-icons/fi';
+import { AiOutlineCheckCircle, AiOutlineEdit } from 'react-icons/ai';
+import AppIconButton from '@crema/components/AppIconButton';
 import {
   StyledDetailContent,
   StyledTodoDetailBtn,
@@ -28,18 +28,18 @@ import {
   StyledTodoDetailStatusPri,
   StyledTodoDetailTextAreaForm,
   StyledTodoDivider,
-} from "../index.styled";
-import { useAppSelector, useAppDispatch } from "../../../../../toolkit/hooks";
-import { onUpdateSelectedTask } from "../../../../../toolkit/actions";
+} from '../index.styled';
+import { useAppSelector, useAppDispatch } from '../../../../../toolkit/hooks';
+import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
 import {
   CommentsLists,
   AssignedStaff,
   TodoDatePicker,
   TaskCreatedByInfo,
   TaskLabels,
-} from "@crema/modules/Notification";
-import { StaffObjType, TodoObjType } from "@crema/types/models/apps/Todo";
-import { getDateObject, getFormattedDate } from "@crema/helpers/DateHelper";
+} from '@crema/modules/Notification';
+import { StaffObjType, TodoObjType } from '@crema/types/models/apps/Todo';
+import { getDateObject, getFormattedDate } from '@crema/helpers/DateHelper';
 
 type TaskDetailBodyProps = {
   selectedTask: TodoObjType;
@@ -56,11 +56,9 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
   const [title, setTitle] = useState(selectedTask.title);
   const [content, setContent] = useState(selectedTask.content);
 
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
-  const [scheduleDate, setScheduleDate] = useState(
-    getDateObject(selectedTask.startDate)
-  );
+  const [scheduleDate, setScheduleDate] = useState(getDateObject(selectedTask.startDate));
 
   const [selectedStaff, setStaff] = useState(selectedTask.assignedTo);
 
@@ -83,7 +81,7 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
         content,
         startDate: getFormattedDate(scheduleDate),
         assignedTo: selectedStaff,
-      })
+      }),
     );
     setEdit(!isEdit);
   };
@@ -92,19 +90,17 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
     const task = selectedTask;
     const comments = task.comments.concat({
       comment: comment,
-      name: user.displayName ? user.displayName : "User",
+      name: user.displayName ? user.displayName : 'User',
       image: user.photoURL,
-      date: dayjs().format("MMM DD"),
+      date: dayjs().format('MMM DD'),
     });
     dispatch(onUpdateSelectedTask({ ...selectedTask, comments }));
-    setComment("");
+    setComment('');
   };
 
   const handleStaffChange = (value: number) => {
-    const newStaff = staffList.find(
-      (staff: StaffObjType) => staff.id === value
-    ) as StaffObjType;
-    setStaff((staff) => {
+    const newStaff = staffList.find((staff: StaffObjType) => staff.id === value) as StaffObjType;
+    setStaff(staff => {
       return { ...staff, ...newStaff };
     });
   };
@@ -118,7 +114,7 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
           {isEdit ? (
             <Input
               style={{ maxWidth: 200, marginRight: 20 }}
-              placeholder={messages["todo.taskTitle"] as string}
+              placeholder={messages['todo.taskTitle'] as string}
               defaultValue={title}
               onChange={({ target: { value } }) => setTitle(value)}
             />
@@ -127,16 +123,14 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
           )}
 
           <StyledTodoDetailContentHeaderLabel className="ant-row ant-row-middle">
-            {selectedTask.label ? (
-              <TaskLabels labels={selectedTask.label} />
-            ) : null}
+            {selectedTask.label ? <TaskLabels labels={selectedTask.label} /> : null}
           </StyledTodoDetailContentHeaderLabel>
 
           <StyledTodoDetailContentHeaderTag>
             <StyledTodoDetailContentHeaderTagBtn
               style={{
                 color: selectedTask.priority.color,
-                backgroundColor: selectedTask.priority.color + "10",
+                backgroundColor: selectedTask.priority.color + '10',
               }}
             >
               {selectedTask.priority.name}
@@ -144,10 +138,7 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
           </StyledTodoDetailContentHeaderTag>
         </StyledTodoDetailContentHeaderLeft>
 
-        <TaskCreatedByInfo
-          createdBy={selectedTask.createdBy}
-          createdOn={selectedTask.createdOn}
-        />
+        <TaskCreatedByInfo createdBy={selectedTask.createdBy} createdOn={selectedTask.createdOn} />
       </StyledTodoDetailContentHeader>
 
       <StyledTodoDetailStaffEdit>
@@ -162,10 +153,7 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
                   handleStaffChange={handleStaffChange}
                 />
               </StyledTodoDetailStaff>
-              <TodoDatePicker
-                scheduleDate={scheduleDate}
-                setScheduleDate={setScheduleDate}
-              />
+              <TodoDatePicker scheduleDate={scheduleDate} setScheduleDate={setScheduleDate} />
             </>
           ) : (
             <AssignedStaff assignedStaff={selectedTask.assignedTo} />
@@ -174,15 +162,9 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
 
         <StyledTodoDetailStaffEditBtnView>
           {!isEdit ? (
-            <AppIconButton
-              onClick={onClickEditButton}
-              icon={<AiOutlineEdit />}
-            />
+            <AppIconButton onClick={onClickEditButton} icon={<AiOutlineEdit />} />
           ) : (
-            <AppIconButton
-              onClick={onDoneEditing}
-              icon={<AiOutlineCheckCircle />}
-            />
+            <AppIconButton onClick={onDoneEditing} icon={<AiOutlineCheckCircle />} />
           )}
         </StyledTodoDetailStaffEditBtnView>
       </StyledTodoDetailStaffEdit>
@@ -194,7 +176,7 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
       ) : (
         <StyledTodoDetailTextAreaForm>
           <Input.TextArea
-            placeholder={messages["common.description"] as string}
+            placeholder={messages['common.description'] as string}
             defaultValue={content}
             onChange={({ target: { value } }) => setContent(value)}
           />
@@ -221,16 +203,11 @@ const TaskDetailBody: React.FC<TaskDetailBodyProps> = ({ selectedTask }) => {
       <StyledTodoDetailFooter>
         <Input.TextArea
           autoSize={{ minRows: 1, maxRows: 2 }}
-          placeholder={messages["common.writeComment"] as string}
+          placeholder={messages['common.writeComment'] as string}
           value={comment}
           onChange={({ target: { value } }) => setComment(value)}
         />
-        <StyledTodoDetailBtn
-          shape="circle"
-          type="primary"
-          disabled={!comment}
-          onClick={onAddComments}
-        >
+        <StyledTodoDetailBtn shape="circle" type="primary" disabled={!comment} onClick={onAddComments}>
           <FiSend />
         </StyledTodoDetailBtn>
       </StyledTodoDetailFooter>

@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import AppList from '@crema/components/AppList';
-import {
-  CommentOutlined,
-  LikeOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
+import { CommentOutlined, LikeOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { Avatar, Button, Input } from 'antd';
 import AppCard from '@crema/components/AppCard';
 import { rgba } from 'polished';

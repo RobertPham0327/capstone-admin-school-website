@@ -1,15 +1,9 @@
-import React, { useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { useIntl } from "react-intl";
-import { Avatar } from "antd";
-import {
-  PictureOutlined,
-  SendOutlined,
-  SmileOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import AppIconButton from "@crema/components/AppIconButton";
+import React, { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useIntl } from 'react-intl';
+import { Avatar } from 'antd';
+import { PictureOutlined, SendOutlined, SmileOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import AppIconButton from '@crema/components/AppIconButton';
 import {
   StyledCreatePostAction,
   StyledCreatePostActionBtn,
@@ -19,11 +13,11 @@ import {
   StyledCreatePostInput,
   StyledCreatePostMain,
   StyledCreatePostMainContent,
-} from "./index.styled";
-import { useInfoViewActionsContext } from "@crema/context/AppContextProvider/InfoViewContextProvider";
-import { postDataApi } from "@crema/hooks/APIHooks";
-import { AttachmentObjType, WallDataType } from "@crema/types/models/apps/Wall";
-import { generateRandomUniqueNumber } from "@crema/helpers/Common";
+} from './index.styled';
+import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { postDataApi } from '@crema/hooks/APIHooks';
+import { AttachmentObjType, WallDataType } from '@crema/types/models/apps/Wall';
+import { generateRandomUniqueNumber } from '@crema/helpers/Common';
 
 type CreatePostProps = {
   wallData: WallDataType;
@@ -31,16 +25,16 @@ type CreatePostProps = {
 };
 const CreatePost: React.FC<CreatePostProps> = ({ wallData, setPostList }) => {
   const infoViewActionsContext = useInfoViewActionsContext();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState<AttachmentObjType[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/jpeg": [],
-      "image/png": [],
+      'image/jpeg': [],
+      'image/png': [],
     },
     multiple: true,
-    onDrop: (acceptedFiles) => {
+    onDrop: acceptedFiles => {
       const files = acceptedFiles.map((file: any) => {
         return {
           id: generateRandomUniqueNumber(),
@@ -68,31 +62,31 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData, setPostList }) => {
       },
     };
 
-    postDataApi("/wall/posts", infoViewActionsContext, {
+    postDataApi('/wall/posts', infoViewActionsContext, {
       post,
     })
-      .then((data) => {
+      .then(data => {
         setPostList(data);
 
-        infoViewActionsContext.showMessage("Post Created Successfully!");
+        infoViewActionsContext.showMessage('Post Created Successfully!');
       })
-      .catch((error) => {
+      .catch(error => {
         infoViewActionsContext.fetchError(error.message);
       });
     setAttachments([]);
-    setMessage("");
+    setMessage('');
   };
 
   const { messages } = useIntl();
 
   return (
-    <StyledCreatePostCard title={messages["wall.createPost"]}>
+    <StyledCreatePostCard title={messages['wall.createPost']}>
       <StyledCreatePostMain>
         <Avatar size={40} src={wallData.profilePic} alt={wallData.name} />
         <StyledCreatePostMainContent>
           <StyledCreatePostInput
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={e => setMessage(e.target.value)}
             placeholder="What's in your mind?"
             suffix={
               <StyledCreatePostAction>

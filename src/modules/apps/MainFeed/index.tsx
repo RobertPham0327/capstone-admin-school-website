@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import AppsContainer from "@crema/components/AppsContainer";
-import { useIntl } from "react-intl";
-import AppPageMeta from "@crema/components/AppPageMeta";
+import React, { useEffect } from 'react';
+import AppsContainer from '@crema/components/AppsContainer';
+import { useIntl } from 'react-intl';
+import AppPageMeta from '@crema/components/AppPageMeta';
 import {
   StyledAppRowContainer,
   StyledWallLeftSidebar,
   StyledWallMainContent,
   StyledWallRightSidebar,
   StyledWallScrollBar,
-} from "./index.styled";
-import { useAppSelector, useAppDispatch } from "../../../toolkit/hooks";
-import { onGetWallData } from "../../../toolkit/actions";
+} from './index.styled';
+import { useAppSelector, useAppDispatch } from '../../../toolkit/hooks';
+import { onGetWallData } from '../../../toolkit/actions';
 import {
   About,
   FriendRequests,
@@ -22,10 +22,10 @@ import {
   Stories,
   WhatsHappen,
   WhoToFollow,
-} from "@crema/modules/apps/Wall";
-import CreatePost from "./CreatePost";
-import PostsList from "./PostsList";
-import { isEmptyObject } from "@crema/helpers/ApiHelper";
+} from '@crema/modules/apps/Wall';
+import CreatePost from './CreatePost';
+import PostsList from './PostsList';
+import { isEmptyObject } from '@crema/helpers/ApiHelper';
 
 const MainFeed = () => {
   const dispatch = useAppDispatch();
@@ -39,15 +39,15 @@ const MainFeed = () => {
 
   return (
     <AppsContainer
-      title={messages["sidebar.apps.mainFeed"] as string}
-      cardStyle={{ backgroundColor: "transparent", boxShadow: "none" }}
+      title={messages['sidebar.apps.mainFeed'] as string}
+      cardStyle={{ backgroundColor: 'transparent', boxShadow: 'none' }}
       fullView
     >
       <AppPageMeta title="Main Feed" />
       {!isEmptyObject(wallData) && (
         <StyledAppRowContainer
           style={{
-            height: "calc(100% - 32px)",
+            height: 'calc(100% - 32px)',
             padding: 8,
           }}
         >
@@ -63,7 +63,7 @@ const MainFeed = () => {
             </StyledWallScrollBar>
           </StyledWallLeftSidebar>
           <StyledWallMainContent xs={24} md={12} xl={12} xxl={12}>
-            <StyledWallScrollBar style={{ height: "100%" }}>
+            <StyledWallScrollBar style={{ height: '100%' }}>
               <div>
                 <CreatePost wallData={wallData} />
                 <PostsList wallData={wallData} />
@@ -71,7 +71,7 @@ const MainFeed = () => {
             </StyledWallScrollBar>
           </StyledWallMainContent>
           <StyledWallRightSidebar xs={24} md={6} xl={6} xxl={6}>
-            <StyledWallScrollBar style={{ height: "100%" }}>
+            <StyledWallScrollBar style={{ height: '100%' }}>
               <div>
                 <Stories stories={wallData?.stories} />
                 <WhatsHappen whatsHappen={wallData?.whatsHappen} />
