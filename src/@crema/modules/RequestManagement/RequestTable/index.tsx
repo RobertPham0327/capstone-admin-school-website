@@ -1,15 +1,16 @@
 import React from "react";
-import OrderActions from "./RequestActions";
+import RequestActions from "./RequestActions";
 import { StyledOrderId, StyledOrderTable } from "../index.styled";
 import type { ColumnsType } from "antd/es/table";
 import type { RecentOrdersType } from "@crema/types/models/ecommerce/EcommerceApp";
+import type { Request } from "@crema/types/models/apps/Request";
 
 const getPaymentStatusColor = (status: string) => {
   switch (status) {
-    case "Pending": {
+    case "pending": {
       return "#E2A72E";
     }
-    case "Approved": {
+    case "approved": {
       return "#43C888";
     }
     default: {
@@ -25,14 +26,19 @@ const columns: ColumnsType<Request> = [
     render: (id) => <StyledOrderId>{id}</StyledOrderId>,
   },
   {
-    title: "Parent ID",
-    dataIndex: "parent_id",
-    key: "parent_id",
+    title: "Student ID",
+    dataIndex: "student_id",
+    key: "student_id",
   },
   {
     title: "Date",
-    dataIndex: "date",
-    key: "date",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (created_at: Date) => (
+      <span>
+        {new Date(created_at).toLocaleString()}
+      </span>
+    )
   },
   {
     title: "Status",
@@ -56,7 +62,7 @@ const columns: ColumnsType<Request> = [
     key: "actions",
     className: "order-table-action",
     fixed: "right",
-    render: () => <OrderActions />,
+    render: (_, request) => <RequestActions request={request} />,
   },
 ];
 

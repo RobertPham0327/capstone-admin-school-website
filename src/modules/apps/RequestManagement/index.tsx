@@ -18,7 +18,8 @@ import {
 import { useAppSelector, useAppDispatch } from "../../../toolkit/hooks";
 import { getRecentOrders } from "../../../toolkit/actions";
 import { RequestTable } from "@crema/modules/RequestManagement/index";
-import mock from "./mock.json"
+import { getAllRequests } from "@crema/services/api/requests";
+import type { Request } from "@crema/types/models/apps/Request";
 
 const RequestManagement = () => {
   const { messages } = useIntl();
@@ -39,9 +40,19 @@ const RequestManagement = () => {
   };
 
   useEffect(() => {
-    setRequests(mock as unknown as Request[]);
-    console.log(requests);
-  })
+    const fetchRequests = async () => {
+      try {
+        const fetchedRequests = await getAllRequests();
+        setRequests(fetchedRequests);
+        console.log(fetchedRequests);
+      } catch (error) {
+        console.error('Error fetching requests:', error);
+      }
+    };
+
+    fetchRequests();
+  }, []);
+
 
 
   useEffect(() => {
