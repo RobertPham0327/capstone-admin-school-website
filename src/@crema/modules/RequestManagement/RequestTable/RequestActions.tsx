@@ -58,12 +58,16 @@ const RequestActions = ({ request }: { request: Request }) => {
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key="reject" danger onClick={handleReject}>
-            Reject
-          </Button>,
-          <Button key="approve" type="primary" onClick={handleApprove}>
-            Approve
-          </Button>,
+          request.status === 'pending' && (
+            <>
+              <Button key="reject" danger onClick={handleReject}>
+                Reject
+              </Button>
+              <Button key="approve" type="primary" onClick={handleApprove}>
+                Approve
+              </Button>
+            </>
+          ),
           <Button key="close" onClick={handleCancel}>
             Close
           </Button>,

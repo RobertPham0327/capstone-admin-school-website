@@ -26,6 +26,11 @@ const columns: ColumnsType<Request> = [
     render: (id) => <StyledOrderId>{id}</StyledOrderId>,
   },
   {
+    title: "Type",
+    dataIndex: "request_type",
+    key: "request_type"
+  },
+  {
     title: "Student ID",
     dataIndex: "student_id",
     key: "student_id",
@@ -52,7 +57,7 @@ const columns: ColumnsType<Request> = [
           backgroundColor: getPaymentStatusColor(status) + "44",
         }}
       >
-        {status}
+        {status.toUpperCase()}
       </span>
     ),
   },
