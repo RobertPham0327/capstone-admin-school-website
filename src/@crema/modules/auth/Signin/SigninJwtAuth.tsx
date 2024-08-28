@@ -12,7 +12,6 @@ import {
   StyledSignContent,
   StyledSignForm,
   StyledSignLink,
-  StyledSignLinkTag,
   StyledSignTextGrey,
 } from './index.styled';
 
