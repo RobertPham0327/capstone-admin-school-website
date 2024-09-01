@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledStudentInfor, StyledTitle } from './index.styled'
 import AppRowContainer from '@crema/components/AppRowContainer'
-import { Button, Col, Descriptions, Form, Input, Modal, Select, Space } from 'antd'
+import { Button, Col, Descriptions, Form, Input, message, Modal, Select, Space, Upload } from 'antd'
 import AppCard from '@crema/components/AppCard'
-import { ClassStudentDataType } from '@crema/types/models/apps/ClassManagement'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks'
-import { getStudentData } from '@/toolkit/actions/ClassManagement'
+import { deleteStudentData, getStudentData, updateStudentData } from '@/toolkit/actions/ClassManagement'
 import AppIconButton from '@/@crema/components/AppIconButton'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import { UploadOutlined } from '@ant-design/icons'
 
 const { Option } = Select;
+
+const confirm = Modal.confirm;
 
 const formItemLayout = {
   labelCol: {
@@ -51,26 +53,65 @@ const StudentDetail = () => {
   console.log('studentId', studentId);
   const dispatch = useAppDispatch();
   const { currentStudent } = useAppSelector(({ classManagement }) => classManagement);
+
   useEffect(() => {
-    dispatch(getStudentData(classId as unknown as number, studentId as unknown as number));
+    dispatch(getStudentData(studentId as unknown as number, classId as unknown as number));
   }, [studentId]);
 
   const [updateStudentModalVisible, setUpdateStudentModalVisible] = useState(false);
+
+  const onUpdateStudentValuesChanged = (values: any) => {
+    console.log(values);
+  }
+
+  const isValidUpdateStudentForm = (values: any) => {
+    if (!values.studentName || !values.parentName || !values.parentPhone) {
+      return false;
+    }
+    return true;
+  }
+
+  const onUpdateStudentSubmit = (values: any) => {
+    console.log(values);
+
+    if (!isValidUpdateStudentForm(values)) {
+      return
+    }
+    dispatch(updateStudentData(Number(studentId), Number(classId), values));
+    setUpdateStudentModalVisible(false);
+  }
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this student?',
+      content: '',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        dispatch(deleteStudentData(Number(studentId)));
+        message.success('Student deleted successfully');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
 
   return (
     <>
       <Space>
         <StyledTitle>Student Detail</StyledTitle>
         <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateStudentModalVisible(true) }} />
-        <AppIconButton icon={<AiOutlineDelete />} onClick={() => { }} />
+        <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
       </Space>
       <AppRowContainer>
         <Col xs={24} lg={24}>
           <AppCard title={
             <StyledContainer>
-              <StyledAvatar src={currentStudent?.avatarUrl || "https://www.spencerclarkegroup.co.uk/uploads/5005001.png"} />
+              <StyledAvatar src={currentStudent?.avatar_url || "https://www.spencerclarkegroup.co.uk/uploads/5005001.png"} />
               <StyledStudentInfor>
-                <h3>{currentStudent?.name}</h3>
+                <h3>{currentStudent?.student_name}</h3>
                 <p>Student</p>
               </StyledStudentInfor>
             </StyledContainer>
@@ -78,12 +119,12 @@ const StudentDetail = () => {
             style={{ padding: "10px" }}
           >
             <Descriptions title='Student Information'>
-              <Descriptions.Item label='Birthday'>{currentStudent?.dateOfBirth}</Descriptions.Item>
-              <Descriptions.Item label='Gender'>{currentStudent?.gender}</Descriptions.Item>
+              <Descriptions.Item label='Birthday'>{currentStudent?.date_of_birth || 'Unknown'}</Descriptions.Item>
+              <Descriptions.Item label='Gender'>{currentStudent?.gender || 'Unknown'}</Descriptions.Item>
               <Descriptions.Item label='Class'>
-                {currentStudent?.className}
+                {currentStudent?.class_name || 'Unknown'}
               </Descriptions.Item>
-              <Descriptions.Item label='School'>{currentStudent?.schoolName}</Descriptions.Item>
+              <Descriptions.Item label='School'>{currentStudent?.school_name || 'Unknown'}</Descriptions.Item>
             </Descriptions>
 
           </AppCard>
@@ -91,9 +132,9 @@ const StudentDetail = () => {
         <Col xs={24} lg={24}>
           <AppCard title='Parent Information' style={{ padding: "10px" }}>
             <Descriptions>
-              <Descriptions.Item label='Name'>{currentStudent?.parentName}</Descriptions.Item>
+              <Descriptions.Item label='Name'>{currentStudent?.parent_name || 'Unknown'}</Descriptions.Item>
               <Descriptions.Item label='Phone'>
-                {currentStudent?.parentPhone}
+                {currentStudent?.parent_phone || 'Unknown'}
               </Descriptions.Item>
             </Descriptions>
             {/* <Descriptions title='Parent 1'>
@@ -138,25 +179,45 @@ const StudentDetail = () => {
         onCancel={() => { setUpdateStudentModalVisible(false) }}
         footer={false}
       >
-        <Form {...formItemLayout} onValuesChange={(values) => console.log(values)} onFinish={(values) => { console.log(values); setUpdateStudentModalVisible(false) }}>
+        <Form
+          initialValues={
+            {
+              studentName: currentStudent?.student_name,
+              parentName: currentStudent?.parent_name,
+              parentPhone: currentStudent?.parent_phone
+            }
+          }
+          {...formItemLayout}
+          onValuesChange={onUpdateStudentValuesChanged}
+          onFinish={onUpdateStudentSubmit}
+        >
           <Form.Item
             label="Student name"
-            name="name"
-            rules={[{ required: true, message: 'Please input a student name!' }]}>
+            name="studentName"
+          // rules={[{ required: true, message: 'Please input a student name!' }]}
+          >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Gender"
-            name="gender"
-            rules={[{ required: true, message: 'Please select a gender!' }]}>
-            <Select
-              defaultValue='male'
-              style={{ width: "100%" }}
-              onChange={() => { }}>
-              <Option value='male'>Male</Option>
-              <Option value='female'>Female</Option>
-            </Select>
+            label="Parent name"
+            name="parentName"
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Parent phone"
+            name="parentPhone">
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Avatar"
+            name="avatar">
+            <Upload maxCount={1}>
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
+            </Upload>
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>

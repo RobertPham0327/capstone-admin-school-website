@@ -9,6 +9,12 @@ import { ClassDataType } from '@crema/types/models/apps/ClassManagement';
 
 const getColumns = (router: NextRouter): ColumnsType<any> => [
   {
+    title: 'No.',
+    dataIndex: 'index',
+    align: 'center',
+    key: 'index',
+  },
+  {
     title: 'Class ID',
     dataIndex: 'id',
     align: 'center',
@@ -18,7 +24,7 @@ const getColumns = (router: NextRouter): ColumnsType<any> => [
         onClick={() => router.push(`/apps/class-management/class/${record.id}`)}
         style={{ display: 'flex', alignItems: 'center' }}
       >
-        {ellipsisLines(`${record.id}`)}
+        {ellipsisLines(`#${record.id}`)}
       </Typography.Link>
     ),
   },
@@ -42,17 +48,18 @@ const getColumns = (router: NextRouter): ColumnsType<any> => [
       </Typography.Link>
     ),
   },
-  // {
-  //   title: 'School',
-  //   dataIndex: 'school_id',
-  //   align: 'center',
-  //   key: 'school_id',
-  //   render: (id, record) => (
-  //     <div>
-  //       {record?.school?.name}
-  //     </div>
-  //   ),
-  // },
+  {
+    title: 'Classroom',
+    dataIndex: 'class_room',
+    align: 'center',
+    key: 'class_room',
+  },
+  {
+    title: 'School year',
+    dataIndex: 'school_year',
+    align: 'center',
+    key: 'school_year',
+  },
   // {
   //   title: 'Created Date',
   //   dataIndex: 'created_at',

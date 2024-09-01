@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { momentLocalizer, stringOrDate } from 'react-big-calendar';
 import moment from 'moment';
 import { StyledCalendar } from './Calendar.style';
@@ -10,8 +10,8 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
 import { TodoObjType } from '@crema/types/models/apps/Todo';
 import { useRouter } from 'next/router';
-import { Button, Col, DatePicker, Descriptions, Form, Input, Modal, Space, Upload } from 'antd';
-import { getCurrentMonthDate } from '@crema/helpers/DateHelper';
+import { Button, Col, DatePicker, Descriptions, Form, Input, message, Modal, Space, Upload } from 'antd';
+import { getCurrentMonthDate, getIOStringDate } from '@crema/helpers/DateHelper';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
 import { StyledPlusOutlined, StyledTitle } from './index.styled';
 import { Calendar } from 'react-big-calendar';
@@ -19,6 +19,12 @@ import { UploadOutlined } from '@ant-design/icons';
 import AppIconButton from '@/@crema/components/AppIconButton';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import dayjs from 'dayjs';
+import { sampleClassScheduleList } from '../mockData';
+import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
+import { addClassScheduleData, deleteClassScheduleData, getAllClassSchedulesData, updateClassScheduleData } from '@/toolkit/actions/ClassManagement';
+import { typeOf } from 'react-is';
+import { get } from 'lodash';
+import { on } from 'events';
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
 
@@ -30,7 +36,7 @@ const formItemLayout = {
       span: 24,
     },
     sm: {
-      span: 8,
+      span: 6,
     },
   },
   wrapperCol: {
@@ -51,10 +57,12 @@ const tailFormItemLayout = {
     },
     sm: {
       span: 16,
-      offset: 8,
+      offset: 6,
     },
   },
 };
+
+const confirm = Modal.confirm;
 
 const ClassSchedule = () => {
   const [isAddEventOpen, setAddEventOpen] = useState(false);
@@ -86,6 +94,9 @@ const ClassSchedule = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  const [updateEventForm] = Form.useForm();
+  const [newEventForm] = Form.useForm();
+
   const onSelectDate = ({ start }: { start: any }) => {
     console.log('Selected: ', start);
     setSelectedDate(start);
@@ -95,7 +106,7 @@ const ClassSchedule = () => {
   const onOpenAddTask = (data: any) => {
     if (data) {
       setSelectedEvent(data);
-      onViewTaskDetail(data);
+      onViewEventDetail(data);
     }
     // else {
     //   if (selectedDate) {
@@ -106,11 +117,37 @@ const ClassSchedule = () => {
     // }
   };
 
-  const onUpdateTask = (task: any) => { }
+  // const onUpdateTask = (task: any) => { }
 
-  const onViewTaskDetail = (event: any) => {
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this event?',
+      content: '',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        dispatch(deleteClassScheduleData(selectedEvent.id));
+        message.success('Event deleted successfully')
+        setUpdateEventOpen(false);
+        setViewEventOpen(false);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+
+  const onViewEventDetail = (event: any) => {
+    console.log('View event detail:', event);
+    updateEventForm.setFieldsValue({
+      title: event?.title,
+      start: dayjs(event?.start, 'YYYY-MM-DD HH:mm:ss'),
+      end: dayjs(event?.end, 'YYYY-MM-DD HH:mm:ss'),
+      teacher: event?.teacher_name,
+      location: event?.location_name,
+    })
     setViewEventOpen(true);
-    // router.push(`/apps/class-mangement/class-schedule/${classId}/event/${event.id}`);
   };
 
   const onSetFilterText = () => { }
@@ -129,19 +166,20 @@ const ClassSchedule = () => {
   //   console.log('resizeEvent: ', event, start, end);
   // };
 
-  const moveEvent = ({
-    event,
-    start,
-    end,
-    isAllDay: droppedOnAllDaySlot,
-  }: {
-    event: object;
-    start: stringOrDate;
-    end: stringOrDate;
-    isAllDay: boolean;
-  }) => {
-    onUpdateTask({ ...event, startDate: start, endDate: end });
-  };
+  // const moveEvent = ({
+  //   event,
+  //   start,
+  //   end,
+  //   isAllDay: droppedOnAllDaySlot,
+  // }: {
+  //   event: object;
+  //   start: stringOrDate;
+  //   end: stringOrDate;
+  //   isAllDay: boolean;
+  // }) => {
+  //   onUpdateTask({ ...event, startDate: start, endDate: end });
+  //   message.success('Event updated successfully');
+  // };
 
   const [isUpdateEventOpen, setUpdateEventOpen] = useState(false);
 
@@ -149,36 +187,79 @@ const ClassSchedule = () => {
     setUpdateEventOpen(true);
   }
 
-  const getEvents = () => {
-    if (eventList?.length > 0)
-      return eventList.map(event => {
-        return {
-          ...event,
-          title: event.title,
-          start: event.startDate,
-          end: event.endDate,
-        };
-      });
-    return [];
-  };
+  const onAddEventFormChange = (changedValues: any, allValues: any) => {
+    console.log('allValues:', allValues);
+  }
 
-  // console.log('taskList', taskList, getEvents());
+  // const getEvents = () => {
+  //   if (eventList?.length > 0)
+  //     return eventList.map(event => {
+  //       return {
+  //         ...event,
+  //         title: event.title,
+  //         start: event.startDate,
+  //         end: event.endDate,
+  //       };
+  //     });
+  //   return [];
+  // };
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllClassSchedulesData(Number(classId)));
+  }, [dispatch]);
+
+  const { classScheduleList } = useAppSelector(state => state.classManagement);
+
+  const onAddNewEvent = (values: any) => {
+    const newSchedule = {
+      class_id: 1,
+      teacher_id: 2,
+      subject_id: 2,  // Assuming this corresponds to "Science"
+      location_id: 2,
+      start_time: getIOStringDate(values.start),
+      end_time: getIOStringDate(values.end),
+    }
+    console.log('New schedule:', newSchedule);
+    dispatch(addClassScheduleData(Number(classId), newSchedule));
+    setAddEventOpen(false);
+    message.success('Event added successfully');
+    newEventForm.resetFields();
+  }
+
+  const onUpdateEventFormChange = (changedValues: any, allValues: any) => {
+    console.log('allValues:', allValues);
+  }
+
+  const onUpdateEventSubmit = (values: any) => {
+    const newScheduleData = {
+      start_time: getIOStringDate(values.start),
+      end_time: getIOStringDate(values.end),
+    }
+    dispatch(updateClassScheduleData(selectedEvent.id, newScheduleData));
+    setUpdateEventOpen(false);
+    setViewEventOpen(false);
+    message.success('Event updated successfully');
+  }
+
 
   return (
     <>
       <StyledTitle>Class schedule</StyledTitle>
+
       <AppRowContainer>
         <Col xs={24} lg={24}>
-          <Button ghost type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setAddEventOpen(true)}>Add new schedule</Button>
-          <DragAndDropCalendar
+          <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setAddEventOpen(true)}>Add new schedule</Button>
+          <StyledCalendar
             localizer={localizer}
-            events={getEvents()}
+            events={classScheduleList}
             views={['month', 'agenda']}
             tooltipAccessor={undefined}
             showMultiDayTimes
             // resizable
             // onEventResize={resizeEvent}
-            onEventDrop={moveEvent}
+            // onEventDrop={moveEvent}
             onSelectEvent={onOpenAddTask}
             components={{
               toolbar: props => (
@@ -196,87 +277,142 @@ const ClassSchedule = () => {
         </Col>
       </AppRowContainer>
 
+      {/* New Event Modal */}
       <Modal
         open={isAddEventOpen}
         onOk={() => setAddEventOpen(false)}
         onCancel={() => setAddEventOpen(false)}
         footer={false}
-        title={"Add new schedule"}
+        title={"Create a new event"}
       >
-        <Form {...formItemLayout}>
+        <Form form={newEventForm} {...formItemLayout} onValuesChange={onAddEventFormChange} onFinish={onAddNewEvent}>
           <Form.Item
-            label="Event title"
+            label="Subject"
             name="title"
-            rules={[{ required: true, message: 'Please input event title!' }]}
+            rules={[{ required: true, message: 'Please input a subject name!' }]}
           >
             <Input />
           </Form.Item>
+
           <Form.Item
-            label="Start date"
-            name="startDate"
+            label="Teacher"
+            name="teacher"
+            rules={[{ required: true, message: 'Please input teacher name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Location"
+            name="location"
+            rules={[{ required: true, message: 'Please input location name!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Start time"
+            name="start"
             rules={[{ required: true, message: 'Please input start date!' }]}
           >
             <DatePicker showTime />
           </Form.Item>
+
           <Form.Item
-            label="End date"
-            name="endDate"
+            label="End time"
+            name="end"
             rules={[{ required: true, message: 'Please input end date!' }]}
           >
             <DatePicker showTime />
           </Form.Item>
+
           <Form.Item
             label="Image"
             name="image"
             rules={[{ required: false, message: 'Please upload an image!' }]}
           >
-            <Upload>
+            <Upload maxCount={1}>
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </Form.Item>
+
           <Form.Item {...tailFormItemLayout}>
             <Space>
               <Button type="primary" htmlType="submit">Submit</Button>
               <Button ghost type="primary" onClick={() => setAddEventOpen(false)}>Cancel</Button>
             </Space>
           </Form.Item>
+
         </Form>
       </Modal>
 
+      {/* Event Detail Modal */}
       <Modal
         open={isViewEventOpen}
         onOk={() => setViewEventOpen(false)}
-        onCancel={() => {setViewEventOpen(false); setUpdateEventOpen(false)}}
+        onCancel={() => { setViewEventOpen(false); setUpdateEventOpen(false) }}
         title={
           <Space>
             <span>Event Detail</span>
             <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateEventOpen(true) }} />
-            <AppIconButton icon={<AiOutlineDelete />} onClick={() => { }} />
+            {isUpdateEventOpen && <AppIconButton icon={<AiOutlineDelete />} onClick={() => showDeleteConfirm()} />}
           </Space>
         }
         footer={false}
       >
-        <Form {...formItemLayout}>
+        <Form
+          {...formItemLayout}
+          form={updateEventForm}
+          // initialValues={
+          //   {
+          //     title: selectedEvent?.title,
+          //     start: dayjs(selectedEvent?.start, 'YYYY-MM-DD HH:mm:ss'),
+          //     end: dayjs(selectedEvent?.end, 'YYYY-MM-DD HH:mm:ss'),
+          //     teacher: selectedEvent?.teacher_name,
+          //     location: selectedEvent?.location_name,
+          //   }
+          // }
+          disabled={!isUpdateEventOpen}
+          onValuesChange={onUpdateEventFormChange}
+          onFinish={onUpdateEventSubmit}
+        >
           <Form.Item
-            label="Event title"
+            label="Subject"
             name="title"
-            rules={[{ required: true, message: 'Please input event title!' }]}
+          // rules={[{ required: true, message: 'Please input event title!' }]}
           >
-            <Input bordered={isUpdateEventOpen} readOnly={!isUpdateEventOpen} defaultValue={selectedEvent?.title} />
+            <Input value={selectedEvent?.title} bordered={isUpdateEventOpen} />
+          </Form.Item>
+
+          <Form.Item
+            label="Teacher"
+            name="teacher"
+          // rules={[{ required: true, message: 'Please input event title!' }]}
+          >
+            <Input bordered={isUpdateEventOpen} />
+          </Form.Item>
+
+          <Form.Item
+            label="Location"
+            name="location"
+          // rules={[{ required: true, message: 'Please input event title!' }]}
+          >
+            <Input bordered={isUpdateEventOpen} />
+          </Form.Item>
+
+          <Form.Item
+            label="Start time"
+            name="start"
+          // rules={[{ required: true, message: 'Please input start date!' }]}
+          >
+            <DatePicker bordered={isUpdateEventOpen} showTime />
           </Form.Item>
           <Form.Item
-            label="Start date"
-            name="startDate"
-            rules={[{ required: true, message: 'Please input start date!' }]}
+            label="End time"
+            name="end"
+          // rules={[{ required: true, message: 'Please input end date!' }]}
           >
-            <DatePicker defaultValue={dayjs('2024-08-22 22:00:00', 'YYYY-MM-DD HH:mm:ss')} disabled={!isUpdateEventOpen} bordered={isUpdateEventOpen} showTime />
-          </Form.Item>
-          <Form.Item
-            label="End date"
-            name="endDate"
-            rules={[{ required: true, message: 'Please input end date!' }]}
-          >
-            <DatePicker bordered={isUpdateEventOpen} defaultValue={dayjs('2024-08-22 22:00:00', 'YYYY-MM-DD HH:mm:ss')} disabled={!isUpdateEventOpen} showTime />
+            <DatePicker bordered={isUpdateEventOpen} showTime />
           </Form.Item>
 
           {/* <Form.Item
@@ -288,13 +424,18 @@ const ClassSchedule = () => {
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </Form.Item> */}
-          
+
           <Form.Item {...tailFormItemLayout}>
             <Space>
-              <Button type="primary" htmlType="submit">Save</Button>
-              <Button ghost type="primary" onClick={() => { setViewEventOpen(false); setUpdateEventOpen(false) }}>Cancel</Button>
+              {isUpdateEventOpen ? (<>
+                <Button type="primary" htmlType="submit">Save</Button>
+                <Button type="primary" ghost onClick={() => setUpdateEventOpen(false)}>Cancel</Button>
+              </>) : (
+                <Button disabled={false} type="primary" onClick={() => { setViewEventOpen(false); setUpdateEventOpen(false) }}>Close</Button>
+              )}
             </Space>
           </Form.Item>
+          {/* <Button ghost type="primary" onClick={() => { setViewEventOpen(false); setUpdateEventOpen(false) }}>Close</Button> */}
         </Form>
       </Modal>
     </>

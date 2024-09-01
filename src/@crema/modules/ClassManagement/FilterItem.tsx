@@ -8,19 +8,6 @@ import { FilterType } from '@crema/types/models/ecommerce/EcommerceApp';
 
 const { Option } = Select;
 
-const statusList = [
-  {
-    id: 1,
-    name: 'In Stock',
-    value: true,
-  },
-  {
-    id: 2,
-    name: 'Out of Stock',
-    value: false,
-  },
-];
-
 const teacherList = [
   {
     id: 1,
@@ -34,15 +21,15 @@ const teacherList = [
   },
 ];
 
-const schoolList = [
+const classList = [
   {
     id: 1,
-    name: 'School 1',
+    name: 'Class 1',
     value: true,
   },
   {
     id: 2,
-    name: 'School 2',
+    name: 'Class 2',
     value: false,
   },
 ];
@@ -54,30 +41,14 @@ type Props = {
 
 const Filter = ({ filterData, setFilterData }: Props) => {
   return (
-    <AppCard title="Filter Item">
+    <AppCard title="Filter">
       <StyledFormWrapper>
         <AppRowContainer>
-          <Col xs={24} md={8}>
-            <StyledTitleFilter>Status</StyledTitleFilter>
-            <Select
-              placeholder="status"
-              onChange={value => {
-                setFilterData(prev => ({
-                  ...prev,
-                  inStock: [value === 1],
-                }));
-              }}
-            >
-              {statusList.map(status => (
-                <Option key={status.id} value={status.id}>
-                  {status.name}
-                </Option>
-              ))}
-            </Select>
-          </Col>
+          
           <Col xs={24} lg={8} md={12}>
-            <StyledTitleFilter>Start Date</StyledTitleFilter>
+            <StyledTitleFilter>School year</StyledTitleFilter>
             <DatePicker
+              picker='year'
               style={{ width: '100%' }}
               defaultValue={filterData?.createdAt?.start as any}
               allowClear={false}
@@ -93,7 +64,7 @@ const Filter = ({ filterData, setFilterData }: Props) => {
               }}
             />
           </Col>
-          <Col xs={24} lg={8} md={12}>
+          {/* <Col xs={24} lg={8} md={12}>
             <StyledTitleFilter>End Date</StyledTitleFilter>
             <DatePicker
               style={{ width: '100%' }}
@@ -109,9 +80,9 @@ const Filter = ({ filterData, setFilterData }: Props) => {
                 }))
               }
             />
-          </Col>
+          </Col> */}
           <Col xs={24} lg={8} md={12}>
-            <StyledTitleFilter>Teachers</StyledTitleFilter>
+            <StyledTitleFilter>Teacher</StyledTitleFilter>
             <Select
               placeholder="teacher"
               onChange={value => {
@@ -129,9 +100,9 @@ const Filter = ({ filterData, setFilterData }: Props) => {
             </Select>
           </Col>
           <Col xs={24} lg={8} md={12}>
-            <StyledTitleFilter>Schools</StyledTitleFilter>
+            <StyledTitleFilter>Class</StyledTitleFilter>
             <Select
-              placeholder="school"
+              placeholder="class"
               onChange={value => {
                 setFilterData(prev => ({
                   ...prev,
@@ -139,7 +110,7 @@ const Filter = ({ filterData, setFilterData }: Props) => {
                 }));
               }}
             >
-              {schoolList.map(status => (
+              {classList.map(status => (
                 <Option key={status.id} value={status.id}>
                   {status.name}
                 </Option>

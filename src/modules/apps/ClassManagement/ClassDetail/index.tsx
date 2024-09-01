@@ -2,16 +2,21 @@ import AppCard from '@crema/components/AppCard'
 import AppRowContainer from '@crema/components/AppRowContainer'
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader'
 import StudentList from '@crema/modules/ClassManagement/StudentList'
-import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker } from 'antd'
+import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledPlusOutlined, StyledTeacherInfor, StyledTitle } from '../ClassDetail/index.styled'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks'
-import { addStudentData, getClassStudentList, updateClassData } from '@/toolkit/actions/ClassManagement'
+import { addStudentData, deleteClassData, getClassStudentList, updateClassData } from '@/toolkit/actions/ClassManagement'
 import AppIconButton from '@/@crema/components/AppIconButton'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+import dayjs from 'dayjs'
+
 
 const { Option } = Select;
+
+const confirm = Modal.confirm;
+
 
 const formItemLayout = {
   labelCol: {
@@ -53,11 +58,14 @@ const ClassDetail = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(getClassStudentList(classId as unknown as number));
-  }, [dispatch, classId]);
-
   const { currentStudentList, currentClass } = useAppSelector(({ classManagement }) => classManagement);
+
+  useEffect(() => {
+    dispatch(getClassStudentList(Number(classId)));
+  }, [dispatch, classId]);
+  
+  const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
+  const endSchoolYearStr = currentClass?.school_year?.split('-')[1];
 
   const onUpdateClassValuesChanged = (values: any) => {
     console.log(values);
@@ -65,14 +73,19 @@ const ClassDetail = () => {
 
   const onUpdateClassFormSubmit = (values: any) => {
     console.log(values);
-    let classData = {};
+    let classData:any = {};
     if (values.name) {
-      classData = { ...classData, name: values.name };
+      classData.name = values.name;
     }
     if (values.classroom) {
-      classData = {
-        ...classData, classRoom: values.classroom
-      };
+      classData.classRoom = values.classroom;
+    }
+    if (values.startSchoolYear && values.endSchoolYear) {
+      classData.schoolYear = `${values.startSchoolYear.format('YYYY')}-${values.endSchoolYear.format('YYYY')}`;
+    }
+    if (!classData) {
+      message.error('Please input class information')
+      return;
     }
     dispatch(updateClassData(classId as unknown as number, classData));
     setUpdateClassModalVisible(false);
@@ -96,15 +109,33 @@ const ClassDetail = () => {
     setNewStudentModalVisible(false);
   }
 
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this class?',
+      content: '',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        dispatch(deleteClassData(classId as unknown as number));
+        message.success('Class deleted successfully');
+        router.push('/apps/class-management/');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+
   return (
     <>
       <Space>
         <StyledTitle>Class details</StyledTitle>
         <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateClassModalVisible(true) }} />
-        <AppIconButton icon={<AiOutlineDelete />} onClick={() => { }} />
+        <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
       </Space>
       <AppRowContainer>
-        {/* <Col xs={24} lg={24}>
+        <Col xs={24} lg={24}>
           <AppCard>
             <StyledContainer>
               <StyledAvatar src="https://www.spencerclarkegroup.co.uk/uploads/5005001.png" />
@@ -118,11 +149,12 @@ const ClassDetail = () => {
         <Col xs={24} lg={24}>
           <AppCard title={'Class information'}>
             <Descriptions>
-              <Descriptions.Item label='Class name'>{currentClass?.name || "Unknown"}</Descriptions.Item>
-              <Descriptions.Item label='Classroom'>{currentClass?.classroom || 'Unknown'}</Descriptions.Item>
+              <Descriptions.Item label='Class name'>{currentClass?.class_name || "Unknown"}</Descriptions.Item>
+              <Descriptions.Item label='Classroom'>{currentClass?.class_room || 'Unknown'}</Descriptions.Item>
+              <Descriptions.Item label='School year'>{currentClass?.school_year || 'Unknown'}</Descriptions.Item>
             </Descriptions>
           </AppCard>
-        </Col> */}
+        </Col>
         <Col xs={24} lg={24}>
           <Space wrap>
             <Button onClick={() => router.push(`/apps/class-management/class-schedule/${classId}`)} type="primary">Class schedule</Button>
@@ -138,7 +170,7 @@ const ClassDetail = () => {
           </AppCard>
         </Col>
       </AppRowContainer>
-
+      {/* Add new student modal */}
       <Modal
         title="Add new student"
         open={newStudentModalVisible}
@@ -166,9 +198,10 @@ const ClassDetail = () => {
             name="gender"
             rules={[{ required: true, message: 'Please select a gender!' }]}>
             <Select
-              defaultValue='male'
+              defaultValue='Male'
               style={{ width: "100%" }}
-              onChange={() => { }}>
+              onChange={() => { }}
+            >
               <Option value='Male'>Male</Option>
               <Option value='Female'>Female</Option>
             </Select>
@@ -201,6 +234,7 @@ const ClassDetail = () => {
         </Form>
       </Modal>
 
+      {/* Update class modal */}
       <Modal
         open={updateClassModalVisible}
         onOk={() => setUpdateClassModalVisible(false)}
@@ -213,7 +247,7 @@ const ClassDetail = () => {
           {...formItemLayout}
           onValuesChange={onUpdateClassValuesChanged}
           onFinish={onUpdateClassFormSubmit}
-          initialValues={{ name: "", classroom: "" }}
+          initialValues={{ name: currentClass?.class_name, classroom: currentClass?.class_room, startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'), endSchoolYear: dayjs(endSchoolYearStr, 'YYYY') }}
         >
           <Form.Item
             label="Class name"
@@ -229,6 +263,16 @@ const ClassDetail = () => {
           // rules={[{ required: true, message: 'Please input classroom!' }]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item
+            label='Start year'
+            name="startSchoolYear">
+            <DatePicker picker='year' />
+          </Form.Item>
+
+          <Form.Item label='End year' name="endSchoolYear">
+            <DatePicker picker='year' />
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>

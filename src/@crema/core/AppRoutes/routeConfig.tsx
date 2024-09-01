@@ -1,9 +1,10 @@
 import React from 'react';
-import { PiStudentFill } from "react-icons/pi";
+import { PiChalkboardTeacher, PiStudentFill, PiUser } from "react-icons/pi";
 import { MdOutlineFeed } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
 import { BsBell } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
+import { GoProjectRoadmap } from "react-icons/go";
 
 const routesConfig = [
   {
@@ -25,8 +26,26 @@ const routesConfig = [
         title: 'Class Management',
         messageId: 'sidebar.classManagement',
         type: 'collapse',
-        icon: <PiStudentFill />,
-        path: '/apps/class-management',
+        icon: <PiChalkboardTeacher />,
+        // path: '/apps/class-management',
+        children: [
+          {
+            id: 'class_listing',
+            title: 'Class',
+            messageId: 'sidebar.classManagement.classes',
+            type: 'collapse',
+            icon: <GoProjectRoadmap />,
+            path: '/apps/class-management/class',
+          },
+          {
+            id: 'teacher_listing',
+            title: 'Teacher',
+            messageId: 'sidebar.classManagement.teachers',
+            type: 'collapse',
+            icon: <PiStudentFill/>,
+            path: '/apps/class-management/teacher',
+          },
+        ]
       },
       {
         id: 'request_management',

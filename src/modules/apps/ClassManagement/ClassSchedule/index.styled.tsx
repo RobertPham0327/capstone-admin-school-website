@@ -1,9 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Calendar } from 'react-big-calendar';
 import styled from "styled-components";
 
 export const StyledPlusOutlined = styled(PlusOutlined)`
-  color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.primary.primary};
   font-size: 16px;
 `;
 

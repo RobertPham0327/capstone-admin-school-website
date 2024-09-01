@@ -1,0 +1,188 @@
+import AppCard from '@/@crema/components/AppCard';
+import AppRowContainer from '@/@crema/components/AppRowContainer';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Form, Input, Modal, Upload, message } from 'antd';
+import React, { useCallback, useState } from 'react'
+import Gallery from 'react-photo-gallery';
+import { InboxOutlined } from '@ant-design/icons';
+import Carousel, { ModalGateway, Modal as ImageModal } from "react-images";
+import { title } from 'process';
+
+const { Dragger } = Upload;
+
+const formItemLayout = {
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 4,
+        },
+    },
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 24,
+        },
+    },
+};
+
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 24,
+            offset: 4,
+        },
+    },
+};
+
+const MediaList = () => {
+
+    // const props = {
+    //     name: 'file',
+    //     multiple: true,
+    //     // action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+    //     onChange(info: any) {
+    //         const { status } = info.file;
+    //         if (status !== 'uploading') {
+    //             console.log(info.file, info.fileList);
+    //         }
+    //         if (status === 'done') {
+    //             message.success(`${info.file.name} file uploaded successfully.`);
+    //         } else if (status === 'error') {
+    //             message.error(`${info.file.name} file upload failed.`);
+    //         }
+    //     },
+    //     onDrop(e: any) {
+    //         console.log('Dropped files', e.dataTransfer.files);
+    //     },
+    // };
+
+    const photos = [
+        {
+            src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
+            width: 4,
+            height: 3
+        },
+        {
+            src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
+            width: 4,
+            height: 3
+        },
+        {
+            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+            width: 4,
+            height: 3
+        },
+        {
+            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+            width: 4,
+            height: 3
+        },
+    ];
+
+    const [uploadModalVisible, setUploadModalVisible] = useState(false);
+
+    const onUploadFinish = (values: any) => {
+        console.log(values);
+        message.success('Media uploaded successfully');
+        setUploadModalVisible(false);
+    }
+
+    const onUploadFormChange = (changedValues: any, allValues: any) => {
+        console.log(allValues);
+    }
+
+    const [currentImage, setCurrentImage] = useState(0);
+    const [viewerIsOpen, setViewerIsOpen] = useState(false);
+
+    const openLightBox = useCallback((event, { index }) => {
+        setCurrentImage(index);
+        setViewerIsOpen(true);
+    }, []);
+
+    const closeLightbox = () => {
+        setCurrentImage(0);
+        setViewerIsOpen(false);
+    };
+
+    return (
+        <>
+            <AppRowContainer>
+                <Col xs={24} lg={24}>
+                    <Button type="primary" icon={<PlusOutlined style={{ marginRight: 5 }} />} onClick={() => setUploadModalVisible(true)}>Upload</Button>
+                </Col>
+                <Col xs={24} lg={24}>
+                    <AppCard title="Media Library">
+                        <Gallery photos={photos} onClick={openLightBox} />
+                    </AppCard>
+                </Col>
+
+                <Modal
+                    open={uploadModalVisible}
+                    title="Upload Media"
+                    onOk={() => setUploadModalVisible(false)}
+                    onCancel={() => setUploadModalVisible(false)}
+                    footer={false}
+                >
+                    <Form {...formItemLayout}
+                        initialValues={{
+                            title: '',
+                            image: null
+                        }}
+                        onFinish={onUploadFinish}
+                        onValuesChange={onUploadFormChange}
+                    >
+                        <Form.Item label="Title" name="title">
+                            <Input placeholder="Media title" />
+                        </Form.Item>
+                        <Form.Item label='Image' name='image'>
+                            <Dragger
+                                multiple={true}
+                            >
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                <p className="ant-upload-hint">
+                                    Support for a single or bulk upload. Strictly prohibited from uploading company data or other
+                                    banned files.
+                                </p>
+                            </Dragger>
+                        </Form.Item>
+                        <Form.Item {...tailFormItemLayout}>
+                            <Button type="primary" htmlType='submit'>Submit</Button>
+                        </Form.Item>
+                    </Form>
+
+                </Modal>
+
+                {/* @ts-ignore */}
+                <ModalGateway>
+                    {viewerIsOpen ? (
+                        <ImageModal onClose={closeLightbox}>
+                            <Carousel
+                                currentIndex={currentImage}
+                                views={photos.map((x: any) => ({
+                                    ...x,
+                                    source: x.src,
+                                    srcset: x.srcSet,
+                                    caption: x.title,
+                                }))}
+                            />
+                        </ImageModal>
+                    ) : null}
+                </ModalGateway>
+
+            </AppRowContainer>
+        </>
+    )
+}
+
+export default MediaList

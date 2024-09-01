@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { FilterItem, ClassList } from '@crema/modules/ClassManagement';
 import AppRowContainer from '@crema/components/AppRowContainer';
 import AppCard from '@crema/components/AppCard';
-import { Col, Space, Modal } from 'antd';
+import { Col, Space, Modal, DatePicker } from 'antd';
 import {
   StyledInputSearch,
   StyledOrderFooterPagination,
@@ -15,11 +15,9 @@ import {
   StyledPlusOutlined,
 } from './index.styled';
 import { useAppSelector, useAppDispatch } from '@toolkit/hooks';
-import { onGetEcommerceData } from '@toolkit/actions';
 import { Button, Form, Input, Select } from "antd";
 import { ClassDataType } from '@crema/types/models/apps/ClassManagement';
 import { createClassData, getClassList } from '@/toolkit/actions/ClassManagement';
-import { createClass } from '@/@crema/services/api/class';
 
 const { Option } = Select;
 
@@ -55,6 +53,7 @@ const tailFormItemLayout = {
   },
 };
 
+
 const ClassListing = () => {
   const { messages } = useIntl();
 
@@ -68,12 +67,9 @@ const ClassListing = () => {
 
   const [page, setPage] = useState(0);
 
-  // const ecommerceList = useAppSelector(({ ecommerce }) => ecommerce.ecommerceList);
-
   const onChange = (page: number) => {
     setPage(page);
   };
-
 
   const searchClass = (title: string) => {
     setFilterData({ ...filterData, title });
@@ -95,6 +91,7 @@ const ClassListing = () => {
       name: values.name,
       teacherId: Number(values.teacherId),
       classRoom: values.classroom,
+      schoolYear: values.startSchoolYear.format('YYYY') + '-' + values.endSchoolYear.format('YYYY'),
     }
     dispatch(createClassData(classData));
     setNewClassModalVisible(false);
@@ -107,7 +104,9 @@ const ClassListing = () => {
 
   return (
     <>
-      <StyledTitle>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle>
+      {/* <StyledTitle>{messages['sidebar.classManagementAdmin.classListing'] as string}</StyledTitle> */}
+      <StyledTitle>Class Management</StyledTitle>
+
       <AppRowContainer>
         <Col xs={24} lg={24}>
           <Space>
@@ -176,6 +175,20 @@ const ClassListing = () => {
               <Option value='2'>Robin Hood</Option>
               <Option value='3'>Optimus Prime</Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            label='Start year'
+            name="startSchoolYear"
+            rules={[{ required: true, message: 'Please select a start school year!' }]}
+          >
+            <DatePicker picker='year' />
+          </Form.Item>
+          <Form.Item
+            label='End year'
+            name="endSchoolYear"
+            rules={[{ required: true, message: 'Please select an end school year!' }]}
+          >
+            <DatePicker picker='year' />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Space>

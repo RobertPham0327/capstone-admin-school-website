@@ -1,23 +1,23 @@
 export type TeacherDataType = {
   id: number;
   name: string;
+  gender: string;
+  contact: string;
+  avatar_url?: string;
 };
+
+export type TeacherProfileDataType = {
+  id: number,
+  name: string,
+  contact: string,
+  school_name: string,
+  avatar_url?: string,
+  class_list?: any[]
+}
 
 export type SchoolDataType = {
   id: number;
   name: string;
-};
-
-export type DailyScheduleDataType = {
-  id: number;
-  class_id: number;
-  schedule: string;
-};
-
-export type EatingScheduleDataType = {
-  id: number;
-  class_id: number;
-  schedule: string;
 };
 
 export type ClassStudentDataType = {
@@ -29,26 +29,64 @@ export type ClassStudentDataType = {
   date_of_birth: string;
 };
 
-export type AbsenceDataType = {
-  id: number;
-  class_id: number;
-  student_id: number;
-  date: string;
-};
+export type StudentProfileDataType = {
+  id: number,
+  student_id: number,
+  student_name: string,
+  gender: string,
+  date_of_birth: string,
+  school_name: string,
+  class_name?: string,
+  school_year?: string,
+  parent_name: string,
+  parent_phone: string,
+  avatar_url?: string;
+}
 
 export type ClassDataType = {
   id: number;
   name: string;
   teacher_id: number;
-  teacher: TeacherDataType;
-  school_id: number;
-  school: SchoolDataType;
-  dailySchedules: DailyScheduleDataType[];
-  eatingSchedules: EatingScheduleDataType[];
-  classStudents: ClassStudentDataType[];
-  absences: AbsenceDataType[];
-  created_at: String;
-  updated_at: String;
+  teacher_name: string;
+  class_room: string;
+  school_year: string;
+};
+
+export type ClassProfileDataType = {
+  teacher_id: number;
+  teacher_name: string;
+  teacher_avatar?: string;
+  class_name: string;
+  class_room: string;
+  school_year: string;
+  studentList: ClassStudentDataType[];
+}
+
+export type ClassScheduleDataType = {
+  id: number;
+  start: string;
+  end: string;
+  title: string;
+  class_id: number;
+  class_name: string;
+  teacher_id: number;
+  teacher_name: string;
+  location_id: number;
+  location_name: string;
+  media?: string[];
+};
+
+export type EatingScheduleDataType = {
+  id: number;
+  start: string;
+  end: string;
+  title: string;
+  class_id: number;
+  location_id: number;
+  location_name: string;
+  menu: string[];
+  nutrition: string[];
+  media?: string[];
 };
 
 export type FilterDataType = {
@@ -59,212 +97,6 @@ export type FilterDataType = {
   page?: number | string;
 };
 
-export const sampleStudentList1: ClassStudentDataType[] = [
-  {
-    id: 1,
-    class_id: 1,
-    student_id: 1,
-    name: 'Student 1',
-    gender: 'female',
-    date_of_birth: '2021-01-01',
-  },
-  {
-    id: 2,
-    class_id: 1,
-    student_id: 2,
-    name: 'Student 2',
-    gender: 'male',
-    date_of_birth: '2021-01-01',
-  },
-];
-
-export const sampleStudentList2: ClassStudentDataType[] = [
-  {
-    id: 3,
-    class_id: 2,
-    student_id: 3,
-    name: 'Student 3',
-    gender: 'male',
-    date_of_birth: '2021-01-01',
-  },
-  {
-    id: 4,
-    class_id: 2,
-    student_id: 4,
-    name: 'Student 4',
-    gender: 'male',
-    date_of_birth: '2021-01-01',
-  },
-]
-
-export const sampleStudentList3: ClassStudentDataType[] = [
-  {
-    id: 5,
-    class_id: 3,
-    student_id: 3,
-    name: 'Student 5',
-    gender: 'male',
-    date_of_birth: '2021-01-01',
-  },
-  {
-    id: 6,
-    class_id: 3,
-    student_id: 6,
-    name: 'Student 6',
-    gender: 'male',
-    date_of_birth: '2021-01-01',
-  },
-]
-
-export const sampleTeacher1: TeacherDataType = {
-  id: 1,
-  name: 'Dumbledore',
-};
-
-export const sampleTeacher2: TeacherDataType = {
-  id: 2,
-  name: 'Robin Hood',
-};
-
-export const sampleTeacher3: TeacherDataType = {
-  id: 3,
-  name: 'Optimus Prime',
-};
-
-export const sampleClassList: ClassDataType[] = [
-  {
-    id: 1,
-    name: 'Magic Class',
-    teacher_id: 1,
-    teacher: sampleTeacher1,
-    school_id: 1,
-    school: {
-      id: 1,
-      name: 'School 1',
-    },
-    dailySchedules: [
-      {
-        id: 1,
-        class_id: 1,
-        schedule: '8:00 - 10:00',
-      },
-      {
-        id: 2,
-        class_id: 1,
-        schedule: '10:00 - 12:00',
-      },
-    ],
-    eatingSchedules: [
-      {
-        id: 1,
-        class_id: 1,
-        schedule: '12:00 - 13:00',
-      },
-    ],
-    classStudents: sampleStudentList1,
-    absences: [
-      {
-        id: 1,
-        class_id: 1,
-        student_id: 1,
-        date: '2021-01-01',
-      },
-    ],
-    created_at: "2024-08-21",
-    updated_at: "2024-08-21",
-  },
-  {
-    id: 2,
-    name: 'Thieves Guild',
-    teacher_id: 2,
-    teacher: sampleTeacher2,
-    school_id: 2,
-    school: {
-      id: 2,
-      name: 'School 2',
-    },
-    dailySchedules: [
-      {
-        id: 3,
-        class_id: 2,
-        schedule: '8:00 - 10:00',
-      },
-      {
-        id: 4,
-        class_id: 2,
-        schedule: '10:00 - 12:00',
-      },
-    ],
-    eatingSchedules: [
-      {
-        id: 2,
-        class_id: 2,
-        schedule: '12:00 - 13:00',
-      },
-    ],
-    classStudents: sampleStudentList2,
-    absences: [
-      {
-        id: 2,
-        class_id: 2,
-        student_id: 3,
-        date: '2021-01-01',
-      },
-    ],
-    created_at: "2024-08-21",
-    updated_at: "2024-08-21",
-  },
-  {
-    id: 3,
-    name: 'Autobots',
-    teacher_id: 2,
-    teacher: sampleTeacher3,
-    school_id: 2,
-    school: {
-      id: 2,
-      name: 'School 2',
-    },
-    dailySchedules: [
-      {
-        id: 3,
-        class_id: 2,
-        schedule: '8:00 - 10:00',
-      },
-      {
-        id: 4,
-        class_id: 2,
-        schedule: '10:00 - 12:00',
-      },
-    ],
-    eatingSchedules: [
-      {
-        id: 2,
-        class_id: 2,
-        schedule: '12:00 - 13:00',
-      },
-    ],
-    classStudents: sampleStudentList3,
-    absences: [
-      {
-        id: 2,
-        class_id: 2,
-        student_id: 3,
-        date: '2021-01-01',
-      },
-    ],
-    created_at: "2024-08-21",
-    updated_at: "2024-08-21",
-  }
-];
-
-export const sampleStudent: ClassStudentDataType = {
-  id: 1,
-  class_id: 1,
-  student_id: 1,
-  name: 'Student 1',
-  gender: 'male',
-  date_of_birth: '2021-01-01',
-};
 
 
 
