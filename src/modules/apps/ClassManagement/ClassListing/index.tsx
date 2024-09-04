@@ -17,7 +17,7 @@ import {
 import { useAppSelector, useAppDispatch } from '@toolkit/hooks';
 import { Button, Form, Input, Select } from "antd";
 import { ClassDataType } from '@crema/types/models/apps/ClassManagement';
-import { createClassData, getClassList } from '@/toolkit/actions/ClassManagement';
+import { createClassData, getAllTeacherData, getClassList } from '@/toolkit/actions/ClassManagement';
 
 const { Option } = Select;
 
@@ -77,12 +77,13 @@ const ClassListing = () => {
 
   const [newClassModalVisible, setNewClassModalVisible] = useState(false);
 
-  const { classList } = useAppSelector(({ classManagement }) => classManagement);
+  const { classList, teacherList } = useAppSelector(({ classManagement }) => classManagement);
 
   const loading = useAppSelector(({ common }) => common.loading);
 
   useEffect(() => {
     dispatch(getClassList());
+    dispatch(getAllTeacherData());
   }, [dispatch]);
 
   const onFormSubmit = (values: any) => {
@@ -143,6 +144,7 @@ const ClassListing = () => {
         </Col>
       </AppRowContainer>
 
+      {/* Add new class modal */}
       <Modal
         title="Add new class"
         open={newClassModalVisible}
@@ -152,28 +154,31 @@ const ClassListing = () => {
       >
         <Form {...formItemLayout} onValuesChange={onFormValuesChange} onFinish={onFormSubmit}>
           <Form.Item
-            label="Class name"
+            label="Name"
             name="name"
             rules={[{ required: true, message: 'Please input your class name!' }]}>
-            <Input />
+            <Input placeholder='Class name'/>
           </Form.Item>
           <Form.Item
-            label="Class room"
+            label="Location"
             name="classroom"
             rules={[{ required: true, message: 'Please input your class room!' }]}>
-            <Input />
+            <Input placeholder='Class room name'/>
           </Form.Item>
           <Form.Item
             label="Teacher"
             name="teacherId"
             rules={[{ required: true, message: 'Please select teacher!' }]}>
             <Select
-              defaultValue='1'
+              placeholder="Select a teacher"
               style={{ width: "100%" }}
               onChange={() => { }}>
-              <Option value='1'>Dumbledore</Option>
+                {teacherList.map((teacher: any) => (
+                  <Option key={teacher.id} value={teacher.id}>{teacher.name}</Option>
+                ))}
+              {/* <Option value='1'>Dumbledore</Option>
               <Option value='2'>Robin Hood</Option>
-              <Option value='3'>Optimus Prime</Option>
+              <Option value='3'>Optimus Prime</Option> */}
             </Select>
           </Form.Item>
           <Form.Item

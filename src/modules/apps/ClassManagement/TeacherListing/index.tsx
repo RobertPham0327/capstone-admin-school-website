@@ -103,7 +103,7 @@ const TeacherListing = () => {
 
       {/* Add new teacher modal */}
       <Modal
-        title="Add new student"
+        title="Add new teacher"
         open={newTeacherModalVisible}
         onOk={() => setNewTeacherModalVisible(false)}
         onCancel={() => setNewTeacherModalVisible(false)}
@@ -111,10 +111,10 @@ const TeacherListing = () => {
       >
         <Form {...formItemLayout} form={newTeacherForm} onValuesChange={onNewTeacherValuesChanged} onFinish={onNewTeacherFormSubmit}>
           <Form.Item
-            label="Teacher name"
+            label="Name"
             name="name"
             rules={[{ required: true, message: 'Please input teacher name!' }]}>
-            <Input />
+            <Input placeholder='Teacher name'/>
           </Form.Item>
 
           {/* <Form.Item
@@ -129,7 +129,7 @@ const TeacherListing = () => {
             name="gender"
             rules={[{ required: true, message: 'Please select a gender!' }]}>
             <Select
-              defaultValue='Male'
+              placeholder="Select gender"
               style={{ width: "100%" }}
               onChange={() => { }}
             >
@@ -149,7 +149,7 @@ const TeacherListing = () => {
             label="Phone"
             name="contact"
             rules={[{ required: true, message: 'Please input teacher phone!' }]}>
-            <Input />
+            <Input placeholder='Phone number'/>
           </Form.Item>
 
           <Form.Item

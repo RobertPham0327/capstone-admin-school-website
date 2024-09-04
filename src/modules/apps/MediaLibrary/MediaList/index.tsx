@@ -1,14 +1,18 @@
 import AppCard from '@/@crema/components/AppCard';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Upload, message } from 'antd';
-import React, { useCallback, useState } from 'react'
+import { Button, Col, Form, Input, Modal, Select, Upload, message } from 'antd';
+import React, { useCallback, useEffect, useState } from 'react'
 import Gallery from 'react-photo-gallery';
 import { InboxOutlined } from '@ant-design/icons';
 import Carousel, { ModalGateway, Modal as ImageModal } from "react-images";
 import { title } from 'process';
+import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
+import { addNewMediaData, getAllMediaData } from '@/toolkit/actions/MediaManagement';
 
 const { Dragger } = Upload;
+
+const { Option } = Select;
 
 const formItemLayout = {
     labelCol: {
@@ -33,17 +37,17 @@ const tailFormItemLayout = {
     wrapperCol: {
         xs: {
             span: 24,
-            offset: 0,
+            offset: 18,
         },
         sm: {
             span: 24,
-            offset: 4,
+            offset: 20,
         },
     },
+
 };
 
 const MediaList = () => {
-
     // const props = {
     //     name: 'file',
     //     multiple: true,
@@ -85,12 +89,33 @@ const MediaList = () => {
             width: 4,
             height: 3
         },
+        {
+            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+            width: 4,
+            height: 3
+        },
+        {
+            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+            width: 4,
+            height: 3
+        },
     ];
+
+    const [mediaType, setMediaType] = useState('Photo');
+    const [uploadForm] = Form.useForm();
+
+    const dispatch = useAppDispatch();
+    const { mediaList } = useAppSelector((state) => state.mediaManagement);
+
+    useEffect(() => {
+        dispatch(getAllMediaData());
+    }, [dispatch, mediaList.length]);
 
     const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
     const onUploadFinish = (values: any) => {
         console.log(values);
+        dispatch(addNewMediaData(values));
         message.success('Media uploaded successfully');
         setUploadModalVisible(false);
     }
@@ -112,6 +137,16 @@ const MediaList = () => {
         setViewerIsOpen(false);
     };
 
+    const formattedMediaList = (data: any) => {
+        return data.map((media: any, index: any) => {
+            return {
+                src: media?.url,
+                width: 3,
+                height: 2,
+            }
+        })
+    }
+
     return (
         <>
             <AppRowContainer>
@@ -119,8 +154,8 @@ const MediaList = () => {
                     <Button type="primary" icon={<PlusOutlined style={{ marginRight: 5 }} />} onClick={() => setUploadModalVisible(true)}>Upload</Button>
                 </Col>
                 <Col xs={24} lg={24}>
-                    <AppCard title="Media Library">
-                        <Gallery photos={photos} onClick={openLightBox} />
+                    <AppCard title="Photos">
+                        <Gallery photos={formattedMediaList(mediaList)} onClick={openLightBox} />
                     </AppCard>
                 </Col>
 
@@ -132,17 +167,29 @@ const MediaList = () => {
                     footer={false}
                 >
                     <Form {...formItemLayout}
-                        initialValues={{
-                            title: '',
-                            image: null
-                        }}
+                        // initialValues={{
+                        //     title: '',
+                        //     image: null
+                        // }}
+                        form={uploadForm}
                         onFinish={onUploadFinish}
                         onValuesChange={onUploadFormChange}
                     >
-                        <Form.Item label="Title" name="title">
+                        <Form.Item name="title">
                             <Input placeholder="Media title" />
                         </Form.Item>
-                        <Form.Item label='Image' name='image'>
+
+                        <Form.Item name='media_type'>
+                            <Select
+                                placeholder="Select media type"
+                                style={{ width: "100%" }}
+                                onChange={(value) => { setMediaType(value) }}>
+                                <Option value='Photo'>Photo upload</Option>
+                                <Option value='Video'>Video upload</Option>
+                            </Select>
+                        </Form.Item>
+
+                        {mediaType === 'Photo' ? <Form.Item name='photo'>
                             <Dragger
                                 multiple={true}
                             >
@@ -155,7 +202,10 @@ const MediaList = () => {
                                     banned files.
                                 </p>
                             </Dragger>
-                        </Form.Item>
+                        </Form.Item> : <Form.Item name='video'>
+                            <Input placeholder="Video URL" />
+                        </Form.Item>}
+
                         <Form.Item {...tailFormItemLayout}>
                             <Button type="primary" htmlType='submit'>Submit</Button>
                         </Form.Item>
@@ -169,7 +219,7 @@ const MediaList = () => {
                         <ImageModal onClose={closeLightbox}>
                             <Carousel
                                 currentIndex={currentImage}
-                                views={photos.map((x: any) => ({
+                                views={formattedMediaList(mediaList).map((x: any) => ({
                                     ...x,
                                     source: x.src,
                                     srcset: x.srcSet,

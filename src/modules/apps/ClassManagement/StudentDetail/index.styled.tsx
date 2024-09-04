@@ -2,9 +2,10 @@ import { Avatar, Descriptions } from 'antd';
 import styled from 'styled-components';
 
 
-export const StyledTitle = styled.h2`
+export const StyledTitle = styled.span`
   color: ${({ theme }) => theme.palette.text.primary};
   font-weight: ${({ theme }) => theme.font.weight.bold};
+  font-size: 20px;
 `;
 
 

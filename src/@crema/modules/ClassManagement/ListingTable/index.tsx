@@ -67,7 +67,7 @@ const getColumns = (router: NextRouter): ColumnsType<any> => [
   //   key: 'created_at',
   // },
   {
-    title: 'Actions',
+    title: '',
     dataIndex: 'actions',
     align: 'center',
     key: 'actions',

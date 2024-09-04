@@ -139,7 +139,7 @@ export type DeleteClassScheduleAction = {
 
 export type GetAllEatingSchedulesAction = {
   type: typeof GET_ALL_EATING_SCHEDULES;
-  payload: EatingScheduleDataType[];
+  payload: {eatingScheduleList: EatingScheduleDataType[], classId: number};
 }
 
 export type GetEatingScheduleAction = {

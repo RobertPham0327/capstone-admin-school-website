@@ -39,7 +39,7 @@ export const ItemAction = ({ id }: Props) => {
         }
     }
     return (
-        <Dropdown menu={{ items: actionItems, onClick: onMenuClick }} trigger={['click']}>
+        <Dropdown menu={{ items: actionItems, onClick: onMenuClick }} trigger={['hover']}>
             <AppIconButton icon={<MoreOutlined />} />
         </Dropdown>
     )

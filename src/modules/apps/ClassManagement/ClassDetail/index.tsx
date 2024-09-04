@@ -63,7 +63,7 @@ const ClassDetail = () => {
   useEffect(() => {
     dispatch(getClassStudentList(Number(classId)));
   }, [dispatch, classId]);
-  
+
   const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
   const endSchoolYearStr = currentClass?.school_year?.split('-')[1];
 
@@ -73,7 +73,7 @@ const ClassDetail = () => {
 
   const onUpdateClassFormSubmit = (values: any) => {
     console.log(values);
-    let classData:any = {};
+    let classData: any = {};
     if (values.name) {
       classData.name = values.name;
     }
@@ -129,12 +129,14 @@ const ClassDetail = () => {
 
   return (
     <>
-      <Space>
-        <StyledTitle>Class details</StyledTitle>
-        <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateClassModalVisible(true) }} />
-        <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
-      </Space>
       <AppRowContainer>
+        <Col xs={24} lg={24}>
+          <Space>
+            <StyledTitle>Class details</StyledTitle>
+            <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateClassModalVisible(true) }} />
+            <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
+          </Space>
+        </Col>
         <Col xs={24} lg={24}>
           <AppCard>
             <StyledContainer>
@@ -158,7 +160,7 @@ const ClassDetail = () => {
         <Col xs={24} lg={24}>
           <Space wrap>
             <Button onClick={() => router.push(`/apps/class-management/class-schedule/${classId}`)} type="primary">Class schedule</Button>
-            <Button onClick={() => router.push(`/apps/class-management/eating-schedule/${classId}`)} type="primary">Eating schedule</Button>
+            <Button onClick={() => router.push(`/apps/class-management/eating-schedule/${classId}`)} type="primary">Meal schedule</Button>
             <Button ghost type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setNewStudentModalVisible(true)}>Add new student</Button>
           </Space>
         </Col>
@@ -198,7 +200,7 @@ const ClassDetail = () => {
             name="gender"
             rules={[{ required: true, message: 'Please select a gender!' }]}>
             <Select
-              defaultValue='Male'
+              placeholder="Select a gender"
               style={{ width: "100%" }}
               onChange={() => { }}
             >
@@ -241,7 +243,6 @@ const ClassDetail = () => {
         onCancel={() => setUpdateClassModalVisible(false)}
         footer={false}
         title={"Update class information"}
-
       >
         <Form
           {...formItemLayout}

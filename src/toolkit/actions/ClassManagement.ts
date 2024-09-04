@@ -21,23 +21,31 @@ import {
   addNewTeacher,
   updateTeacher,
   deleteTeacher,
+  getAllEatingSchedules,
+  createEatingSchedule,
+  updateEatingSchedule,
 } from '@crema/services/api/class';
 import {
   ADD_CLASS,
   ADD_CLASS_SCHEDULE,
+  ADD_EATING_SCHEDULE,
   ADD_STUDENT,
   ADD_TEACHER,
   DELETE_CLASS,
   DELETE_CLASS_SCHEDULE,
+  DELETE_EATING_SCHEDULE,
   DELETE_STUDENT,
   GET_ALL_CLASS_SCHEDULES,
   GET_ALL_CLASSES,
+  GET_ALL_EATING_SCHEDULES,
   GET_ALL_TEACHERS,
   GET_CLASS_STUDENTS,
+  GET_EATING_SCHEDULE,
   GET_STUDENT,
   GET_TEACHER,
   UPDATE_CLASS,
   UPDATE_CLASS_SCHEDULE,
+  UPDATE_EATING_SCHEDULE,
   UPDATE_STUDENT,
   UPDATE_TEACHER,
 } from '@crema/types/actions/ClassManagement.actions';
@@ -45,6 +53,7 @@ import {
   ClassDataType,
   ClassScheduleDataType,
   ClassStudentDataType,
+  EatingScheduleDataType,
   StudentProfileDataType,
   TeacherDataType,
   TeacherProfileDataType,
@@ -56,25 +65,34 @@ import {
   sampleTeacherList,
 } from '@/modules/apps/ClassManagement/mockData';
 import { statusCodes } from '@/@crema/services/api/constants';
-import teacher from '@/pages/apps/class-management/teacher';
 
 export const getClassList = () => {
   return async (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    dispatch({ type: GET_ALL_CLASSES, payload: sampleClassList });
-    dispatch(fetchSuccess());
+    // dispatch(fetchStart());
+    // dispatch({ type: GET_ALL_CLASSES, payload: sampleClassList });
+    // dispatch(fetchSuccess());
 
-    // try {
-    //   const response = await getAllClasses();
-    //   if (response.status === statusCodes.OK) {
-    //     dispatch({ type: GET_ALL_CLASSES, payload: response.data });
-    //     dispatch(fetchSuccess());
-    //   } else {
-    //     dispatch(fetchError('Something went wrong, Please try again!'));
-    //   }
-    // } catch (error) {
-    //   dispatch(fetchError(error.message));
-    // }
+    try {
+      const response = await getAllClasses();
+      if (response.status === statusCodes.OK) {
+        const classList: ClassDataType[] = response.data.map((classData: any) => {
+          return {
+            id: classData?.id,
+            name: classData?.name,
+            teacher_id: classData?.teacher_id,
+            teacher_name: classData?.teacher_name,
+            class_room: classData?.location_name,
+            school_year: classData?.school_year,
+          };
+        })
+        dispatch({ type: GET_ALL_CLASSES, payload: classList });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
   };
 };
 
@@ -132,21 +150,31 @@ export const deleteClassData = (classId: number) => {
 
 export const getClassStudentList = (classId: number) => {
   return async (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    dispatch({ type: GET_CLASS_STUDENTS, payload: { studentList: sampleStudentList, classId } });
-    dispatch(fetchSuccess());
+    // dispatch(fetchStart());
+    // dispatch({ type: GET_CLASS_STUDENTS, payload: { studentList: sampleStudentList, classId } });
+    // dispatch(fetchSuccess());
 
-    // try {
-    //   const response = await getAllStudent(classId);
-    //   if (response.status === statusCodes.OK) {
-    //     dispatch({ type: GET_CLASS_STUDENTS, payload: response.data });
-    //     dispatch(fetchSuccess());
-    //   } else {
-    //     dispatch(fetchError('Something went wrong, Please try again!'));
-    //   }
-    // } catch (error) {
-    //   dispatch(fetchError(error.message));
-    // }
+    try {
+      const response = await getAllStudent(classId);
+      if (response.status === statusCodes.OK) {
+        const studentList: ClassStudentDataType[] = response.data.map((student: any, index: any) => {
+          return {
+            id: student.id,
+            class_id: classId,
+            student_id: student.id,
+            name: student?.name,
+            date_of_birth: student?.date_of_birth,
+            gender: student?.gender
+          }
+        })
+        dispatch({ type: GET_CLASS_STUDENTS, payload:  { studentList: studentList, classId } });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
   };
 };
 
@@ -189,15 +217,16 @@ export const addStudentData = (classId: number, studentData: any) => {
     try {
       const response = await createStudent(studentData);
       if (response.status === statusCodes.CREATED) {
-        const res = await addStudentToClass(classId, response.data.id);
+        const studentId = response.data?.id;
+        const res = await addStudentToClass(studentId, classId);
         if (res.status === statusCodes.CREATED) {
           const newStudent: ClassStudentDataType = {
-            id: response.data.id,
+            id: response.data?.id,
             class_id: classId,
-            student_id: response.data.id,
-            name: response.data.name,
-            date_of_birth: response.data.date_of_birth,
-            gender: response.data.gender,
+            student_id: response.data?.id,
+            name: response.data?.name,
+            date_of_birth: response.data?.date_of_birth,
+            gender: response.data?.gender,
           };
           dispatch({ type: ADD_STUDENT, payload: newStudent });
           dispatch(fetchSuccess());
@@ -255,6 +284,7 @@ export const getAllTeacherData = () => {
 
     try {
       const response = await getAllTeachers();
+      console.log(response);
       if (response.status === statusCodes.OK) {
         const teacherList: TeacherDataType[] = response.data.map((teacher: any) => {
           return {
@@ -333,13 +363,13 @@ export const updateTeacherData = (teacherId: number, teacherData: any) => {
     dispatch(fetchStart());
     try {
       const response = await updateTeacher(teacherId, teacherData);
-      console.log(response);
       if (response.status === statusCodes.OK) {
         const updatedTeacher: TeacherDataType = {
-          id: response.data.id,
-          name: response.data.name,
-          contact: response.data.contact_number,
-          gender: "Male"
+          id: response.data?.id,
+          name: response.data?.name,
+          contact: response.data?.contact_number,
+          gender: "Male",
+          avatar_url: response.data?.profilePictureUrl,
         }
         dispatch({ type: UPDATE_TEACHER, payload: updatedTeacher });
       } else {
@@ -463,3 +493,156 @@ export const deleteClassScheduleData = (scheduleId: number) => {
     }
   };
 };
+
+
+export const getAllEatingSchedulesData = (classId: number) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    dispatch(fetchStart());
+    try {
+      const response = await getAllEatingSchedules(classId);
+      if (response.status === statusCodes.OK) {
+        // const rawData = {
+        //   '2024-08-16': {
+        //     Breakfast: [
+        //       {
+        //         id: 17,
+        //         class_id: 1,
+        //         start_time: '2024-08-16T08:00:00.000Z',
+        //         end_time: '2024-08-16T09:00:00.000Z',
+        //         meal: 'Breakfast',
+        //         menu: ['Chicken', 'Salad'],
+        //         nutrition: ['Protein', 'carb'],
+        //         location_id: 1,
+        //         created_at: '2024-08-16T07:52:08.411Z',
+        //         updated_at: '2024-08-16T07:52:08.411Z',
+        //         media_id: null,
+        //         media: [],
+        //       },
+        //       {
+        //         id: 16,
+        //         class_id: 1,
+        //         start_time: '2024-08-16T08:00:00.000Z',
+        //         end_time: '2024-08-16T09:00:00.000Z',
+        //         meal: 'Breakfast',
+        //         menu: ['Grilled Chicken', 'Yagourt'],
+        //         nutrition: ['Vitamin A', 'Vitamin B'],
+        //         location_id: 1,
+        //         created_at: '2024-08-16T07:21:16.341Z',
+        //         updated_at: '2024-08-19T03:18:19.693Z',
+        //         media_id: null,
+        //         media: [],
+        //       },
+        //     ],
+        //   },
+        // };
+        const rawData = response.data;
+        const eatingScheduleList: EatingScheduleDataType[] = Object.keys(rawData).map((date: string) => {
+          const scheduleData = rawData[date];
+          const mealList: EatingScheduleDataType[] = Object.keys(scheduleData).map((meal: string) => {
+            const mealData = scheduleData[meal];
+            return mealData.map((event: any) => {
+              return {
+                id: event.id,
+                start: event.start_time?.split('.')[0],
+                end: event.end_time?.split('.')[0],
+                title: event.meal,
+                class_id: event.class_id,
+                class_name: 'Class name',
+                location_id: event.location_id,
+                location_name: 'Location name',
+                nutrition: event.nutrition,
+                menu: event.menu,
+              };
+            })
+          });
+          return mealList.flat();
+        }).flat();
+        console.log(eatingScheduleList);
+        dispatch({ type: GET_ALL_EATING_SCHEDULES, payload: { eatingScheduleList: eatingScheduleList, classId } });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
+  };
+}
+
+export const addEatingScheduleData = (classId: number, scheduleData: any) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    dispatch(fetchStart());
+    try {
+      const response = await createEatingSchedule(classId, scheduleData);
+      if (response.status === statusCodes.CREATED) {
+        const newScheduleData: EatingScheduleDataType = {
+          id: response.data.id,
+          start: response.data.start_time?.split('.')[0],
+          end: response.data.end_time?.split('.')[0],
+          title: response.data?.meal,
+          class_id: response.data?.class_id,
+          class_name: 'Class name',
+          location_id: response.data?.location_id,
+          location_name: 'Location name',
+          nutrition: response.data?.nutrition,
+          menu: response.data?.menu,
+        }
+        dispatch({ type: ADD_EATING_SCHEDULE, payload: newScheduleData });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
+  };
+}
+
+export const updateEatingScheduleData = (scheduleId: number, scheduleData: any) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    dispatch(fetchStart());
+    try {
+      const response = await updateEatingSchedule(scheduleId, scheduleData);
+      console.log(response);
+      if (response.status === statusCodes.OK) {
+        const resData = response.data[0];
+        const updatedSchedule: EatingScheduleDataType = {
+          id: resData.id,
+          start: resData.start_time?.split('.')[0],
+          end: resData.end_time?.split('.')[0],
+          title: resData?.meal,
+          class_id: resData?.class_id,
+          class_name: 'Class name',
+          location_id: resData?.location_id,
+          location_name: 'Location name',
+          nutrition: resData?.nutrition,
+          menu: resData?.menu,
+        };
+        console.log(updatedSchedule);
+        dispatch({ type: UPDATE_EATING_SCHEDULE, payload: updatedSchedule });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
+  };
+}
+
+export const deleteEatingScheduleData = (scheduleId: number) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    dispatch(fetchStart());
+    try {
+      const response = await deleteClassSchedule(scheduleId);
+      if (response.status === statusCodes.OK) {
+        dispatch({ type: DELETE_EATING_SCHEDULE, payload: scheduleId });
+        dispatch(fetchSuccess());
+      } else {
+        dispatch(fetchError('Something went wrong, Please try again!'));
+      }
+    } catch (error) {
+      dispatch(fetchError(error.message));
+    }
+  };
+}

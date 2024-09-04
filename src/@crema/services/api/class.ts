@@ -1,10 +1,12 @@
 import { ClassDataType, ClassStudentDataType } from '@/@crema/types/models/apps/ClassManagement';
 import axios from '@crema/services/axios';
 import { statusCodes } from './constants';
+import { getIOStringDate } from '@/@crema/helpers/DateHelper';
 
 export const getAllClasses = async () => {
   try {
     const response = await axios.get('/class');
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -123,6 +125,7 @@ export const createStudent = async (data: any) => {
 export const addStudentToClass = async (studentId: number, classId: number) => {
   try {
     const response = await axios.post(`/class/${classId}`, { studentId });
+    console.log(response);
     if (response.status === statusCodes.CREATED) {
       return { data: response.data, status: response.status };
     }
@@ -140,14 +143,15 @@ export const updateStudent = async (studentId: number, classId: number, data: an
     formData.append('studentName', data.studentName);
     formData.append('parentName', data.parentName);
     formData.append('parentPhone', data.parentPhone);
-    // if (data.avatar.fileList[0] > 0) {
-    //   formData.append('avatar', data.avatar.fileList[0].originFileObj);
-    // }
+    if (data?.avatar?.fileList.length > 0) {
+      formData.append('avatar', data.avatar.fileList[0].originFileObj);
+    }
     const response = await axios.put(`/students/${studentId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -246,6 +250,7 @@ export const updateTeacher = async (teacherId: number, data: any) => {
     formData.append('name', data.name);
     formData.append('contact_number', data.contact);
     if (data?.avatar?.fileList.length > 0) {
+      console.log(data.avatar.fileList[0].originFileObj);
       formData.append('profilePicture', data.avatar.fileList[0].originFileObj);
     }
     const response = await axios.put(`/teacher/${teacherId}`, formData, {
@@ -253,6 +258,7 @@ export const updateTeacher = async (teacherId: number, data: any) => {
         'Content-Type': 'multipart/form-data',
       },
     });
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -295,7 +301,7 @@ export const createClassSchedule = async (classId: number, data: any) => {
 
 export const updateClassSchedule = async (scheduleId: number, data: any) => {
   try {
-    const response = await axios.put(`/schedule/${scheduleId}`, data);
+    const response = await axios.put(`/eating-schedule/${scheduleId}`, data);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -309,7 +315,7 @@ export const updateClassSchedule = async (scheduleId: number, data: any) => {
 
 export const deleteClassSchedule = async (scheduleId: number) => {
   try {
-    const response = await axios.delete(`/schedule/${scheduleId}`);
+    const response = await axios.delete(`/eating-schedule/${scheduleId}`);
     if (response.status === statusCodes.OK) {
       return { status: response.status };
     }
@@ -323,7 +329,8 @@ export const deleteClassSchedule = async (scheduleId: number) => {
 
 export const getAllEatingSchedules = async (classId: number) => {
   try {
-    const response = await axios.get(`/eating-schedule/${classId}`);
+    const response = await axios.get(`/eating-schedule/weekly/${classId}`);
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -337,7 +344,41 @@ export const getAllEatingSchedules = async (classId: number) => {
 
 export const createEatingSchedule = async (classId: number, data: any) => {
   try {
-    const response = await axios.post('/eating-schedule/create', data);
+    const newScheduleData = {
+      class_id: classId.toString(),
+      location_id: '1',
+      start_time: getIOStringDate(data.start),
+      end_time: getIOStringDate(data.end),
+      meal: data?.title,
+      menu: data?.menu,
+      nutrition: data?.nutrition,
+      files: data?.image?.fileList,
+    }
+
+    console.log("New Schedule:", newScheduleData);
+
+    const formData = new FormData();
+
+    Object.keys(newScheduleData).forEach(key => {
+      if (key === 'nutrition' || key === 'menu') {
+        newScheduleData[key].forEach((item: any) => {
+          formData.append(key, item);
+        })
+      } else if (key === 'files') {
+        if (newScheduleData?.files?.length > 0) {
+          formData.append('files', newScheduleData.files[0].originFileObj);
+        }
+      } else {
+        formData.append(key, newScheduleData[key]);
+      }
+    })
+
+    const response = await axios.post('/eating-schedule/create',formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(response);
     if (response.status === statusCodes.CREATED) {
       return { data: response.data, status: response.status };
     }
@@ -351,7 +392,40 @@ export const createEatingSchedule = async (classId: number, data: any) => {
 
 export const updateEatingSchedule = async (scheduleId: number, data: any) => {
   try {
-    const response = await axios.put(`/eating-schedule/${scheduleId}`, data);
+    const updateData = {
+      location_id: '1',
+      start_time: getIOStringDate(data.start),
+      end_time: getIOStringDate(data.end),
+      meal: data?.title,
+      menu: data?.menu,
+      nutrition: data?.nutrition,
+      files: data?.image?.fileList,
+    }
+
+    console.log("Update Schedule:", updateData);
+
+    const formData = new FormData();
+
+    Object.keys(updateData).forEach(key => {
+      if (key === 'nutrition' || key === 'menu') {
+        updateData[key].forEach((item: any) => {
+          formData.append(key, item);
+        })
+      } else if (key === 'files') {
+        if (updateData?.files?.length > 0) {
+          formData.append('files', updateData.files[0].originFileObj);
+        }
+      } else {
+        formData.append(key, updateData[key]);
+      }
+    })
+
+    const response = await axios.put(`/eating-schedule/${scheduleId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }

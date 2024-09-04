@@ -77,6 +77,7 @@ const StudentDetail = () => {
     if (!isValidUpdateStudentForm(values)) {
       return
     }
+    
     dispatch(updateStudentData(Number(studentId), Number(classId), values));
     setUpdateStudentModalVisible(false);
   }
@@ -98,14 +99,28 @@ const StudentDetail = () => {
     });
   }
 
+  const [updateStudentForm] = Form.useForm();
+
+  const onUpdateOpen = () => {
+    updateStudentForm.setFieldsValue({
+      studentName: currentStudent?.student_name,
+      parentName: currentStudent?.parent_name,
+      parentPhone: currentStudent?.parent_phone,
+    })
+    setUpdateStudentModalVisible(true);
+  }
+
   return (
     <>
-      <Space>
-        <StyledTitle>Student Detail</StyledTitle>
-        <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateStudentModalVisible(true) }} />
-        <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
-      </Space>
+
       <AppRowContainer>
+        <Col xs={24} lg={24}>
+          <Space>
+            <StyledTitle>Student Detail</StyledTitle>
+            <AppIconButton icon={<AiOutlineEdit />} onClick={onUpdateOpen} />
+            <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
+          </Space>
+        </Col>
         <Col xs={24} lg={24}>
           <AppCard title={
             <StyledContainer>
@@ -180,13 +195,7 @@ const StudentDetail = () => {
         footer={false}
       >
         <Form
-          initialValues={
-            {
-              studentName: currentStudent?.student_name,
-              parentName: currentStudent?.parent_name,
-              parentPhone: currentStudent?.parent_phone
-            }
-          }
+          form={updateStudentForm}
           {...formItemLayout}
           onValuesChange={onUpdateStudentValuesChanged}
           onFinish={onUpdateStudentSubmit}

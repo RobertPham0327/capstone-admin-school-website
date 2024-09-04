@@ -3,6 +3,7 @@ import {
   ClassProfileDataType,
   ClassScheduleDataType,
   ClassStudentDataType,
+  EatingScheduleDataType,
   StudentProfileDataType,
   TeacherDataType,
   TeacherProfileDataType,
@@ -44,6 +45,8 @@ const initialState: {
   currentStudent: StudentProfileDataType | null;
   classScheduleList: ClassScheduleDataType[];
   currentClassSchedule: ClassScheduleDataType | null;
+  eatingScheduleList: EatingScheduleDataType[];
+  currentEatingSchedule: EatingScheduleDataType;
 } = {
   classList: [],
   currentClass: null,
@@ -53,6 +56,8 @@ const initialState: {
   currentStudent: null,
   classScheduleList: [],
   currentClassSchedule: null,
+  eatingScheduleList: [],
+  currentEatingSchedule: null,
 };
 
 const classManagementReducer = createReducer(initialState, builder => {
@@ -104,8 +109,12 @@ const classManagementReducer = createReducer(initialState, builder => {
       state.currentStudent = action.payload;
     })
     .addCase(AddStudentAction, (state, action) => {
-      state.currentStudentList.push(action.payload);
-      state.currentClass.studentList.push(action.payload);
+      const newStudent = {
+        ...action.payload,
+        index: state.currentStudentList.length + 1,
+      };
+      state.currentStudentList.push(newStudent);
+      state.currentClass.studentList.push(newStudent);
     })
     .addCase(UpdateStudentAction, (state, action) => {
       state.currentStudentList = state.currentStudentList.map(item =>
@@ -157,11 +166,21 @@ const classManagementReducer = createReducer(initialState, builder => {
     .addCase(DeleteClassScheduleAction, (state, action) => {
       state.classScheduleList = state.classScheduleList.filter(item => item.id !== action.payload);
     })
-    .addCase(GetAllEatingSchedulesAction, (state, action) => {})
-    .addCase(GetEatingScheduleAction, (state, action) => {})
-    .addCase(AddEatingScheduleAction, (state, action) => {})
-    .addCase(UpdateEatingScheduleAction, (state, action) => {})
-    .addCase(DeleteEatingScheduleAction, (state, action) => {})
+    .addCase(GetAllEatingSchedulesAction, (state, action) => {
+      state.eatingScheduleList = action.payload?.eatingScheduleList;
+    })
+    .addCase(GetEatingScheduleAction, (state, action) => {
+      state.currentEatingSchedule = action.payload;
+    })
+    .addCase(AddEatingScheduleAction, (state, action) => {
+      state.eatingScheduleList.push(action.payload);
+    })
+    .addCase(UpdateEatingScheduleAction, (state, action) => {
+      state.eatingScheduleList = state.eatingScheduleList.map(item => (item.id === action.payload.id ? action.payload : item));
+    })
+    .addCase(DeleteEatingScheduleAction, (state, action) => {
+      state.eatingScheduleList = state.eatingScheduleList.filter(item => item.id !== action.payload);
+    })
 
 });
 

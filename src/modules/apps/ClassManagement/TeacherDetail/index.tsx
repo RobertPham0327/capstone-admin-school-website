@@ -60,6 +60,7 @@ const TeacherDetail = () => {
     const [updateTeacherModalVisible, setUpdateTeacherModalVisible] = useState(false);
 
     const onUpdateTeacherValuesChanged = (changedValues: any, allValues: any) => {
+        console.log(allValues)
     }
 
     const onUpdateTeacherSubmit = (values: any) => {
@@ -72,30 +73,42 @@ const TeacherDetail = () => {
 
     const showDeleteConfirm = () => {
         confirm({
-          title: 'Are you sure delete this teacher?',
-          content: '',
-          okText: 'Yes',
-          okType: 'danger',
-          cancelText: 'No',
-          onOk() {
-            dispatch(deleteTeacherData(Number(teacherId)));
-            message.success('Teacher deleted successfully');
-            router.push('/apps/class-management/teacher');
-          },
-          onCancel() {
-            console.log('Cancel');
-          },
+            title: 'Are you sure delete this teacher?',
+            content: '',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                dispatch(deleteTeacherData(Number(teacherId)));
+                message.success('Teacher deleted successfully');
+                router.push('/apps/class-management/teacher');
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
         });
-      }
+    }
+
+    const [updateTeacherForm] = Form.useForm();
+    const onUpdateOpen = () => {
+        updateTeacherForm.setFieldsValue({
+            name: currentTeacher?.name,
+            contact: currentTeacher?.contact,
+        })
+        setUpdateTeacherModalVisible(true);
+    }
 
     return (
         <>
-            <Space>
-                <StyledTitle>Teacher Detail</StyledTitle>
-                <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateTeacherModalVisible(true) }} />
-                <AppIconButton icon={<AiOutlineDelete />} onClick={ () => showDeleteConfirm() } />
-            </Space>
+
             <AppRowContainer>
+                <Col xs={24} lg={24}>
+                    <Space>
+                        <StyledTitle>Teacher Detail</StyledTitle>
+                        <AppIconButton icon={<AiOutlineEdit />} onClick={onUpdateOpen} />
+                        <AppIconButton icon={<AiOutlineDelete />} onClick={() => showDeleteConfirm()} />
+                    </Space>
+                </Col>
                 <Col xs={24} lg={24}>
                     <AppCard title={
                         <StyledContainer>
@@ -127,25 +140,26 @@ const TeacherDetail = () => {
                 onOk={() => setUpdateTeacherModalVisible(false)}
                 onCancel={() => setUpdateTeacherModalVisible(false)}
                 footer={false}
-                >
+            >
                 <Form
                     //   initialValues={}
                     {...formItemLayout}
                     onValuesChange={onUpdateTeacherValuesChanged}
                     onFinish={onUpdateTeacherSubmit}
+                    form={updateTeacherForm}
                 >
                     <Form.Item
-                        label="Teacher name"
+                        label="Name"
                         name="name"
                     // rules={[{ required: true, message: 'Please input a student name!' }]}
                     >
-                        <Input />
+                        <Input placeholder='Teacher name'/>
                     </Form.Item>
 
                     <Form.Item
-                        label="Teacher phone"
+                        label="Phone"
                         name="contact">
-                        <Input />
+                        <Input placeholder='Teacher contact phone number'/>
                     </Form.Item>
 
                     <Form.Item

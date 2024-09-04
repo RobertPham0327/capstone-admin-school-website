@@ -14,6 +14,8 @@ import { InvoiceActionTypes } from './Invoice.action';
 import { BlogActionTypes } from './Blogs.action';
 import { ClassActionTypes } from './Class.actions';
 import { ClassManagementActions } from './ClassManagement.actions';
+import { MediaManagementActions } from './MediaManagement.actions';
+
 
 export type AppActions =
   | CommonActionTypes
@@ -31,5 +33,6 @@ export type AppActions =
   | BlogActionTypes
   | UserListActions
   | ClassActionTypes
-  | ClassManagementActions;
+  | ClassManagementActions
+  | MediaManagementActions;
  

@@ -42,7 +42,7 @@ export const StudentListAction = ({ studentId, classId }: Props) => {
         }
     }
     return (
-        <Dropdown menu={{ items: actionItems, onClick: onMenuClick }} trigger={['click']}>
+        <Dropdown menu={{ items: actionItems, onClick: onMenuClick }} trigger={['hover']}>
             <AppIconButton icon={<MoreOutlined />} />
         </Dropdown>
     )

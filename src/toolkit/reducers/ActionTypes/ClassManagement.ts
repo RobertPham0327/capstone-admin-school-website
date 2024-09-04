@@ -66,7 +66,7 @@ export const UpdateClassScheduleAction = createAction<ClassScheduleDataType>(UPD
 
 export const DeleteClassScheduleAction = createAction<number>(DELETE_CLASS_SCHEDULE);
 
-export const GetAllEatingSchedulesAction = createAction<EatingScheduleDataType>(GET_ALL_EATING_SCHEDULES);
+export const GetAllEatingSchedulesAction = createAction<{eatingScheduleList: EatingScheduleDataType[]; classId: number}>(GET_ALL_EATING_SCHEDULES);
 
 export const GetEatingScheduleAction = createAction<EatingScheduleDataType>(GET_EATING_SCHEDULE);
 

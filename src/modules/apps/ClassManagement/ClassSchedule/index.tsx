@@ -8,13 +8,11 @@ import EventItem from './EventItem';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
-import { TodoObjType } from '@crema/types/models/apps/Todo';
 import { useRouter } from 'next/router';
 import { Button, Col, DatePicker, Descriptions, Form, Input, message, Modal, Space, Upload } from 'antd';
 import { getCurrentMonthDate, getIOStringDate } from '@crema/helpers/DateHelper';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
 import { StyledPlusOutlined, StyledTitle } from './index.styled';
-import { Calendar } from 'react-big-calendar';
 import { UploadOutlined } from '@ant-design/icons';
 import AppIconButton from '@/@crema/components/AppIconButton';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
@@ -22,9 +20,7 @@ import dayjs from 'dayjs';
 import { sampleClassScheduleList } from '../mockData';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 import { addClassScheduleData, deleteClassScheduleData, getAllClassSchedulesData, updateClassScheduleData } from '@/toolkit/actions/ClassManagement';
-import { typeOf } from 'react-is';
-import { get } from 'lodash';
-import { on } from 'events';
+
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
 

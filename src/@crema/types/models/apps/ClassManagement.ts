@@ -82,6 +82,7 @@ export type EatingScheduleDataType = {
   end: string;
   title: string;
   class_id: number;
+  class_name: string;
   location_id: number;
   location_name: string;
   menu: string[];
