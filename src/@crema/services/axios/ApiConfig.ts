@@ -5,7 +5,7 @@ const apiConfig = axios.create({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   },
-  withCredentials: true,
+  withCredentials: false,
   // withXSRFToken: true,
 });
 export default apiConfig;
