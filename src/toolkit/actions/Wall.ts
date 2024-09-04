@@ -11,7 +11,7 @@ export const onGetWallData = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get('/wall')
+      .get('/post/all-posts')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -31,7 +31,7 @@ export const onGetPostsList = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get('/wall/posts')
+      .get('/post/all-posts')
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());
@@ -51,7 +51,7 @@ export const onCreateNewPost = (post: PostObjType) => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .post('/wall/posts', { post })
+      .post('/post/draft', { post })
       .then((data: any) => {
         if (data.status === 200) {
           dispatch(fetchSuccess());

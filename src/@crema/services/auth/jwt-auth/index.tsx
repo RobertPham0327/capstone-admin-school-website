@@ -3,10 +3,11 @@ import type { AxiosResponse } from 'axios';
 
 const jwtAxios = axios.create({
   // baseURL: 'https://crema-gomango.herokuapp.com/api/', // YOUR_API_URL HERE
-  aseURL: 'http://18.140.148.120:8082/api/v1/',
+  baseURL: 'http://18.140.148.120:8082/api/v1/',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false,
 });
 jwtAxios.interceptors.response.use(
   (res: AxiosResponse<any, any>) => res,

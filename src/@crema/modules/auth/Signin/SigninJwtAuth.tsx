@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 import { Checkbox, Form, Input } from 'antd';
 
@@ -16,7 +17,7 @@ import {
 } from './index.styled';
 
 const SignInJwtAuth = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { signInUser } = useAuthMethod();
 
   const onFinishFailed = (errorInfo: any) => {
@@ -24,7 +25,7 @@ const SignInJwtAuth = () => {
   };
 
   const onGoToForgetPassword = () => {
-    navigate('/forget-password');
+    router.push('/forget-password');
   };
 
   function onRememberMe(e) {
@@ -40,8 +41,10 @@ const SignInJwtAuth = () => {
           name="basic"
           initialValues={{
             remember: true,
-            email: 'crema.demo@gmail.com',
-            password: 'Pass@1!@all',
+            // email: 'crema.demo@gmail.com',
+            // password: 'Pass@1!@all',
+            email: 'admin@example.com',
+            password: 'securepassword123',
           }}
           onFinish={signInUser}
           onFinishFailed={onFinishFailed}
@@ -66,22 +69,12 @@ const SignInJwtAuth = () => {
             <Checkbox onChange={onRememberMe}>
               <IntlMessages id="common.rememberMe" />
             </Checkbox>
-
-            <StyledSignLink onClick={onGoToForgetPassword}>
-              <IntlMessages id="common.forgetPassword" />
-            </StyledSignLink>
           </StyledRememberMe>
 
           <div className="form-btn-field">
             <SignInButton type="primary" htmlType="submit">
               <IntlMessages id="common.login" />
             </SignInButton>
-          </div>
-
-          <div className="form-field-action">
-            <StyledSignTextGrey>
-              <IntlMessages id="common.dontHaveAccount" />
-            </StyledSignTextGrey>
           </div>
         </StyledSignForm>
       </StyledSignContent>
