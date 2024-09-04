@@ -13,7 +13,8 @@ import {
   StyledNotifyScrollSubmenu,
   StyledNotifyText,
 } from './index.styled';
-import { notification } from '@crema/mockapi/fakedb';
+// import { notification } from '@crema/mockapi/fakedb';
+const notification = [];
 
 const items = [
   {

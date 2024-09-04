@@ -26,14 +26,12 @@ const PostStats: React.FC<PostStatsProps> = ({ post }) => {
     <StyledPostStats>
       <StyledPostStatsItem className={clsx({ active: post.liked })} onClick={toggleLikeStatus}>
         <StyledLikeOutlined />
-        <StyledPostStatsItemInfo>{post.likes} likes</StyledPostStatsItemInfo>
+        <StyledPostStatsItemInfo>{post.numLikes} likes</StyledPostStatsItemInfo>
       </StyledPostStatsItem>
-      {post.comments.length > 0 && (
-        <StyledPostStatsItem>
-          <StyledCommentOutlined />
-          <StyledPostStatsItemInfo>{post.comments.length} Comments</StyledPostStatsItemInfo>
-        </StyledPostStatsItem>
-      )}
+      <StyledPostStatsItem>
+        <StyledCommentOutlined />
+        <StyledPostStatsItemInfo>{post.numComments.length} Comments</StyledPostStatsItemInfo>
+      </StyledPostStatsItem>
     </StyledPostStats>
   );
 };

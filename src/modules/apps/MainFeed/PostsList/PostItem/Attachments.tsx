@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import AppGrid from '@crema/components/AppGrid';
 import AppMedialViewer from '@crema/components/AppMedialViewer';
 import { StyledPostAttachment, StyledPostAttachmentCount, StyledPostAttachmentImgItem } from '../index.styled';
-import { AttachmentObjType } from '@crema/types/models/apps/Wall';
+import { AttachmentObjType, MediaPostObjType } from '@crema/types/models/apps/Wall';
 
 type AttachmentsProps = {
-  attachments: AttachmentObjType[];
+  attachments: MediaPostObjType[];
 };
 
 const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
@@ -23,7 +23,7 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
         column={attachments.length > 3 ? 2 : attachments.length}
         renderItem={(item, index) => (
           <StyledPostAttachmentImgItem key={index}>
-            <img src={item.preview} alt="attachment" onClick={() => setIndex(index)} />
+            <img src={item.url} alt="attachment" onClick={() => setIndex(index)} />
             {attachments.length > 4 && index === 3 && (
               <StyledPostAttachmentCount>+ {attachments.length - 3}</StyledPostAttachmentCount>
             )}
@@ -34,7 +34,7 @@ const Attachments: React.FC<AttachmentsProps> = ({ attachments }) => {
         index={index}
         medias={attachments.map(data => {
           return {
-            url: data.preview,
+            url: data.url,
             mime_type: 'image/*',
           };
         })}

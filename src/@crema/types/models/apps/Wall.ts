@@ -131,14 +131,27 @@ export type UserObjType = {
 
 export type PostObjType = {
   id: number;
-  owner: UserObjType;
-  date: any;
-  attachments: AttachmentObjType[];
-  message?: string;
-  liked: boolean;
-  likes: number;
-  shares: number;
-  views: number;
-  comments: CommentObjType[];
-  content?: string;
+  title: string;              
+  content: string;            
+  school_id: number;          
+  created_by: number;         
+  status: string;             
+  published_at: string | null; 
+  created_at: string;         
+  updated_at: string;         
+  media: MediaPostObjType[];               
+  hashtags: string[];         
+  liked: boolean;             
+  numLikes: number;              
+  numComments: CommentObjType[]; 
+  shares: number;             
+  views?: number;   
+};
+
+// Media Object Type
+export type MediaPostObjType = {
+  id: number;
+  url: string;
+  media_type: string;
+  created_at: string; // Assuming ISO date format
 };

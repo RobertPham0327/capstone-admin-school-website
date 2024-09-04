@@ -16,7 +16,7 @@ import {
 } from './index.styled';
 import { useAppDispatch } from '../../../../toolkit/hooks';
 import { onCreateNewPost } from '../../../../toolkit/actions';
-import { AttachmentObjType, PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
+import { AttachmentObjType, PostObjType, WallDataType, MediaPostObjType } from '@crema/types/models/apps/Wall';
 import { generateRandomUniqueNumber } from '@crema/helpers/Common';
 
 type CreatePostProps = {
@@ -61,7 +61,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
         id: wallData.id,
       },
     };
-    dispatch(onCreateNewPost(post as PostObjType));
+    dispatch(onCreateNewPost(post as MediaPostObjType));
     setAttachments([]);
     setMessage('');
   };
@@ -71,7 +71,6 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
   return (
     <StyledCreatePostCard title={messages['wall.createPost']}>
       <StyledCreatePostMain>
-        <Avatar size={40} src={wallData.profilePic} alt={wallData.name} />
         <StyledCreatePostMainContent>
           <StyledCreatePostInput
             value={message}

@@ -10,7 +10,7 @@ import {
 } from './index.styled';
 import { useAppSelector, useAppDispatch } from '../../../toolkit/hooks';
 import { onGetWallData } from '../../../toolkit/actions';
-import { RecentNews, WhatsHappen } from '@crema/modules/apps/Wall';
+import { RecentNews } from '@crema/modules/MainFeed';
 import CreatePost from './CreatePost';
 import PostsList from './PostsList';
 import { isEmptyObject } from '@crema/helpers/ApiHelper';
@@ -50,7 +50,6 @@ const MainFeed = () => {
           <StyledWallRightSidebar xs={24} md={6} xl={8} xxl={6}>
             <StyledWallScrollBar style={{ height: '100%' }}>
               <div>
-                <WhatsHappen whatsHappen={wallData?.whatsHappen} />
                 <RecentNews recentNews={wallData?.recentNews} />
               </div>
             </StyledWallScrollBar>
