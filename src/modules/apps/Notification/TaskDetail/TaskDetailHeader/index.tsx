@@ -1,25 +1,19 @@
-import React from "react";
-import { useRouter } from "next/router";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppsStarredIcon from "@crema/components/AppsStarredIcon";
-import StatusToggleButton from "./StatusToggleButton";
-import { BiArrowBack } from "react-icons/bi";
-import {
-  StyledTodoDetailArrow,
-  StyledTodoDetailDeleteIcon,
-  StyledTodoStarIconView,
-} from "../index.styled";
-import { useAppDispatch } from "../../../../../toolkit/hooks";
-import { onUpdateSelectedTask } from "../../../../../toolkit/actions";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
+import React from 'react';
+import { useRouter } from 'next/router';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppsStarredIcon from '@crema/components/AppsStarredIcon';
+import StatusToggleButton from './StatusToggleButton';
+import { BiArrowBack } from 'react-icons/bi';
+import { StyledTodoDetailArrow, StyledTodoDetailDeleteIcon, StyledTodoStarIconView } from '../index.styled';
+import { useAppDispatch } from '../../../../../toolkit/hooks';
+import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskDetailHeaderProps = {
   selectedTask: TodoObjType;
 };
 
-const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({
-  selectedTask,
-}) => {
+const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -50,10 +44,7 @@ const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({
         <AppsStarredIcon item={selectedTask} onChange={onChangeStarred} />
       </StyledTodoStarIconView>
 
-      <StyledTodoDetailDeleteIcon
-        deleteAction={onDeleteTask}
-        deleteTitle={<IntlMessages id="todo.deleteMessage" />}
-      />
+      <StyledTodoDetailDeleteIcon deleteAction={onDeleteTask} deleteTitle={<IntlMessages id="todo.deleteMessage" />} />
     </>
   );
 };

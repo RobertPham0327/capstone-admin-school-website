@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import TaskDetailHeader from "./TaskDetailHeader";
-import TaskDetailBody from "./TaskDetailBody";
-import { useRouter } from "next/router";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import AppsContent from "@crema/components/AppsContainer/AppsContent";
-import { onGetSelectedTask } from "../../../../toolkit/actions";
-import { useAppSelector, useAppDispatch } from "../../../../toolkit/hooks";
+import React, { useEffect } from 'react';
+import TaskDetailHeader from './TaskDetailHeader';
+import TaskDetailBody from './TaskDetailBody';
+import { useRouter } from 'next/router';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import AppsContent from '@crema/components/AppsContainer/AppsContent';
+import { onGetSelectedTask } from '../../../../toolkit/actions';
+import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
 
 const TaskDetail = () => {
   const dispatch = useAppDispatch();

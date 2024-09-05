@@ -14,7 +14,7 @@ const getPaymentStatusColor = (status: string) => {
       return "#43C888";
     }
     default: {
-      return "#F84E4E";
+      return '#F84E4E';
     }
   }
 };
@@ -46,15 +46,15 @@ const columns: ColumnsType<Request> = [
     )
   },
   {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (status) => (
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: status => (
       <span
         className="badge"
         style={{
           color: getPaymentStatusColor(status),
-          backgroundColor: getPaymentStatusColor(status) + "44",
+          backgroundColor: getPaymentStatusColor(status) + '44',
         }}
       >
         {status.toUpperCase()}
@@ -62,12 +62,12 @@ const columns: ColumnsType<Request> = [
     ),
   },
   {
-    title: "Actions",
-    dataIndex: "actions",
-    key: "actions",
-    className: "order-table-action",
-    fixed: "right",
-    render: (_, request) => <RequestActions request={request} />,
+    title: 'Actions',
+    dataIndex: 'actions',
+    key: 'actions',
+    className: 'order-table-action',
+    fixed: 'right',
+    render: () => <OrderActions />,
   },
 ];
 
@@ -76,15 +76,7 @@ type Props = {
   loading: boolean;
 };
 const RequestTable = ({ orderData, loading }: Props) => {
-  return (
-    <StyledOrderTable
-      hoverColor
-      data={orderData}
-      loading={loading}
-      columns={columns}
-      scroll={{ x: "auto" }}
-    />
-  );
+  return <StyledOrderTable hoverColor data={orderData} loading={loading} columns={columns} scroll={{ x: 'auto' }} />;
 };
 
 export default RequestTable;

@@ -1,4 +1,7 @@
-import ListingTable from './ListingTable';
+import ClassList from './ListingTable';
 import FilterItem from './FilterItem';
+import StudentList from './StudentList';
+import TeacherList from './TeacherList';
 
-export { ListingTable, FilterItem };
+
+export { ClassList, FilterItem, StudentList, TeacherList };

@@ -34,7 +34,7 @@ export const onGetTaskList = (type: string, name: string, currentPage: number) =
         },
       })
       .then((data: any) => {
-        if (data.status === 200) {         
+        if (data.status === 200) {
           dispatch(fetchSuccess());
           dispatch({ type: GET_TASK_LIST, payload: data.data });
           console.log(data.data);

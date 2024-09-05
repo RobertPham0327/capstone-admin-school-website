@@ -14,7 +14,7 @@ const OrderActions = ({ id }: Props) => {
   const items = [
     {
       key: 1,
-      label: <span style={{ fontSize: 14 }}>View Order</span>,
+      label: <span style={{ fontSize: 14 }}>View Class</span>,
     },
     {
       key: 2,

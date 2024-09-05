@@ -1,18 +1,16 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import { CheckOutlined } from "@ant-design/icons";
-import { StyledTodoDetailStatusBtn } from "../index.styled";
-import { onUpdateSelectedTask } from "../../../../../toolkit/actions";
-import { useAppDispatch } from "../../../../../toolkit/hooks";
-import { TodoObjType } from "@crema/types/models/apps/Todo";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import { CheckOutlined } from '@ant-design/icons';
+import { StyledTodoDetailStatusBtn } from '../index.styled';
+import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
+import { useAppDispatch } from '../../../../../toolkit/hooks';
+import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type StatusToggleButtonProps = {
   selectedTask: TodoObjType;
 };
 
-const StatusToggleButton: React.FC<StatusToggleButtonProps> = ({
-  selectedTask,
-}) => {
+const StatusToggleButton: React.FC<StatusToggleButtonProps> = ({ selectedTask }) => {
   const dispatch = useAppDispatch();
 
   const onChangeTaskStatus = (status: number) => {
@@ -20,10 +18,7 @@ const StatusToggleButton: React.FC<StatusToggleButtonProps> = ({
   };
 
   return selectedTask.status === 3 ? (
-    <StyledTodoDetailStatusBtn
-      className="bg-color"
-      onClick={() => onChangeTaskStatus(1)}
-    >
+    <StyledTodoDetailStatusBtn className="bg-color" onClick={() => onChangeTaskStatus(1)}>
       <CheckOutlined className="check-icon" />
       <IntlMessages id="todo.completed" />
     </StyledTodoDetailStatusBtn>

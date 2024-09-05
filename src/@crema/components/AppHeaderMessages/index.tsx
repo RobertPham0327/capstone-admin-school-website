@@ -12,7 +12,8 @@ import {
   StyledHeaderMsgLink,
   StyledHeaderMsgLinkText,
 } from './index.styled';
-import { messages } from '@crema/mockapi/fakedb';
+
+const messages = [];
 
 const items = [
   {

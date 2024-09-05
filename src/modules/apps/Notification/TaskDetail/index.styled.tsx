@@ -429,8 +429,7 @@ export const StyledTodoCommentItem = styled.div`
 
   &.last-chat-message {
     & .todo-comment-msg {
-      border-bottom-left-radius: ${({ theme }) =>
-        theme.sizes.borderRadius.base};
+      border-bottom-left-radius: ${({ theme }) => theme.sizes.borderRadius.base};
     }
   }
 `;

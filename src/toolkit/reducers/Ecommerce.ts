@@ -1,4 +1,4 @@
-import { cartItems } from '@crema/mockapi/fakedb';
+// import { cartItems } from '@crema/mockapi/fakedb';
 import { createReducer } from '@reduxjs/toolkit';
 import {
   CartItemsType,
@@ -20,6 +20,8 @@ import {
   UpdateCartItemAction,
   UpdateProdDataAction,
 } from './ActionTypes/Ecommerce';
+
+const cartItems = [];
 
 export const VIEW_TYPE = Object.freeze({ LIST: 1, GRID: 2 });
 const initialState: {

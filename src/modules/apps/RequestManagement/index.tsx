@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import AppsContainer from "@crema/components/AppsContainer";
-import { useIntl } from "react-intl";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import AppsContent from "@crema/components/AppsContainer/AppsContent";
-import AppInfoView from "@crema/components/AppInfoView";
-import { Input } from "antd";
-import Link from "next/link";
-import AppPageMeta from "@crema/components/AppPageMeta";
+import React, { useEffect, useState } from 'react';
+import AppsContainer from '@crema/components/AppsContainer';
+import { useIntl } from 'react-intl';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import AppsContent from '@crema/components/AppsContainer/AppsContent';
+import AppInfoView from '@crema/components/AppInfoView';
+import { Input } from 'antd';
+import Link from 'next/link';
+import AppPageMeta from '@crema/components/AppPageMeta';
 import {
   StyledOrderFooterPagination,
   StyledOrderHeader,

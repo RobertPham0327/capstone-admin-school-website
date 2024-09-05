@@ -45,8 +45,8 @@ const SignInFirebase = () => {
           name="basic"
           initialValues={{
             remember: true,
-            email: 'crema.demo@gmail.com',
-            password: 'Pass@1!@all',
+            email: 'admin@example.com',
+            password: 'securepassword123',
           }}
           onFinish={values => logInWithEmailAndPassword(values as SignInProps)}
           onFinishFailed={onFinishFailed}

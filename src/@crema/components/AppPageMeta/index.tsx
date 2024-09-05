@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import Helmet from 'react-helmet';
 
-const SITE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://ant-cra.cremawork.com/';
+const SITE_URL = process.env.NODE_ENV === 'development' ? 'http://18.140.148.120:8082/api/v1' : 'https://ant-cra.cremawork.com/';
 
 const FACEBOOK_APP_ID = 'XXXXXXXXX';
 

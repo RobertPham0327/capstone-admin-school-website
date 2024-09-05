@@ -20,8 +20,12 @@
     "baseUrl": "src",
     "paths": {
       "@/*": [
-        "./src/*"
-      ]
+        "./*"
+      ],
+      "@modules/*": ["modules/*"],
+      "@toolkit/*": ["toolkit/*"],
+      "@assets/*": ["assets/*"],
+      "@pages/*": ["pages/*"],
     },
     "strict": false
   },

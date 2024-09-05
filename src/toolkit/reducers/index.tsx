@@ -13,6 +13,8 @@ import UserList from './UserList';
 import InvoiceApp from './Invoice';
 import CalendarApp from './CalendarApp';
 import Blogs from './Blogs';
+import ClassManagement from './ClassManagement';
+import MediaManagement from './MediaManagement';
 
 const reducers = () =>
   combineReducers({
@@ -30,5 +32,7 @@ const reducers = () =>
     invoiceApp: InvoiceApp,
     wall: Wall,
     blogs: Blogs,
+    classManagement: ClassManagement,
+    mediaManagement: MediaManagement
   });
 export default reducers;

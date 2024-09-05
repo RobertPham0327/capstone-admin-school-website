@@ -7,7 +7,7 @@ import { IoMdNotifications } from 'react-icons/io';
 import IntlMessages from '@crema/helpers/IntlMessages';
 import { StyledUserProfileContainer, StyledUserProfileTabs } from './index.styled';
 import AppAnimate from '@crema/components/AppAnimate';
-import { accountData } from '@crema/mockapi/fakedb';
+import { accountData } from '@crema/mockapi/fakedb/account';
 import {
   ChangePassword,
   Information,

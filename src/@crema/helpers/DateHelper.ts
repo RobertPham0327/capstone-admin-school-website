@@ -42,3 +42,8 @@ export const getTimeFromNow = (date: string) => {
   const newDate = dayjs.unix(Number(timestamp));
   return dayjs(newDate).fromNow();
 };
+
+export const getIOStringDate = (dateObject?: string | dayjs.Dayjs) => {
+  const date = dayjs(dateObject).format('YYYY-MM-DD HH:mm:ss');
+  return date?.split(' ')[0] + 'T' + date?.split(' ')[1] + '.000Z'
+}

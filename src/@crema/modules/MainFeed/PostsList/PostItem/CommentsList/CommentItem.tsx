@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import clsx from "clsx";
+import React, { useState } from 'react';
+import clsx from 'clsx';
 import {
   StyledPostCommentItem,
   StyledPostCommentItemContent,
   StyledPostCommentItemContentArea,
   StyledPostItemAvatar,
   StyledPostCommentItemAction,
-} from "../../index.styled";
-import { CommentObjType } from "@crema/types/models/apps/Wall";
+} from '../../index.styled';
+import { CommentObjType } from '@crema/types/models/apps/Wall';
 
 type CommentItemProps = {
   item: CommentObjType;
@@ -29,10 +29,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ item }) => {
           <p className="mb-0">{comment}</p>
         </StyledPostCommentItemContentArea>
         <StyledPostCommentItemAction>
-          <span
-            className={clsx("pointer", { active: isLiked })}
-            onClick={toggleLikeStatus}
-          >
+          <span className={clsx('pointer', { active: isLiked })} onClick={toggleLikeStatus}>
             Like
           </span>
           <span className="pointer">Reply</span>

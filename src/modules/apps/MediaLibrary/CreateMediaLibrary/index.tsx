@@ -1,12 +1,12 @@
-import React, { useEffect, useId, useState } from "react";
-import AppRowContainer from "@crema/components/AppRowContainer";
-import BlogContent from "./Content";
-import { useAppDispatch } from "../../../../toolkit/hooks";
-import { onAddBlog, onEditBlog } from "../../../../toolkit/actions";
-import { CreateNewBlog } from "./NewBlogTemplate";
-import { useRouter } from "next/router";
-import { StyledTitle } from "./index.styled";
-import { Form } from "antd";
+import React, { useEffect, useId, useState } from 'react';
+import AppRowContainer from '@crema/components/AppRowContainer';
+import BlogContent from './Content';
+import { useAppDispatch } from '../../../../toolkit/hooks';
+import { onAddBlog, onEditBlog } from '../../../../toolkit/actions';
+import { CreateNewBlog } from './NewBlogTemplate';
+import { useRouter } from 'next/router';
+import { StyledTitle } from './index.styled';
+import { Form } from 'antd';
 import {
   BlogContentType,
   BlogDetailContentType,
@@ -14,7 +14,7 @@ import {
   MetaType,
   RecentPostType,
   TagType,
-} from "@crema/types/models/extrapages/Blog";
+} from '@crema/types/models/extrapages/Blog';
 type Props = {
   selectedBlog?: BlogContentType;
 };
@@ -29,30 +29,26 @@ export const CreateMediaLibrary = ({ selectedBlog }: Props) => {
   useEffect(() => {
     if (selectedBlog) {
       setSelectedTags(selectedBlog?.blogDetailContent?.tag);
-      setUploadedFiles([
-        { preview: selectedBlog?.blogDetailContent?.cardMedia },
-      ]);
+      setUploadedFiles([{ preview: selectedBlog?.blogDetailContent?.cardMedia }]);
     }
   }, [selectedBlog]);
   return (
     <>
-      <StyledTitle>
-        {selectedBlog ? "Edit Blog" : "Create a new media"}
-      </StyledTitle>
+      <StyledTitle>{selectedBlog ? 'Edit Blog' : 'Create a new media'}</StyledTitle>
 
       <Form
         initialValues={{
-          title: selectedBlog?.blogDetailContent?.title || "",
-          description: selectedBlog?.blogDetailContent?.description || "",
-          content: selectedBlog?.blogDetailContent?.content || "",
+          title: selectedBlog?.blogDetailContent?.title || '',
+          description: selectedBlog?.blogDetailContent?.description || '',
+          content: selectedBlog?.blogDetailContent?.content || '',
           tag: selectedBlog?.blogDetailContent?.tag || [],
-          cardMedia: selectedBlog?.blogDetailContent?.cardMedia || "",
-          metatitle: selectedBlog?.blogDetailContent?.meta?.metatitle || "",
-          metadesc: selectedBlog?.blogDetailContent?.meta?.metadesc || "",
-          keywords: selectedBlog?.blogDetailContent?.meta?.keywords || "",
+          cardMedia: selectedBlog?.blogDetailContent?.cardMedia || '',
+          metatitle: selectedBlog?.blogDetailContent?.meta?.metatitle || '',
+          metadesc: selectedBlog?.blogDetailContent?.meta?.metadesc || '',
+          keywords: selectedBlog?.blogDetailContent?.meta?.keywords || '',
         }}
         layout="vertical"
-        onFinish={(data) => {
+        onFinish={data => {
           if (selectedBlog) {
             const newBlog = {
               ...selectedBlog,
@@ -62,24 +58,22 @@ export const CreateMediaLibrary = ({ selectedBlog }: Props) => {
                 description: data.description,
                 content: data.content,
                 tag: selectedTags,
-                cardMedia:
-                  uploadedFiles[0]?.preview ||
-                  selectedBlog.blogDetailContent.cardMedia,
+                cardMedia: uploadedFiles[0]?.preview || selectedBlog.blogDetailContent.cardMedia,
                 meta: {
                   keywords: data.keywords,
                   metadesc: data.metadesc,
                   metatitle: data.metatitle,
                 },
                 post: {
-                  user: "/assets/images/avatar/A12.jpg",
-                  userName: "John Deuo",
-                  userPosition: "Co-founder",
+                  user: '/assets/images/avatar/A12.jpg',
+                  userName: 'John Deuo',
+                  userPosition: 'Co-founder',
                   description: selectedBlog.blogDetailContent.post.description,
                 },
               },
             };
             dispatch(onEditBlog(newBlog));
-            router.push("/extra-pages/blog");
+            router.push('/extra-pages/blog');
           } else {
             dispatch(
               onAddBlog(
@@ -89,18 +83,15 @@ export const CreateMediaLibrary = ({ selectedBlog }: Props) => {
                   content: data.content,
                   srcImg: uploadedFiles[0]?.preview,
                   tag: selectedTags,
-                } as BlogDetailContentType & MetaType & Partial<RecentPostType>)
-              )
+                } as BlogDetailContentType & MetaType & Partial<RecentPostType>),
+              ),
             );
-            router.push("/extra-pages/blog");
+            router.push('/extra-pages/blog');
           }
         }}
       >
         <AppRowContainer>
-          <BlogContent
-            uploadedFiles={uploadedFiles}
-            setUploadedFiles={setUploadedFiles}
-          />
+          <BlogContent uploadedFiles={uploadedFiles} setUploadedFiles={setUploadedFiles} />
         </AppRowContainer>
       </Form>
     </>
