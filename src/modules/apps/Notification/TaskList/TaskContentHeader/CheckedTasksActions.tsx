@@ -1,17 +1,14 @@
-import React from "react";
-import IntlMessages from "@crema/helpers/IntlMessages";
-import AppsDeleteIcon from "@crema/components/AppsDeleteIcon";
-import { useRouter } from "next/router";
-import { Dropdown } from "antd";
-import { MdLabelOutline } from "react-icons/md";
-import AppIconButton from "@crema/components/AppIconButton";
-import { StyledTodoHeaderCheckedAction } from "../index.styled";
-import { LabelObjType } from "@crema/types/models/apps/Todo";
-import {
-  onDeleteSelectedTasks,
-  onUpdateTaskLabels,
-} from "../../../../../toolkit/actions";
-import { useAppSelector, useAppDispatch } from "../../../../../toolkit/hooks";
+import React from 'react';
+import IntlMessages from '@crema/helpers/IntlMessages';
+import AppsDeleteIcon from '@crema/components/AppsDeleteIcon';
+import { useRouter } from 'next/router';
+import { Dropdown } from 'antd';
+import { MdLabelOutline } from 'react-icons/md';
+import AppIconButton from '@crema/components/AppIconButton';
+import { StyledTodoHeaderCheckedAction } from '../index.styled';
+import { LabelObjType } from '@crema/types/models/apps/Todo';
+import { onDeleteSelectedTasks, onUpdateTaskLabels } from '../../../../../toolkit/actions';
+import { useAppSelector, useAppDispatch } from '../../../../../toolkit/hooks';
 
 type CheckedTasksActionsProps = {
   checkedTasks: number[];
@@ -19,17 +16,13 @@ type CheckedTasksActionsProps = {
   page: number;
 };
 
-const CheckedTasksActions: React.FC<CheckedTasksActionsProps> = ({
-  checkedTasks,
-  setCheckedTasks,
-  page,
-}) => {
+const CheckedTasksActions: React.FC<CheckedTasksActionsProps> = ({ checkedTasks, setCheckedTasks, page }) => {
   const labelList = useAppSelector(({ todoApp }) => todoApp.labelList);
 
   const router = useRouter();
   const { all } = router.query;
-  let folder = "";
-  let label = "";
+  let folder = '';
+  let label = '';
   if (all?.length === 2) {
     label = all[1];
   } else if (all?.length === 1) {
@@ -38,10 +31,8 @@ const CheckedTasksActions: React.FC<CheckedTasksActionsProps> = ({
   const dispatch = useAppDispatch();
 
   const onDeleteTasks = () => {
-    if (folder)
-      dispatch(onDeleteSelectedTasks(checkedTasks, "folder", folder, page));
-    if (label)
-      dispatch(onDeleteSelectedTasks(checkedTasks, "label", label, page));
+    if (folder) dispatch(onDeleteSelectedTasks(checkedTasks, 'folder', folder, page));
+    if (label) dispatch(onDeleteSelectedTasks(checkedTasks, 'label', label, page));
 
     setCheckedTasks([]);
   };
@@ -60,16 +51,10 @@ const CheckedTasksActions: React.FC<CheckedTasksActionsProps> = ({
 
   return (
     <StyledTodoHeaderCheckedAction>
-      <AppsDeleteIcon
-        deleteAction={onDeleteTasks}
-        deleteTitle={<IntlMessages id="todo.deleteMessage" />}
-      />
+      <AppsDeleteIcon deleteAction={onDeleteTasks} deleteTitle={<IntlMessages id="todo.deleteMessage" />} />
 
-      <Dropdown menu={{ items: menuLabel }} trigger={["click"]}>
-        <AppIconButton
-          title={<IntlMessages id="common.label" />}
-          icon={<MdLabelOutline />}
-        />
+      <Dropdown menu={{ items: menuLabel }} trigger={['click']}>
+        <AppIconButton title={<IntlMessages id="common.label" />} icon={<MdLabelOutline />} />
       </Dropdown>
     </StyledTodoHeaderCheckedAction>
   );

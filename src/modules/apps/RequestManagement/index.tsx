@@ -1,32 +1,30 @@
-import React, { useEffect, useState } from "react";
-import AppsContainer from "@crema/components/AppsContainer";
-import { useIntl } from "react-intl";
-import AppsHeader from "@crema/components/AppsContainer/AppsHeader";
-import AppsContent from "@crema/components/AppsContainer/AppsContent";
-import AppInfoView from "@crema/components/AppInfoView";
-import { Input } from "antd";
-import Link from "next/link";
-import AppPageMeta from "@crema/components/AppPageMeta";
+import React, { useEffect, useState } from 'react';
+import AppsContainer from '@crema/components/AppsContainer';
+import { useIntl } from 'react-intl';
+import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
+import AppsContent from '@crema/components/AppsContainer/AppsContent';
+import AppInfoView from '@crema/components/AppInfoView';
+import { Input } from 'antd';
+import Link from 'next/link';
+import AppPageMeta from '@crema/components/AppPageMeta';
 import {
   StyledOrderFooterPagination,
   StyledOrderHeader,
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
   StyledOrderHeaderRight,
-  StyledLinkBtn
-} from "./index.styled";
-import { useAppSelector, useAppDispatch } from "../../../toolkit/hooks";
-import { getRecentOrders } from "../../../toolkit/actions";
-import { RequestTable } from "@crema/modules/RequestManagement/index";
+  StyledLinkBtn,
+} from './index.styled';
+import { useAppSelector, useAppDispatch } from '../../../toolkit/hooks';
+import { getRecentOrders } from '../../../toolkit/actions';
+import { RequestTable } from '@crema/modules/RequestManagement/index';
 
 const RequestManagement = () => {
   const { messages } = useIntl();
   const [page, setPage] = useState<number>(1);
-  const [search, setSearchQuery] = useState("");
+  const [search, setSearchQuery] = useState('');
   const dispatch = useAppDispatch();
-  const recentOrders = useAppSelector(
-    ({ ecommerce }) => ecommerce.recentOrders
-  );
+  const recentOrders = useAppSelector(({ ecommerce }) => ecommerce.recentOrders);
   const orderCount = useAppSelector(({ ecommerce }) => ecommerce.orderCount);
   const loading = useAppSelector(({ common }) => common.loading);
 
@@ -46,32 +44,18 @@ const RequestManagement = () => {
   return (
     <>
       <AppPageMeta title="Request Management" />
-      <AppsContainer
-        title={messages["requestManagement.loaRequest"] as string}
-        type="bottom"
-        fullView
-      >
+      <AppsContainer title={messages['requestManagement.loaRequest'] as string} type="bottom" fullView>
         <AppsHeader>
           <StyledOrderHeader>
             <StyledOrderHeaderInputView>
-              <Input
-                id="user-name"
-                placeholder="Search"
-                type="search"
-                onChange={onSearchOrder}
-              />
+              <Input id="user-name" placeholder="Search" type="search" onChange={onSearchOrder} />
             </StyledOrderHeaderInputView>
             <StyledOrderHeaderRight>
               <StyledLinkBtn type="primary">
                 <Link href="/ecommerce/products">Request Modal</Link>
               </StyledLinkBtn>
 
-              <StyledOrderHeaderPagination
-                pageSize={10}
-                count={orderCount}
-                page={page}
-                onChange={onChange}
-              />
+              <StyledOrderHeaderPagination pageSize={10} count={orderCount} page={page} onChange={onChange} />
             </StyledOrderHeaderRight>
           </StyledOrderHeader>
         </AppsHeader>
@@ -85,12 +69,7 @@ const RequestManagement = () => {
           <RequestTable loading={loading} orderData={recentOrders || []} />
         </AppsContent>
 
-        <StyledOrderFooterPagination
-          pageSize={10}
-          count={orderCount}
-          page={page}
-          onChange={onChange}
-        />
+        <StyledOrderFooterPagination pageSize={10} count={orderCount} page={page} onChange={onChange} />
       </AppsContainer>
       <AppInfoView />
     </>

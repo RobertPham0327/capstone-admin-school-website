@@ -1,9 +1,9 @@
-import React from "react";
-import { Form, Select } from "antd";
-import { useIntl } from "react-intl";
-import { StyledTodoChStaffAvatar } from "../index.styled";
-import { useAppSelector } from "../../../../../toolkit/hooks";
-import { StaffObjType } from "@crema/types/models/apps/Todo";
+import React from 'react';
+import { Form, Select } from 'antd';
+import { useIntl } from 'react-intl';
+import { StyledTodoChStaffAvatar } from '../index.styled';
+import { useAppSelector } from '../../../../../toolkit/hooks';
+import { StaffObjType } from '@crema/types/models/apps/Todo';
 const { Option } = Select;
 
 type ChangeStaffProps = {
@@ -13,10 +13,7 @@ type ChangeStaffProps = {
   handleStaffChange: (value: number) => void;
 };
 
-const ChangeStaff: React.FC<ChangeStaffProps> = ({
-  selectedStaff,
-  handleStaffChange,
-}) => {
+const ChangeStaff: React.FC<ChangeStaffProps> = ({ selectedStaff, handleStaffChange }) => {
   const staffList = useAppSelector(({ todoApp }) => todoApp.staffList);
 
   const { messages } = useIntl();
@@ -24,7 +21,7 @@ const ChangeStaff: React.FC<ChangeStaffProps> = ({
     <Form.Item className="form-field">
       <Select
         defaultValue={selectedStaff?.id}
-        placeholder={messages["common.staff"] as string}
+        placeholder={messages['common.staff'] as string}
         onSelect={handleStaffChange}
         style={{ minWidth: 150 }}
       >
@@ -35,9 +32,7 @@ const ChangeStaff: React.FC<ChangeStaffProps> = ({
                 {staff.image ? (
                   <StyledTodoChStaffAvatar src={staff.image} />
                 ) : (
-                  <StyledTodoChStaffAvatar>
-                    {staff.name.toUpperCase()}
-                  </StyledTodoChStaffAvatar>
+                  <StyledTodoChStaffAvatar>{staff.name.toUpperCase()}</StyledTodoChStaffAvatar>
                 )}
                 <span>{staff.name}</span>
               </div>

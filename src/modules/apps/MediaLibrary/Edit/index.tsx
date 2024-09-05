@@ -1,11 +1,11 @@
-import AppLoader from "@crema/components/AppLoader";
-import AppAnimate from "@crema/components/AppAnimate";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { isEmptyObject } from "@crema/helpers/ApiHelper";
-import CreateMediaLibrary from "../CreateMediaLibrary";
-import { useAppSelector, useAppDispatch } from "../../../../toolkit/hooks";
-import { getBlogDetail } from "../../../../toolkit/actions";
+import AppLoader from '@crema/components/AppLoader';
+import AppAnimate from '@crema/components/AppAnimate';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { isEmptyObject } from '@crema/helpers/ApiHelper';
+import CreateMediaLibrary from '../CreateMediaLibrary';
+import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
+import { getBlogDetail } from '../../../../toolkit/actions';
 
 const BlogEditPage = () => {
   const { query } = useRouter();

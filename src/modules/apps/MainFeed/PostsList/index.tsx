@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import PostItem from "./PostItem";
-import { StyledPostList } from "./index.styled";
-import { PostObjType, WallDataType } from "@crema/types/models/apps/Wall";
-import { useAppSelector, useAppDispatch } from "../../../../toolkit/hooks";
-import { onGetPostsList } from "../../../../toolkit/actions";
+import React, { useEffect } from 'react';
+import PostItem from './PostItem';
+import { StyledPostList } from './index.styled';
+import { PostObjType, WallDataType } from '@crema/types/models/apps/Wall';
+import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
+import { onGetPostsList } from '../../../../toolkit/actions';
 
 type PostListsProps = {
   wallData: WallDataType;
@@ -21,12 +21,7 @@ const PostsList: React.FC<PostListsProps> = ({ wallData }) => {
     <StyledPostList
       data={postList}
       renderItem={(post: PostObjType, index: number) => (
-        <PostItem
-          key={index}
-          post={post}
-          wallData={wallData}
-          isLast={postList.length - 1 === index}
-        />
+        <PostItem key={index} post={post} wallData={wallData} isLast={postList.length - 1 === index} />
       )}
     />
   );

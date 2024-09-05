@@ -39,8 +39,8 @@ const AuthWrapper = ({ children }: Props) => {
               </StyledAuthMainContent>
               <StyledAuthWellAction>
                 <StyledAuthWelContent>
-                <h2>Welcome to Mykidz</h2>
-                <p>Mykidz is a platform for parents to manage their children's activities.</p>
+                  <h2>Welcome to Mykidz</h2>
+                  <p>Mykidz is a platform for parents to manage their children's activities.</p>
                 </StyledAuthWelContent>
               </StyledAuthWellAction>
             </StyledAuthCard>

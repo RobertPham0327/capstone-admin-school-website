@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { PiChalkboardTeacher, PiStudentFill, PiUser } from "react-icons/pi";
 import { MdOutlineFeed } from "react-icons/md";
 import { GoGitPullRequest } from "react-icons/go";
@@ -65,12 +66,12 @@ const routesConfig = [
       },
       {
         id: 'media_library',
-        title: "Media Library",
-        messageId: "sidebar.mediaLibrary",
-        type: "collapse",
+        title: 'Media Library',
+        messageId: 'sidebar.mediaLibrary',
+        type: 'collapse',
         icon: <MdOutlinePermMedia />,
-        path: "/apps/media-library",
-      }
+        path: '/apps/media-library',
+      },
     ],
   },
 ];

@@ -1,16 +1,16 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import CheckedTasksActions from "./CheckedTasksActions";
-import { Checkbox } from "antd";
+import React from 'react';
+import { useIntl } from 'react-intl';
+import CheckedTasksActions from './CheckedTasksActions';
+import { Checkbox } from 'antd';
 import {
   StyledContentHeader,
   StyledTodoHeaderCheckboxView,
   StyledTodoHeaderPagination,
   StyledTodoSearch,
-} from "../index.styled";
-import { SelectTasksDropdown } from "@crema/modules/Notification";
+} from '../index.styled';
+import { SelectTasksDropdown } from '@crema/modules/Notification';
 
-import { TodoObjType } from "@crema/types/models/apps/Todo";
+import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskContentHeaderProps = {
   taskLists: TodoObjType[];
@@ -34,7 +34,7 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
 }) => {
   const onHandleMasterCheckbox = (event: any) => {
     if (event.target.checked) {
-      const taskIds = taskLists?.map((task) => task.id);
+      const taskIds = taskLists?.map(task => task.id);
       setCheckedTasks(taskIds);
     } else {
       setCheckedTasks([]);
@@ -44,22 +44,18 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
   const onSelectTasks = (value: number) => {
     switch (value) {
       case 0:
-        setCheckedTasks(taskLists?.map((task) => task.id));
+        setCheckedTasks(taskLists?.map(task => task.id));
         break;
       case 1:
         setCheckedTasks([]);
         break;
 
       case 2:
-        setCheckedTasks(
-          taskLists?.filter((task) => task.isStarred).map((task) => task.id)
-        );
+        setCheckedTasks(taskLists?.filter(task => task.isStarred).map(task => task.id));
         break;
 
       case 3:
-        setCheckedTasks(
-          taskLists?.filter((task) => task.isAttachment).map((task) => task.id)
-        );
+        setCheckedTasks(taskLists?.filter(task => task.isAttachment).map(task => task.id));
         break;
 
       default:
@@ -74,13 +70,8 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
       <StyledContentHeader>
         <StyledTodoHeaderCheckboxView>
           <Checkbox
-            indeterminate={
-              checkedTasks?.length > 0 &&
-              checkedTasks?.length < taskLists?.length
-            }
-            checked={
-              taskLists?.length > 0 && checkedTasks.length === taskLists?.length
-            }
+            indeterminate={checkedTasks?.length > 0 && checkedTasks?.length < taskLists?.length}
+            checked={taskLists?.length > 0 && checkedTasks.length === taskLists?.length}
             onChange={onHandleMasterCheckbox}
           />
         </StyledTodoHeaderCheckboxView>
@@ -89,26 +80,18 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
 
         <StyledTodoHeaderCheckboxView>
           {checkedTasks.length > 0 ? (
-            <CheckedTasksActions
-              checkedTasks={checkedTasks}
-              setCheckedTasks={setCheckedTasks}
-              page={page}
-            />
+            <CheckedTasksActions checkedTasks={checkedTasks} setCheckedTasks={setCheckedTasks} page={page} />
           ) : null}
         </StyledTodoHeaderCheckboxView>
 
         <StyledTodoSearch
-          placeholder={messages["common.searchHere"] as string}
+          placeholder={messages['common.searchHere'] as string}
           value={filterText}
-          onChange={(event) => onSetFilterText(event.target.value)}
+          onChange={event => onSetFilterText(event.target.value)}
         />
       </StyledContentHeader>
       {taskLists?.length > 0 && (
-        <StyledTodoHeaderPagination
-          count={taskLists?.length}
-          page={page}
-          onChange={onPageChange}
-        />
+        <StyledTodoHeaderPagination count={taskLists?.length} page={page} onChange={onPageChange} />
       )}
     </>
   );

@@ -17,7 +17,7 @@ import {
 
 const Notification = () => {
   const dispatch = useAppDispatch();
-  const { query } = useRouter();    
+  const { query } = useRouter();
 
   useEffect(() => {
     dispatch(onGetToDoLabelList());
@@ -49,10 +49,7 @@ const Notification = () => {
 
   const { messages } = useIntl();
   return (
-    <AppsContainer
-      title={messages['notification.title'] as string}
-      sidebarContent={<TaskSideBar />}
-    >
+    <AppsContainer title={messages['notification.title'] as string} sidebarContent={<TaskSideBar />}>
       <AppPageMeta title="Notifications" />
       {onGetMainComponent()}
     </AppsContainer>

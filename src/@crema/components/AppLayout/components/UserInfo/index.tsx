@@ -82,7 +82,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ hasColor }) => {
                       light: themeMode === 'light',
                     })}
                   >
-                    {user.displayName ? user.displayName : 'admin user '}
+                    {user.displayName ? user.displayName : 'Admin'}
                   </StyledUsername>
                   <StyledUserArrow className="cr-user-arrow">
                     <FaChevronDown />

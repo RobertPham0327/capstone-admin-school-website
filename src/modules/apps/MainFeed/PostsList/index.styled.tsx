@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import AppList from '@crema/components/AppList';
-import {
-  CommentOutlined,
-  LikeOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
-import { Avatar, Button, Input } from 'antd';
+import { CommentOutlined, LikeOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { Avatar, Button, Input, Image } from 'antd';
 import AppCard from '@crema/components/AppCard';
 import { rgba } from 'polished';
 
@@ -68,7 +64,7 @@ export const StyledPostItemUser = styled.div`
   align-items: center;
 `;
 
-export const StyledPostItemAvatar = styled(Avatar)`
+export const StyledPostItemAvatar = styled(Image)`
   width: 35px;
   height: 35px;
 
