@@ -13,49 +13,86 @@ import {
   StyledOrderHeaderInputView,
   StyledOrderHeaderPagination,
   StyledOrderHeaderRight,
-  StyledLinkBtn,
-} from './index.styled';
-import { useAppSelector, useAppDispatch } from '../../../toolkit/hooks';
-import { getRecentOrders } from '../../../toolkit/actions';
-import { RequestTable } from '@crema/modules/RequestManagement/index';
+  StyledLinkBtn
+} from "./index.styled";
+import { useAppSelector, useAppDispatch } from "../../../toolkit/hooks";
+import { getRecentOrders } from "../../../toolkit/actions";
+import { RequestTable } from "@crema/modules/RequestManagement/index";
+import { getAllRequests } from "@crema/services/api/requests";
+import type { Request } from "@crema/types/models/apps/Request";
 
 const RequestManagement = () => {
   const { messages } = useIntl();
   const [page, setPage] = useState<number>(1);
-  const [search, setSearchQuery] = useState('');
-  const dispatch = useAppDispatch();
-  const recentOrders = useAppSelector(({ ecommerce }) => ecommerce.recentOrders);
+  //const [search, setSearchQuery] = useState("");
+  // const dispatch = useAppDispatch();
+  // const recentOrders = useAppSelector(
+  //   ({ ecommerce }) => ecommerce.recentOrders
+  // );
   const orderCount = useAppSelector(({ ecommerce }) => ecommerce.orderCount);
-  const loading = useAppSelector(({ common }) => common.loading);
+  //const loading = useAppSelector(({ common }) => common.loading);
+
+  const [requests, setRequests] = useState<Request[]>([]);
+  const requestCount = requests.length;
 
   const onChange = (page: number) => {
     setPage(page);
   };
 
   useEffect(() => {
-    dispatch(getRecentOrders(search, page));
-  }, [dispatch, search, page]);
+    const fetchRequests = async () => {
+      try {
+        const fetchedRequests = await getAllRequests();
+        setRequests(fetchedRequests);
+        console.log(fetchedRequests);
+      } catch (error) {
+        console.error('Error fetching requests:', error);
+      }
+    };
 
-  const onSearchOrder = (e: any) => {
-    setSearchQuery(e.target.value);
-    setPage(0);
-  };
+    fetchRequests();
+  }, []);
+
+
+
+  // useEffect(() => {
+  //   dispatch(getRecentOrders(search, page));
+  // }, [dispatch, search, page]);
+
+  // const onSearchOrder = (e: any) => {
+  //   setSearchQuery(e.target.value);
+  //   setPage(0);
+  // };
 
   return (
     <>
       <AppPageMeta title="Request Management" />
-      <AppsContainer title={messages['requestManagement.loaRequest'] as string} type="bottom" fullView>
+      <AppsContainer
+        title={"Requests"}
+        type="bottom"
+        fullView
+      >
         <AppsHeader>
           <StyledOrderHeader>
-            <StyledOrderHeaderInputView>
-              <Input id="user-name" placeholder="Search" type="search" onChange={onSearchOrder} />
-            </StyledOrderHeaderInputView>
+            {/* <StyledOrderHeaderInputView>
+              <Input
+                id="user-name"
+                placeholder="Search"
+                type="search"
+                onChange={onSearchOrder}
+              />
+            </StyledOrderHeaderInputView> */}
             <StyledOrderHeaderRight>
-              <StyledLinkBtn type="primary">
+              {/* <StyledLinkBtn type="primary">
                 <Link href="/ecommerce/products">Request Modal</Link>
-              </StyledLinkBtn>
+              </StyledLinkBtn> */}
 
-              <StyledOrderHeaderPagination pageSize={10} count={orderCount} page={page} onChange={onChange} />
+              <StyledOrderHeaderPagination
+                pageSize={10}
+                count={requestCount}
+                page={page}
+                onChange={onChange}
+              />
             </StyledOrderHeaderRight>
           </StyledOrderHeader>
         </AppsHeader>
@@ -66,10 +103,15 @@ const RequestManagement = () => {
             paddingBottom: 10,
           }}
         >
-          <RequestTable loading={loading} orderData={recentOrders || []} />
+          <RequestTable loading={false} orderData={requests || []} />
         </AppsContent>
 
-        <StyledOrderFooterPagination pageSize={10} count={orderCount} page={page} onChange={onChange} />
+        <StyledOrderFooterPagination
+          pageSize={10}
+          count={requestCount}
+          page={page}
+          onChange={onChange}
+        />
       </AppsContainer>
       <AppInfoView />
     </>

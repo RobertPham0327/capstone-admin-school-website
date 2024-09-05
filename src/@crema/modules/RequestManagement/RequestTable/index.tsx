@@ -1,53 +1,49 @@
-import React from 'react';
-import OrderActions from './RequestActions';
-import { StyledOrderId, StyledOrderTable } from '../index.styled';
-import type { ColumnsType } from 'antd/es/table';
-import type { RecentOrdersType } from '@crema/types/models/ecommerce/EcommerceApp';
+import React from "react";
+import RequestActions from "./RequestActions";
+import { StyledOrderId, StyledOrderTable } from "../index.styled";
+import type { ColumnsType } from "antd/es/table";
+import type { RecentOrdersType } from "@crema/types/models/ecommerce/EcommerceApp";
+import type { Request } from "@crema/types/models/apps/Request";
 
 const getPaymentStatusColor = (status: string) => {
   switch (status) {
-    case 'Pending': {
-      return '#E2A72E';
+    case "pending": {
+      return "#E2A72E";
     }
-    case 'Delivered': {
-      return '#43C888';
+    case "approved": {
+      return "#43C888";
     }
     default: {
       return '#F84E4E';
     }
   }
 };
-const columns: ColumnsType<RecentOrdersType> = [
+const columns: ColumnsType<Request> = [
   {
-    title: 'Order ID',
-    dataIndex: 'id',
-    key: 'id',
-    render: id => <StyledOrderId>{id}</StyledOrderId>,
+    title: "Request ID",
+    dataIndex: "id",
+    key: "id",
+    render: (id) => <StyledOrderId>{id}</StyledOrderId>,
   },
   {
-    title: 'Product',
-    dataIndex: 'product',
-    key: 'product',
+    title: "Type",
+    dataIndex: "request_type",
+    key: "request_type"
   },
   {
-    title: 'Customer',
-    dataIndex: 'customer',
-    key: 'customer',
+    title: "Student ID",
+    dataIndex: "student_id",
+    key: "student_id",
   },
   {
-    title: 'Delivery Date',
-    dataIndex: 'date',
-    key: 'date',
-  },
-  {
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
-  },
-  {
-    title: 'Payment Method',
-    dataIndex: 'paymentType',
-    key: 'paymentType',
+    title: "Date",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (created_at: Date) => (
+      <span>
+        {new Date(created_at).toLocaleString()}
+      </span>
+    )
   },
   {
     title: 'Status',
@@ -61,7 +57,7 @@ const columns: ColumnsType<RecentOrdersType> = [
           backgroundColor: getPaymentStatusColor(status) + '44',
         }}
       >
-        {status}
+        {status.toUpperCase()}
       </span>
     ),
   },
@@ -76,7 +72,7 @@ const columns: ColumnsType<RecentOrdersType> = [
 ];
 
 type Props = {
-  orderData: RecentOrdersType[];
+  orderData: Request[];
   loading: boolean;
 };
 const RequestTable = ({ orderData, loading }: Props) => {
