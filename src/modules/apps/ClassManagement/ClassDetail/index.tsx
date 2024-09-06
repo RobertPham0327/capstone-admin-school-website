@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledPlusOutlined, StyledTeacherInfor, StyledTitle } from '../ClassDetail/index.styled'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks'
-import { addStudentData, deleteClassData, getClassStudentList, updateClassData } from '@/toolkit/actions/ClassManagement'
+import { addStudentData, deleteClassData, updateClassData, getClassProfileData } from '@/toolkit/actions/ClassManagement'
 import AppIconButton from '@/@crema/components/AppIconButton'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import dayjs from 'dayjs'
@@ -58,10 +58,10 @@ const ClassDetail = () => {
 
   const dispatch = useAppDispatch();
 
-  const { currentStudentList, currentClass } = useAppSelector(({ classManagement }) => classManagement);
+  const { currentClass } = useAppSelector(({ classManagement }) => classManagement);
 
   useEffect(() => {
-    dispatch(getClassStudentList(Number(classId)));
+    dispatch(getClassProfileData(Number(classId)));
   }, [dispatch, classId]);
 
   const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
@@ -105,7 +105,7 @@ const ClassDetail = () => {
       parentPhone: values.parentPhone,
     }
     console.log(studentData);
-    dispatch(addStudentData(classId as unknown as number, studentData));
+    dispatch(addStudentData(Number(classId), studentData));
     setNewStudentModalVisible(false);
   }
 
@@ -140,7 +140,7 @@ const ClassDetail = () => {
         <Col xs={24} lg={24}>
           <AppCard>
             <StyledContainer>
-              <StyledAvatar src="https://www.spencerclarkegroup.co.uk/uploads/5005001.png" />
+              <StyledAvatar src={currentClass?.teacher_avatar} />
               <StyledTeacherInfor>
                 <h3>{currentClass?.teacher_name || "Unknown"}</h3>
                 <p>Class coordinator</p>
@@ -152,7 +152,7 @@ const ClassDetail = () => {
           <AppCard title={'Class information'}>
             <Descriptions>
               <Descriptions.Item label='Class name'>{currentClass?.class_name || "Unknown"}</Descriptions.Item>
-              <Descriptions.Item label='Classroom'>{currentClass?.class_room || 'Unknown'}</Descriptions.Item>
+              <Descriptions.Item label='Classroom'>{currentClass?.location_name || 'Unknown'}</Descriptions.Item>
               <Descriptions.Item label='School year'>{currentClass?.school_year || 'Unknown'}</Descriptions.Item>
             </Descriptions>
           </AppCard>
@@ -168,7 +168,7 @@ const ClassDetail = () => {
           <AppCard
             title={'Student list'}
           >
-            <StudentList data={currentStudentList || []} loading={false} classId={Number(classId)} />
+            <StudentList data={currentClass?.student_list || []} loading={false} classId={Number(classId)} />
           </AppCard>
         </Col>
       </AppRowContainer>
@@ -248,20 +248,12 @@ const ClassDetail = () => {
           {...formItemLayout}
           onValuesChange={onUpdateClassValuesChanged}
           onFinish={onUpdateClassFormSubmit}
-          initialValues={{ name: currentClass?.class_name, classroom: currentClass?.class_room, startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'), endSchoolYear: dayjs(endSchoolYearStr, 'YYYY') }}
+          initialValues={{ name: currentClass?.class_name, classroom: currentClass?.location_name, startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'), endSchoolYear: dayjs(endSchoolYearStr, 'YYYY') }}
         >
           <Form.Item
             label="Class name"
             name="name"
           // rules={[{ required: true, message: 'Please input a class name!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Class room"
-            name="classroom"
-          // rules={[{ required: true, message: 'Please input classroom!' }]}
           >
             <Input />
           </Form.Item>

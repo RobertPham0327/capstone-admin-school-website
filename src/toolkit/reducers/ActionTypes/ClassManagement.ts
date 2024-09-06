@@ -23,10 +23,13 @@ import {
   GET_EATING_SCHEDULE,
   ADD_EATING_SCHEDULE,
   UPDATE_EATING_SCHEDULE,
-  DELETE_EATING_SCHEDULE
+  DELETE_EATING_SCHEDULE,
+  GET_ALL_LOCATIONS,
+  GET_ALL_SUBJECTS,
+  GET_CLASS_PROFILE
 } from '@/@crema/types/actions/ClassManagement.actions';
 
-import { ClassDataType, ClassScheduleDataType, ClassStudentDataType, EatingScheduleDataType, TeacherDataType, TeacherProfileDataType } from '@/@crema/types/models/apps/ClassManagement';
+import { ClassDataType, ClassProfileDataType, ClassScheduleDataType, ClassStudentDataType, EatingScheduleDataType, LocationDataType, SubjectDataType, TeacherDataType, TeacherProfileDataType } from '@/@crema/types/models/apps/ClassManagement';
 
 export const GetAllClassesAction = createAction<ClassDataType[]>(GET_ALL_CLASSES);
 
@@ -36,7 +39,7 @@ export const UpdateClassAction = createAction<ClassDataType>(UPDATE_CLASS);
 
 export const DeleteClassAction = createAction<number>(DELETE_CLASS);
 
-export const GetClassStudentsAction = createAction<{studentList: ClassStudentDataType[]; classId: number}>(GET_CLASS_STUDENTS);
+export const GetClassProfileAction = createAction<ClassProfileDataType>(GET_CLASS_PROFILE);
 
 export const GetStudentAction = createAction<any>(GET_STUDENT);
 
@@ -75,5 +78,9 @@ export const AddEatingScheduleAction = createAction<EatingScheduleDataType>(ADD_
 export const UpdateEatingScheduleAction = createAction<EatingScheduleDataType>(UPDATE_EATING_SCHEDULE);
 
 export const DeleteEatingScheduleAction = createAction<number>(DELETE_EATING_SCHEDULE);
+
+export const GetAllLocationsAction = createAction<LocationDataType[]>(GET_ALL_LOCATIONS);
+
+export const GetAllSubjectsAction = createAction<SubjectDataType[]>(GET_ALL_SUBJECTS);
 
 

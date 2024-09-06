@@ -1,9 +1,12 @@
 import {
   ClassDataType,
+  ClassProfileDataType,
   ClassScheduleDataType,
   ClassStudentDataType,
   EatingScheduleDataType,
+  LocationDataType,
   StudentProfileDataType,
+  SubjectDataType,
   TeacherDataType,
   TeacherProfileDataType,
 } from '../models/apps/ClassManagement';
@@ -14,6 +17,7 @@ export const ADD_CLASS = 'ADD_CLASS';
 export const UPDATE_CLASS = 'UPDATE_CLASS';
 export const DELETE_CLASS = 'DELETE_CLASS';
 export const GET_CLASS_STUDENTS = 'GET_CLASS_STUDENTS';
+export const GET_CLASS_PROFILE = 'GET_CLASS_PROFILE';
 
 // Student actions
 export const GET_STUDENT = 'GET_STUDENT';
@@ -35,12 +39,18 @@ export const ADD_CLASS_SCHEDULE = 'ADD_CLASS_SCHEDULE';
 export const UPDATE_CLASS_SCHEDULE = 'UPDATE_CLASS_SCHEDULE';
 export const DELETE_CLASS_SCHEDULE = 'DELETE_CLASS_SCHEDULE';
 
-// Eating schedule actions
+// Meal schedule actions
 export const GET_ALL_EATING_SCHEDULES = 'GET_ALL_EATING_SCHEDULES';
 export const GET_EATING_SCHEDULE = 'GET_EATING_SCHEDULE';
 export const ADD_EATING_SCHEDULE = 'ADD_EATING_SCHEDULE';
 export const UPDATE_EATING_SCHEDULE = 'UPDATE_EATING_SCHEDULE';
 export const DELETE_EATING_SCHEDULE = 'DELETE_EATING_SCHEDULE';
+
+// Location action
+export const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS';
+
+// Subject action
+export const GET_ALL_SUBJECTS = 'GET_ALL_SUBJECTS';
 
 export type GetAllClassesAction = {
   type: typeof GET_ALL_CLASSES;
@@ -62,10 +72,10 @@ export type DeleteClassAction = {
   payload: number;
 };
 
-export type GetClassStudentsAction = {
-  type: typeof GET_CLASS_STUDENTS;
-  payload: { studentList: ClassStudentDataType[]; classId: number };
-};
+export type GetClassProfileAction = {
+  type: typeof GET_CLASS_PROFILE;
+  payload: ClassProfileDataType;
+}
 
 export type GetStudentAction = {
   type: typeof GET_STUDENT;
@@ -114,60 +124,70 @@ export type DeleteTeacherAction = {
 
 export type GetAllClassSchedulesAction = {
   type: typeof GET_ALL_CLASS_SCHEDULES;
-  payload: {classScheduleList: ClassScheduleDataType[]; classId: number};
-}
+  payload: { classScheduleList: ClassScheduleDataType[]; classId: number };
+};
 
 export type GetClassScheduleAction = {
   type: typeof GET_CLASS_SCHEDULE;
   payload: ClassScheduleDataType;
-}
+};
 
 export type AddClassScheduleAction = {
   type: typeof ADD_CLASS_SCHEDULE;
   payload: ClassScheduleDataType;
-}
+};
 
 export type UpdateClassScheduleAction = {
   type: typeof UPDATE_CLASS_SCHEDULE;
   payload: ClassScheduleDataType;
-}
+};
 
 export type DeleteClassScheduleAction = {
   type: typeof DELETE_CLASS_SCHEDULE;
   payload: number;
-}
+};
 
 export type GetAllEatingSchedulesAction = {
   type: typeof GET_ALL_EATING_SCHEDULES;
-  payload: {eatingScheduleList: EatingScheduleDataType[], classId: number};
-}
+  payload: { eatingScheduleList: EatingScheduleDataType[]; classId: number };
+};
 
 export type GetEatingScheduleAction = {
   type: typeof GET_EATING_SCHEDULE;
   payload: EatingScheduleDataType;
-}
+};
 
 export type AddEatingScheduleAction = {
   type: typeof ADD_EATING_SCHEDULE;
   payload: EatingScheduleDataType;
-}
+};
 
 export type UpdateEatingScheduleAction = {
   type: typeof UPDATE_EATING_SCHEDULE;
   payload: EatingScheduleDataType;
-}
+};
 
 export type DeleteEatingScheduleAction = {
   type: typeof DELETE_EATING_SCHEDULE;
   payload: number;
-}
+};
+
+export type GetAllLocationsAction = {
+  type: typeof GET_ALL_LOCATIONS;
+  payload: LocationDataType[];
+};
+
+export type GetAllSubjectsAction = {
+  type: typeof GET_ALL_SUBJECTS;
+  payload: SubjectDataType[];
+};
 
 export type ClassManagementActions =
   | GetAllClassesAction
   | AddClassAction
   | UpdateClassAction
   | DeleteClassAction
-  | GetClassStudentsAction
+  | GetClassProfileAction
   | GetStudentAction
   | AddStudentAction
   | UpdateStudentAction
@@ -186,4 +206,6 @@ export type ClassManagementActions =
   | GetEatingScheduleAction
   | AddEatingScheduleAction
   | UpdateEatingScheduleAction
-  | DeleteEatingScheduleAction;
+  | DeleteEatingScheduleAction
+  | GetAllLocationsAction
+  | GetAllSubjectsAction;

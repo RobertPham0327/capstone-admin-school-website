@@ -18,7 +18,7 @@ import { MinusOutlined, UploadOutlined } from '@ant-design/icons';
 import AppIconButton from '@/@crema/components/AppIconButton';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import dayjs from 'dayjs';
-import { addEatingScheduleData, deleteEatingScheduleData, getAllEatingSchedulesData, updateEatingScheduleData } from '@/toolkit/actions/ClassManagement';
+import { addEatingScheduleData, deleteEatingScheduleData, getAllEatingSchedulesData, getAllLocationData, updateEatingScheduleData } from '@/toolkit/actions/ClassManagement';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
@@ -208,9 +208,10 @@ const EatingSchedule = () => {
 
   useEffect(() => {
     dispatch(getAllEatingSchedulesData(Number(classId)));
+    dispatch(getAllLocationData())
   }, [dispatch]);
 
-  const { eatingScheduleList } = useAppSelector(state => state.classManagement); 
+  const { eatingScheduleList, locationList } = useAppSelector(state => state.classManagement); 
 
   const onAddNewEvent = (values: any) => {
     dispatch(addEatingScheduleData(Number(classId), values))
@@ -341,7 +342,13 @@ const EatingSchedule = () => {
             name="location"
             rules={[{ required: true, message: 'Please input location name!' }]}
           >
-            <Input placeholder='Select a location' />
+            <Select>
+              {
+                locationList.map(location => (
+                  <Option key={location.id} value={location.id}>{location.name}</Option>
+                ))
+              }
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -461,7 +468,13 @@ const EatingSchedule = () => {
             name="location"
           // rules={[{ required: true, message: 'Please input location name!' }]}
           >
-            <Input bordered={isUpdateEventOpen} />
+            <Select bordered={isUpdateEventOpen}>
+              {
+                locationList.map(location => (
+                  <Option key={location.id} value={location.id}>{location.name}</Option>
+                ))
+              }
+            </Select>
           </Form.Item>
 
           <Form.Item

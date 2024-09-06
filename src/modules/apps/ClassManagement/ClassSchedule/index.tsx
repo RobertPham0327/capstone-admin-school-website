@@ -9,7 +9,7 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
 import { useRouter } from 'next/router';
-import { Button, Col, DatePicker, Descriptions, Form, Input, message, Modal, Space, Upload } from 'antd';
+import { Button, Col, DatePicker, Descriptions, Form, Input, message, Modal, Select, Space, Upload } from 'antd';
 import { getCurrentMonthDate, getIOStringDate } from '@crema/helpers/DateHelper';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
 import { StyledPlusOutlined, StyledTitle } from './index.styled';
@@ -19,7 +19,7 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import dayjs from 'dayjs';
 import { sampleClassScheduleList } from '../mockData';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
-import { addClassScheduleData, deleteClassScheduleData, getAllClassSchedulesData, updateClassScheduleData } from '@/toolkit/actions/ClassManagement';
+import { addClassScheduleData, deleteClassScheduleData, getAllClassSchedulesData, getAllLocationData, getAllSubjectData, getAllTeacherData, updateClassScheduleData } from '@/toolkit/actions/ClassManagement';
 
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
@@ -204,9 +204,12 @@ const ClassSchedule = () => {
 
   useEffect(() => {
     dispatch(getAllClassSchedulesData(Number(classId)));
+    dispatch(getAllSubjectData());
+    dispatch(getAllTeacherData());
+    dispatch(getAllLocationData());
   }, [dispatch]);
 
-  const { classScheduleList } = useAppSelector(state => state.classManagement);
+  const { classScheduleList, teacherList, subjectList, locationList } = useAppSelector(state => state.classManagement);
 
   const onAddNewEvent = (values: any) => {
     const newSchedule = {
@@ -287,7 +290,11 @@ const ClassSchedule = () => {
             name="title"
             rules={[{ required: true, message: 'Please input a subject name!' }]}
           >
-            <Input />
+            <Select>
+              {subjectList.map((subject: any) => (
+                <Select.Option key={subject.id} value={subject.id}>{subject.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -295,7 +302,11 @@ const ClassSchedule = () => {
             name="teacher"
             rules={[{ required: true, message: 'Please input teacher name!' }]}
           >
-            <Input />
+            <Select>
+              {teacherList.map((teacher: any) => (
+                <Select.Option key={teacher.id} value={teacher.id}>{teacher.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -303,7 +314,11 @@ const ClassSchedule = () => {
             name="location"
             rules={[{ required: true, message: 'Please input location name!' }]}
           >
-            <Input />
+            <Select>
+              {locationList.map((location: any) => (
+                <Select.Option key={location.id} value={location.id}>{location.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -377,7 +392,11 @@ const ClassSchedule = () => {
             name="title"
           // rules={[{ required: true, message: 'Please input event title!' }]}
           >
-            <Input value={selectedEvent?.title} bordered={isUpdateEventOpen} />
+            <Select bordered={isUpdateEventOpen}>
+              {subjectList.map((subject: any) => (
+                <Select.Option key={subject.id} value={subject.id}>{subject.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -385,7 +404,11 @@ const ClassSchedule = () => {
             name="teacher"
           // rules={[{ required: true, message: 'Please input event title!' }]}
           >
-            <Input bordered={isUpdateEventOpen} />
+            <Select bordered={isUpdateEventOpen}>
+              {teacherList.map((teacher: any) => (
+                <Select.Option key={teacher.id} value={teacher.id}>{teacher.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -393,7 +416,11 @@ const ClassSchedule = () => {
             name="location"
           // rules={[{ required: true, message: 'Please input event title!' }]}
           >
-            <Input bordered={isUpdateEventOpen} />
+            <Select bordered={isUpdateEventOpen}>
+              {locationList.map((location: any) => (
+                <Select.Option key={location.id} value={location.id}>{location.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item

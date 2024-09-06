@@ -62,9 +62,9 @@ export const deleteClass = async (classId: number) => {
   }
 };
 
-export const getAllStudent = async (classId: number) => {
+export const getClassProfile = async (classId: number) => {
   try {
-    const response = await axios.get(`/class/${classId}/students`);
+    const response = await axios.get(`/class/${classId}`);
     console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
@@ -451,3 +451,31 @@ export const deleteEatingSchedule = async (scheduleId: number) => {
     console.error(error);
   }
 };
+
+export const getAllLocations = async () => {
+  try {
+    const response = await axios.get('/location');
+    if (response.status === statusCodes.OK) {
+      return { data: response.data, status: response.status };
+    }
+  } catch (error) {
+    if (error.response) {
+      return { status: error.response.status };
+    }
+    console.error(error);
+  }
+}
+
+export const getAllSubjects = async () => {
+  try {
+    const response = await axios.get('/subject');
+    if (response.status === statusCodes.OK) {
+      return { data: response.data, status: response.status };
+    }
+  } catch (error) {
+    if (error.response) {
+      return { status: error.response.status };
+    }
+    console.error(error);
+  }
+}
