@@ -1,7 +1,8 @@
 import { ClassDataType, ClassStudentDataType } from '@/@crema/types/models/apps/ClassManagement';
-import axios from '@crema/services/axios';
+// import axios from '@crema/services/axios';
 import { statusCodes } from './constants';
 import { getIOStringDate } from '@/@crema/helpers/DateHelper';
+import axios from '../auth/jwt-auth';
 
 export const getAllClasses = async () => {
   try {

@@ -1,4 +1,5 @@
-import axios from '@crema/services/axios';
+// import axios from '@crema/services/axios';
+import axios from '../auth/jwt-auth';
 import { statusCodes } from './constants';
 
 export const getAllMedia = async () => {

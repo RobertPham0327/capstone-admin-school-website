@@ -9,6 +9,7 @@ import Carousel, { ModalGateway, Modal as ImageModal } from "react-images";
 import { title } from 'process';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 import { addNewMediaData, getAllMediaData } from '@/toolkit/actions/MediaManagement';
+import { get, size } from 'lodash';
 
 const { Dragger } = Upload;
 
@@ -137,12 +138,43 @@ const MediaList = () => {
         setViewerIsOpen(false);
     };
 
+    const getImageSize = (url: string) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          
+          // When the image is loaded, resolve the promise with its dimensions
+          img.onload = () => {
+            resolve({ width: img.width, height: img.height });
+          };
+          
+          // If there's an error loading the image, reject the promise
+          img.onerror = () => {
+            reject(new Error("Failed to load image"));
+          };
+      
+          // Set the source of the image to start loading
+          img.src = url;
+        });
+      }
+
     const formattedMediaList = (data: any) => {
         return data.map((media: any, index: any) => {
+            // getImageSize(media.url).then((size: any) => {
+            //     return {
+            //         src: media.url,
+            //         width: size.width,
+            //         height: size.height,
+            //         // title: media.title
+            //     }
+            // }).catch((error: any) => {
+            //     console.error(error);
+            //     return null;
+            // })
             return {
-                src: media?.url,
-                width: 3,
-                height: 2,
+                src: media.url,
+                width: 4,
+                height: 3,
+                // title: media.title
             }
         })
     }
