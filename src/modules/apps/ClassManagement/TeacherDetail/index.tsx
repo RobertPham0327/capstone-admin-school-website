@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledTeacherInfor, StyledTitle } from './index.styled'
 import AppRowContainer from '@crema/components/AppRowContainer'
-import { Col, Descriptions, Form, Input, Modal, Select, Space, Upload, Button, message } from 'antd'
+import { Col, Descriptions, Form, Input, Modal, Select, Space, Upload, Button, message, List } from 'antd'
 import AppCard from '@crema/components/AppCard'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks'
@@ -121,14 +121,30 @@ const TeacherDetail = () => {
                     }
                         style={{ padding: "10px" }}
                     >
-                        <Descriptions layout='vertical'>
-                            <Descriptions.Item label='Biography' span={3}>Unknown</Descriptions.Item>
-                            <Descriptions.Item label='Birthday'>Unknown</Descriptions.Item>
-                            <Descriptions.Item label='School'>{currentTeacher?.school_name}</Descriptions.Item>
+                        <Descriptions title='Information' layout='vertical'>
+                            <Descriptions.Item span={2} label='School'>{currentTeacher?.school_name}</Descriptions.Item>
                             <Descriptions.Item label='Contact'>
                                 {currentTeacher?.contact}
                             </Descriptions.Item>
                         </Descriptions>
+                    </AppCard>
+                </Col>
+                <Col xs={24} lg={24}>
+                    <AppCard title='Current Classes'>
+                        <List
+                            itemLayout='horizontal'
+                            dataSource={currentTeacher?.class_list}
+                            renderItem={item => (
+                                <List.Item>
+                                    <List.Item.Meta
+                                        title={`${item?.name}`}
+                                        description={<>
+                                            <div>Location: {item?.location_name}</div>
+                                        </>}
+                                    />
+                                </List.Item>
+                            )}
+                        />
                     </AppCard>
                 </Col>
             </AppRowContainer>

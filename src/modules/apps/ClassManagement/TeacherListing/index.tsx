@@ -56,6 +56,8 @@ const TeacherListing = () => {
 
   const [newTeacherModalVisible, setNewTeacherModalVisible] = useState(false);
 
+  const [filteredTeacherList, setFilteredTeacherList] = useState(null);
+
   const onNewTeacherValuesChanged = (changedValues: any, allValues: any) => {
     console.log(allValues)
   }
@@ -68,7 +70,7 @@ const TeacherListing = () => {
     message.success('Teacher added successfully!')
   }
 
-  const searchTeacher = (value: string) => { }
+  const [filterForm] = Form.useForm();
 
   return (
     <>
@@ -79,24 +81,29 @@ const TeacherListing = () => {
         </Col>
         <Col xs={24} lg={24}>
           <AppCard
-          title={
-            <AppsHeader>
-              <StyledOrderHeader>
-                <StyledOrderHeaderInputView>
-                  <StyledInputSearch
-                    id="user-name"
-                    placeholder="Search..."
-                    type="search"
-                    enterButton
-                    onChange={event => searchTeacher(event.target.value)}
-                  />
-                </StyledOrderHeaderInputView>
-                {/* <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} /> */}
-              </StyledOrderHeader>
-            </AppsHeader>
-          }
+            title={
+              <AppsHeader>
+                <StyledOrderHeader>
+                  <StyledOrderHeaderInputView>
+                    <StyledInputSearch
+                      placeholder='Search teacher'
+                      enterButton
+                      onChange={(e) => {
+                        const searchValue = e.target.value;
+                        if (searchValue) {
+                          const filteredData = teacherList.filter((item: any) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+                          setFilteredTeacherList(filteredData);
+                        } else {
+                          setFilteredTeacherList(null);
+                        }
+                      }}
+                    />
+                  </StyledOrderHeaderInputView>
+                </StyledOrderHeader>
+              </AppsHeader>
+            }
           >
-            <TeacherList data={teacherList || []} loading={false} />
+            <TeacherList data={filteredTeacherList || teacherList || []} loading={false} />
           </AppCard>
         </Col>
       </AppRowContainer>
@@ -114,7 +121,7 @@ const TeacherListing = () => {
             label="Name"
             name="name"
             rules={[{ required: true, message: 'Please input teacher name!' }]}>
-            <Input placeholder='Teacher name'/>
+            <Input placeholder='Teacher name' />
           </Form.Item>
 
           {/* <Form.Item
@@ -124,7 +131,7 @@ const TeacherListing = () => {
             <DatePicker format={"YYYY-MM-DD"} />
           </Form.Item> */}
 
-          <Form.Item
+          {/* <Form.Item
             label="Gender"
             name="gender"
             rules={[{ required: true, message: 'Please select a gender!' }]}>
@@ -136,7 +143,7 @@ const TeacherListing = () => {
               <Option value='Male'>Male</Option>
               <Option value='Female'>Female</Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           {/* <Form.Item
             label="Email"
@@ -149,13 +156,13 @@ const TeacherListing = () => {
             label="Phone"
             name="contact"
             rules={[{ required: true, message: 'Please input teacher phone!' }]}>
-            <Input placeholder='Phone number'/>
+            <Input placeholder='Phone number' />
           </Form.Item>
 
           <Form.Item
             label="Avatar"
             name="avatar"
-            // rules={[{ required: false, message: 'Please upload an image!' }]}
+          // rules={[{ required: false, message: 'Please upload an image!' }]}
           >
             <Upload maxCount={1}>
               <Button icon={<UploadOutlined />}>Upload Image</Button>

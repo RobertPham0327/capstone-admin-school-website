@@ -6,6 +6,7 @@ const jwtAxios = axios.create({
   baseURL: 'http://18.140.148.120:8082/api/v1/',
   headers: {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   },
   withCredentials: false,
 });

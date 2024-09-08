@@ -4,7 +4,9 @@ import {
   ClassScheduleDataType,
   ClassStudentDataType,
   EatingScheduleDataType,
+  LocationDataType,
   StudentProfileDataType,
+  SubjectDataType,
   TeacherDataType,
   TeacherProfileDataType,
 } from '@crema/types/models/apps/ClassManagement';
@@ -23,9 +25,11 @@ import {
   GetAllClassesAction,
   GetAllClassSchedulesAction,
   GetAllEatingSchedulesAction,
+  GetAllLocationsAction,
+  GetAllSubjectsAction,
   GetAllTeachersAction,
+  GetClassProfileAction,
   GetClassScheduleAction,
-  GetClassStudentsAction,
   GetEatingScheduleAction,
   GetStudentAction,
   GetTeacherAction,
@@ -39,7 +43,6 @@ import {
 const initialState: {
   classList: ClassDataType[];
   currentClass: ClassProfileDataType | null;
-  currentStudentList: ClassStudentDataType[];
   teacherList: TeacherDataType[];
   currentTeacher: TeacherProfileDataType | null;
   currentStudent: StudentProfileDataType | null;
@@ -47,10 +50,11 @@ const initialState: {
   currentClassSchedule: ClassScheduleDataType | null;
   eatingScheduleList: EatingScheduleDataType[];
   currentEatingSchedule: EatingScheduleDataType;
+  locationList: LocationDataType[];
+  subjectList: SubjectDataType[];
 } = {
   classList: [],
   currentClass: null,
-  currentStudentList: [],
   teacherList: [],
   currentTeacher: null,
   currentStudent: null,
@@ -58,6 +62,8 @@ const initialState: {
   currentClassSchedule: null,
   eatingScheduleList: [],
   currentEatingSchedule: null,
+  locationList: [],
+  subjectList: [],
 };
 
 const classManagementReducer = createReducer(initialState, builder => {
@@ -84,26 +90,17 @@ const classManagementReducer = createReducer(initialState, builder => {
     .addCase(DeleteClassAction, (state, action) => {
       state.classList = state.classList.filter(item => item.id !== action.payload);
     })
-    .addCase(GetClassStudentsAction, (state, action) => {
-      const studentListData = action.payload?.studentList.map((student: any, index: any) => {
+    .addCase(GetClassProfileAction, (state, action) => {
+      const studentListData = action.payload.student_list.map((student: any, index: any) => {
         return {
           ...student,
           index: index + 1,
         };
       });
-      state.currentStudentList = studentListData;
-      const classData: ClassDataType = state.classList.find(item => item.id === action.payload.classId) || null;
       state.currentClass = {
-        ...state.currentClass,
-        teacher_id: classData?.teacher_id,
-        teacher_name: classData?.teacher_name,
-        // teacher_avatar: 'string',
-        class_name: classData?.name,
-        class_room: classData?.class_room,
-        school_year: classData?.school_year,
-        studentList: studentListData,
+        ...action.payload,
+        student_list: studentListData,
       };
-      console.log("Current class:", state.currentClass);
     })
     .addCase(GetStudentAction, (state, action) => {
       state.currentStudent = action.payload;
@@ -111,20 +108,17 @@ const classManagementReducer = createReducer(initialState, builder => {
     .addCase(AddStudentAction, (state, action) => {
       const newStudent = {
         ...action.payload,
-        index: state.currentStudentList.length + 1,
+        index: state.currentClass.student_list.length + 1,
       };
-      state.currentStudentList.push(newStudent);
-      state.currentClass.studentList.push(newStudent);
+      state.currentClass.student_list.push(newStudent);
     })
     .addCase(UpdateStudentAction, (state, action) => {
-      state.currentStudentList = state.currentStudentList.map(item =>
+      state.currentClass.student_list = state.currentClass.student_list.map(item =>
         item.id === action.payload.id ? action.payload : item,
       );
-      state.currentClass.studentList = state.currentClass.studentList.map(item => (item.student_id === action.payload.id ? action.payload : item));
     })
     .addCase(DeleteStudentAction, (state, action) => {
-      state.currentStudentList = state.currentStudentList.filter(item => item.id !== action.payload);
-      state.currentClass.studentList = state.currentClass.studentList.filter(item => item.student_id !== action.payload);
+      state.currentClass.student_list = state.currentClass.student_list.filter(item => item.id !== action.payload);
     })
     .addCase(GetTeacherAction, (state, action) => {
       state.currentTeacher = action.payload;
@@ -161,7 +155,9 @@ const classManagementReducer = createReducer(initialState, builder => {
       state.classScheduleList.push(action.payload);
     })
     .addCase(UpdateClassScheduleAction, (state, action) => {
-      state.classScheduleList = state.classScheduleList.map(item => (item.id === action.payload.id ? action.payload : item));
+      state.classScheduleList = state.classScheduleList.map(item =>
+        item.id === action.payload.id ? action.payload : item,
+      );
     })
     .addCase(DeleteClassScheduleAction, (state, action) => {
       state.classScheduleList = state.classScheduleList.filter(item => item.id !== action.payload);
@@ -176,12 +172,19 @@ const classManagementReducer = createReducer(initialState, builder => {
       state.eatingScheduleList.push(action.payload);
     })
     .addCase(UpdateEatingScheduleAction, (state, action) => {
-      state.eatingScheduleList = state.eatingScheduleList.map(item => (item.id === action.payload.id ? action.payload : item));
+      state.eatingScheduleList = state.eatingScheduleList.map(item =>
+        item.id === action.payload.id ? action.payload : item,
+      );
     })
     .addCase(DeleteEatingScheduleAction, (state, action) => {
       state.eatingScheduleList = state.eatingScheduleList.filter(item => item.id !== action.payload);
     })
-
+    .addCase(GetAllLocationsAction, (state, action) => {
+      state.locationList = action.payload;
+    })
+    .addCase(GetAllSubjectsAction, (state, action) => {
+      state.subjectList = action.payload;
+    });
 });
 
 export default classManagementReducer;

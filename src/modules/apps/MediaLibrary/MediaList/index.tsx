@@ -1,6 +1,6 @@
 import AppCard from '@/@crema/components/AppCard';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
-import { PlusOutlined } from '@ant-design/icons';
+import { PhoneTwoTone, PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Select, Upload, message } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react'
 import Gallery from 'react-photo-gallery';
@@ -9,6 +9,7 @@ import Carousel, { ModalGateway, Modal as ImageModal } from "react-images";
 import { title } from 'process';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 import { addNewMediaData, getAllMediaData } from '@/toolkit/actions/MediaManagement';
+import { get, size } from 'lodash';
 
 const { Dragger } = Upload;
 
@@ -105,10 +106,57 @@ const MediaList = () => {
     const [uploadForm] = Form.useForm();
 
     const dispatch = useAppDispatch();
+
     const { mediaList } = useAppSelector((state) => state.mediaManagement);
+    const [ formattedPhotos, setFormattedPhotos ] = useState([]);
+
+    const getImageSize = (url: string): Promise<{ width: number, height: number }> => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                resolve({ width: img.width, height: img.height });
+            };
+            img.onerror = () => {
+                reject(new Error('Failed to load image'));
+            };
+            img.src = url;
+        });
+    };
+
+    // Function to format the photo list
+    const getFormattedPhotos = async (photoList: any) => {
+        const formattedList = await Promise.all(
+            photoList.map(async (photo: any) => {
+                try {
+                    const size = await getImageSize(photo.url);
+                    return { ...photo, src: photo?.url, ...size };
+                } catch (error) {
+                    console.error(`Error loading image at ${photo.url}:`, error);
+                    return { ...photo, src: photo?.url, width: 1, height: 1 }; // Handle error by setting width/height to null
+                }
+            })
+        );
+        return formattedList;
+    }
+
+
+    // const formattedMediaList = (data: any) => {
+    //     return data.map((media: any, index: any) => {
+    //         return {
+    //             src: media.url,
+    //             width: 4,
+    //             height: 3,
+    //             // title: media.title
+    //         }
+    //     })
+    // }
 
     useEffect(() => {
         dispatch(getAllMediaData());
+        getFormattedPhotos(mediaList).then((formattedList) => {
+            console.log('Formatted Photo List:', formattedList);
+            setFormattedPhotos(formattedList);
+        });
     }, [dispatch, mediaList.length]);
 
     const [uploadModalVisible, setUploadModalVisible] = useState(false);
@@ -137,15 +185,8 @@ const MediaList = () => {
         setViewerIsOpen(false);
     };
 
-    const formattedMediaList = (data: any) => {
-        return data.map((media: any, index: any) => {
-            return {
-                src: media?.url,
-                width: 3,
-                height: 2,
-            }
-        })
-    }
+
+
 
     return (
         <>
@@ -155,7 +196,7 @@ const MediaList = () => {
                 </Col>
                 <Col xs={24} lg={24}>
                     <AppCard title="Photos">
-                        <Gallery photos={formattedMediaList(mediaList)} onClick={openLightBox} />
+                        <Gallery photos={formattedPhotos} onClick={openLightBox} />
                     </AppCard>
                 </Col>
 
@@ -175,9 +216,9 @@ const MediaList = () => {
                         onFinish={onUploadFinish}
                         onValuesChange={onUploadFormChange}
                     >
-                        <Form.Item name="title">
+                        {/* <Form.Item name="title">
                             <Input placeholder="Media title" />
-                        </Form.Item>
+                        </Form.Item> */}
 
                         <Form.Item name='media_type'>
                             <Select
@@ -219,7 +260,7 @@ const MediaList = () => {
                         <ImageModal onClose={closeLightbox}>
                             <Carousel
                                 currentIndex={currentImage}
-                                views={formattedMediaList(mediaList).map((x: any) => ({
+                                views={formattedPhotos.map((x: any) => ({
                                     ...x,
                                     source: x.src,
                                     srcset: x.srcSet,

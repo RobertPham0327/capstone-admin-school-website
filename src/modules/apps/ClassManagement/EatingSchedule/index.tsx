@@ -18,7 +18,7 @@ import { MinusOutlined, UploadOutlined } from '@ant-design/icons';
 import AppIconButton from '@/@crema/components/AppIconButton';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import dayjs from 'dayjs';
-import { addEatingScheduleData, deleteEatingScheduleData, getAllEatingSchedulesData, updateEatingScheduleData } from '@/toolkit/actions/ClassManagement';
+import { addEatingScheduleData, deleteEatingScheduleData, getAllEatingSchedulesData, getAllLocationData, updateEatingScheduleData } from '@/toolkit/actions/ClassManagement';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
@@ -116,6 +116,16 @@ const EatingSchedule = () => {
 
   // const onUpdateTask = (task: any) => { }
 
+  const isValidForm = (values: any) => {
+    if (!values.meal || !values.start || !values.end || !values.location || !values.menu || !values.nutrition) {
+      return { isValid: false, message: 'Please fill in all required fields!' };
+    }
+    if (values.menu.length < 2 || values.nutrition.length < 2) {
+      return { isValid: false, message: 'Please input at least 2 dish names and 2 nutrition names!' };
+    }
+    return { isValid: true };
+  }
+
   const showDeleteConfirm = () => {
     confirm({
       title: 'Are you sure delete this event?',
@@ -138,10 +148,10 @@ const EatingSchedule = () => {
   const onViewEventDetail = (event: any) => {
     console.log('View event detail:', event);
     updateEventForm.setFieldsValue({
-      title: event?.title,
+      meal: event?.title,
       start: dayjs(event?.start, 'YYYY-MM-DD HH:mm:ss'),
       end: dayjs(event?.end, 'YYYY-MM-DD HH:mm:ss'),
-      location: event?.location_name,
+      location: event?.location_id,
       menu: event?.menu,
       nutrition: event?.nutrition,
     })
@@ -151,35 +161,6 @@ const EatingSchedule = () => {
   };
 
   const onSetFilterText = () => { }
-
-  // const resizeEvent = ({
-  //   event,
-  //   start,
-  //   end,
-  // }: {
-  //   event: object;
-  //   start: stringOrDate;
-  //   end: stringOrDate;
-  //   isAllDay: boolean;
-  // }) => {
-  //   // onUpdateTask({ ...event, startDate: start, endDate: end });
-  //   console.log('resizeEvent: ', event, start, end);
-  // };
-
-  // const moveEvent = ({
-  //   event,
-  //   start,
-  //   end,
-  //   isAllDay: droppedOnAllDaySlot,
-  // }: {
-  //   event: object;
-  //   start: stringOrDate;
-  //   end: stringOrDate;
-  //   isAllDay: boolean;
-  // }) => {
-  //   onUpdateTask({ ...event, startDate: start, endDate: end });
-  //   message.success('Event updated successfully');
-  // };
 
   const [isUpdateEventOpen, setUpdateEventOpen] = useState(false);
 
@@ -191,29 +172,25 @@ const EatingSchedule = () => {
     console.log('allValues:', allValues);
   }
 
-  // const getEvents = () => {
-  //   if (eventList?.length > 0)
-  //     return eventList.map(event => {
-  //       return {
-  //         ...event,
-  //         title: event.title,
-  //         start: event.startDate,
-  //         end: event.endDate,
-  //       };
-  //     });
-  //   return [];
-  // };
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllEatingSchedulesData(Number(classId)));
+    dispatch(getAllLocationData())
   }, [dispatch]);
 
-  const { eatingScheduleList } = useAppSelector(state => state.classManagement); 
+  const { eatingScheduleList, locationList } = useAppSelector(state => state.classManagement); 
 
   const onAddNewEvent = (values: any) => {
-    dispatch(addEatingScheduleData(Number(classId), values))
+    const newEvent = {
+      meal: values.meal,
+      start: getIOStringDate(values.start),
+      end: getIOStringDate(values.end),
+      location: values.location,
+      menu: values.menu,
+      nutrition: values.nutrition,
+    }
+    dispatch(addEatingScheduleData(Number(classId), newEvent))
     setAddEventOpen(false);
     message.success('Event added successfully');
     newEventForm.resetFields();
@@ -226,7 +203,20 @@ const EatingSchedule = () => {
   const onUpdateEventSubmit = (values: any) => {
     // console.log('Selected event:', selectedEvent);
     console.log('Update event:', values);
-    dispatch(updateEatingScheduleData(selectedEvent.id, values));
+    if (!isValidForm(values).isValid) {
+      message.error(isValidForm(values).message);
+      return;
+    }
+    const newEvent = {
+      meal: values.meal,
+      start: getIOStringDate(values.start),
+      end: getIOStringDate(values.end),
+      location: values.location,
+      menu: values.menu,
+      nutrition: values.nutrition,
+      files: values.image,
+    }
+    dispatch(updateEatingScheduleData(selectedEvent.id, newEvent));
     setUpdateEventOpen(false);
     setViewEventOpen(false);
     message.success('Event updated successfully');
@@ -238,6 +228,34 @@ const EatingSchedule = () => {
 
   const onUpdateEventOpen = () => {
     setUpdateEventOpen(true);
+  }
+
+  const onMenuDeleteForUpdating = (index: number) => {
+    console.log('Delete menu:', index);
+    updateEventForm.setFieldsValue({
+      menu: updateEventForm.getFieldValue('menu').filter((_: any, i: number) => i !== index)
+    });
+  }
+
+  const onNutritionDeleteForUpdating = (index: number) => {
+    console.log('Delete nutrition:', index);
+    updateEventForm.setFieldsValue({
+      nutrition: updateEventForm.getFieldValue('nutrition').filter((_: any, i: number) => i !== index)
+    });
+  }
+
+  const onMenuDeleteForCreating = (index: number) => {
+    console.log('Delete menu:', index);
+    newEventForm.setFieldsValue({
+      menu: newEventForm.getFieldValue('menu').filter((_: any, i: number) => i !== index)
+    });
+  }
+
+  const onNutritionDeleteForCreating = (index: number) => {
+    console.log('Delete nutrition:', index);
+    newEventForm.setFieldsValue({
+      nutrition: newEventForm.getFieldValue('nutrition').filter((_: any, i: number) => i !== index)
+    });
   }
 
   return (
@@ -276,15 +294,15 @@ const EatingSchedule = () => {
       <Modal
         open={isAddEventOpen}
         onOk={() => setAddEventOpen(false)}
-        onCancel={() => setAddEventOpen(false)}
+        onCancel={() => {setAddEventOpen(false); newEventForm.resetFields()}}
         footer={false}
         title={"Create a new event"}>
         <Form form={newEventForm} {...formItemLayout} onValuesChange={onAddEventFormChange} onFinish={onAddNewEvent}>
           {/* <Divider style={{  borderColor: '#000' }} orientation="left">Menu infor</Divider> */}
           <Form.Item
             label="Meal"
-            name="title"
-            rules={[{ required: true, message: 'Please input meal name!' }]}
+            name="meal"
+            rules={[{ required: true, message: 'Please select a meal type!' }]}
           >
             <Select
               placeholder="Select a meal type"
@@ -299,7 +317,7 @@ const EatingSchedule = () => {
           <Form.Item
             label="Menu"
             name="menu"
-            rules={[{ required: true, message: 'Please input at least a dish in menu!' }]}
+            rules={[{ required: true, message: 'Please input at least 2 dish names!' }]}
           >
             {
               Array.from({ length: menuCount }, (_, index) => (
@@ -312,14 +330,14 @@ const EatingSchedule = () => {
               menuCount < 3 && <Button onClick={() => setMenuCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Dish</Button>
             }
             {
-              menuCount > 1 && <Button onClick={() => setMenuCount(prev => prev - 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
+              menuCount > 1 && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForCreating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
             }
           </Form.Item>
 
           <Form.Item
             label="Nutrition"
             name="nutrition"
-            rules={[{ required: true, message: 'Please input nutrition!' }]}
+            rules={[{ required: true, message: 'Please input at least 2 nutrition names!' }]}
           >
              {
               Array.from({ length: nutritionCount }, (_, index) => (
@@ -332,16 +350,22 @@ const EatingSchedule = () => {
               nutritionCount < 3 && <Button onClick={() => setNutritionCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Nutrition</Button>
             }
             {
-              nutritionCount > 1 && <Button onClick={() => setNutritionCount(prev => prev - 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
+              nutritionCount > 1 && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForCreating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
             }
           </Form.Item>
 
           <Form.Item
             label="Location"
             name="location"
-            rules={[{ required: true, message: 'Please input location name!' }]}
+            rules={[{ required: true, message: 'Please select a location!' }]}
           >
-            <Input placeholder='Select a location' />
+            <Select>
+              {
+                locationList.map(location => (
+                  <Option key={location.id} value={location.id}>{location.name}</Option>
+                ))
+              }
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -402,7 +426,7 @@ const EatingSchedule = () => {
         >
           <Form.Item
             label="Meal"
-            name="title"
+            name="meal"
           // rules={[{ required: true, message: 'Please input event title!' }]}
           >
              <Select
@@ -419,12 +443,11 @@ const EatingSchedule = () => {
           <Form.Item
             label="Menu"
             name="menu"
-            // rules={[{ required: true, message: 'Please input at least a dish in menu!' }]}
           >
             {
               Array.from({ length: menuCount }, (_, index) => (
                 <Form.Item key={index} name={['menu', index]} noStyle>
-                  <Input key={index} placeholder='Dish name' style={{ marginBottom: '10px' }} bordered={isUpdateEventOpen}/>
+                  <Input required key={index} placeholder='Dish name' style={{ marginBottom: '10px' }} bordered={isUpdateEventOpen}/>
                 </Form.Item>
               ))
             }
@@ -432,19 +455,18 @@ const EatingSchedule = () => {
               menuCount < 3  && isUpdateEventOpen && <Button onClick={() => setMenuCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Dish</Button>
             }
             {
-              menuCount > 1 && isUpdateEventOpen && <Button onClick={() => setMenuCount(prev => prev - 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
+              menuCount > 1 && isUpdateEventOpen && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForUpdating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
             }
           </Form.Item>
 
           <Form.Item
             label="Nutrition"
             name="nutrition"
-            // rules={[{ required: true, message: 'Please input nutrition!' }]}
           >
              {
               Array.from({ length: nutritionCount }, (_, index) => (
                 <Form.Item key={index} name={['nutrition', index]} noStyle>
-                  <Input key={index} placeholder='Nutrition name' style={{ marginBottom: '10px' }} bordered={isUpdateEventOpen}/>
+                  <Input required key={index} placeholder='Nutrition name' style={{ marginBottom: '10px' }} bordered={isUpdateEventOpen}/>
                 </Form.Item>
               ))
             }
@@ -452,29 +474,32 @@ const EatingSchedule = () => {
               nutritionCount < 3 && isUpdateEventOpen && <Button onClick={() => setNutritionCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Nutrition</Button>
             }
             {
-              nutritionCount > 1 && isUpdateEventOpen && <Button onClick={() => setNutritionCount(prev => prev - 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
+              nutritionCount > 1 && isUpdateEventOpen && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForUpdating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
             }
           </Form.Item>
 
           <Form.Item
             label="Location"
             name="location"
-          // rules={[{ required: true, message: 'Please input location name!' }]}
           >
-            <Input bordered={isUpdateEventOpen} />
+            <Select bordered={isUpdateEventOpen}>
+              {
+                locationList.map(location => (
+                  <Option key={location.id} value={location.id}>{location.name}</Option>
+                ))
+              }
+            </Select>
           </Form.Item>
 
           <Form.Item
             label="Start time"
             name="start"
-          // rules={[{ required: true, message: 'Please input start time!' }]}
           >
             <DatePicker bordered={isUpdateEventOpen} showTime />
           </Form.Item>
           <Form.Item
             label="End time"
             name="end"
-          // rules={[{ required: true, message: 'Please input end time!' }]}
           >
             <DatePicker bordered={isUpdateEventOpen} showTime />
           </Form.Item>

@@ -41,13 +41,7 @@ const getColumns = (router: NextRouter): ColumnsType<TeacherDataType> => [
         align: 'center',
     },
     {
-        title: 'Gender',
-        dataIndex: 'gender',
-        key: 'gender',
-        align: 'center',
-    },
-    {
-        title: 'Action',
+        title: '',
         key: 'action',
         align: 'center',
         render: (id, record) => <TeacherListAction teacherId={record.id} />,

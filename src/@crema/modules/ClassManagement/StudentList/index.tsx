@@ -4,6 +4,8 @@ import { StyledTable } from '../index.styled'
 import { ColumnsType } from 'antd/es/table'
 import { ClassStudentDataType } from '@crema/types/models/apps/ClassManagement'
 import { StudentListAction } from './StudentListAction'
+import { ellipsisLines } from '@/@crema/helpers/StringHelper'
+import { Typography } from 'antd'
 
 type Props = {
     classId: number,
@@ -23,7 +25,14 @@ const getColumns = (router: NextRouter, classId: number): ColumnsType<ClassStude
         dataIndex: 'id',
         key: 'id',
         align: 'center',
-        render: (id, record) => (<span>#{record.id}</span>)
+        render: (id, record) => (
+            <Typography.Link
+                onClick={() => router.push(`/apps/class-management/class/${classId}/student/${record.id}`)}
+                style={{ display: 'flex', alignItems: 'center' }}
+            >
+                {ellipsisLines(`#${record.id}`)}
+            </Typography.Link>
+        ),
     },
     {
         title: 'Name',
@@ -44,10 +53,10 @@ const getColumns = (router: NextRouter, classId: number): ColumnsType<ClassStude
         align: 'center',
     },
     {
-        title: 'Action',
+        title: '',
         key: 'action',
         align: 'center',
-        render: (id, record) => <StudentListAction classId={classId} studentId={record.id}/>,
+        render: (id, record) => <StudentListAction classId={classId} studentId={record.id} />,
     },
 ]
 

@@ -1,7 +1,7 @@
 export type TeacherDataType = {
   id: number;
   name: string;
-  gender: string;
+  gender?: string;
   contact: string;
   avatar_url?: string;
 };
@@ -23,7 +23,6 @@ export type SchoolDataType = {
 export type ClassStudentDataType = {
   id: number;
   class_id: number;
-  student_id: number;
   name: string;
   gender: string;
   date_of_birth: string;
@@ -53,13 +52,14 @@ export type ClassDataType = {
 };
 
 export type ClassProfileDataType = {
-  teacher_id: number;
+  id: number;
+  class_name: string;
+  school_year: string;
+  location_name: string;
   teacher_name: string;
   teacher_avatar?: string;
-  class_name: string;
-  class_room: string;
-  school_year: string;
-  studentList: ClassStudentDataType[];
+  teacher_contact: string;
+  student_list: ClassStudentDataType[];
 }
 
 export type ClassScheduleDataType = {
@@ -97,6 +97,16 @@ export type FilterDataType = {
   student?: ClassStudentDataType | null;
   page?: number | string;
 };
+
+export type LocationDataType = {
+  id : number;
+  name: string;
+}
+
+export type SubjectDataType = {
+  id: number;
+  name: string;
+}
 
 
 
