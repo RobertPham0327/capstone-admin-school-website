@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { FilterItem, ClassList } from '@crema/modules/ClassManagement';
 import AppRowContainer from '@crema/components/AppRowContainer';
 import AppCard from '@crema/components/AppCard';
-import { Col, Space, Modal, DatePicker, Row } from 'antd';
+import { Col, Space, Modal, DatePicker, Row, message } from 'antd';
 import {
   StyledInputSearch,
   StyledOrderFooterPagination,
@@ -18,6 +18,7 @@ import {
 import { useAppSelector, useAppDispatch } from '@toolkit/hooks';
 import { Button, Form, Input, Select } from "antd";
 import { createClassData, getAllLocationData, getAllTeacherData, getClassList } from '@/toolkit/actions/ClassManagement';
+import teacher from '@/pages/apps/class-management/teacher';
 const { Option } = Select;
 
 const formItemLayout = {
@@ -80,25 +81,27 @@ const ClassListing = () => {
 
   const loading = useAppSelector(({ common }) => common.loading);
 
-  const [filteredClassList, setFilteredClassList] = useState(classList);
-  
+  const [filteredClassList, setFilteredClassList] = useState(null);
 
   useEffect(() => {
     dispatch(getClassList());
     dispatch(getAllTeacherData());
     dispatch(getAllLocationData());
     setFilteredClassList(classList);
-  }, [dispatch]);
+  }, [dispatch, classList.length]);
 
   const onFormSubmit = (values: any) => {
     console.log(values);
     const classData = {
       name: values.name,
       teacherId: Number(values.teacherId),
-      classRoom: values.classroom,
+      locationId: Number(values.classroom),
       schoolYear: values.startSchoolYear.format('YYYY') + '-' + values.endSchoolYear.format('YYYY'),
+      teacherName: teacherList.find((teacher: any) => teacher.id === Number(values.teacherId))?.name,
+      locationName: locationList.find((location: any) => location.id === Number(values.classroom))?.name,
     }
     dispatch(createClassData(classData));
+    message.success('Class created successfully');
     setNewClassModalVisible(false);
   }
 
@@ -106,7 +109,7 @@ const ClassListing = () => {
     console.log(changedValues, allValues);
   }
 
-  const filterClass = (classList: any, filterData: any) => {
+  const getFilteredClass = (classList: any, filterData: any) => {
     return classList.filter((item: any) => {
       const itemStartYear = item.school_year.split('-')[0];
       const itemEndYear = item.school_year.split('-')[1];
@@ -127,7 +130,7 @@ const ClassListing = () => {
       startYear: allValues?.startYear?.format('YYYY') || null,
       endYear: allValues?.endYear?.format('YYYY') || null,
     }
-    const filteredClass = filterClass(classList, filterData);
+    const filteredClass = getFilteredClass(classList, filterData);
     console.log(filteredClass);
     setFilteredClassList(filteredClass);
   }
@@ -149,13 +152,14 @@ const ClassListing = () => {
           </Space>
         </Col>
 
+        {/* Filter */}
         <Col xs={24} lg={24}>
           {/* <FilterItem filterData={filterData} setFilterData={setFilterData} /> */}
           <AppCard title={"Filter"}>
             <Form onValuesChange={onFilterFormChange} form={filterForm}>
-              <Row gutter={[16, 0]}>
-                <Col span={5}>
-                  <Form.Item name='teacher'>
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6} >
+                  <Form.Item name='teacher' noStyle>
                     <Select
                       placeholder="Select a teacher"
                       style={{ width: "100%" }}
@@ -166,8 +170,8 @@ const ClassListing = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={5}>
-                  <Form.Item name='class'>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                  <Form.Item name='class' noStyle>
                     <Select
                       placeholder="Select a class"
                       style={{ width: "100%" }}
@@ -178,17 +182,17 @@ const ClassListing = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={5}>
-                  <Form.Item name='startYear'>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                  <Form.Item name='startYear' noStyle>
                     <DatePicker placeholder='Start school year' picker='year' style={{ width: "100%" }} />
                   </Form.Item>
                 </Col>
-                <Col span={5}>
-                  <Form.Item name='endYear'>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
+                  <Form.Item name='endYear' noStyle>
                     <DatePicker placeholder='End school year' picker='year' style={{ width: "100%" }} />
                   </Form.Item>
                 </Col>
-                <Col span={4}>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                   <Button type='primary' onClick={onClearFilter}>Clear filter</Button>
                 </Col>
               </Row>
@@ -199,20 +203,21 @@ const ClassListing = () => {
         <Col xs={24} lg={24}>
           <AppCard
             title={
-              <AppsHeader>
-                <StyledOrderHeader>
-                  <StyledOrderHeaderInputView>
-                    <StyledInputSearch
-                      id="user-name"
-                      placeholder="Search..."
-                      type="search"
-                      enterButton
-                      onChange={event => searchClass(event.target.value)}
-                    />
-                  </StyledOrderHeaderInputView>
-                  {/* <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} /> */}
-                </StyledOrderHeader>
-              </AppsHeader>
+              // <AppsHeader>
+              //   <StyledOrderHeader>
+              //     <StyledOrderHeaderInputView>
+              //       <StyledInputSearch
+              //         id="user-name"
+              //         placeholder="Search..."
+              //         type="search"
+              //         enterButton
+              //         onChange={event => searchClass(event.target.value)}
+              //       />
+              //     </StyledOrderHeaderInputView>
+              //     {/* <StyledOrderHeaderPagination pageSize={10} count={total} page={page} onChange={onChange} /> */}
+              //   </StyledOrderHeader>
+              // </AppsHeader>
+              <>Class List</>
             }
           >
             <ClassList data={filteredClassList || classList || []} loading={loading} />
@@ -240,7 +245,7 @@ const ClassListing = () => {
             label="Location"
             name="classroom"
             rules={[{ required: true, message: 'Please select a class room!' }]}>
-             <Select
+            <Select
               placeholder="Select a location"
               style={{ width: "100%" }}
               onChange={() => { }}>

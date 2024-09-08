@@ -110,7 +110,16 @@ export const createClassData = (classData: any) => {
     try {
       const response = await createClass(classData);
       if (response.status === statusCodes.CREATED) {
-        dispatch({ type: ADD_CLASS, payload: response.data });
+        const newClassData: ClassDataType = {
+          id: response.data?.id,
+          name: response.data?.name,
+          teacher_id: response.data?.teacher_id,
+          teacher_name: classData?.teacherName,
+          class_room: classData?.locationName,
+          school_year: response.data?.school_year,
+        };
+        console.log(newClassData);
+        dispatch({ type: ADD_CLASS, payload: newClassData });
         dispatch(fetchSuccess());
       } else {
         dispatch(fetchError('Something went wrong, Please try again!'));
@@ -446,9 +455,20 @@ export const addClassScheduleData = (classId: number, scheduleData: any) => {
     dispatch(fetchStart());
     try {
       const response = await createClassSchedule(classId, scheduleData);
-      console.log(response);
       if (response.status === statusCodes.CREATED) {
-        dispatch({ type: ADD_CLASS_SCHEDULE, payload: response.data });
+        const newScheduleData: ClassScheduleDataType = {
+          id: response.data.id,
+          start: response.data.start_time?.split('.')[0],
+          end: response.data.end_time?.split('.')[0],
+          title: scheduleData?.subject_name,
+          class_id: response.data?.class_id,
+          class_name: scheduleData?.class_name,
+          teacher_id: response.data?.teacher_id,
+          teacher_name: scheduleData?.teacher_name,
+          location_id: response.data?.location_id,
+          location_name: scheduleData?.location_name,
+        };
+        dispatch({ type: ADD_CLASS_SCHEDULE, payload: newScheduleData });
         dispatch(fetchSuccess());
       } else {
         dispatch(fetchError('Something went wrong, Please try again!'));
@@ -494,6 +514,7 @@ export const deleteClassScheduleData = (scheduleId: number) => {
     dispatch(fetchStart());
     try {
       const response = await deleteClassSchedule(scheduleId);
+      console.log(response);
       if (response.status === statusCodes.OK) {
         dispatch({ type: DELETE_CLASS_SCHEDULE, payload: scheduleId });
         dispatch(fetchSuccess());

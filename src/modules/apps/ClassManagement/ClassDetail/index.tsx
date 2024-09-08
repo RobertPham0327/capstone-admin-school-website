@@ -2,7 +2,7 @@ import AppCard from '@crema/components/AppCard'
 import AppRowContainer from '@crema/components/AppRowContainer'
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader'
 import StudentList from '@crema/modules/ClassManagement/StudentList'
-import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker, message } from 'antd'
+import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker, message, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledPlusOutlined, StyledTeacherInfor, StyledTitle } from '../ClassDetail/index.styled'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ import { addStudentData, deleteClassData, updateClassData, getClassProfileData }
 import AppIconButton from '@/@crema/components/AppIconButton'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import dayjs from 'dayjs'
+import { set } from 'lodash'
 
 
 const { Option } = Select;
@@ -55,6 +56,8 @@ const ClassDetail = () => {
   const { classId } = router.query;
   const [newStudentModalVisible, setNewStudentModalVisible] = useState(false);
   const [updateClassModalVisible, setUpdateClassModalVisible] = useState(false);
+  const [filteredStudentList, setFilteredStudentList] = useState(null);
+
 
   const dispatch = useAppDispatch();
 
@@ -62,6 +65,7 @@ const ClassDetail = () => {
 
   useEffect(() => {
     dispatch(getClassProfileData(Number(classId)));
+    setFilteredStudentList(currentClass?.student_list);
   }, [dispatch, classId]);
 
   const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
@@ -87,8 +91,10 @@ const ClassDetail = () => {
       message.error('Please input class information')
       return;
     }
-    dispatch(updateClassData(classId as unknown as number, classData));
+    dispatch(updateClassData(Number(classId), classData));
     setUpdateClassModalVisible(false);
+    message.success('Class information updated successfully');
+    router.reload();
   }
 
   const onNewStudentValuesChanged = (values: any) => {
@@ -117,14 +123,53 @@ const ClassDetail = () => {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        dispatch(deleteClassData(classId as unknown as number));
+        dispatch(deleteClassData(Number(classId)));
         message.success('Class deleted successfully');
-        router.push('/apps/class-management/');
+        router.back();
       },
       onCancel() {
         console.log('Cancel');
       },
     });
+  }
+
+
+  const [filterForm] = Form.useForm();
+
+  const getFilteredStudent = (studentList: any, filterData: any) => {
+    return studentList.filter((item: any) => {
+      const studentYearOfBirth = item.date_of_birth.split('-')[0];
+      if (filterData.name && !item.name.toLowerCase().includes(filterData.name.toLowerCase())) return false;
+      if (filterData.gender && item.gender !== filterData.gender) return false;
+      if (filterData.year && studentYearOfBirth !== filterData.year) return false;
+      return true
+    });
+  }
+
+  const onFilterFormChange = (changedValues: any, allValues: any) => {
+    const filterData = {
+      name: allValues?.name || null,
+      gender: allValues?.gender || null,
+      year: allValues?.year?.format('YYYY') || null,
+    }
+    const filteredStudent = getFilteredStudent(currentClass?.student_list, filterData);
+    console.log(filteredStudent);
+    setFilteredStudentList(filteredStudent);
+  }
+
+  const onClearFilter = () => {
+    filterForm.setFieldsValue({
+      ...filterForm,
+      gender: null,
+      year: null,
+    })
+    const filterData = {
+      name: filterForm.getFieldValue('name') || null,
+    }
+    const filteredStudent = getFilteredStudent(currentClass?.student_list, filterData);
+    setFilteredStudentList(filteredStudent);
+    // setFilteredStudentList(currentClass?.student_list);
+    // filterForm.resetFields();
   }
 
   return (
@@ -165,10 +210,47 @@ const ClassDetail = () => {
           </Space>
         </Col>
         <Col xs={24} lg={24}>
+          <AppCard title={"Filter"}>
+            <Form onValuesChange={onFilterFormChange} form={filterForm}>
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+                  <Form.Item name='name' noStyle>
+                    <Input.Search
+                      placeholder='Search by name'
+                      onSearch={(value) => { console.log(value) }}
+                      enterButton
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6} >
+                  <Form.Item name='gender' noStyle>
+                    <Select
+                      placeholder="Select a gender"
+                      style={{ width: "100%" }}
+                      onChange={() => { }}>
+                      <Option value='Male'>Male</Option>
+                      <Option value='Female'>Female</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={6} xl={6} >
+                  <Form.Item name='year' noStyle>
+                    <DatePicker placeholder='Select a year of birth' picker='year' style={{ width: "100%" }} />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={4} xl={4}>
+                  <Button type='primary' onClick={onClearFilter}>Clear filter</Button>
+                </Col>
+
+              </Row>
+            </Form>
+          </AppCard>
+        </Col>
+        <Col xs={24} lg={24}>
           <AppCard
-            title={'Student list'}
+            title='Student list'
           >
-            <StudentList data={currentClass?.student_list || []} loading={false} classId={Number(classId)} />
+            <StudentList data={filteredStudentList || currentClass?.student_list || []} loading={false} classId={Number(classId)} />
           </AppCard>
         </Col>
       </AppRowContainer>

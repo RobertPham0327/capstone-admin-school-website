@@ -137,45 +137,16 @@ const ClassSchedule = () => {
   const onViewEventDetail = (event: any) => {
     console.log('View event detail:', event);
     updateEventForm.setFieldsValue({
-      title: event?.title,
+      subject: subjectList.find((subject: any) => subject.name === event?.title)?.id,
       start: dayjs(event?.start, 'YYYY-MM-DD HH:mm:ss'),
       end: dayjs(event?.end, 'YYYY-MM-DD HH:mm:ss'),
-      teacher: event?.teacher_name,
-      location: event?.location_name,
+      teacher: event?.teacher_id,
+      location: event?.location_id,
     })
     setViewEventOpen(true);
   };
 
   const onSetFilterText = () => { }
-
-  // const resizeEvent = ({
-  //   event,
-  //   start,
-  //   end,
-  // }: {
-  //   event: object;
-  //   start: stringOrDate;
-  //   end: stringOrDate;
-  //   isAllDay: boolean;
-  // }) => {
-  //   // onUpdateTask({ ...event, startDate: start, endDate: end });
-  //   console.log('resizeEvent: ', event, start, end);
-  // };
-
-  // const moveEvent = ({
-  //   event,
-  //   start,
-  //   end,
-  //   isAllDay: droppedOnAllDaySlot,
-  // }: {
-  //   event: object;
-  //   start: stringOrDate;
-  //   end: stringOrDate;
-  //   isAllDay: boolean;
-  // }) => {
-  //   onUpdateTask({ ...event, startDate: start, endDate: end });
-  //   message.success('Event updated successfully');
-  // };
 
   const [isUpdateEventOpen, setUpdateEventOpen] = useState(false);
 
@@ -186,19 +157,6 @@ const ClassSchedule = () => {
   const onAddEventFormChange = (changedValues: any, allValues: any) => {
     console.log('allValues:', allValues);
   }
-
-  // const getEvents = () => {
-  //   if (eventList?.length > 0)
-  //     return eventList.map(event => {
-  //       return {
-  //         ...event,
-  //         title: event.title,
-  //         start: event.startDate,
-  //         end: event.endDate,
-  //       };
-  //     });
-  //   return [];
-  // };
 
   const dispatch = useAppDispatch();
 
@@ -213,14 +171,15 @@ const ClassSchedule = () => {
 
   const onAddNewEvent = (values: any) => {
     const newSchedule = {
-      class_id: 1,
-      teacher_id: 2,
-      subject_id: 2,  // Assuming this corresponds to "Science"
-      location_id: 2,
+      subject_id: values.subject,
+      teacher_id: values.teacher, 
+      location_id: values.location,
       start_time: getIOStringDate(values.start),
       end_time: getIOStringDate(values.end),
+      subject_name: subjectList.find((subject: any) => subject.id === values.subject)?.name,
+      teacher_name: teacherList.find((teacher: any) => teacher.id === values.teacher)?.name,
+      location_name: locationList.find((location: any) => location.id === values.location)?.name,
     }
-    console.log('New schedule:', newSchedule);
     dispatch(addClassScheduleData(Number(classId), newSchedule));
     setAddEventOpen(false);
     message.success('Event added successfully');
@@ -233,8 +192,14 @@ const ClassSchedule = () => {
 
   const onUpdateEventSubmit = (values: any) => {
     const newScheduleData = {
+      subject_id: values.subject,
+      teacher_id: values.teacher,
+      location_id: values.location,
       start_time: getIOStringDate(values.start),
       end_time: getIOStringDate(values.end),
+      // subject_name: subjectList.find((subject: any) => subject.id === values.subject)?.name,
+      // teacher_name: teacherList.find((teacher: any) => teacher.id === values.teacher)?.name,
+      // location_name: locationList.find((location: any) => location.id === values.location)?.name,
     }
     dispatch(updateClassScheduleData(selectedEvent.id, newScheduleData));
     setUpdateEventOpen(false);
@@ -287,7 +252,7 @@ const ClassSchedule = () => {
         <Form form={newEventForm} {...formItemLayout} onValuesChange={onAddEventFormChange} onFinish={onAddNewEvent}>
           <Form.Item
             label="Subject"
-            name="title"
+            name="subject"
             rules={[{ required: true, message: 'Please input a subject name!' }]}
           >
             <Select>
@@ -337,7 +302,7 @@ const ClassSchedule = () => {
             <DatePicker showTime />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             label="Image"
             name="image"
             rules={[{ required: false, message: 'Please upload an image!' }]}
@@ -345,7 +310,7 @@ const ClassSchedule = () => {
             <Upload maxCount={1}>
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item {...tailFormItemLayout}>
             <Space>
@@ -389,7 +354,7 @@ const ClassSchedule = () => {
         >
           <Form.Item
             label="Subject"
-            name="title"
+            name="subject"
           // rules={[{ required: true, message: 'Please input event title!' }]}
           >
             <Select bordered={isUpdateEventOpen}>

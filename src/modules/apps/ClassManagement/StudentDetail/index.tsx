@@ -53,9 +53,10 @@ const StudentDetail = () => {
   console.log('studentId', studentId);
   const dispatch = useAppDispatch();
   const { currentStudent } = useAppSelector(({ classManagement }) => classManagement);
+  const { loading } = useAppSelector(({ common }) => common);
 
   useEffect(() => {
-    dispatch(getStudentData(studentId as unknown as number, classId as unknown as number));
+    dispatch(getStudentData(Number(studentId), Number(classId)));
   }, [studentId]);
 
   const [updateStudentModalVisible, setUpdateStudentModalVisible] = useState(false);
@@ -80,6 +81,8 @@ const StudentDetail = () => {
     
     dispatch(updateStudentData(Number(studentId), Number(classId), values));
     setUpdateStudentModalVisible(false);
+    message.success('Student updated successfully');
+    router.reload();
   }
 
   const showDeleteConfirm = () => {
@@ -92,6 +95,7 @@ const StudentDetail = () => {
       onOk() {
         dispatch(deleteStudentData(Number(studentId)));
         message.success('Student deleted successfully');
+        router.back();
       },
       onCancel() {
         console.log('Cancel');
@@ -110,9 +114,12 @@ const StudentDetail = () => {
     setUpdateStudentModalVisible(true);
   }
 
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
-
       <AppRowContainer>
         <Col xs={24} lg={24}>
           <Space>

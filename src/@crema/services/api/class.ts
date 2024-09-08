@@ -3,6 +3,7 @@ import { ClassDataType, ClassStudentDataType } from '@/@crema/types/models/apps/
 import { statusCodes } from './constants';
 import { getIOStringDate } from '@/@crema/helpers/DateHelper';
 import axios from '../auth/jwt-auth';
+import teacher from '@/pages/apps/class-management/teacher';
 
 export const getAllClasses = async () => {
   try {
@@ -21,7 +22,13 @@ export const getAllClasses = async () => {
 
 export const createClass = async (data: any) => {
   try {
-    const response = await axios.post('/class/create', data);
+    const newClassData = {
+      name: data?.name,
+      teacherId: data?.teacherId,
+      locationId: data?.locationId,
+      schoolYear: data?.schoolYear,
+    }
+    const response = await axios.post('/class/create', newClassData);
     console.log(response);
     if (response.status === statusCodes.CREATED) {
       return { data: response.data, status: response.status };
@@ -195,6 +202,7 @@ export const getAllTeachers = async () => {
 export const getTeacherProfile = async (teacherId: number) => {
   try {
     const response = await axios.get(`/teacher/${teacherId}/profile`);
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -208,10 +216,10 @@ export const getTeacherProfile = async (teacherId: number) => {
 
 export const getAllClassSchedules = async (classId: number) => {
   try {
-    const response = await axios.get(`/schedule/all-schedules`);
+    const response = await axios.get(`/schedule/${classId}`);
+    console.log(response);
     if (response.status === statusCodes.OK) {
-      const classSchedules = response.data.filter((schedule: any) => schedule.classId === classId);
-      return { data: classSchedules, status: response.status };
+      return { data: response.data, status: response.status };
     }
   } catch (error) {
     if (error.response) {
@@ -288,7 +296,16 @@ export const deleteTeacher = async (teacherId: number) => {
 
 export const createClassSchedule = async (classId: number, data: any) => {
   try {
-    const response = await axios.post('/schedule/create', data);
+    const newScheduleData = {
+      class_id: classId,
+      subject_id: data.subject_id,
+      teacher_id: data.teacher_id, 
+      location_id: data.location_id,
+      start_time: data.start_time,
+      end_time: data.end_time,
+    }
+    const response = await axios.post('/schedule/create', newScheduleData);
+    console.log(response);
     if (response.status === statusCodes.CREATED) {
       return { data: response.data, status: response.status };
     }
@@ -302,7 +319,15 @@ export const createClassSchedule = async (classId: number, data: any) => {
 
 export const updateClassSchedule = async (scheduleId: number, data: any) => {
   try {
-    const response = await axios.put(`/eating-schedule/${scheduleId}`, data);
+    const newScheduleData = {
+      subject_id: data.subject_id,
+      teacher_id: data.teacher_id, 
+      location_id: data.location_id,
+      start_time: data.start_time,
+      end_time: data.end_time,
+    }
+    const response = await axios.put(`/schedule/${scheduleId}`, newScheduleData);
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { data: response.data, status: response.status };
     }
@@ -317,6 +342,7 @@ export const updateClassSchedule = async (scheduleId: number, data: any) => {
 export const deleteClassSchedule = async (scheduleId: number) => {
   try {
     const response = await axios.delete(`/eating-schedule/${scheduleId}`);
+    console.log(response);
     if (response.status === statusCodes.OK) {
       return { status: response.status };
     }
@@ -346,11 +372,11 @@ export const getAllEatingSchedules = async (classId: number) => {
 export const createEatingSchedule = async (classId: number, data: any) => {
   try {
     const newScheduleData = {
-      class_id: classId.toString(),
-      location_id: '1',
+      class_id: classId,
+      location_id: data?.location,
       start_time: getIOStringDate(data.start),
       end_time: getIOStringDate(data.end),
-      meal: data?.title,
+      meal: data?.meal,
       menu: data?.menu,
       nutrition: data?.nutrition,
       files: data?.image?.fileList,
@@ -394,13 +420,13 @@ export const createEatingSchedule = async (classId: number, data: any) => {
 export const updateEatingSchedule = async (scheduleId: number, data: any) => {
   try {
     const updateData = {
-      location_id: '1',
+      location_id: data?.location,
       start_time: getIOStringDate(data.start),
       end_time: getIOStringDate(data.end),
-      meal: data?.title,
+      meal: data?.meal,
       menu: data?.menu,
       nutrition: data?.nutrition,
-      files: data?.image?.fileList,
+      files: data?.files?.fileList,
     }
 
     console.log("Update Schedule:", updateData);

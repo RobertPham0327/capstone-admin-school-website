@@ -124,7 +124,7 @@ const TeacherListing = () => {
             <DatePicker format={"YYYY-MM-DD"} />
           </Form.Item> */}
 
-          <Form.Item
+          {/* <Form.Item
             label="Gender"
             name="gender"
             rules={[{ required: true, message: 'Please select a gender!' }]}>
@@ -136,7 +136,7 @@ const TeacherListing = () => {
               <Option value='Male'>Male</Option>
               <Option value='Female'>Female</Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
 
           {/* <Form.Item
             label="Email"
