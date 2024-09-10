@@ -68,22 +68,6 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
   return (
     <>
       <StyledContentHeader>
-        <StyledTodoHeaderCheckboxView>
-          <Checkbox
-            indeterminate={checkedTasks?.length > 0 && checkedTasks?.length < taskLists?.length}
-            checked={taskLists?.length > 0 && checkedTasks.length === taskLists?.length}
-            onChange={onHandleMasterCheckbox}
-          />
-        </StyledTodoHeaderCheckboxView>
-
-        <SelectTasksDropdown onSelectTasks={onSelectTasks} />
-
-        <StyledTodoHeaderCheckboxView>
-          {checkedTasks.length > 0 ? (
-            <CheckedTasksActions checkedTasks={checkedTasks} setCheckedTasks={setCheckedTasks} page={page} />
-          ) : null}
-        </StyledTodoHeaderCheckboxView>
-
         <StyledTodoSearch
           placeholder={messages['common.searchHere'] as string}
           value={filterText}

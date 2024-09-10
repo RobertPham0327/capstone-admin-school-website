@@ -36,8 +36,8 @@ const TasksList = () => {
   }, [asPath]);
 
   useEffect(() => {
-    // dispatch(onGetTaskList(all[0], all[1], page));
-  }, [dispatch, page, all]);
+    dispatch(onGetTaskList());
+  }, [dispatch]);
 
   const onOpenAddTask = () => {
     setAddTaskOpen(true);
@@ -75,7 +75,6 @@ const TasksList = () => {
     }
   };
 
-  console.log('taskList', taskList);
 
   const list = onGetFilteredItems();
   return (
@@ -140,12 +139,12 @@ const TasksList = () => {
           </StyledTodoListMobile>
         </>
       </AppsContent>
-
+{/* 
       {taskList.length > 0 ? (
         <StyledTodoFooter>
           <AppsPagination count={totalTasks} page={page} onChange={onPageChange} />
         </StyledTodoFooter>
-      ) : null}
+      ) : null} */}
 
       {isAddTaskOpen ? <AddNewTask isAddTaskOpen={isAddTaskOpen} onCloseAddTask={onCloseAddTask} /> : null}
     </>

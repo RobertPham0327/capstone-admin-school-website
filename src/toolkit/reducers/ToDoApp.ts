@@ -97,11 +97,11 @@ const todoReducer = createReducer(initialState, builder => {
           return task;
         }
       });
-      const filteredList =
-        action.payload.folderName === 'starred' ? updatedList.filter(item => item?.isStarred) : updatedList;
+      // const filteredList =
+      //   action.payload.folderName === 'starred' ? updatedList.filter(item => item?.isStarred) : updatedList;
       const total =
         action.payload.folderName === 'starred' ? state.totalTasks - action.payload.data.length : state.totalTasks;
-      state.taskList = filteredList as TodoObjType[];
+      // state.taskList = filteredList as TodoObjType[];
       state.totalTasks = total;
     })
     .addCase(GetTaskAction, (state, action) => {

@@ -43,27 +43,11 @@ export type CommentObjType = {
 
 export type TodoObjType = {
   id: number;
+  user_id: number;
+  school_id: number;
   title: string;
-  isStarred?: boolean;
-  label: LabelObjType[];
-  priority: PriorityObjType;
-  isAttachment: boolean;
-  sentAt: string;
-  folderValue: number;
-  scheduleMobile: string;
-  image: string;
-  assignedTo: StaffObjType;
-  createdBy: {
-    name: string;
-    image?: string;
-  };
-  createdOn: string;
-  startDate: string;
-  endDate?: string;
-  status: number;
-  comments: CommentObjType[];
-  content: string;
-  isReplied?: boolean;
-  isRead?: boolean;
-  date?: string;
+  message: string;
+  status: 'unread' | 'read'; // Based on the provided example
+  notification_type: 'notification'; // You can expand this based on different types
+  created_at: string;
 };

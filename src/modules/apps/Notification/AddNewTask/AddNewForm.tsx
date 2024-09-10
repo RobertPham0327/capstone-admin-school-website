@@ -28,18 +28,18 @@ type AddTaskFormProps = {
 };
 
 const AddTaskForm: React.FC<AddTaskFormProps> = ({ onCloseAddTask, selectedDate, reCallAPI }) => {
-  const [{ apiData: labelList }] = useGetDataApi('/api/todo/labels/list', []);
-  const [{ apiData: priorityList }] = useGetDataApi('/api/todo/priority/list', []);
-  const [{ apiData: staffList }] = useGetDataApi('/api/todo/staff/list', []);
+  // const [{ apiData: labelList }] = useGetDataApi('/api/todo/labels/list', []);
+  // const [{ apiData: priorityList }] = useGetDataApi('/api/todo/priority/list', []);
+  // const [{ apiData: staffList }] = useGetDataApi('/api/todo/staff/list', []);
 
   const infoViewActionsContext = useInfoViewActionsContext();
   const { user } = useAuthUser();
 
   const onFinish = (values: any) => {
-    const staff = staffList.find((staff: StaffObjType) => staff.id === +values.staffList);
+    // const staff = staffList.find((staff: StaffObjType) => staff.id === +values.staffList);
 
-    const priority = priorityList.find((label: PriorityObjType) => +values.priorityList === label.id);
-    const label = labelList.filter((label: LabelObjType) => +values.labelList === label.id);
+    // const priority = priorityList.find((label: PriorityObjType) => +values.priorityList === label.id);
+    // const label = labelList.filter((label: LabelObjType) => +values.labelList === label.id);
 
     const newTask = {
       ...values,
@@ -54,12 +54,12 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onCloseAddTask, selectedDate,
         image: user.photoURL ? user.photoURL : '/assets/images/dummy2.jpg',
       },
       scheduleDate: dayjs(values.scheduleDate).format('lll'),
-      assignedTo: staff,
+      // assignedTo: staff,
       createdOn: dayjs().format('MMM DD'),
       status: 1,
       comments: [],
-      label: label,
-      priority: priority,
+      // label: label,
+      // priority: priority,
     };
     console.log(newTask);
     postDataApi('/api/todoApp/compose', infoViewActionsContext, {

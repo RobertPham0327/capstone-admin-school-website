@@ -20,21 +20,17 @@ import { Dispatch } from 'redux';
 import { AppActions } from '@crema/types/actions';
 import { TodoObjType } from '@crema/types/models/apps/Todo';
 
-export const onGetTaskList = (type: string, name: string, currentPage: number) => {
+export const onGetTaskList = () => {
   const { messages } = appIntl();
-  const page = currentPage ? currentPage : null;
+  // const page = currentPage ? currentPage : null;
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     jwtAxios
-      .get('/api/todo/task/list', {
-        params: {
-          type: type,
-          name: name,
-          page: page,
-        },
+      .get('/notification', {
       })
       .then((data: any) => {
         if (data.status === 200) {
+          console.log(data.data);
           dispatch(fetchSuccess());
           dispatch({ type: GET_TASK_LIST, payload: data.data });
           console.log(data.data);
@@ -54,126 +50,126 @@ export const onToggleTodoDrawer = () => {
   };
 };
 
-export const onGetToDoLabelList = () => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .get('/api/todo/labels/list')
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: GET_TODO_LABEL_LIST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onGetToDoLabelList = () => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .get('/api/todo/labels/list')
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: GET_TODO_LABEL_LIST, payload: data.data });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
-export const onGetToDoStaffList = () => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .get('/api/todo/staff/list')
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: GET_TODO_STAFF_LIST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onGetToDoStaffList = () => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .get('/api/todo/staff/list')
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: GET_TODO_STAFF_LIST, payload: data.data });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
-export const onGetToDoPriorityList = () => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .get('/api/todo/priority/list')
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: GET_TODO_PRIORITY_LIST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onGetToDoPriorityList = () => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .get('/api/todo/priority/list')
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: GET_TODO_PRIORITY_LIST, payload: data.data });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
-export const onGetToDoFolderList = () => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .get('/api/todo/folders/list')
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: GET_TODO_FOLDER_LIST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onGetToDoFolderList = () => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .get('/api/todo/folders/list')
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: GET_TODO_FOLDER_LIST, payload: data.data });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
-export const onGetToDoStatusList = () => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .get('/api/todo/status/list')
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: GET_TODO_STATUS_LIST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onGetToDoStatusList = () => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .get('/api/todo/status/list')
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: GET_TODO_STATUS_LIST, payload: data.data });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
-export const onUpdateTaskLabels = (taskIds: number[], type: string | number) => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .put('/api/todo/update/label', { taskIds, type })
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: UPDATE_TASK_LABEL, payload: data.data });
-          dispatch(showMessage(String(messages['message.labelUpdatedTo'])));
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch(() => {
-        dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-      });
-  };
-};
+// export const onUpdateTaskLabels = (taskIds: number[], type: string | number) => {
+//   const { messages } = appIntl();
+//   return (dispatch: Dispatch<AppActions>) => {
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .put('/api/todo/update/label', { taskIds, type })
+//       .then((data: any) => {
+//         if (data.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({ type: UPDATE_TASK_LABEL, payload: data.data });
+//           dispatch(showMessage(String(messages['message.labelUpdatedTo'])));
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(() => {
+//         dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//       });
+//   };
+// };
 
 export const onUpdateTaskStarredStatus = (taskIds: number[], status: boolean, folderName: string) => {
   const { messages } = appIntl();
@@ -278,9 +274,9 @@ export const onUpdateSelectedTask = (task: TodoObjType) => {
             type: UPDATE_TASK_DETAIL,
             payload: data.data,
           });
-          dispatch(
-            showMessage(task.folderValue === 126 ? String(messages['task.deleted']) : String(messages['task.updated'])),
-          );
+          // dispatch(
+          //   showMessage(task.folderValue === 126 ? String(messages['task.deleted']) : String(messages['task.updated'])),
+          // );
         } else {
           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }

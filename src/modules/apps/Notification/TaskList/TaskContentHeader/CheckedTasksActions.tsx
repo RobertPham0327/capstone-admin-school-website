@@ -7,7 +7,7 @@ import { MdLabelOutline } from 'react-icons/md';
 import AppIconButton from '@crema/components/AppIconButton';
 import { StyledTodoHeaderCheckedAction } from '../index.styled';
 import { LabelObjType } from '@crema/types/models/apps/Todo';
-import { onDeleteSelectedTasks, onUpdateTaskLabels } from '../../../../../toolkit/actions';
+import { onDeleteSelectedTasks} from '../../../../../toolkit/actions';
 import { useAppSelector, useAppDispatch } from '../../../../../toolkit/hooks';
 
 type CheckedTasksActionsProps = {
@@ -37,25 +37,25 @@ const CheckedTasksActions: React.FC<CheckedTasksActionsProps> = ({ checkedTasks,
     setCheckedTasks([]);
   };
 
-  const onSelectLabel = (key: number) => {
-    dispatch(onUpdateTaskLabels(checkedTasks, key));
-    setCheckedTasks([]);
-  };
+  // const onSelectLabel = (key: number) => {
+  //   dispatch(onUpdateTaskLabels(checkedTasks, key));
+  //   setCheckedTasks([]);
+  // };
 
-  const menuLabel = labelList.map((label: LabelObjType, index: number) => {
-    return {
-      key: index,
-      label: <span onClick={() => onSelectLabel(label.id)}> {label.name}</span>,
-    };
-  });
+  // const menuLabel = labelList.map((label: LabelObjType, index: number) => {
+  //   return {
+  //     key: index,
+  //     label: <span onClick={() => onSelectLabel(label.id)}> {label.name}</span>,
+  //   };
+  // });
 
   return (
     <StyledTodoHeaderCheckedAction>
       <AppsDeleteIcon deleteAction={onDeleteTasks} deleteTitle={<IntlMessages id="todo.deleteMessage" />} />
 
-      <Dropdown menu={{ items: menuLabel }} trigger={['click']}>
+      {/* <Dropdown menu={{ items: menuLabel }} trigger={['click']}>
         <AppIconButton title={<IntlMessages id="common.label" />} icon={<MdLabelOutline />} />
-      </Dropdown>
+      </Dropdown> */}
     </StyledTodoHeaderCheckedAction>
   );
 };

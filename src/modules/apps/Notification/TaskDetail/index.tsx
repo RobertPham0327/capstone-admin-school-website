@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import TaskDetailHeader from './TaskDetailHeader';
-import TaskDetailBody from './TaskDetailBody';
 import { useRouter } from 'next/router';
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader';
 import AppsContent from '@crema/components/AppsContainer/AppsContent';
@@ -26,9 +25,9 @@ const TaskDetail = () => {
       {/* <AppsHeader>
         <TaskDetailHeader selectedTask={selectedTask} />
       </AppsHeader> */}
-      <AppsContent isDetailView>
+      {/* <AppsContent isDetailView>
         <TaskDetailBody selectedTask={selectedTask} />
-      </AppsContent>
+      </AppsContent> */}
     </>
   );
 };
