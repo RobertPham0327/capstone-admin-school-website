@@ -2,7 +2,7 @@ import AppCard from '@crema/components/AppCard'
 import AppRowContainer from '@crema/components/AppRowContainer'
 import AppsHeader from '@crema/components/AppsContainer/AppsHeader'
 import StudentList from '@crema/modules/ClassManagement/StudentList'
-import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker, message, Row } from 'antd'
+import { Button, Col, Descriptions, Modal, Space, Form, Input, Select, DatePicker, message, Row, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledPlusOutlined, StyledTeacherInfor, StyledTitle } from '../ClassDetail/index.styled'
 import { useRouter } from 'next/router'
@@ -109,6 +109,7 @@ const ClassDetail = () => {
       gender: values.gender,
       parentName: values.parentName,
       parentPhone: values.parentPhone,
+      files: values.avatar,
     }
     console.log(studentData);
     dispatch(addStudentData(Number(classId), studentData));
@@ -303,6 +304,13 @@ const ClassDetail = () => {
             name="parentPhone"
             rules={[{ required: true, message: 'Please input parent phone!' }]}>
             <Input />
+          </Form.Item>
+
+          <Form.Item label="Avatar" name='avatar'>
+            <Upload maxCount={1}>
+              <Button icon={<StyledPlusOutlined />}>Upload student avatar</Button>
+            </Upload>
+
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>

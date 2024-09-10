@@ -1,15 +1,15 @@
 import AppCard from '@/@crema/components/AppCard';
 import AppRowContainer from '@/@crema/components/AppRowContainer';
 import { PhoneTwoTone, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Select, Upload, message } from 'antd';
+import { Button, Col, Form, Input, Modal, Row, Select, Space, Upload, message } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react'
 import Gallery from 'react-photo-gallery';
 import { InboxOutlined } from '@ant-design/icons';
 import Carousel, { ModalGateway, Modal as ImageModal } from "react-images";
-import { title } from 'process';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 import { addNewMediaData, getAllMediaData } from '@/toolkit/actions/MediaManagement';
-import { get, size } from 'lodash';
+import ReactPlayer from 'react-player';
+import { useRouter } from 'next/router';
 
 const { Dragger } = Upload;
 
@@ -49,66 +49,54 @@ const tailFormItemLayout = {
 };
 
 const MediaList = () => {
-    // const props = {
-    //     name: 'file',
-    //     multiple: true,
-    //     // action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-    //     onChange(info: any) {
-    //         const { status } = info.file;
-    //         if (status !== 'uploading') {
-    //             console.log(info.file, info.fileList);
-    //         }
-    //         if (status === 'done') {
-    //             message.success(`${info.file.name} file uploaded successfully.`);
-    //         } else if (status === 'error') {
-    //             message.error(`${info.file.name} file upload failed.`);
-    //         }
-    //     },
-    //     onDrop(e: any) {
-    //         console.log('Dropped files', e.dataTransfer.files);
-    //     },
-    // };
 
-    const photos = [
-        {
-            src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
-            width: 4,
-            height: 3
-        },
-        {
-            src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
-            width: 4,
-            height: 3
-        },
-        {
-            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
-            width: 4,
-            height: 3
-        },
-        {
-            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
-            width: 4,
-            height: 3
-        },
-        {
-            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
-            width: 4,
-            height: 3
-        },
-        {
-            src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
-            width: 4,
-            height: 3
-        },
-    ];
+    // const photos = [
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
+    //         width: 4,
+    //         height: 3
+    //     },
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/children-playing-grass_1098-504.jpg?w=996&t=st=1724985222~exp=1724985822~hmac=b52b0c4edbcac8bca752610925f8cf1240c9999eda7ae726a752f17cc7f63e78',
+    //         width: 4,
+    //         height: 3
+    //     },
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+    //         width: 4,
+    //         height: 3
+    //     },
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+    //         width: 4,
+    //         height: 3
+    //     },
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+    //         width: 4,
+    //         height: 3
+    //     },
+    //     {
+    //         src: 'https://img.freepik.com/free-photo/group-children-lying-reading-grass-field_1150-3899.jpg?t=st=1724989562~exp=1724993162~hmac=4937313bb054f7af3cba75804d54762be9854ee70b4f14932e673e87b72cc6d2&w=996',
+    //         width: 4,
+    //         height: 3
+    //     },
+    // ];
 
-    const [mediaType, setMediaType] = useState('Photo');
+    const mediaTypes = {
+        PHOTO: 'image',
+        VIDEO: 'video'
+    }
+
+    const [mediaType, setMediaType] = useState(mediaTypes.PHOTO);
     const [uploadForm] = Form.useForm();
 
     const dispatch = useAppDispatch();
+    const router = useRouter();
 
-    const { mediaList } = useAppSelector((state) => state.mediaManagement);
-    const [ formattedPhotos, setFormattedPhotos ] = useState([]);
+    const { mediaList, photoList, videoList } = useAppSelector((state) => state.mediaManagement);
+    const [formattedPhotos, setFormattedPhotos] = useState([]);
+    const [currentMediaTypeDisplay, setCurrentMediaTypeDisplay] = useState(mediaTypes.PHOTO);
 
     const getImageSize = (url: string): Promise<{ width: number, height: number }> => {
         return new Promise((resolve, reject) => {
@@ -139,32 +127,20 @@ const MediaList = () => {
         return formattedList;
     }
 
-
-    // const formattedMediaList = (data: any) => {
-    //     return data.map((media: any, index: any) => {
-    //         return {
-    //             src: media.url,
-    //             width: 4,
-    //             height: 3,
-    //             // title: media.title
-    //         }
-    //     })
-    // }
-
     useEffect(() => {
         dispatch(getAllMediaData());
-        getFormattedPhotos(mediaList).then((formattedList) => {
-            console.log('Formatted Photo List:', formattedList);
-            setFormattedPhotos(formattedList);
-        });
+        // getFormattedPhotos(photoList).then((formattedList) => {
+        //     setFormattedPhotos(formattedList);
+        // });
     }, [dispatch, mediaList.length]);
 
     const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
-    const onUploadFinish = (values: any) => {
+    const onUploadSubmit = (values: any) => {
         console.log(values);
         dispatch(addNewMediaData(values));
         message.success('Media uploaded successfully');
+        uploadForm.resetFields();
         setUploadModalVisible(false);
     }
 
@@ -185,19 +161,54 @@ const MediaList = () => {
         setViewerIsOpen(false);
     };
 
-
-
+    const getPhotoList = (data: any) => {
+        return data.map((photo: any) => {
+            return {
+                src: photo.url,
+                width: photo.width,
+                height: photo.height
+            }
+        });
+    }
 
     return (
         <>
             <AppRowContainer>
                 <Col xs={24} lg={24}>
-                    <Button type="primary" icon={<PlusOutlined style={{ marginRight: 5 }} />} onClick={() => setUploadModalVisible(true)}>Upload</Button>
+                    <Space size={'large'}>
+                        <Button type="primary" icon={<PlusOutlined style={{ marginRight: 5 }} />} onClick={() => setUploadModalVisible(true)}>Upload</Button>
+                        <Select
+                            placeholder="Select media type"
+                            style={{ width: "100%" }}
+                            onChange={(value) => { setCurrentMediaTypeDisplay(value) }}>
+                            <Option value={mediaTypes.PHOTO}>Photos</Option>
+                            <Option value={mediaTypes.VIDEO}>Videos</Option>
+                        </Select>
+                    </Space>
                 </Col>
+
                 <Col xs={24} lg={24}>
-                    <AppCard title="Photos">
-                        <Gallery photos={formattedPhotos} onClick={openLightBox} />
-                    </AppCard>
+                    {
+                        currentMediaTypeDisplay === mediaTypes.PHOTO ?
+                            <AppCard title='Photos'>
+                                <Gallery photos={getPhotoList(photoList)} onClick={openLightBox} />
+                            </AppCard>
+                            :
+                            <AppCard title='Videos'>
+                                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                                    {
+                                        videoList.map((video: any, index: any) => {
+                                            return (
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                                    <ReactPlayer key={index} controls url={video?.url} />
+                                                </Col>
+                                            )
+                                        }
+                                        )
+                                    }
+                                </Row>
+                            </AppCard>
+                    }
                 </Col>
 
                 <Modal
@@ -208,31 +219,30 @@ const MediaList = () => {
                     footer={false}
                 >
                     <Form {...formItemLayout}
-                        // initialValues={{
-                        //     title: '',
-                        //     image: null
-                        // }}
                         form={uploadForm}
-                        onFinish={onUploadFinish}
+                        onFinish={onUploadSubmit}
                         onValuesChange={onUploadFormChange}
                     >
-                        {/* <Form.Item name="title">
-                            <Input placeholder="Media title" />
-                        </Form.Item> */}
 
-                        <Form.Item name='media_type'>
+                        <Form.Item
+                            name='media_type'
+                            rules={[{ required: true, message: 'Please select a media type!' }]}>
                             <Select
                                 placeholder="Select media type"
                                 style={{ width: "100%" }}
                                 onChange={(value) => { setMediaType(value) }}>
-                                <Option value='Photo'>Photo upload</Option>
-                                <Option value='Video'>Video upload</Option>
+                                <Option value={mediaTypes.PHOTO}>Photo upload</Option>
+                                <Option value={mediaTypes.VIDEO}>Video upload</Option>
                             </Select>
                         </Form.Item>
 
-                        {mediaType === 'Photo' ? <Form.Item name='photo'>
+                        <Form.Item
+                            name='files'
+                            rules={[{ required: true, message: 'Please upload a file!' }]}
+                        >
                             <Dragger
-                                multiple={true}
+                                multiple={false}
+                                maxCount={1}
                             >
                                 <p className="ant-upload-drag-icon">
                                     <InboxOutlined />
@@ -243,9 +253,7 @@ const MediaList = () => {
                                     banned files.
                                 </p>
                             </Dragger>
-                        </Form.Item> : <Form.Item name='video'>
-                            <Input placeholder="Video URL" />
-                        </Form.Item>}
+                        </Form.Item>
 
                         <Form.Item {...tailFormItemLayout}>
                             <Button type="primary" htmlType='submit'>Submit</Button>

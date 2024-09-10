@@ -107,10 +107,17 @@ export const createStudent = async (data: any) => {
       gender: data?.gender,
       parentName: data?.parentName,
       parentPhone: data?.parentPhone,
+      files: data?.files?.fileList,
     };
     const formData = new FormData();
     Object.keys(form).forEach(key => {
-      formData.append(key, form[key]);
+      if (key === 'files') {
+        if (form?.files?.length > 0) {
+          formData.append('files', form.files[0].originFileObj);
+        }
+      } else {
+        formData.append(key, form[key]);
+      }
     });
     console.log(formData);
     const response = await axios.post(`/students/enroll`, formData, {

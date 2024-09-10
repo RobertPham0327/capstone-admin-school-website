@@ -19,7 +19,7 @@ export const getAllMedia = async () => {
 export const uploadMedia = async (data: any) => {
   try {
     const mediaData = new FormData();
-    const fileList = data?.photo?.fileList.map((file: any) => file.originFileObj);
+    const fileList = data?.files?.fileList.map((file: any) => file.originFileObj);
     mediaData.append('files', fileList[0]);
     const response = await axios.post('/media/upload', mediaData, {
       headers: {
