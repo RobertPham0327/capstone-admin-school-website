@@ -94,6 +94,15 @@ const EatingSchedule = () => {
   const [updateEventForm] = Form.useForm();
   const [newEventForm] = Form.useForm();
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllEatingSchedulesData(Number(classId)));
+    dispatch(getAllLocationData())
+  }, [dispatch]);
+
+  const { eatingScheduleList, locationList } = useAppSelector(state => state.classManagement); 
+
   const onSelectDate = ({ start }: { start: any }) => {
     console.log('Selected: ', start);
     setSelectedDate(start);
@@ -116,6 +125,14 @@ const EatingSchedule = () => {
 
   // const onUpdateTask = (task: any) => { }
 
+  const isOverlapping = (start: Date, end: Date) => {
+    return eatingScheduleList.some(event => {
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
+      return (start < eventEnd && end > eventStart);
+    });
+  };
+
   const isValidForm = (values: any) => {
     if (!values.meal || !values.start || !values.end || !values.location || !values.menu || !values.nutrition) {
       return { isValid: false, message: 'Please fill in all required fields!' };
@@ -123,6 +140,17 @@ const EatingSchedule = () => {
     if (values.menu.length < 2 || values.nutrition.length < 2) {
       return { isValid: false, message: 'Please input at least 2 dish names and 2 nutrition names!' };
     }
+
+    if (values.start >= values.end) {
+      return { isValid: false, message: 'Start time must be before end time!' };
+    }
+
+    if (isOverlapping(values.start, values.end)) {
+      return { isValid: false, message: 'The event is overlapping with other events!' };
+    }
+
+    
+    
     return { isValid: true };
   }
 
@@ -146,7 +174,7 @@ const EatingSchedule = () => {
   }
 
   const onViewEventDetail = (event: any) => {
-    console.log('View event detail:', event);
+    console.log('Event detail:', event);
     updateEventForm.setFieldsValue({
       meal: event?.title,
       start: dayjs(event?.start, 'YYYY-MM-DD HH:mm:ss'),
@@ -172,15 +200,6 @@ const EatingSchedule = () => {
     console.log('allValues:', allValues);
   }
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getAllEatingSchedulesData(Number(classId)));
-    dispatch(getAllLocationData())
-  }, [dispatch]);
-
-  const { eatingScheduleList, locationList } = useAppSelector(state => state.classManagement); 
-
   const onAddNewEvent = (values: any) => {
     const newEvent = {
       meal: values.meal,
@@ -189,6 +208,12 @@ const EatingSchedule = () => {
       location: values.location,
       menu: values.menu,
       nutrition: values.nutrition,
+    }
+    console.log('New event:', newEvent);
+    if (!isValidForm(values).isValid) {
+      message.error(isValidForm(values).message);
+      message.error('Failed to add event');
+      return;
     }
     dispatch(addEatingScheduleData(Number(classId), newEvent))
     setAddEventOpen(false);
@@ -202,11 +227,6 @@ const EatingSchedule = () => {
 
   const onUpdateEventSubmit = (values: any) => {
     // console.log('Selected event:', selectedEvent);
-    console.log('Update event:', values);
-    if (!isValidForm(values).isValid) {
-      message.error(isValidForm(values).message);
-      return;
-    }
     const newEvent = {
       meal: values.meal,
       start: getIOStringDate(values.start),
@@ -216,6 +236,15 @@ const EatingSchedule = () => {
       nutrition: values.nutrition,
       files: values.image,
     }
+
+    console.log('Update event:', newEvent);
+
+    if (!isValidForm(newEvent).isValid) {
+      message.error(isValidForm(values).message);
+      message.error('Failed to update event');
+      return;
+    }
+
     dispatch(updateEatingScheduleData(selectedEvent.id, newEvent));
     setUpdateEventOpen(false);
     setViewEventOpen(false);
@@ -233,29 +262,35 @@ const EatingSchedule = () => {
   const onMenuDeleteForUpdating = (index: number) => {
     console.log('Delete menu:', index);
     updateEventForm.setFieldsValue({
-      menu: updateEventForm.getFieldValue('menu').filter((_: any, i: number) => i !== index)
+      menu: updateEventForm.getFieldValue('menu')?.filter((_: any, i: number) => i !== index)
     });
   }
 
   const onNutritionDeleteForUpdating = (index: number) => {
     console.log('Delete nutrition:', index);
     updateEventForm.setFieldsValue({
-      nutrition: updateEventForm.getFieldValue('nutrition').filter((_: any, i: number) => i !== index)
+      nutrition: updateEventForm.getFieldValue('nutrition')?.filter((_: any, i: number) => i !== index)
     });
   }
 
   const onMenuDeleteForCreating = (index: number) => {
     console.log('Delete menu:', index);
     newEventForm.setFieldsValue({
-      menu: newEventForm.getFieldValue('menu').filter((_: any, i: number) => i !== index)
+      menu: newEventForm.getFieldValue('menu')?.filter((_: any, i: number) => i !== index)
     });
   }
 
   const onNutritionDeleteForCreating = (index: number) => {
     console.log('Delete nutrition:', index);
     newEventForm.setFieldsValue({
-      nutrition: newEventForm.getFieldValue('nutrition').filter((_: any, i: number) => i !== index)
+      nutrition: newEventForm.getFieldValue('nutrition')?.filter((_: any, i: number) => i !== index)
     });
+  }
+
+  const onOpenAddNewEvent = () => {
+    setAddEventOpen(true);
+    setMenuCount(2);
+    setNutritionCount(2);
   }
 
   return (
@@ -263,7 +298,7 @@ const EatingSchedule = () => {
       <StyledTitle>Meal schedule</StyledTitle>
       <AppRowContainer>
         <Col xs={24} lg={24}>
-          <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setAddEventOpen(true)}>Add new schedule</Button>
+          <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={onOpenAddNewEvent}>Add new schedule</Button>
           <StyledCalendar
             localizer={localizer}
             events={eatingScheduleList}
@@ -330,7 +365,7 @@ const EatingSchedule = () => {
               menuCount < 3 && <Button onClick={() => setMenuCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Dish</Button>
             }
             {
-              menuCount > 1 && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForCreating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
+              menuCount > 2 && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForCreating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
             }
           </Form.Item>
 
@@ -350,7 +385,7 @@ const EatingSchedule = () => {
               nutritionCount < 3 && <Button onClick={() => setNutritionCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Nutrition</Button>
             }
             {
-              nutritionCount > 1 && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForCreating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
+              nutritionCount > 2 && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForCreating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
             }
           </Form.Item>
 
@@ -455,7 +490,7 @@ const EatingSchedule = () => {
               menuCount < 3  && isUpdateEventOpen && <Button onClick={() => setMenuCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Dish</Button>
             }
             {
-              menuCount > 1 && isUpdateEventOpen && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForUpdating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
+              menuCount > 2 && isUpdateEventOpen && <Button onClick={() => {setMenuCount(prev => prev - 1); onMenuDeleteForUpdating(menuCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Dish</Button>
             }
           </Form.Item>
 
@@ -474,7 +509,7 @@ const EatingSchedule = () => {
               nutritionCount < 3 && isUpdateEventOpen && <Button onClick={() => setNutritionCount(prev => prev + 1)} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledPlusOutlined />}>Add Nutrition</Button>
             }
             {
-              nutritionCount > 1 && isUpdateEventOpen && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForUpdating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
+              nutritionCount > 2 && isUpdateEventOpen && <Button onClick={() => {setNutritionCount(prev => prev - 1); onNutritionDeleteForUpdating(nutritionCount-1)}} type="dashed" style={{ width: '100%', marginBottom: '10px' }} icon={<StyledMinusOutlined />}>Remove Nutrition</Button>
             }
           </Form.Item>
 

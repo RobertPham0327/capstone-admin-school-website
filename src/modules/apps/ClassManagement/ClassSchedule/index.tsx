@@ -20,6 +20,8 @@ import dayjs from 'dayjs';
 import { sampleClassScheduleList } from '../mockData';
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks';
 import { addClassScheduleData, deleteClassScheduleData, getAllClassSchedulesData, getAllLocationData, getAllSubjectData, getAllTeacherData, updateClassScheduleData } from '@/toolkit/actions/ClassManagement';
+import { add } from 'lodash';
+import { number } from 'prop-types';
 
 
 const DragAndDropCalendar = withDragAndDrop(StyledCalendar);
@@ -93,6 +95,17 @@ const ClassSchedule = () => {
   const [updateEventForm] = Form.useForm();
   const [newEventForm] = Form.useForm();
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getAllClassSchedulesData(Number(classId)));
+    dispatch(getAllSubjectData());
+    dispatch(getAllTeacherData());
+    dispatch(getAllLocationData());
+  }, [dispatch]);
+
+  const { classScheduleList, teacherList, subjectList, locationList } = useAppSelector(state => state.classManagement);
+
   const onSelectDate = ({ start }: { start: any }) => {
     console.log('Selected: ', start);
     setSelectedDate(start);
@@ -104,16 +117,7 @@ const ClassSchedule = () => {
       setSelectedEvent(data);
       onViewEventDetail(data);
     }
-    // else {
-    //   if (selectedDate) {
-    //     setAddEventOpen(true);
-    //   } else {
-    //     setAddEventOpen(false);
-    //   }
-    // }
   };
-
-  // const onUpdateTask = (task: any) => { }
 
   const showDeleteConfirm = () => {
     confirm({
@@ -155,21 +159,41 @@ const ClassSchedule = () => {
   }
 
   const onAddEventFormChange = (changedValues: any, allValues: any) => {
-    console.log('allValues:', allValues);
+    console.log('New event form:', allValues);
   }
 
-  const dispatch = useAppDispatch();
+  const isOverlapping = (start: Date, end: Date, id: number) => {
+    return classScheduleList.some(event => {
+      if (id === event.id) return false;
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end);
+      return (start < eventEnd && end > eventStart);
+    });
+  };
 
-  useEffect(() => {
-    dispatch(getAllClassSchedulesData(Number(classId)));
-    dispatch(getAllSubjectData());
-    dispatch(getAllTeacherData());
-    dispatch(getAllLocationData());
-  }, [dispatch]);
+  const isValidForm = (values: any) => {
+    if (!values.subject || !values.teacher || !values.location || !values.start || !values.end) {
+      return { isValid: false, message: 'Please fill in all fields!' };
+    }
 
-  const { classScheduleList, teacherList, subjectList, locationList } = useAppSelector(state => state.classManagement);
+    if (values.start >= values.end) {
+      return { isValid: false, message: 'Start time must be before end time!' };
+    }
+
+    if (isOverlapping(values.start, values.end, Number(selectedEvent?.id))) {
+      return { isValid: false, message: 'The event is overlapping with other events!' };
+    }
+    
+    return { isValid: true };
+  }
 
   const onAddNewEvent = (values: any) => {
+    if (!isValidForm(values).isValid) {
+      message.error(isValidForm(values).message);
+      message.error('Failed to add event');
+      return;
+    }
+
     const newSchedule = {
       subject_id: values.subject,
       teacher_id: values.teacher, 
@@ -180,6 +204,9 @@ const ClassSchedule = () => {
       teacher_name: teacherList.find((teacher: any) => teacher.id === values.teacher)?.name,
       location_name: locationList.find((location: any) => location.id === values.location)?.name,
     }
+
+    console.log('New event:', newSchedule);
+
     dispatch(addClassScheduleData(Number(classId), newSchedule));
     setAddEventOpen(false);
     message.success('Event added successfully');
@@ -191,22 +218,44 @@ const ClassSchedule = () => {
   }
 
   const onUpdateEventSubmit = (values: any) => {
-    const newScheduleData = {
+    if (!isValidForm(values).isValid) {
+      message.error(isValidForm(values).message);
+      message.error('Failed to update event');
+      return;
+    }
+
+    let newScheduleData:any = {
       subject_id: values.subject,
       teacher_id: values.teacher,
       location_id: values.location,
-      start_time: getIOStringDate(values.start),
-      end_time: getIOStringDate(values.end),
+      // start_time: getIOStringDate(values.start),
+      // end_time: getIOStringDate(values.end),
       // subject_name: subjectList.find((subject: any) => subject.id === values.subject)?.name,
       // teacher_name: teacherList.find((teacher: any) => teacher.id === values.teacher)?.name,
       // location_name: locationList.find((location: any) => location.id === values.location)?.name,
     }
+
+    const updatingStart = getIOStringDate(values.start).split('.')[0];
+    const updatingEnd = getIOStringDate(values.end).split('.')[0];
+    console.log('Updating start:', updatingStart);
+
+    if (selectedEvent?.start !== updatingStart && selectedEvent?.end !== updatingEnd) {
+      newScheduleData.start_time = updatingStart;
+      newScheduleData.end_time = updatingEnd;
+    }
+    console.log('Selected event:', selectedEvent);
+    console.log('Update event:', newScheduleData);
+
     dispatch(updateClassScheduleData(selectedEvent.id, newScheduleData));
     setUpdateEventOpen(false);
     setViewEventOpen(false);
     message.success('Event updated successfully');
   }
 
+  const onOpenAddNewEvent = () => {
+    newEventForm.resetFields();
+    setAddEventOpen(true);
+  }
 
   return (
     <>
@@ -214,7 +263,7 @@ const ClassSchedule = () => {
 
       <AppRowContainer>
         <Col xs={24} lg={24}>
-          <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={() => setAddEventOpen(true)}>Add new schedule</Button>
+          <Button type="primary" icon={<StyledPlusOutlined style={{ marginRight: 5 }} />} onClick={onOpenAddNewEvent}>Add new schedule</Button>
           <StyledCalendar
             localizer={localizer}
             events={classScheduleList}

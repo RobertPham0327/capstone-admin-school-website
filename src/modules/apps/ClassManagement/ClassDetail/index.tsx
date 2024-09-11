@@ -7,11 +7,12 @@ import React, { useEffect, useState } from 'react'
 import { StyledAvatar, StyledContainer, StyledPlusOutlined, StyledTeacherInfor, StyledTitle } from '../ClassDetail/index.styled'
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/toolkit/hooks'
-import { addStudentData, deleteClassData, updateClassData, getClassProfileData } from '@/toolkit/actions/ClassManagement'
+import { addStudentData, deleteClassData, updateClassData, getClassProfileData, getAllLocationData, getAllTeacherData } from '@/toolkit/actions/ClassManagement'
 import AppIconButton from '@/@crema/components/AppIconButton'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import dayjs from 'dayjs'
 import { set } from 'lodash'
+import teacher from '@/pages/apps/class-management/teacher'
 
 
 const { Option } = Select;
@@ -61,59 +62,98 @@ const ClassDetail = () => {
 
   const dispatch = useAppDispatch();
 
-  const { currentClass } = useAppSelector(({ classManagement }) => classManagement);
+  const { currentClass, locationList, teacherList } = useAppSelector(({ classManagement }) => classManagement);
+  const { loading, error } = useAppSelector(({ common }) => common);
 
   useEffect(() => {
     dispatch(getClassProfileData(Number(classId)));
+    dispatch(getAllLocationData());
+    dispatch(getAllTeacherData());
     setFilteredStudentList(currentClass?.student_list);
   }, [dispatch, classId]);
 
-  const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
-  const endSchoolYearStr = currentClass?.school_year?.split('-')[1];
+ 
 
   const onUpdateClassValuesChanged = (values: any) => {
     console.log(values);
   }
 
+  const isValidateUpdateClassForm = (values: any) => {
+    if (!values.name && !values.location && !values.startSchoolYear && !values.endSchoolYear && !values.teacher) {
+      message.error('Please input class information');
+      return false;
+    }
+    return true;
+  }
+
   const onUpdateClassFormSubmit = (values: any) => {
     console.log(values);
-    let classData: any = {};
-    if (values.name) {
-      classData.name = values.name;
+    // let classData: any = {};
+    // if (values.name) {
+    //   classData.name = values.name;
+    // }
+    // if (values.location) {
+    //   classData.locationId = values.location;
+    // }
+    // if (values.startSchoolYear && values.endSchoolYear) {
+    //   classData.schoolYear = `${values.startSchoolYear.format('YYYY')}-${values.endSchoolYear.format('YYYY')}`;
+    // }
+    // if (values.teacher) {
+    //   classData.teacherId = values.teacher;
+    // }
+    // if (!classData) {
+    //   message.error('Please input class information')
+    //   return;
+    // }
+    const classData = {
+      name: values?.name,
+      locationId: values.location,
+      locationName: locationList.find((location: any) => location.id === values.location)?.name,
+      teacherId: values?.teacher,
+      teacherName: teacherList.find((teacher: any) => teacher.id === values.teacher)?.name,
+      schoolYear: `${values?.startSchoolYear?.format('YYYY')}-${values?.endSchoolYear?.format('YYYY')}`
     }
-    if (values.classroom) {
-      classData.classRoom = values.classroom;
-    }
-    if (values.startSchoolYear && values.endSchoolYear) {
-      classData.schoolYear = `${values.startSchoolYear.format('YYYY')}-${values.endSchoolYear.format('YYYY')}`;
-    }
-    if (!classData) {
-      message.error('Please input class information')
-      return;
-    }
+    if (!isValidateUpdateClassForm(classData)) return;
     dispatch(updateClassData(Number(classId), classData));
     setUpdateClassModalVisible(false);
+    if (error) {
+      message.error(error);
+      message.error('Failed to update class information');
+      return;
+    }
     message.success('Class information updated successfully');
-    router.reload();
+    dispatch(getClassProfileData(Number(classId)));
   }
 
   const onNewStudentValuesChanged = (values: any) => {
     console.log(values);
   }
 
-  const onNewStudentFormSubmit = (values: any) => {
-    console.log(values);
-    const studentData = {
-      studentName: values.name,
-      dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
-      gender: values.gender,
-      parentName: values.parentName,
-      parentPhone: values.parentPhone,
-      files: values.avatar,
+  const onNewStudentFormSubmit = async (values: any) => {
+    try {
+      console.log(values);
+      const studentData = {
+        studentName: values.name,
+        dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
+        gender: values.gender,
+        parentName: values.parentName,
+        parentPhone: values.parentPhone,
+        files: values.avatar,
+      }
+      console.log(studentData);
+      await dispatch(addStudentData(Number(classId), studentData));
+      setNewStudentModalVisible(false);
+      newStudentForm.resetFields();
+      setFilteredStudentList(null);
+      if (error) {
+        message.error(error);
+        message.error('Failed to add new student');
+        return;
+      }
+      message.success('Student added successfully');
+    } catch (error) {
+      message.error(error.message);
     }
-    console.log(studentData);
-    dispatch(addStudentData(Number(classId), studentData));
-    setNewStudentModalVisible(false);
   }
 
   const showDeleteConfirm = () => {
@@ -136,6 +176,8 @@ const ClassDetail = () => {
 
 
   const [filterForm] = Form.useForm();
+  const [newStudentForm] = Form.useForm();
+  const [updateClassForm] = Form.useForm();
 
   const getFilteredStudent = (studentList: any, filterData: any) => {
     return studentList.filter((item: any) => {
@@ -173,13 +215,26 @@ const ClassDetail = () => {
     // filterForm.resetFields();
   }
 
+  const onOpenUpdateClass = () => {
+    const startSchoolYearStr = currentClass?.school_year?.split('-')[0];
+    const endSchoolYearStr = currentClass?.school_year?.split('-')[1];
+    setUpdateClassModalVisible(true);
+    updateClassForm.setFieldsValue({
+      name: currentClass?.class_name,
+      location: locationList.find((location: any) => location.name === currentClass?.location_name)?.id,
+      teacher: teacherList.find((teacher: any) => teacher.name === currentClass?.teacher_name)?.id,
+      startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'),
+      endSchoolYear: dayjs(endSchoolYearStr, 'YYYY'),
+    })
+  }
+
   return (
     <>
       <AppRowContainer>
         <Col xs={24} lg={24}>
           <Space>
             <StyledTitle>Class details</StyledTitle>
-            <AppIconButton icon={<AiOutlineEdit />} onClick={() => { setUpdateClassModalVisible(true) }} />
+            <AppIconButton icon={<AiOutlineEdit />} onClick={onOpenUpdateClass} />
             <AppIconButton icon={<AiOutlineDelete />} onClick={showDeleteConfirm} />
           </Space>
         </Col>
@@ -263,7 +318,7 @@ const ClassDetail = () => {
         onCancel={() => setNewStudentModalVisible(false)}
         footer={false}
       >
-        <Form {...formItemLayout} onValuesChange={onNewStudentValuesChanged} onFinish={onNewStudentFormSubmit}>
+        <Form {...formItemLayout} form={newStudentForm} onValuesChange={onNewStudentValuesChanged} onFinish={onNewStudentFormSubmit}>
           <Form.Item
             label="Student name"
             name="name"
@@ -338,7 +393,8 @@ const ClassDetail = () => {
           {...formItemLayout}
           onValuesChange={onUpdateClassValuesChanged}
           onFinish={onUpdateClassFormSubmit}
-          initialValues={{ name: currentClass?.class_name, classroom: currentClass?.location_name, startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'), endSchoolYear: dayjs(endSchoolYearStr, 'YYYY') }}
+          form={updateClassForm}
+          // initialValues={{ name: currentClass?.class_name, classroom: currentClass?.location_name, startSchoolYear: dayjs(startSchoolYearStr, 'YYYY'), endSchoolYear: dayjs(endSchoolYearStr, 'YYYY') }}
         >
           <Form.Item
             label="Class name"
@@ -346,6 +402,46 @@ const ClassDetail = () => {
           // rules={[{ required: true, message: 'Please input a class name!' }]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Teacher"
+            name="teacher"
+          // rules={[{ required: true, message: 'Please select a teacher!' }]}
+          >
+            {
+                <Select
+                  placeholder="Select a teacher"
+                  style={{ width: "100%" }}
+                  onChange={() => { }}
+                >
+                  {
+                    teacherList.map((teacher: any) => (
+                      <Option key={teacher.id} value={teacher.id}>{teacher.name}</Option>
+                    ))
+                  }
+                </Select>
+            }
+          </Form.Item>
+
+          <Form.Item
+            label="Classroom"
+            name="location"
+          // rules={[{ required: true, message: 'Please input a classroom!' }]}
+          >
+            {
+                <Select
+                  placeholder="Select a classroom"
+                  style={{ width: "100%" }}
+                  onChange={() => { }}
+                >
+                  {
+                    locationList.map((location: any) => (
+                      <Option key={location.id} value={location.id}>{location.name}</Option>
+                    ))
+                  }
+                </Select>
+            }
           </Form.Item>
 
           <Form.Item

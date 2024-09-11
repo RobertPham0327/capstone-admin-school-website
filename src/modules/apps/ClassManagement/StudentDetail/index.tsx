@@ -53,13 +53,14 @@ const StudentDetail = () => {
   console.log('studentId', studentId);
   const dispatch = useAppDispatch();
   const { currentStudent } = useAppSelector(({ classManagement }) => classManagement);
-  const { loading } = useAppSelector(({ common }) => common);
+  const { loading, error } = useAppSelector(({ common }) => common);
 
   useEffect(() => {
     dispatch(getStudentData(Number(studentId), Number(classId)));
   }, [studentId]);
 
   const [updateStudentModalVisible, setUpdateStudentModalVisible] = useState(false);
+  const [updateStudentForm] = Form.useForm();
 
   const onUpdateStudentValuesChanged = (values: any) => {
     console.log(values);
@@ -67,22 +68,36 @@ const StudentDetail = () => {
 
   const isValidUpdateStudentForm = (values: any) => {
     if (!values.studentName || !values.parentName || !values.parentPhone) {
+      message.error('Please fill all required fields');
       return false;
     }
     return true;
   }
 
-  const onUpdateStudentSubmit = (values: any) => {
-    console.log(values);
-
-    if (!isValidUpdateStudentForm(values)) {
-      return
+  const onUpdateStudentSubmit = async (values: any) => {
+    try {
+      const studentData = {
+        studentName: values.studentName,
+        parentName: values.parentName,
+        parentPhone: values.parentPhone,
+        avatar: values.avatar,
+      }
+      console.log(studentData);
+      if (!isValidUpdateStudentForm(studentData)) {
+        return
+      }
+      await dispatch(updateStudentData(Number(studentId), Number(classId), studentData));
+      setUpdateStudentModalVisible(false);
+      if (error) {
+        message.error(error);
+        message.error('Failed to update student');
+        return;
+      }
+      message.success('Student updated successfully');
+      dispatch(getStudentData(Number(studentId), Number(classId)));
+    } catch (error) {
+      message.error(error.message);
     }
-    
-    dispatch(updateStudentData(Number(studentId), Number(classId), values));
-    setUpdateStudentModalVisible(false);
-    message.success('Student updated successfully');
-    router.reload();
   }
 
   const showDeleteConfirm = () => {
@@ -102,8 +117,6 @@ const StudentDetail = () => {
       },
     });
   }
-
-  const [updateStudentForm] = Form.useForm();
 
   const onUpdateOpen = () => {
     updateStudentForm.setFieldsValue({

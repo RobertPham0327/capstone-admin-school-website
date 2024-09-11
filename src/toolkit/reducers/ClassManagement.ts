@@ -114,7 +114,7 @@ const classManagementReducer = createReducer(initialState, builder => {
     })
     .addCase(UpdateStudentAction, (state, action) => {
       state.currentClass.student_list = state.currentClass.student_list.map(item =>
-        item.id === action.payload.id ? action.payload : item,
+        item.id === action.payload.id ? {...item, name: action.payload?.name} : item,
       );
     })
     .addCase(DeleteStudentAction, (state, action) => {

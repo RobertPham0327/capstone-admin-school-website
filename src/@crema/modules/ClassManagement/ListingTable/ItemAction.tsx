@@ -15,13 +15,13 @@ export const ItemAction = ({ id }: Props) => {
     const actionItems = [
         {
             key: 1,
-            label: <span style={{ fontSize: 14 }}>View Class</span>,
+            label: <span style={{ fontSize: 14 }}>View</span>,
         },
-        {
-            key: 2,
-            label: <span style={{ fontSize: 14 }}>Edit</span>,
-        },
-        { key: 3, label: <span style={{ fontSize: 14 }}>Delete</span> },
+        // {
+        //     key: 2,
+        //     label: <span style={{ fontSize: 14 }}>Edit</span>,
+        // },
+        // { key: 3, label: <span style={{ fontSize: 14 }}>Delete</span> },
     ];
 
     const onMenuClick = ({ item, key }: { item: any; key: string }) => {
