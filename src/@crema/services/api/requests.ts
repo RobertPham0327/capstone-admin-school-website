@@ -1,23 +1,20 @@
 import { Request as CremaRequest } from "@crema/types/models/apps/Request";
+import axios from "../auth/jwt-auth";
+import { statusCodes } from './constants';
 
 const API_URL = 'http://ec2-54-169-237-21.ap-southeast-1.compute.amazonaws.com:3000/api/v1/request';
 const AUTH_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjc3LCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6InNjaG9vbEFkbWluIiwiaWF0IjoxNzI0Mzk2ODY0LCJleHAiOjE3MzQ3NjQ4NjR9.TxPRmW8eLTJTTsqMZez7u5_Pm1GFvzLb0L16A_Ha5ew'; // Replace with your actual token
 
+
 export const getAllRequests = async (): Promise<CremaRequest[]> => {
     try {
-        const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${AUTH_TOKEN}`, // Add the authorization header
-            },
-        });
+        const response = await axios.get('/request');
 
-        if (!response.ok) {
+        if (response.status !== statusCodes.OK) {
             throw new Error(`Error fetching requests: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = response.data;
 
         if (!Array.isArray(data)) {
             throw new Error('Unexpected response format');
@@ -32,17 +29,19 @@ export const getAllRequests = async (): Promise<CremaRequest[]> => {
 
 export const updateRequestStatus = async (request_id: string, status: string): Promise<void> => {
     try {
-        const url = `${API_URL}/${request_id}/${status}`; // Construct the URL with ID and status
+        // const url = `${API_URL}/${request_id}/${status}`; // Construct the URL with ID and status
 
-        const response = await fetch(url, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${AUTH_TOKEN}`, // Add the authorization header
-            },
-        });
+        // const response = await fetch(url, {
+        //     method: 'PATCH',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${AUTH_TOKEN}`, // Add the authorization header
+        //     },
+        // });
 
-        if (!response.ok) {
+        const response = await axios.patch(`/request/${request_id}/${status}`);
+
+        if (response.status !== statusCodes.OK) {
             throw new Error(`Error updating request status: ${response.statusText}`);
         }
 
