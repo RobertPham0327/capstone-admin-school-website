@@ -41,27 +41,27 @@ const TaskContentHeader: React.FC<TaskContentHeaderProps> = ({
     }
   };
 
-  const onSelectTasks = (value: number) => {
-    switch (value) {
-      case 0:
-        setCheckedTasks(taskLists?.map(task => task.id));
-        break;
-      case 1:
-        setCheckedTasks([]);
-        break;
+  // const onSelectTasks = (value: number) => {
+  //   switch (value) {
+  //     case 0:
+  //       setCheckedTasks(taskLists?.map(task => task.id));
+  //       break;
+  //     case 1:
+  //       setCheckedTasks([]);
+  //       break;
 
-      case 2:
-        setCheckedTasks(taskLists?.filter(task => task.isStarred).map(task => task.id));
-        break;
+  //     case 2:
+  //       setCheckedTasks(taskLists?.filter(task => task.isStarred).map(task => task.id));
+  //       break;
 
-      case 3:
-        setCheckedTasks(taskLists?.filter(task => task.isAttachment).map(task => task.id));
-        break;
+  //     case 3:
+  //       setCheckedTasks(taskLists?.filter(task => task.isAttachment).map(task => task.id));
+  //       break;
 
-      default:
-        setCheckedTasks([]);
-    }
-  };
+  //     default:
+  //       setCheckedTasks([]);
+  //   }
+  // };
 
   const { messages } = useIntl();
 

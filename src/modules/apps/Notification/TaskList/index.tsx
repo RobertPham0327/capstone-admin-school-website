@@ -10,7 +10,8 @@ import AppList from '@crema/components/AppList';
 import { StyledTodoFooter, StyledTodoListDesktop, StyledTodoListMobile } from './index.styled';
 import { TaskListItemMobile } from '@crema/modules/Notification';
 import { useAppSelector, useAppDispatch } from '../../../../toolkit/hooks';
-import { onDeleteSelectedTasks, onGetTaskList, onUpdateTaskStarredStatus } from '../../../../toolkit/actions';
+import { onDeleteSelectedTasks, onGetTaskList } from '../../../../toolkit/actions';
+// import { NotificationObjType } from '@crema/types/models/apps/Notification'; // Updated to NotificationObjType
 import { TodoObjType } from '@crema/types/models/apps/Todo';
 import { useRouter } from 'next/router';
 import TaskListItem from './TaskListItem';
@@ -20,15 +21,15 @@ const TasksList = () => {
   const router = useRouter();
   const { all, asPath } = router.query;
 
-  const taskList = useAppSelector(({ todoApp }) => todoApp.taskList);
+  const notificationList = useAppSelector(({ todoApp }) => todoApp.taskList); // taskList now refers to notifications
 
-  const totalTasks = useAppSelector(({ todoApp }) => todoApp.totalTasks);
+  const totalNotifications = useAppSelector(({ todoApp }) => todoApp.totalTasks); // Update variable name for clarity
 
   const loading = useAppSelector(({ common }) => common.loading);
 
   const [page, setPage] = useState(0);
   const [filterText, onSetFilterText] = useState<string>('');
-  const [checkedTasks, setCheckedTasks] = useState<number[]>([]);
+  const [checkedNotifications, setCheckedNotifications] = useState<number[]>([]);
   const [isAddTaskOpen, setAddTaskOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,8 +37,12 @@ const TasksList = () => {
   }, [asPath]);
 
   useEffect(() => {
-    dispatch(onGetTaskList());
+    dispatch(onGetTaskList()); // Fetch the notification list
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('Notification List:', notificationList); // Add this for debugging
+  }, [notificationList]);
 
   const onOpenAddTask = () => {
     setAddTaskOpen(true);
@@ -47,11 +52,11 @@ const TasksList = () => {
     setAddTaskOpen(false);
   };
 
-  const onChangeCheckedTasks = (checked: boolean, id: number) => {
+  const onChangeCheckedNotifications = (checked: boolean, id: number) => {
     if (checked) {
-      setCheckedTasks(checkedTasks.concat(id));
+      setCheckedNotifications(checkedNotifications.concat(id));
     } else {
-      setCheckedTasks(checkedTasks.filter(taskId => taskId !== id));
+      setCheckedNotifications(checkedNotifications.filter(notificationId => notificationId !== id));
     }
   };
 
@@ -59,31 +64,30 @@ const TasksList = () => {
     setPage(value);
   };
 
-  const onChangeStarred = (checked: boolean, task: TodoObjType) => {
-    dispatch(onUpdateTaskStarredStatus([task.id], checked, all[1]));
-  };
+  // const onChangeStarred = (checked: boolean, notification: TodoObjType) => {
+  //   dispatch(onUpdateTaskStarredStatus([notification.id], checked, all[1]));
+  // };
 
-  const onDeleteSelectedTask = (task: TodoObjType) => {
-    dispatch(onDeleteSelectedTasks([task.id], all[0], all[1], page));
+  const onDeleteSelectedNotification = (notification: TodoObjType) => {
+    dispatch(onDeleteSelectedTasks([notification.id], all[0], all[1], page));
   };
 
   const onGetFilteredItems = () => {
     if (filterText === '') {
-      return taskList;
+      return notificationList;
     } else {
-      return taskList.filter(task => task.title.toUpperCase().includes(filterText.toUpperCase()));
+      return notificationList.filter(notification => notification.title.toUpperCase().includes(filterText.toUpperCase()));
     }
   };
-
 
   const list = onGetFilteredItems();
   return (
     <>
       <AppsHeader>
         <TaskContentHeader
-          taskLists={taskList}
-          checkedTasks={checkedTasks}
-          setCheckedTasks={setCheckedTasks}
+          taskLists={notificationList} // Render notification list
+          checkedTasks={checkedNotifications}
+          setCheckedTasks={setCheckedNotifications}
           filterText={filterText}
           onSetFilterText={onSetFilterText}
           onPageChange={onPageChange}
@@ -95,14 +99,14 @@ const TasksList = () => {
           <StyledTodoListDesktop>
             <AppList
               data={list}
-              renderItem={task => (
+              renderItem={notification => (
                 <TaskListItem
-                  key={task.id}
-                  task={task}
-                  onChangeCheckedTasks={onChangeCheckedTasks}
-                  checkedTasks={checkedTasks}
-                  onChangeStarred={onChangeStarred}
-                  onUpdateSelectedTask={onDeleteSelectedTask}
+                  key={notification.id}
+                  task={notification}
+                  onChangeCheckedTasks={onChangeCheckedNotifications}
+                  checkedTasks={checkedNotifications}
+                  // onChangeStarred={onChangeStarred}
+                  onUpdateSelectedTask={onDeleteSelectedNotification}
                 />
               )}
               ListEmptyComponent={
@@ -118,13 +122,13 @@ const TasksList = () => {
           <StyledTodoListMobile>
             <AppList
               data={list}
-              renderItem={task => (
+              renderItem={notification => (
                 <TaskListItemMobile
-                  key={task.id}
-                  task={task}
-                  checkedTasks={checkedTasks}
-                  onChangeStarred={onChangeStarred}
-                  onChangeCheckedTasks={onChangeCheckedTasks}
+                  key={notification.id}
+                  task={notification} // Adjust to notification
+                  checkedTasks={checkedNotifications}
+                  // onChangeStarred={onChangeStarred}
+                  onChangeCheckedTasks={onChangeCheckedNotifications}
                 />
               )}
               ListEmptyComponent={
@@ -139,15 +143,9 @@ const TasksList = () => {
           </StyledTodoListMobile>
         </>
       </AppsContent>
-{/* 
-      {taskList.length > 0 ? (
-        <StyledTodoFooter>
-          <AppsPagination count={totalTasks} page={page} onChange={onPageChange} />
-        </StyledTodoFooter>
-      ) : null} */}
-
       {isAddTaskOpen ? <AddNewTask isAddTaskOpen={isAddTaskOpen} onCloseAddTask={onCloseAddTask} /> : null}
     </>
   );
 };
+
 export default TasksList;

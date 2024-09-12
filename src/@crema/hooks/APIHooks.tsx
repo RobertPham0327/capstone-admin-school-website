@@ -145,6 +145,28 @@ const handleAPIError = (
   }
 };
 
+// export const postDataApi = <T,>(
+//   url: string,
+//   infoViewContext: InfoViewActions,
+//   payload: object,
+//   isHideLoader?: boolean,
+//   headers = {},
+// ): Promise<T> => {
+//   const { fetchStart, fetchSuccess } = infoViewContext;
+//   return new Promise((resolve, reject) => {
+//     if (!isHideLoader) fetchStart();
+//     jwtAxios
+//       .post(url, sanitizeData(payload), headers ? { headers } : {})
+//       .then((data: any) => {
+//         return handleApiResponse<T>(url, fetchSuccess, data, resolve, reject);
+//       })
+//       .catch((error: any) => {
+//         return handleAPIError(url, fetchSuccess, error, reject);
+//       });
+//     return Promise.resolve();
+//   });
+// };
+
 export const postDataApi = <T,>(
   url: string,
   infoViewContext: InfoViewActions,
@@ -153,17 +175,26 @@ export const postDataApi = <T,>(
   headers = {},
 ): Promise<T> => {
   const { fetchStart, fetchSuccess } = infoViewContext;
+
+  // Retrieve the token (assumes you're storing it in localStorage or state)
+  const token = localStorage.getItem('token'); // Adjust this based on how you store the token
+
   return new Promise((resolve, reject) => {
     if (!isHideLoader) fetchStart();
+
+    const authHeaders = {
+      Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+      ...headers, // Include any additional headers passed in
+    };
+
     jwtAxios
-      .post(url, sanitizeData(payload), headers ? { headers } : {})
+      .post(url, sanitizeData(payload), { headers: authHeaders }) // Pass headers with token
       .then((data: any) => {
         return handleApiResponse<T>(url, fetchSuccess, data, resolve, reject);
       })
       .catch((error: any) => {
         return handleAPIError(url, fetchSuccess, error, reject);
       });
-    return Promise.resolve();
   });
 };
 

@@ -49,8 +49,9 @@ const todoReducer = createReducer(initialState, builder => {
   builder
     .addCase(GetTaskListAction, (state, action) => {
       state.taskList = action.payload.data;
-      state.totalTasks = action.payload.count;
+      state.totalTasks = action.payload.data.length;
     })
+
     .addCase(GetFolderListAction, (state, action) => {
       state.folderList = action.payload;
     })

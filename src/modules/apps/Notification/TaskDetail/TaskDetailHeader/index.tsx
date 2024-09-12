@@ -6,7 +6,7 @@ import StatusToggleButton from './StatusToggleButton';
 import { BiArrowBack } from 'react-icons/bi';
 import { StyledTodoDetailArrow, StyledTodoDetailDeleteIcon, StyledTodoStarIconView } from '../index.styled';
 import { useAppDispatch } from '../../../../../toolkit/hooks';
-import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
+// import { onUpdateSelectedTask } from '../../../../../toolkit/actions';
 import { TodoObjType } from '@crema/types/models/apps/Todo';
 
 type TaskDetailHeaderProps = {
@@ -21,14 +21,14 @@ const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => 
     router.back();
   };
 
-  const onChangeStarred = (checked: boolean) => {
-    dispatch(onUpdateSelectedTask({ ...selectedTask, isStarred: checked }));
-  };
+  // const onChangeStarred = (checked: boolean) => {
+  //   dispatch(onUpdateSelectedTask({ ...selectedTask }));
+  // };
 
-  const onDeleteTask = () => {
-    dispatch(onUpdateSelectedTask({ ...selectedTask, folderValue: 126 }));
-    router.back();
-  };
+  // const onDeleteTask = () => {
+  //   dispatch(onUpdateSelectedTask({ ...selectedTask }));
+  //   router.back();
+  // };
 
   return (
     <>
@@ -41,10 +41,10 @@ const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => 
       <StatusToggleButton selectedTask={selectedTask} />
 
       <StyledTodoStarIconView>
-        <AppsStarredIcon item={selectedTask} onChange={onChangeStarred} />
+        {/* <AppsStarredIcon item={selectedTask} onChange={onChangeStarred} /> */}
       </StyledTodoStarIconView>
 
-      <StyledTodoDetailDeleteIcon deleteAction={onDeleteTask} deleteTitle={<IntlMessages id="todo.deleteMessage" />} />
+      {/* <StyledTodoDetailDeleteIcon deleteAction={onDeleteTask} deleteTitle={<IntlMessages id="todo.deleteMessage" />} /> */}
     </>
   );
 };

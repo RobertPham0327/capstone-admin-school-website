@@ -22,7 +22,7 @@ import { TodoObjType } from '@crema/types/models/apps/Todo';
 type TaskListItemProps = {
   task: TodoObjType;
   checkedTasks: number[];
-  onChangeStarred: (checked: boolean, task: TodoObjType) => void;
+  // onChangeStarred: (checked: boolean, task: TodoObjType) => void;
   onChangeCheckedTasks: (checked: boolean, taskNo: number) => void;
 };
 
@@ -30,7 +30,7 @@ const TaskListItemMobile: React.FC<TaskListItemProps> = ({
   task,
   checkedTasks,
   onChangeCheckedTasks,
-  onChangeStarred,
+  // onChangeStarred,
 }) => {
   const router = useRouter();
   const { query } = router;
@@ -82,7 +82,7 @@ const TaskListItemMobile: React.FC<TaskListItemProps> = ({
       <StyledTodoListMobileAction>
         <StyledTodoListMobileDate>{dayjs(task.startDate).format('HH:mm A')}</StyledTodoListMobileDate>
         <StyledTodoListStarMobile onClick={event => event.stopPropagation()}>
-          <AppsStarredIcon item={task} onChange={onChangeStarred} />
+          {/* <AppsStarredIcon item={task} onChange={onChangeStarred} /> */}
         </StyledTodoListStarMobile>
       </StyledTodoListMobileAction>
     </StyledTodoListMobileItem>

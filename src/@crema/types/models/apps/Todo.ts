@@ -51,3 +51,4 @@ export type TodoObjType = {
   notification_type: 'notification'; // You can expand this based on different types
   created_at: string;
 };
+
