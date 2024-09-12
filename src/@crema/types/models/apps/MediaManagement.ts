@@ -1,5 +1,7 @@
 export type MediaDataType = {
     id: number;
-    name: string;
+    type: string;
     url: string;
+    height?: number;
+    width?: number;
 }

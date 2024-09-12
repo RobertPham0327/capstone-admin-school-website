@@ -137,7 +137,15 @@ export const updateClassData = (classId: number, classData: any) => {
       const response = await updateClass(classId, classData);
       console.log(response);
       if (response.status === statusCodes.OK) {
-        dispatch({ type: UPDATE_CLASS, payload: response.data });
+        const newClassData: ClassDataType = {
+          id: response.data?.id,
+          name: response.data?.name,
+          teacher_id: response.data?.teacher_id,
+          teacher_name: classData?.teacherName,
+          class_room: classData?.locationName,
+          school_year: response.data?.school_year,
+        };
+        dispatch({ type: UPDATE_CLASS, payload: newClassData });
         dispatch(fetchSuccess());
       } else {
         dispatch(fetchError('Something went wrong, Please try again!'));
@@ -273,7 +281,12 @@ export const updateStudentData = (studentId: number, classId: number, studentDat
     try {
       const response = await updateStudent(studentId, classId, studentData);
       if (response.status === statusCodes.OK) {
-        dispatch({ type: UPDATE_STUDENT, payload: response.data });
+        const newStudent: any = {
+          id: studentId,
+          class_id: classId,
+          name: studentData?.studentName,
+        }
+        dispatch({ type: UPDATE_STUDENT, payload: newStudent });
         dispatch(fetchSuccess());
       } else {
         dispatch(fetchError('Something went wrong, Please try again!'));

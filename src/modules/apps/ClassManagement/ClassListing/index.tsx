@@ -80,7 +80,7 @@ const ClassListing = () => {
 
   const { classList, teacherList, locationList } = useAppSelector(({ classManagement }) => classManagement);
 
-  const loading = useAppSelector(({ common }) => common.loading);
+  const { loading, error } = useAppSelector(({ common }) => common);
 
   const [filteredClassList, setFilteredClassList] = useState(null);
 
@@ -91,7 +91,7 @@ const ClassListing = () => {
     setFilteredClassList(classList);
   }, [dispatch, classList.length]);
 
-  const onFormSubmit = (values: any) => {
+  const onFormSubmit = async (values: any) => {
     console.log(values);
     const classData = {
       name: values.name,
@@ -101,9 +101,16 @@ const ClassListing = () => {
       teacherName: teacherList.find((teacher: any) => teacher.id === Number(values.teacherId))?.name,
       locationName: locationList.find((location: any) => location.id === Number(values.classroom))?.name,
     }
-    dispatch(createClassData(classData));
-    message.success('Class created successfully');
+    await dispatch(createClassData(classData));
     setNewClassModalVisible(false);
+    newClassForm.resetFields();
+    setFilteredClassList(null);
+    if (error) {
+      message.error(error);
+      message.error('Failed to create class');
+      return;
+    }
+    message.success('Class created successfully');
   }
 
   const onFormValuesChange = (changedValues: any, allValues: any) => {
@@ -124,6 +131,7 @@ const ClassListing = () => {
   }
 
   const [filterForm] = Form.useForm();
+  const [newClassForm] = Form.useForm();
 
   const onFilterFormChange = (changedValues: any, allValues: any) => {
     const filterData = {
@@ -245,7 +253,7 @@ const ClassListing = () => {
         onCancel={() => setNewClassModalVisible(false)}
         footer={false}
       >
-        <Form {...formItemLayout} onValuesChange={onFormValuesChange} onFinish={onFormSubmit}>
+        <Form {...formItemLayout} form={newClassForm} onValuesChange={onFormValuesChange} onFinish={onFormSubmit}>
           <Form.Item
             label="Name"
             name="name"
