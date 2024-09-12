@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useIntl } from 'react-intl';
-import { Avatar } from 'antd';
 import { PictureOutlined, SendOutlined } from '@ant-design/icons';
 import AppIconButton from '@crema/components/AppIconButton';
 import {
@@ -22,11 +21,12 @@ import { generateRandomUniqueNumber } from '@crema/helpers/Common';
 type CreatePostProps = {
   wallData: WallDataType;
 };
+
 const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
   const dispatch = useAppDispatch();
 
-  const [message, setMessage] = useState('');
-  const [attachments, setAttachments] = useState<AttachmentObjType[]>([]);
+  const [content, setContent] = useState('');
+  const [media, setMedia] = useState<any[]>([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -38,9 +38,11 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
       const files = acceptedFiles.map((file: any) => {
         return {
           id: generateRandomUniqueNumber(),
-          path: file.path,
+          url: file.path,
           metaData: { type: file.type, size: file.size },
           preview: URL.createObjectURL(file),
+          media_type: file.type,
+          created_at: new Date().toISOString(),
         };
       });
       onAddAttachments(files);
@@ -48,23 +50,40 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
   });
 
   const onAddAttachments = (files: AttachmentObjType[]) => {
-    setAttachments([...attachments, ...files]);
+    setMedia([...media, ...files]);
   };
 
   const handlePostSubmit = () => {
-    const post = {
-      message,
-      attachments,
-      owner: {
-        name: wallData.name,
-        profilePic: wallData.profilePic,
-        id: wallData.id,
-      },
+    const post: PostObjType = {
+      title: content,
+      content,
+      school_id: wallData.schooId, // Assuming wallData contains schoolId
+      created_by: wallData.id, // Assuming wallData contains user ID
+      status: 'draft', // Defaulting to 'draft' status
+      published_at: new Date().toISOString(),
+      id: generateRandomUniqueNumber(), // Generate a temporary ID if needed
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      // published_at: new Date().toISOString(),
+      // files: media.map(file => ({
+      //   id: file.id,
+      //   url: file.url, // Using preview URL
+      //   media_type: file.media_type, // Assuming media_type is 'image'. Adjust this based on the type of media.
+      //   created_at: new Date().toISOString(), // The current timestamp for when the media was added
+      // })),
+      // files: new File(media[0], 'files'),
+      hashtags: [],
+      liked: false,
+      numLikes: 0,
+      numComments: [],
+      shares: 0,
     };
-    dispatch(onCreateNewPost(post as MediaPostObjType));
-    setAttachments([]);
-    setMessage('');
+
+    dispatch(onCreateNewPost(post as PostObjType));
+    setMedia([]);
+    setContent('');
   };
+
 
   const { messages } = useIntl();
 
@@ -73,28 +92,24 @@ const CreatePost: React.FC<CreatePostProps> = ({ wallData }) => {
       <StyledCreatePostMain>
         <StyledCreatePostMainContent>
           <StyledCreatePostInput
-            value={message}
-            onChange={e => setMessage(e.target.value)}
-            placeholder="What's in your mind?"
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            placeholder="What's on your mind?"
             suffix={
               <StyledCreatePostAction>
                 <StyledCreatePostActionBtn {...getRootProps()}>
                   <input {...getInputProps()} />
                   <PictureOutlined />
                 </StyledCreatePostActionBtn>
-                <AppIconButton
-                  // disabled={!message.trim() && attachments.length === 0}
-                  onClick={handlePostSubmit}
-                  icon={<SendOutlined />}
-                />
+                <AppIconButton onClick={handlePostSubmit} icon={<SendOutlined />} />
               </StyledCreatePostAction>
             }
           />
         </StyledCreatePostMainContent>
       </StyledCreatePostMain>
-      {attachments ? (
+      {media.length > 0 ? (
         <StyledCreatePostImgList
-          data={attachments}
+          data={media}
           renderItem={(item: AttachmentObjType, index: number) => (
             <StyledCreatePostImgItem key={index}>
               <img src={item.preview} alt="upload" />

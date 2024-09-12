@@ -48,19 +48,32 @@ export const onGetPostsList = () => {
 
 export const onCreateNewPost = (post: PostObjType) => {
   const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
+
+  return (dispatch: Dispatch<any>) => {
+    console.log('post', post);
     dispatch(fetchStart());
     jwtAxios
-      .post('/post/draft', { post })
-      .then((data: any) => {
-        if (data.status === 200) {
+      .post('/post/draft', {
+        // files: post.files,
+        title: post.title,
+        content: post.content,
+        school_id: post.school_id,
+        created_by: post.created_by,
+        status: post.status,
+        // published_at: post.published_at,
+      })
+      .then(response => {
+        if (response.status === 200) {
           dispatch(fetchSuccess());
-          dispatch({ type: CREATE_NEW_POST, payload: data.data });
+          dispatch({
+            type: CREATE_NEW_POST,
+            payload: response.data, // Process the data from the API response
+          });
         } else {
           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
         }
       })
-      .catch((error: any) => {
+      .catch(error => {
         dispatch(fetchError(error.message));
       });
   };

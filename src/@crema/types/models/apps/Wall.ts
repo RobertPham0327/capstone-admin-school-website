@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import { MessageType } from './Chat';
 
 export type FriendRequestObjType = {
@@ -39,12 +40,15 @@ export type SuggestionObjType = {
 export type MediaObjType = {
   id: number | string;
   url: string;
-  mime_type: string;
+  media_type: string;
+  created_at: string;
 };
 
 export type AttachmentObjType = {
   id: number;
-  path: string;
+  url: string;
+  media_type: string;
+  created_at: string;
   preview: string;
   metaData: {
     type: string;
@@ -121,6 +125,8 @@ export type WallDataType = {
   recentNews: RecentNewsObjType[];
   whoToFollow: WhoToFollowObjType[];
   suggestions: SuggestionObjType[];
+  schooId: number;
+  media: MediaObjType;
 };
 
 export type UserObjType = {
@@ -131,21 +137,21 @@ export type UserObjType = {
 
 export type PostObjType = {
   id: number;
-  title: string;              
-  content: string;            
-  school_id: number;          
-  created_by: number;         
-  status: string;             
-  published_at: string | null; 
-  created_at: string;         
-  updated_at: string;         
-  media: MediaPostObjType[];               
-  hashtags: string[];         
-  liked: boolean;             
-  numLikes: number;              
-  numComments: CommentObjType[]; 
-  shares: number;             
-  views?: number;   
+  title: string;
+  content: string;
+  school_id: number;
+  created_by: number;
+  status: string;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+  files: any;
+  hashtags: string[];
+  liked: boolean;
+  numLikes: number;
+  numComments: CommentObjType[];
+  shares: number;
+  views?: number;
 };
 
 // Media Object Type
