@@ -7,37 +7,11 @@ import AppsContainer from '@crema/components/AppsContainer';
 import AppPageMeta from '@crema/components/AppPageMeta';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from '../../../toolkit/hooks';
-import {
-  // onGetToDoFolderList,
-  // onGetToDoLabelList,
-  // onGetToDoPriorityList,
-  // onGetToDoStaffList,
-  // onGetToDoStatusList,
-} from '../../../toolkit/actions';
 
 const Notification = () => {
   const dispatch = useAppDispatch();
   const { query } = useRouter();
 
-  // useEffect(() => {
-  //   dispatch(onGetToDoLabelList());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(onGetToDoFolderList());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(onGetToDoPriorityList());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(onGetToDoStaffList());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(onGetToDoStatusList());
-  // }, [dispatch]);
 
   const onGetMainComponent = () => {
     if (query?.all?.[2]) {

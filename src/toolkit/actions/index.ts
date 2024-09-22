@@ -5,7 +5,6 @@ export * from './ChatApp';
 export * from './ContactApp';
 export * from './Ecommerce';
 export * from './ScrumboardApp';
-export * from './MailApp';
 export * from './Blogs';
 export * from './InvoiceApp';
 export * from './CalendarApp';

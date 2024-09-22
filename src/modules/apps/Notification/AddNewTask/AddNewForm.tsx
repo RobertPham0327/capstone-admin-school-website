@@ -13,6 +13,7 @@ import {
 import dayjs, { Dayjs } from 'dayjs';
 import { postDataApi } from '@crema/hooks/APIHooks';
 import { useInfoViewActionsContext } from '@crema/context/AppContextProvider/InfoViewContextProvider';
+import { toast } from 'react-toastify';
 
 type AddNotificationFormProps = {
   reCallAPI?: any;
@@ -27,19 +28,14 @@ const AddNotificationForm: React.FC<AddNotificationFormProps> = ({ onCloseAddTas
   const onFinish = (values: any) => {
     const newNotification = {
       ...values,
-      // createdBy: {
-      //   name: user.displayName ? user.displayName : 'user',
-      //   image: user.photoURL ? user.photoURL : '/assets/images/dummy2.jpg',
-      // },
       // created_at: dayjs().format(), // Set the created_at field for notifications
     };
-
-    console.log(newNotification);
 
     postDataApi('/notification', infoViewActionsContext, newNotification) // Adjust API endpoint to '/notification'
       .then(() => {
         if (reCallAPI) reCallAPI()
         infoViewActionsContext.showMessage('New Notification has been created successfully!');
+        toast.success('New notification has been created successfully!');
       })
       .catch(error => {
         infoViewActionsContext.fetchError(error.message);

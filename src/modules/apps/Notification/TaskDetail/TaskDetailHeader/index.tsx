@@ -21,9 +21,6 @@ const TaskDetailHeader: React.FC<TaskDetailHeaderProps> = ({ selectedTask }) => 
     router.back();
   };
 
-  // const onChangeStarred = (checked: boolean) => {
-  //   dispatch(onUpdateSelectedTask({ ...selectedTask }));
-  // };
 
   // const onDeleteTask = () => {
   //   dispatch(onUpdateSelectedTask({ ...selectedTask }));

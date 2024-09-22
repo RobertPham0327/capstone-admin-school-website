@@ -14,6 +14,8 @@ import '../../public/styles/index.css';
 import { GlobalStyles } from '@crema/core/theme/GlobalStyle';
 import { Normalize } from 'styled-normalize';
 import { AppProps } from 'next/app';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 
@@ -27,6 +29,7 @@ export default function MyApp(props: AppProps) {
           <AppLocaleProvider>
             <AppAuthProvider>
               <AuthRoutes>
+              <ToastContainer /> 
                 <GlobalStyles />
                 <Normalize />
                 <AppPageMeta />

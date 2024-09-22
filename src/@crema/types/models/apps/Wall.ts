@@ -145,7 +145,7 @@ export type PostObjType = {
   published_at: string | null;
   created_at: string;
   updated_at: string;
-  files: any;
+  media: MediaObjType[];
   hashtags: string[];
   liked: boolean;
   numLikes: number;

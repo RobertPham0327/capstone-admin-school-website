@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { AppActions } from '@crema/types/actions';
 import { appIntl } from '@crema/helpers/Common';
 import { CommentObjType, PostObjType } from '@crema/types/models/apps/Wall';
+import { Form } from 'antd';
 
 export const onGetWallData = () => {
   const { messages } = appIntl();
@@ -46,28 +47,53 @@ export const onGetPostsList = () => {
   };
 };
 
-export const onCreateNewPost = (post: PostObjType) => {
+// export const onCreateNewPost = (post: PostObjType) => {
+//   const { messages } = appIntl();
+
+//   return (dispatch: Dispatch<any>) => {
+//     console.log('post in actions', post);
+//     dispatch(fetchStart());
+//     jwtAxios
+//       .post('/post/draft', {
+//         media: post.media,
+//         title: post.title,
+//         content: post.content,
+//         school_id: post.school_id,
+//         created_by: post.created_by,
+//         status: post.status,
+//         // published_at: post.published_at,
+//       })
+//       .then(response => {
+//         if (response.status === 200) {
+//           dispatch(fetchSuccess());
+//           dispatch({
+//             type: CREATE_NEW_POST,
+//             payload: response.data, // Process the data from the API response
+//           });
+//         } else {
+//           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
+//         }
+//       })
+//       .catch(error => {
+//         dispatch(fetchError(error.message));
+//       });
+//   };
+// };
+
+export const onCreateNewPost = (post: FormData) => {
   const { messages } = appIntl();
 
   return (dispatch: Dispatch<any>) => {
-    console.log('post', post);
     dispatch(fetchStart());
+
     jwtAxios
-      .post('/post/draft', {
-        // files: post.files,
-        title: post.title,
-        content: post.content,
-        school_id: post.school_id,
-        created_by: post.created_by,
-        status: post.status,
-        // published_at: post.published_at,
-      })
+      .post('/post/draft', post)
       .then(response => {
         if (response.status === 200) {
           dispatch(fetchSuccess());
           dispatch({
             type: CREATE_NEW_POST,
-            payload: response.data, // Process the data from the API response
+            payload: response.data,
           });
         } else {
           dispatch(fetchError(String(messages['message.somethingWentWrong'])));
@@ -77,7 +103,7 @@ export const onCreateNewPost = (post: PostObjType) => {
         dispatch(fetchError(error.message));
       });
   };
-};
+}
 
 export const onUpdatePostStatus = (postId: number, status: boolean) => {
   const { messages } = appIntl();
@@ -102,22 +128,4 @@ export const onUpdatePostStatus = (postId: number, status: boolean) => {
   };
 };
 
-export const onAddNewComment = (postId: number, comment: CommentObjType) => {
-  const { messages } = appIntl();
-  return (dispatch: Dispatch<AppActions>) => {
-    dispatch(fetchStart());
-    jwtAxios
-      .post('/wall/posts/comments', { postId, comment })
-      .then((data: any) => {
-        if (data.status === 200) {
-          dispatch(fetchSuccess());
-          dispatch({ type: UPDATE_POST, payload: data.data });
-        } else {
-          dispatch(fetchError(String(messages['message.somethingWentWrong'])));
-        }
-      })
-      .catch((error: any) => {
-        dispatch(fetchError(error.message));
-      });
-  };
-};
+

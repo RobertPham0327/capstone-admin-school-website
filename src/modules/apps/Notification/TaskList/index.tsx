@@ -41,7 +41,9 @@ const TasksList = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log('Notification List:', notificationList); // Add this for debugging
+    if (page !== 0) {
+      dispatch(onGetTaskList());
+    }
   }, [notificationList]);
 
   const onOpenAddTask = () => {
