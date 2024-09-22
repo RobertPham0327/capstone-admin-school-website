@@ -4,6 +4,7 @@ import { StyledOrderId, StyledOrderTable } from "../index.styled";
 import type { ColumnsType } from "antd/es/table";
 import type { RecentOrdersType } from "@crema/types/models/ecommerce/EcommerceApp";
 import type { Request } from "@crema/types/models/apps/Request";
+import OrderActions from "../../ClassManagement/ListingTable/OrderAction";
 
 const getPaymentStatusColor = (status: string) => {
   switch (status) {
@@ -67,7 +68,7 @@ const columns: ColumnsType<Request> = [
     key: 'actions',
     className: 'order-table-action',
     fixed: 'right',
-    render: () => <OrderActions />,
+    render: (id, record) => <RequestActions request={record} />,
   },
 ];
 

@@ -5,7 +5,7 @@ import { MoreOutlined } from '@ant-design/icons';
 import AppIconButton from '@crema/components/AppIconButton';
 
 type Props = {
-  id: number;
+  id?: number;
 };
 
 const OrderActions = ({ id }: Props) => {
